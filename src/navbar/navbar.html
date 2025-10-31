@@ -1,0 +1,52 @@
+<tui-app-bar
+  size="l"
+  class="fixed top-0 left-0 z-50 w-full shadow-lg transition-all duration-300 ease-in-out"
+  [ngClass]="isScrolled() ? 'bg-base-100/90 backdrop-blur-sm' : 'bg-base-100'">
+
+  <a
+    tuiButton
+    tuiSlot="left"
+    appearance="flat"
+    routerLink="/"
+    size="xl"
+    class="text-xl font-semibold ">
+    SmartCv
+  </a>
+
+  <tui-tabs class="hidden md:flex mx-auto">
+    <a
+      tuiTab
+      [routerLink]="['/']"
+      [routerLinkActiveOptions]="{exact: true}"
+      routerLinkActive="tui-tabs__tab_active"
+      class="text-sm font-medium  ">
+      Resume
+    </a>
+    <a
+      tuiTab
+      [routerLink]="['/config']"
+      [routerLinkActiveOptions]="{exact: true}"
+      routerLinkActive="tui-tabs__tab_active"
+      class="text-sm font-medium  ">
+      Config
+    </a>
+
+  </tui-tabs>
+
+  <div tuiSlot="right" class="md:hidden">
+    <button
+      tuiIconButton
+      appearance="flat"
+      iconStart="@tui.menu"
+      [tuiDropdown]="dropdown"
+      tuiDropdownOpen>
+    </button>
+  </div>
+</tui-app-bar>
+
+<ng-template #dropdown>
+  <tui-data-list>
+    <a tuiOption routerLink="/" class="text-sm">nada1</a>
+    <a tuiOption routerLink="/config" class="text-sm">nada</a>
+  </tui-data-list>
+</ng-template>

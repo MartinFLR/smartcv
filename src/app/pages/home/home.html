@@ -1,0 +1,402 @@
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 p-4 md:p-8">
+
+  <div class="md:col-span-7 flex flex-col gap-6">
+
+    <form [formGroup]="cvForm" class="flex flex-col gap-6 p-6 border rounded-lg shadow-sm bg-white">
+      <p>{{cvForm.getRawValue() | json}} </p>
+      <p>oferta laboral:{{ iaForm.getRawValue() | json }}</p>
+      <tui-tabs [(activeItemIndex)]="activeTab" tuiFade>
+        <button tuiTab>
+          <tui-icon icon="@tui.user" class="mr-2"></tui-icon>
+          Personal
+        </button>
+        <button tuiTab>
+          <tui-icon icon="@tui.book-open" class="mr-2"></tui-icon>
+          Educación
+        </button>
+        <button tuiTab>
+          <tui-icon icon="@tui.briefcase" class="mr-2"></tui-icon>
+          Experiencia
+        </button>
+        <button tuiTab>
+          <tui-icon icon="@tui.code" class="mr-2"></tui-icon>
+          Habilidades
+        </button>
+        <button tuiTab>
+          <tui-icon icon="@tui.sparkles" class="mr-2"></tui-icon>
+          IA
+        </button>
+      </tui-tabs>
+
+      @switch (activeTab()) {
+        @case (0) {
+          <fieldset formGroupName="personalInfo" class="contents">
+            <h2 class="text-xl font-semibold text-gray-800">Información Personal</h2>
+            <tui-textfield>
+              <label tuiLabel>Nombre Completo</label>
+              <input tuiTextfield formControlName="name" />
+            </tui-textfield>
+            <tui-textfield>
+              <label tuiLabel>Puesto</label>
+              <input tuiTextfield placeholder="FullStack Developer, etc.." formControlName="job" />
+            </tui-textfield>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <tui-textfield>
+                <label tuiLabel>Email</label>
+                <input tuiTextfield placeholder="ejemplo@gmail.com" type="email" formControlName="email" />
+              </tui-textfield>
+              <tui-textfield [tuiTextfieldCleaner]="true">
+                <label tuiLabel>Teléfono</label>
+                <input tuiInputPhoneInternational
+                       [countries]="countries"
+                       countryIsoCode="AR"
+                       autocomplete="tel"
+                       formControlName="phone" />
+              </tui-textfield>
+            </div>
+            <tui-textfield>
+              <label tuiLabel>LinkedIn (URL)</label>
+              <input tuiTextfield placeholder="https://www.linkedin.com/in/#####" formControlName="linkedin" />
+            </tui-textfield>
+          </fieldset>
+
+          <fieldset class="contents">
+            <h2 class="text-xl font-semibold text-gray-800">Perfil Profesional</h2>
+            <tui-textfield iconStart="@tui.pencil">
+              <textarea
+                tuiTextarea
+                placeholder="Escribí tu perfil profesional acá..."
+                formControlName="profileSummary"
+                [max]="8"
+                [min]="4"
+              ></textarea>
+            </tui-textfield>
+          </fieldset>
+        }
+        @case (1) {
+          <fieldset formArrayName="education" class="flex flex-col gap-4">
+            <h2 class="text-xl font-semibold text-gray-800">Educación</h2>
+            @for (eduGroup of educationForms.controls; track $index) {
+              <div
+                [formGroupName]="$index"
+                class="p-4 border rounded relative flex flex-col gap-4 bg-gray-50"
+              >
+                <div class="flex flex-row-reverse">
+                  <button
+                    tuiIconButton
+                    type="button"
+                    appearance="action-destructive"
+                    size="s"
+                    tuiRipple
+                    iconStart="@tui.trash"
+                    (click)="removeEducacion($index)"
+                  ></button>
+                </div>
+                <tui-textfield>
+                  <label tuiLabel>Título</label>
+                  <input
+                    tuiTextfield
+                    placeholder="Ej: Lic. en Sistemas"
+                    formControlName="title"
+                  />
+                </tui-textfield>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <tui-textfield>
+                    <label tuiLabel>Institución</label>
+                    <input tuiTextfield formControlName="institution" />
+                  </tui-textfield>
+                  <div class="flex flex-row ">
+                    <tui-textfield class="w-full">
+                      <label tuiLabel>Fecha Inicio</label>
+                      <input tuiTextfield formControlName="dateIn"
+                             placeholder="Ej: Ene 2023"
+                      />
+                    </tui-textfield>
+                    <tui-textfield class="w-full">
+                      <label tuiLabel>Fecha Finalizacion</label>
+                      <input tuiTextfield formControlName="dateFin"
+                             placeholder="Ej: Presente"
+                      />
+                    </tui-textfield>
+                  </div>
+                </div>
+                <tui-textfield>
+                  <label tuiLabel>Logros (un bullet por línea)</label>
+                  <textarea
+                    tuiTextarea
+                    placeholder="- Lideré la migración de..."
+                    formControlName="bullets"
+                    [min]="4"
+                    [max]="6"
+                    [rows]="4"
+                  ></textarea>
+                </tui-textfield>
+              </div>
+            }
+            <button
+              tuiButton
+              tuiRipple
+              type="button"
+              appearance="outline"
+              (click)="addEducation()"
+              class="mt-2 self-start"
+            >
+              <tui-icon icon="@tui.plus" class="mr-2"></tui-icon>
+              Agregar Educación
+            </button>
+          </fieldset>
+        }
+        @case (2) {
+          <fieldset formArrayName="experience" class="contents">
+            <h2 class="text-xl font-semibold text-gray-800">Experiencia Laboral</h2>
+
+            @for (expGroup of experienceForms.controls; track $index) {
+              <div [formGroupName]="$index" class="p-4 border rounded relative flex flex-col gap-4 bg-gray-50">
+                <div class="flex flex-row-reverse">
+                  <button
+                    tuiIconButton
+                    type="button"
+                    appearance="action-destructive"
+                    size="s"
+                    tuiRipple
+                    iconStart="@tui.trash"
+                    (click)="removeExperience($index)">
+                  </button>
+                </div>
+
+                <tui-textfield>
+                  <label tuiLabel>Puesto</label>
+                  <input tuiTextfield
+                         placeholder="Ej: Desarrollador Frontend"
+                         formControlName="role" />
+                </tui-textfield>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <tui-textfield>
+                    <label tuiLabel>Empresa</label>
+                    <input tuiTextfield
+                           formControlName="company" />
+                  </tui-textfield>
+                  <div class="flex flex-row ">
+                    <tui-textfield class="w-full">
+                      <label tuiLabel>Fecha Inicio</label>
+                      <input tuiTextfield formControlName="dateIn"
+                             placeholder="Ej: Ene 2023"
+                      />
+                    </tui-textfield>
+                    <tui-textfield class="w-full">
+                      <label tuiLabel>Fecha Finalizacion</label>
+                      <input tuiTextfield formControlName="dateFin"
+                             placeholder="Ej: Presente"
+                      />
+                    </tui-textfield>
+                  </div>
+                </div>
+                <tui-textfield>
+                  <label tuiLabel>Logros y Tareas (un bullet por línea)</label>
+                  <textarea
+                    tuiTextarea
+                    placeholder="- Lideré la migración de..."
+                    formControlName="bullets"
+                    [min]="4"
+                    [max]="6"
+                    [rows]="4"
+                  ></textarea>
+                </tui-textfield>
+              </div>
+            }
+            <button tuiButton tuiRipple type="button" appearance="outline" (click)="addExperience()" class="mt-2 self-start">
+              <tui-icon icon="@tui.plus" class="mr-2"></tui-icon>
+              Agregar Experiencia
+            </button>
+          </fieldset>
+        }
+        @case (3){
+          <fieldset class="contents">
+            <h2 class="text-xl font-semibold text-gray-800">Habilidades</h2>
+            <tui-textfield multi>
+              <label tuiLabel>Habilidades (separadas por coma)</label>
+              <input
+                placeholder="Angular, React, Node.js..."
+                formControlName="skills"
+                tuiInputChip
+              />
+              <tui-input-chip *tuiItem />
+            </tui-textfield>
+          </fieldset>
+        }
+        @case (4){
+          <form [formGroup]="iaForm">
+            <div   class="flex flex-col gap-4 shadow-sm bg-white">
+              <h2 class="text-xl font-semibold text-gray-800">Oferta Laboral</h2>
+              <tui-textfield class="w-full">
+                <label tuiLabel>Pegá acá la descripción del puesto</label>
+                <textarea
+                  tuiTextarea
+                  formControlName="jobDescription"
+                  [max]="8"
+                  [min]="4"
+                ></textarea>
+              </tui-textfield>
+              <label tuiLabel class="flex items-center gap-2 mt-4">
+                <input
+                  tuiCheckbox
+                  type="checkbox"
+                  formControlName="makeEnglish"
+                />
+                Traducir CV a Inglés (Experimental)
+              </label>
+              <button
+                tuiButton
+                type="button"
+                size="l"
+                appearance="primary"
+                (click)="optimizarCv()"
+                [disabled]="!iaForm.valid"
+                class="flex">
+                <tui-loader [showLoader]="isLoading()" size="s" class="mr-2"></tui-loader>
+                Optimizar CV con IA
+              </button>
+            </div>
+          </form>
+
+        }
+      }
+    </form>
+    <div class="flex flex-col sm:flex-row gap-4 mt-4">
+      <button
+        tuiButton
+        type="button"
+        size="l"
+        tuiRipple
+        appearance="secondary"
+        (click)="saveCv()"
+        [disabled]="isLoading()"
+        class="flex-1">
+        <tui-icon icon="@tui.save" class="mr-2"></tui-icon>
+        Guardar Progreso
+      </button>
+
+      <button
+        tuiButton
+        type="button"
+        size="l"
+        tuiRipple
+        appearance="primary"
+        (click)="downloadPdf()"
+        [disabled]="isLoading()"
+        class="flex-1">
+        <tui-icon icon="@tui.download" class="mr-2"></tui-icon>
+        Descargar PDF
+      </button>
+
+      <button
+        tuiButton
+        type="button"
+        size="l"
+        tuiRipple
+        appearance="destructive-outline"
+        (click)="clearCv()"
+        [disabled]="isLoading()"
+        class="flex-1 sm:flex-none">
+        <tui-icon icon="@tui.trash" class="mr-2"></tui-icon>
+        Limpiar
+      </button>
+    </div>
+  </div>
+
+  <div class="md:col-span-5 md:sticky md:top-8 h-full">
+    <h2 class="text-xl font-semibold mb-4 text-gray-800">Vista Previa (ATS-Friendly)</h2>
+
+    @if (cvPreview(); as cv) {
+      <div class="font-['Times_New_Roman',_Times,_serif] text-black bg-white shadow-lg rounded-lg border p-[40pt] max-w-[595pt] mx-auto min-h-[842pt]">
+
+        @if(cv.personalInfo.name) {
+          <div class="text-center mb-[15pt]">
+            <h2 class="text-[18pt] font-bold break-words">{{ cv.personalInfo.name }}</h2>
+            @if(cv.personalInfo.job) {
+              <h3 class="text-[12pt] italic font-medium mt-[5pt] break-words">{{ cv.personalInfo.job }}</h3>
+            }
+            <div class="text-[10pt] mt-[5pt] break-words">
+              {{ [cv.personalInfo.email, cv.personalInfo.phone, cv.personalInfo.linkedin].filter(Boolean).join(' | ') }}
+            </div>
+          </div>
+        }
+
+        @if (cv.personalInfo.profileSummary) {
+          <div class="mt-[15pt]">
+            <h4 class="text-[12pt] font-bold border-b border-gray-300 pb-1 mb-[15pt] break-words">Perfil Profesional</h4>
+            <p class="text-[10pt] whitespace-pre-line break-words">{{ cv.personalInfo.profileSummary }}</p>
+          </div>
+        }
+
+        @if (hasExperience()) {
+          <div class="mt-[15pt]">
+            <h4 class="text-[12pt] font-bold border-b border-gray-300 pb-1 mb-[15pt]">Experiencia Laboral</h4>
+            @for (exp of cv.experience; track $index) {
+              @if(exp.role) {
+                <div class="mb-[10pt]">
+                  <div class="flex justify-between items-baseline">
+                    <h5 class="text-[10pt] font-bold break-words">{{ exp.role }}</h5>
+                    <span class="text-[10pt] italic text-right"> {{ [exp.dateIn, exp.dateFin].filter(Boolean).join(' - ') }}
+                    </span>
+                  </div>
+                  <h6 class="text-[10pt] italic mb-1 break-words">{{ exp.company }}</h6>
+                  <ul class="list-disc">
+                    @for (bullet of (exp.bullets || '').split('\n'); track $index) {
+                      @if (bullet.trim().length > 0) {
+                        <li class="text-[10pt] mb-[4pt] ml-[20pt] break-words"> {{ bullet.trim().replace("/^\s*-\s*/", '').trim() }}
+                        </li>
+                      }
+                    }
+                  </ul>
+                </div>
+              }
+            }
+          </div>
+        }
+
+        @if (hasEducation()) {
+          <div class="mt-[15pt]">
+            <h4 class="text-[12pt] font-bold border-b border-gray-300 pb-1 mb-[15pt] break-words">Educación</h4>
+            @for (edu of cv.education; track $index) {
+              @if(edu.title) {
+                <div class="mb-[10pt]">
+                  <div class="flex justify-between items-baseline">
+                    <h5 class="text-[10pt] font-bold break-words">{{ edu.title }}</h5>
+                    <span class="text-[10pt] italic text-right"> {{ [edu.dateIn, edu.dateFin].filter(Boolean).join(' - ') }}
+                    </span>
+                  </div>
+                  <h6 class="text-[10pt] italic mb-1 break-words">{{ edu.institution }}</h6>
+                  @if (edu.bullets) {
+                    <ul class="list-disc">
+                      @for (bullet of (edu.bullets || '').split('\n'); track $index) {
+                        @if (bullet.trim().length > 0) {
+                          <li class="text-[10pt] mb-[4pt] ml-[20pt] break-words">
+                            {{ bullet.trim().replace("/^\s*-\s*/", '').trim() }}
+                          </li>
+                        }
+                      }
+                    </ul>
+                  }
+                </div>
+              }
+            }
+          </div>
+        }
+
+        @if (hasSkills()) {
+          <div class="mt-[15pt]">
+            <h4 class="text-[12pt] font-bold border-b border-gray-300 pb-1 mb-[15pt]">Habilidades</h4>
+            <p class="text-[10pt] break-words">
+              {{ (cv.skills || []).join(' | ') }}
+            </p>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="p-8 bg-white shadow-lg rounded-lg border min-h-[80vh] flex items-center justify-center">
+        <p class="text-gray-500">Completá el formulario para ver la vista previa.</p>
+      </div>
+    }
+  </div>
+</div>
