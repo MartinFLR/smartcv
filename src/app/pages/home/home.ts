@@ -1,12 +1,12 @@
 import {Component, computed, inject, Signal, signal} from '@angular/core';
 import {TuiAlertService, TuiButton, TuiIcon, TuiLoader, TuiTextfield} from '@taiga-ui/core';
 import {
+  TuiButtonLoading,
   TuiCheckbox,
   TuiFade,
   TuiInputChip,
   tuiInputPhoneInternationalOptionsProvider, TuiTabs, TuiTextarea
 } from '@taiga-ui/kit';
-// Faltaban estos imports para standalone: true
 import {
   FormArray,
   FormBuilder,
@@ -21,15 +21,14 @@ import {TuiRipple} from '@taiga-ui/addon-mobile';
 import {TuiInputPhoneInternational} from '@taiga-ui/experimental';
 import {type TuiCountryIsoCode} from '@taiga-ui/i18n';
 import {PdfService} from '../../services/pdf.service';
-import { IaService, TransformedCvResponse} from '../../services/ia.service';
+import { IaService} from '../../services/ia.service';
 import {
   CvFormControls,
   CvFormShape, CvPayload,
   EducationControls, EducationValue,
   ExperienceControls, ExperienceValue, iaFormControls,
-  PersonalInfoControls
-} from '../../types/types';
-import {JsonPipe} from '@angular/common';
+  PersonalInfoControls, TransformedCvResponse, TransformedExperience
+} from '../../../../shared/types/types';
 import {SaveDataService} from '../../services/save-data.service';
 
 @Component({
@@ -40,7 +39,6 @@ import {SaveDataService} from '../../services/save-data.service';
     TuiTextfield,
     TuiTextarea,
     FormsModule,
-    TuiLoader,
     ReactiveFormsModule,
     TuiInputChip,
     TuiRipple,
@@ -48,8 +46,8 @@ import {SaveDataService} from '../../services/save-data.service';
     TuiInputPhoneInternational,
     TuiTabs,
     TuiFade,
-    JsonPipe,
     TuiCheckbox,
+    TuiButtonLoading,
   ],
   providers: [
     tuiInputPhoneInternationalOptionsProvider({
@@ -182,43 +180,74 @@ export class Home {
       baseCv: this.cvForm.getRawValue() as CvFormShape,
       jobDesc: this.iaForm.getRawValue().jobDescription ?? ''
     };
+    console.log(payload)
 
     this.iaService.generateCvWithIA(payload)
-      .pipe(
-        finalize(() => this.isLoading.set(false))
-      )
+      .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: (response: TransformedCvResponse) => {
+            console.log(response)
+          // --- EXPERIENCIA ---
+          response.experience.forEach((exp, i) => {
+            const fg = this.experienceForms.at(i);
+            if (fg) {
+              // si ya existe, actualizamos solo los campos devueltos por la IA
+              fg.patchValue({
+                role: exp.role || fg.value.role,
+                company: exp.company || fg.value.company,
+                bullets: exp.bullets || fg.value.bullets
+              });
+            } else {
+              // si no existe, agregamos uno nuevo con valores por defecto para fechas
+              this.experienceForms.push(this.createExperienceGroup({
+                role: exp.role || '',
+                company: exp.company || '',
+                dateIn: '',
+                dateFin: '',
+                bullets: exp.bullets || ''
+              }));
+            }
+          });
 
-          const { education, ...restOfResponse } = response;
-
-          const patchData = {
-            ...restOfResponse,
-            experience: response.experience
-          };
-
-          this.cvForm.patchValue(patchData);
-
-          if (education && this.educationForms.length > 0) {
-            this.educationForms.at(0).patchValue({
-              bullets: education.bullets
+          // --- EDUCACIÓN ---
+          const eduFG = this.educationForms.at(0); // tu API devuelve solo un objeto de educación
+          if (eduFG) {
+            eduFG.patchValue({
+              bullets: response.education?.bullets || eduFG.value.bullets
             });
+          } else {
+            this.educationForms.push(this.createEducationGroup({
+              title: null,
+              institution: null,
+              dateIn: null,
+              dateFin: null,
+              bullets: response.education?.bullets || ''
+            }));
           }
 
-          this.alerts.open(
-            'CV optimizado con IA. ¡Revisá los cambios!',
-            { appearance: 'success' }
-          ).subscribe();
+          // --- PERSONAL INFO Y SKILLS ---
+          this.cvForm.patchValue({
+            personalInfo: {
+              ...this.cvForm.value.personalInfo,
+              profileSummary: response.profileSummary || this.cvForm.value.personalInfo!.profileSummary
+            },
+            skills: response.skills || this.cvForm.value.skills
+          });
+
+          this.saveDataService.saveData(this.cvForm.getRawValue() as CvFormShape);
+
+          this.alerts.open('CV optimizado con IA. ¡Revisá los cambios!', {
+            appearance: 'success'
+          }).subscribe();
         },
         error: (err) => {
           console.error(err);
-          this.alerts.open(
-            err.message,
-            { appearance: 'error' }
-          ).subscribe();
+          this.alerts.open(err.message, { appearance: 'error' }).subscribe();
         }
       });
   }
+
+
 
 
   downloadPdf(){

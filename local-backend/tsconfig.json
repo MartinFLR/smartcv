@@ -8,5 +8,9 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["server.ts"]
+  "include": [
+    "server.ts",
+    "../../shared/types/**/*.ts"
+
+  ]
 }

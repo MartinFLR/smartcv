@@ -3,8 +3,10 @@
   <div class="md:col-span-7 flex flex-col gap-6">
 
     <form [formGroup]="cvForm" class="flex flex-col gap-6 p-6 border rounded-lg shadow-sm bg-white">
+      <!-- para testing
       <p>{{cvForm.getRawValue() | json}} </p>
       <p>oferta laboral:{{ iaForm.getRawValue() | json }}</p>
+      -->
       <tui-tabs [(activeItemIndex)]="activeTab" tuiFade>
         <button tuiTab>
           <tui-icon icon="@tui.user" class="mr-2"></tui-icon>
@@ -58,10 +60,8 @@
               <label tuiLabel>LinkedIn (URL)</label>
               <input tuiTextfield placeholder="https://www.linkedin.com/in/#####" formControlName="linkedin" />
             </tui-textfield>
-          </fieldset>
 
-          <fieldset class="contents">
-            <h2 class="text-xl font-semibold text-gray-800">Perfil Profesional</h2>
+            <h2 class="text-xl font-semibold mt-4 text-gray-800">Perfil Profesional</h2>
             <tui-textfield iconStart="@tui.pencil">
               <textarea
                 tuiTextarea
@@ -251,9 +251,8 @@
                 size="l"
                 appearance="primary"
                 (click)="optimizarCv()"
-                [disabled]="!iaForm.valid"
+                [loading]="isLoading()"
                 class="flex">
-                <tui-loader [showLoader]="isLoading()" size="s" class="mr-2"></tui-loader>
                 Optimizar CV con IA
               </button>
             </div>

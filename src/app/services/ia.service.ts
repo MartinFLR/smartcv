@@ -1,16 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {finalize, map, Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {CvPayload, TailoredCvResponse} from '../types/types';
+import {CvPayload, TailoredCvResponse, TransformedCvResponse} from '../../../shared/types/types';
 
-
-type TransformedExperience = Omit<TailoredCvResponse['experience'][0], 'bullets'> & {
-  bullets: string | null;
-};
-
-export interface TransformedCvResponse extends Omit<TailoredCvResponse, 'experience'> {
-  experience: TransformedExperience[];
-}
 
 @Injectable({
   providedIn: 'root',

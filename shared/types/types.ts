@@ -15,6 +15,16 @@ export interface TailoredCvResponse {
 export type ExperienceValue = CvFormShape['experience'][number];
 export type EducationValue = CvFormShape['education'][number];
 
+export type TransformedExperience = Omit<TailoredCvResponse['experience'][0], 'bullets'> & {
+  role: string;
+  company: string;
+  bullets: string;
+};
+
+export interface TransformedCvResponse extends Omit<TailoredCvResponse, 'experience'> {
+  experience: TransformedExperience[];
+}
+
 export interface CvPayload {
   baseCv: CvFormShape;
   jobDesc: string;
@@ -83,8 +93,19 @@ export interface CvFormShape {
   }[];
   skills: string[] | null;
 }
+export interface ModelConfig{
+  model: string;
+
+}
+
 export interface CvPayload {
   baseCv: CvFormShape;
   jobDesc: string;
 }
 
+export interface CvProfile {
+  id: string;
+  name: string;
+  jobTitle: string;
+  data: CvFormShape;
+}

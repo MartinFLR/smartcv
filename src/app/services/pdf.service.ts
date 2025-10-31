@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import jsPDF from 'jspdf';
-import {CvFormShape} from '../types/types';
+import {CvFormShape} from '../../../shared/types/types';
 
 @Injectable({
   providedIn: 'root',

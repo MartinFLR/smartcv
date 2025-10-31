@@ -1,5 +1,5 @@
 import {DOCUMENT, inject, Injectable} from '@angular/core';
-import {CvFormShape} from '../types/types';
+import {CvFormShape} from '../../../shared/types/types';
 import {TuiAlertService} from '@taiga-ui/core';
 
 @Injectable({

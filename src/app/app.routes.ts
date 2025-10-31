@@ -11,7 +11,7 @@ export const routes: Routes = [
   },
   {
     // Ruta para "Config"
-    path: 'config',
+    path: 'configuracion',
     component: Config,
     title: 'SmartCV - Configuración',
   },
