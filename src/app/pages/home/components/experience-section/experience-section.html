@@ -1,0 +1,66 @@
+<fieldset formArrayName="experience" class="contents">
+  <div class="flex justify-between items-center mb-3">
+    <h2 class="text-xl font-semibold text-gray-800">Experiencia Laboral</h2>
+    <button
+      tuiButton
+      tuiRipple
+      iconStart="@tui.plus"
+      type="button" size="s" (click)="add.emit()">
+      Agregar
+    </button>
+  </div>
+
+  @for (group of experienceForms().controls; track $index; let i = $index) {
+    <div [formGroupName]="i" class="p-4 border-gray-200 border rounded relative flex flex-col gap-4 bg-gray-50 mb-4">
+      <div class="flex flex-row-reverse">
+        <button
+          tuiIconButton
+          type="button"
+          appearance="action-destructive"
+          size="s"
+          tuiRipple
+          iconStart="@tui.trash"
+          (click)="remove.emit(i)">
+        </button>
+      </div>
+
+      <tui-textfield>
+        <label tuiLabel>Puesto</label>
+        <input tuiTextfield
+               placeholder="Ej: Desarrollador Frontend"
+               formControlName="role" />
+      </tui-textfield>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <tui-textfield>
+          <label tuiLabel>Empresa</label>
+          <input tuiTextfield
+                 formControlName="company" />
+        </tui-textfield>
+        <div class="flex flex-row ">
+          <tui-textfield class="w-full">
+            <label tuiLabel>Fecha Inicio</label>
+            <input tuiTextfield formControlName="dateIn"
+                   placeholder="Ej: Ene 2023"
+            />
+          </tui-textfield>
+          <tui-textfield class="w-full">
+            <label tuiLabel>Fecha Finalizacion</label>
+            <input tuiTextfield formControlName="dateFin"
+                   placeholder="Ej: Presente"
+            />
+          </tui-textfield>
+        </div>
+      </div>
+      <tui-textfield>
+        <label tuiLabel>Logros y Tareas (un bullet por línea)</label>
+        <textarea
+          tuiTextarea
+          placeholder="- Lideré la migración de..."
+          formControlName="bullets"
+          [min]="8"
+          [max]="10"
+        ></textarea>
+      </tui-textfield>
+    </div>
+  }
+</fieldset>

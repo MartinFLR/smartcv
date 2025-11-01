@@ -1,0 +1,102 @@
+<fieldset formArrayName="skills" class="contents">
+  <div class="flex justify-between items-center mb-3">
+    <h2 class="text-xl font-semibold text-gray-800">Habilidades & Certificaciones</h2>
+    @if (skillsForms().controls.length === 0) {
+      <button tuiButton tuiRipple type="button" size="s" (click)="addSkillGroup.emit()">
+        <tui-icon icon="@tui.plus" class="mr-2"></tui-icon>
+        Agregar Grupo
+      </button>
+    }
+  </div>
+
+
+  @for (skillGroup of skillsForms().controls; track $index; let i = $index) {
+    <div [formGroupName]="i" class="p-4 border border-gray-200 rounded relative flex flex-col gap-4 bg-gray-50">
+      @if (skillsForms().controls.length > 1) {
+        <div class="flex flex-row-reverse">
+          <button
+            tuiIconButton
+            type="button"
+            appearance="action-destructive"
+            size="s"
+            tuiRipple
+            iconStart="@tui.trash"
+            (click)="removeSkillGroup.emit(i)">
+          </button>
+        </div>
+      }
+
+      <tui-textfield multi>
+        <label tuiLabel>Habilidades Técnicas / Hard Skills (separadas por coma)</label>
+        <input
+          placeholder="Angular, React, Node.js..."
+          formControlName="skills"
+          tuiInputChip
+        />
+        <tui-input-chip *tuiItem />
+      </tui-textfield>
+
+      <tui-textfield multi>
+        <label tuiLabel>Idiomas</label>
+        <input
+          placeholder="Español, Inglés C1, Francés..."
+          formControlName="languages"
+          tuiInputChip
+        />
+        <tui-input-chip *tuiItem />
+      </tui-textfield>
+
+      <h3 class="text-lg font-medium mt-2 text-gray-700">Certificaciones</h3>
+      <fieldset formArrayName="certifications" class="flex flex-col gap-2">
+
+        @if (getCertificationControls(skillGroup).length === 0) {
+          <p class="text-sm text-gray-500">Agregá certificaciones aquí.</p>
+        }
+
+        @for (certGroup of getCertificationControls(skillGroup); track $index; let certIndex = $index) {
+          <div [formGroupName]="certIndex" class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-end">
+            <tui-textfield class="sm:col-span-6">
+              <label tuiLabel>Nombre Certificado</label>
+              <input tuiTextfield formControlName="name" />
+            </tui-textfield>
+            <tui-textfield class="sm:col-span-4">
+              <label tuiLabel>Fecha Obtención</label>
+              <input tuiTextfield formControlName="date" placeholder="Ej: 2024" />
+            </tui-textfield>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="action-destructive"
+              size="s"
+              tuiRipple
+              iconStart="@tui.trash"
+              (click)="removeCert.emit({ skillGroupIndex: i, certIndex: certIndex })"
+              class="sm:col-span-2">
+            </button>
+          </div>
+        }
+        <button
+          tuiButton
+          tuiRipple
+          type="button"
+          appearance="outline"
+          size="s"
+          iconStart="@tui.plus"
+          (click)="addCert.emit(i)"
+          class="mt-2 self-start">
+          Agregar Certificación
+        </button>
+      </fieldset>
+
+      <tui-textfield multi>
+        <label tuiLabel>Habilidades Adicionales / Otros (Ej: Herramientas, Metodologías)</label>
+        <input
+          placeholder="Scrum, Kanban, Docker, AWS..."
+          formControlName="additional"
+          tuiInputChip
+        />
+        <tui-input-chip *tuiItem />
+      </tui-textfield>
+    </div>
+  }
+</fieldset>

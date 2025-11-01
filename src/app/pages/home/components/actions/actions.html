@@ -1,0 +1,40 @@
+<div class="flex flex-col sm:flex-row gap-4 mt-4">
+  <button
+    tuiButton
+    type="button"
+    size="l"
+    tuiRipple
+    appearance="secondary"
+    (click)="save.emit()"
+    [disabled]="isLoading()"
+    class="flex-1">
+    <tui-icon icon="@tui.save" class="mr-2"></tui-icon>
+    Guardar Progreso
+  </button>
+
+  <button
+    tuiButton
+    type="button"
+    size="l"
+    tuiRipple
+    appearance="primary"
+    (click)="download.emit()"
+    [disabled]="isLoading() || !isCvValid()"
+    class="flex-1">
+    <tui-icon icon="@tui.download" class="mr-2"></tui-icon>
+    Descargar PDF
+  </button>
+
+  <button
+    tuiButton
+    type="button"
+    size="l"
+    tuiRipple
+    appearance="action-destructive"
+    (click)="clear.emit()"
+    [disabled]="isLoading()"
+    class="flex-1 sm:flex-none">
+    <tui-icon icon="@tui.trash" class="mr-2"></tui-icon>
+    Limpiar
+  </button>
+</div>
