@@ -25,11 +25,13 @@ import { IaService} from '../../services/ia.service';
 import {
   CvFormControls,
   CvFormShape, CvPayload,
-  EducationControls, EducationValue,
-  ExperienceControls, ExperienceValue, iaFormControls,
-  PersonalInfoControls, TransformedCvResponse, TransformedExperience
+  EducationControls,
+  ExperienceControls, IaFormControls,
+  PersonalInfoControls, TransformedCvResponse, TransformedExperience, TransformedEducation, SkillsControls,
+  CertificationControls, ProjectControls, TransformedProject
 } from '../../../../shared/types/types';
 import {SaveDataService} from '../../services/save-data.service';
+import {DummyView} from './dummy-view/dummy-view';
 
 @Component({
   selector: 'app-home',
@@ -48,6 +50,7 @@ import {SaveDataService} from '../../services/save-data.service';
     TuiFade,
     TuiCheckbox,
     TuiButtonLoading,
+    DummyView,
   ],
   providers: [
     tuiInputPhoneInternationalOptionsProvider({
@@ -59,6 +62,8 @@ import {SaveDataService} from '../../services/save-data.service';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
+// Importaciones mantienen igual
+
 export class Home {
   private readonly alerts = inject(TuiAlertService);
   private readonly fb = inject(FormBuilder);
@@ -68,18 +73,20 @@ export class Home {
 
   activeTab = signal(0);
   isLoading = signal(false);
+
   protected readonly countries: readonly TuiCountryIsoCode[] = [
     'AR', 'BO', 'CL', 'CO', 'CR', 'CU', 'DO', 'EC', 'ES', 'GT',
     'HN', 'MX', 'NI', 'PA', 'PE', 'PR', 'PY', 'SV', 'US', 'UY', 'VE'
   ];
 
   cvForm: FormGroup<CvFormControls>;
-  iaForm: FormGroup<iaFormControls>;
+  iaForm: FormGroup<IaFormControls>;
 
   cvPreview: Signal<CvFormShape>;
   hasExperience: Signal<boolean>;
   hasEducation: Signal<boolean>;
   hasSkills: Signal<boolean>;
+  hasProjects: Signal<boolean>;
 
   constructor() {
     this.cvForm = this.createCvForm();
@@ -93,216 +100,363 @@ export class Home {
       ),
       { initialValue: this.cvForm.getRawValue() as CvFormShape }
     );
-    this.hasExperience = computed(() => {
-      const expArray = this.cvPreview().experience;
-      return !!expArray && expArray.length > 0;
-    });
 
-    this.hasEducation = computed(() => {
-      const eduArray = this.cvPreview().education;
-      return !!eduArray && eduArray.length > 0;
-    });
+    this.hasEducation = computed(() => !!this.cvPreview().education?.length);
+    this.hasExperience = computed(() => !!this.cvPreview().experience?.length);
+    this.hasProjects = computed(() => !!this.cvPreview().projects?.length);
+
     this.hasSkills = computed(() => {
       const skillsArray = this.cvPreview().skills;
-      return !!skillsArray && skillsArray.length > 0;
+      if (!skillsArray || skillsArray.length === 0) return false;
+
+      return skillsArray.some(group =>
+        (group.skills && group.skills.length > 0) ||
+        (group.languages && group.languages.length > 0) ||
+        (group.certifications && group.certifications.length > 0) ||
+        (group.additional && group.additional.length > 0)
+      );
     });
 
-    this.addExperience();
-    this.addEducation();
+
+    if (!this.experienceForms.length) this.addExperience();
+    if (!this.projectForms.length) this.addProject();
+    if (!this.educationForms.length) this.addEducation();
+    if (!this.skillsForms.length) this.addSkill();
+
   }
 
+  // Se ha cambiado a FormBuilder para cumplir con la restricción de no usar NonNullableFormBuilder
   private createCvForm(): FormGroup<CvFormControls> {
     return this.fb.group<CvFormControls>({
       personalInfo: this.fb.group<PersonalInfoControls>({
-        name: this.fb.control('', Validators.required),
-        job: this.fb.control('', Validators.required),
-        email: this.fb.control(''),
-        phone: this.fb.control(''),
-        linkedin: this.fb.control(''),
-        profileSummary: this.fb.control(''),
+        name: this.fb.control<string | null>('', Validators.required),
+        job: this.fb.control<string | null>('', Validators.required),
+        email: this.fb.control<string | null>(''),
+        phone: this.fb.control<string | null>(''),
+        linkedin: this.fb.control<string | null>(''),
+        location: this.fb.control<string | null>(''),
+        github: this.fb.control<string | null>(''),
+        web: this.fb.control<string | null>(''),
+        profileSummary: this.fb.control<string | null>(''),
       }),
       education: this.fb.array<FormGroup<EducationControls>>([]),
       experience: this.fb.array<FormGroup<ExperienceControls>>([]),
-      skills: this.fb.control([] as string[]),
+      projects: this.fb.array<FormGroup<ProjectControls>>([]),
+      skills: this.fb.array<FormGroup<SkillsControls>>([]),
     });
   }
 
-  private createIaForm(): FormGroup<iaFormControls> {
-    return this.fb.group<iaFormControls>({
-      jobDescription: this.fb.control('', Validators.required),
-      makeEnglish: this.fb.control(false)
+  private createIaForm(): FormGroup<IaFormControls> {
+    return this.fb.group<IaFormControls>({
+      jobDescription: this.fb.control<string | null>('', Validators.required),
+      makeEnglish: this.fb.control<boolean | null>(false)
     });
   }
 
-  private createExperienceGroup(exp?: ExperienceValue): FormGroup<ExperienceControls> {
+  // Definiciones de grupos con tipos explícitos para string | null (compatible con FormBuilder)
+  private createExperienceGroup(exp?: Partial<TransformedExperience>): FormGroup<ExperienceControls> {
     return this.fb.group<ExperienceControls>({
-      // Ahora 'exp.role' es un 'string | null', que es lo que 'fb.control()' espera.
-      role: this.fb.control(exp?.role || ''),
-      company: this.fb.control(exp?.company || ''),
-      dateIn: this.fb.control(exp?.dateIn || ''),
-      dateFin: this.fb.control(exp?.dateFin || ''),
-      bullets: this.fb.control(exp?.bullets || '')
+      role: this.fb.control<string | null>(exp?.role || ''),
+      company: this.fb.control<string | null>(exp?.company || ''),
+      dateIn: this.fb.control<string | null>(exp?.dateIn || ''),
+      dateFin: this.fb.control<string | null>(exp?.dateFin || ''),
+      bullets: this.fb.control<string | null>(exp?.bullets || '')
     });
   }
 
+  private createProjectGroup(exp?: Partial<TransformedProject>): FormGroup<ProjectControls> {
+    return this.fb.group<ProjectControls>({
+      name: this.fb.control<string | null>(exp?.name || ''),
+      subtitle: this.fb.control<string | null>(exp?.subtitle || ''),
+      dateIn: this.fb.control<string | null>(exp?.dateIn || ''),
+      dateFin: this.fb.control<string | null>(exp?.dateFin || ''),
+      bullets: this.fb.control<string | null>(exp?.bullets || '')
+    });
+  }
 
+  private createEducationGroup(edu?: Partial<TransformedEducation>): FormGroup<EducationControls> {
+    return this.fb.group<EducationControls>({
+      title: this.fb.control<string | null>(edu?.title || ''),
+      institution: this.fb.control<string | null>(edu?.institution || ''),
+      bullets: this.fb.control<string | null>(edu?.bullets || ''),
+      dateIn: this.fb.control<string | null>(edu?.dateIn || ''),
+      dateFin: this.fb.control<string | null>(edu?.dateFin || ''),
+    });
+  }
 
+  private createCertificationGroup(cert?: { name?: string | null; date?: string | null }): FormGroup<CertificationControls> {
+    return this.fb.group<CertificationControls>({
+      name: this.fb.control<string | null>(cert?.name ?? null),
+      date: this.fb.control<string | null>(cert?.date ?? null)
+    });
+  }
+
+  /**
+   * Corrige el problema de tipado para TuiInputChip.
+   * Se utiliza `FormControl<string[] | null>` y se inicializa con `[]` para que sea un array válido.
+   */
+  private createSkillGroup(skillObj?: Partial<{ skills: string[]; languages: string[]; certifications: {name:string;date:string}[]; additional: string[] }>): FormGroup<SkillsControls> {
+    const certsArray = this.fb.array<FormGroup<CertificationControls>>(
+      (skillObj?.certifications || []).map(c => this.createCertificationGroup(c))
+    );
+
+    return this.fb.group<SkillsControls>({
+      // CORRECCIÓN CLAVE: El tipo debe ser `string[] | null` para TuiInputChip.
+      skills: this.fb.control<string[] | null>(skillObj?.skills || []),
+      languages: this.fb.control<string[] | null>(skillObj?.languages || []),
+      certifications: certsArray,
+      additional: this.fb.control<string[] | null>(skillObj?.additional || [])
+    });
+  }
+
+  // Getters para los FormArrays (FormArray tipado con los grupos internos)
+  get experienceForms(): FormArray<FormGroup<ExperienceControls>> {
+    return this.cvForm.get('experience') as FormArray<FormGroup<ExperienceControls>>;
+  }
+  get projectForms(): FormArray<FormGroup<ProjectControls>> {
+    return this.cvForm.get('projects') as FormArray<FormGroup<ProjectControls>>;
+  }
+
+  get educationForms(): FormArray<FormGroup<EducationControls>> {
+    return this.cvForm.get('education') as FormArray<FormGroup<EducationControls>>;
+  }
+
+  get skillsForms(): FormArray<FormGroup<SkillsControls>> {
+    return this.cvForm.get('skills') as FormArray<FormGroup<SkillsControls>>;
+  }
+
+  // Métodos de acción (CRUD básico de FormArrays)
   addExperience(): void {
     this.experienceForms.push(this.createExperienceGroup());
   }
 
-  removeExperience(index: number): void {
-    this.experienceForms.removeAt(index);
+  removeExperience(i: number): void {
+    this.experienceForms.removeAt(i);
   }
 
-  private createEducationGroup(edu?: EducationValue): FormGroup<EducationControls> {
-    return this.fb.group<EducationControls>({
-      title: this.fb.control(edu?.title || ''),
-      institution: this.fb.control(edu?.institution || ''),
-      bullets: this.fb.control(edu?.bullets || ''),
-      dateIn: this.fb.control(edu?.dateIn || ''),
-      dateFin: this.fb.control(edu?.dateFin || ''),
-    });
+  addProject(): void {
+    this.projectForms.push(this.createProjectGroup());
   }
+
+  removeProject(i: number): void {
+    this.projectForms.removeAt(i);
+  }
+
 
   addEducation(): void {
     this.educationForms.push(this.createEducationGroup());
   }
 
-  removeEducacion(index: number): void {
-    this.educationForms.removeAt(index);
+  removeEducacion(i: number): void {
+    this.educationForms.removeAt(i);
   }
 
-  optimizarCv() {
+  addSkill(skillObj?: Partial<{ skills: string[]; languages: string[]; certifications: {name:string;date:string}[]; additional: string[] }>): void {
+    this.skillsForms.push(this.createSkillGroup(skillObj));
+  }
+
+  removeSkill(i: number): void {
+    this.skillsForms.removeAt(i);
+  }
+
+  addCertification(skillGroupIndex: number): void {
+    const certificationsArray = this.skillsForms.at(skillGroupIndex)?.get('certifications') as FormArray<FormGroup<CertificationControls>> | null;
+    if (certificationsArray) {
+      this.getCertificationsArray(this.skillsForms.at(skillGroupIndex) as FormGroup).push(this.createCertificationGroup());
+    }
+  }
+
+  removeCertification(skillGroupIndex: number, certIndex: number): void {
+    const certificationsArray = this.skillsForms.at(skillGroupIndex)?.get('certifications') as FormArray<FormGroup<CertificationControls>> | null;
+    if (certificationsArray) {
+      certificationsArray.removeAt(certIndex);
+    }
+  }
+
+  // --- MÉTODOS DE UTILIDAD PARA EL TEMPLATE ---
+
+  /**
+   * Reemplaza el uso de .filter(Boolean) en el template para la vista previa.
+   */
+  protected filterTruthy(arr: (string | null | undefined)[]): string[] {
+    return arr.filter(value => value && value.length > 0) as string[];
+  }
+
+  /**
+   * Obtiene el FormArray de certificaciones de forma segura para usar en el template.
+   */
+  public getCertificationsArray(skillGroup: FormGroup): FormArray<FormGroup<CertificationControls>> {
+    return skillGroup.get('certifications') as FormArray<FormGroup<CertificationControls>>;
+  }
+
+  /**
+   * Obtiene el índice del grupo de skills dentro del FormArray principal.
+   * Reemplaza a la sintaxis obsoleta $parent.$index.
+   */
+  public getSkillGroupIndex(skillGroup: FormGroup): number {
+    return this.skillsForms.controls.indexOf(skillGroup);
+  }
+
+  /**
+   * Obtiene los controles del FormArray de Certificaciones para el @for.
+   */
+  public getCertificationControls(skillGroup: FormGroup): FormGroup<CertificationControls>[] {
+    // Retorna directamente los controles del FormArray obtenido de forma segura.
+    return this.getCertificationsArray(skillGroup).controls;
+  }
+
+  // Optimización con IA
+  optimizarCv(): void {
+    if (this.isLoading()) return;
+
+    if (this.iaForm.invalid) {
+      this.alerts.open('Falta la descripción del puesto (Job Description).', { appearance: 'error' }).subscribe();
+      return;
+    }
+
     this.isLoading.set(true);
+    const rawCv: CvFormShape = this.cvForm.getRawValue() as CvFormShape;
 
     const payload: CvPayload = {
-      baseCv: this.cvForm.getRawValue() as CvFormShape,
+      baseCv: rawCv,
       jobDesc: this.iaForm.getRawValue().jobDescription ?? ''
     };
-    console.log(payload)
 
     this.iaService.generateCvWithIA(payload)
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: (response: TransformedCvResponse) => {
-            console.log(response)
-          // --- EXPERIENCIA ---
-          response.experience.forEach((exp, i) => {
-            const fg = this.experienceForms.at(i);
-            if (fg) {
-              // si ya existe, actualizamos solo los campos devueltos por la IA
-              fg.patchValue({
-                role: exp.role || fg.value.role,
-                company: exp.company || fg.value.company,
-                bullets: exp.bullets || fg.value.bullets
-              });
-            } else {
-              // si no existe, agregamos uno nuevo con valores por defecto para fechas
-              this.experienceForms.push(this.createExperienceGroup({
-                role: exp.role || '',
-                company: exp.company || '',
-                dateIn: '',
-                dateFin: '',
-                bullets: exp.bullets || ''
-              }));
-            }
-          });
+          this.patchFormArrays(response);
 
-          // --- EDUCACIÓN ---
-          const eduFG = this.educationForms.at(0); // tu API devuelve solo un objeto de educación
-          if (eduFG) {
-            eduFG.patchValue({
-              bullets: response.education?.bullets || eduFG.value.bullets
-            });
-          } else {
-            this.educationForms.push(this.createEducationGroup({
-              title: null,
-              institution: null,
-              dateIn: null,
-              dateFin: null,
-              bullets: response.education?.bullets || ''
-            }));
-          }
-
-          // --- PERSONAL INFO Y SKILLS ---
           this.cvForm.patchValue({
             personalInfo: {
               ...this.cvForm.value.personalInfo,
-              profileSummary: response.profileSummary || this.cvForm.value.personalInfo!.profileSummary
-            },
-            skills: response.skills || this.cvForm.value.skills
+              profileSummary: response.profileSummary,
+              job: response.job
+            }
           });
 
           this.saveDataService.saveData(this.cvForm.getRawValue() as CvFormShape);
-
-          this.alerts.open('CV optimizado con IA. ¡Revisá los cambios!', {
-            appearance: 'success'
-          }).subscribe();
+          this.alerts.open('CV optimizado con IA. ¡Revisá los cambios!', { appearance: 'success', autoClose: 5000 }).subscribe();
         },
         error: (err) => {
-          console.error(err);
-          this.alerts.open(err.message, { appearance: 'error' }).subscribe();
+          console.error('Error de IA:', err);
+          const message = err.message || 'Error al conectar con la IA. Intente de nuevo.';
+          this.alerts.open(message, { appearance: 'error', autoClose: 7000 }).subscribe();
         }
       });
   }
 
+  // Lógica de parcheo de FormArrays
+  private patchFormArrays(response: TransformedCvResponse): void {
+    const applyPatch = <T extends FormGroup>(
+      array: FormArray<T>,
+      data: any[],
+      creator: (item: any) => T,
+      patchFields: (item: any) => Partial<T['controls']>
+    ) => {
+      array.clear();
+      data.forEach(item => {
+        const newGroup = creator(item);
+        newGroup.patchValue(patchFields(item));
+        array.push(newGroup);
+      });
+    };
 
+    applyPatch(this.experienceForms, response.experience,
+      (exp) => this.createExperienceGroup(exp),
+      (exp) => ({
+        ...exp,
+        bullets: exp.bullets || ''
+      }),
 
+    );
 
-  downloadPdf(){
-    let data: CvFormShape = this.cvForm.getRawValue();
-    this.pdfService.downloadPdf(data);
+    applyPatch(this.educationForms, response.education,
+      (edu) => this.createEducationGroup(edu),
+      (edu) => ({
+        ...edu,
+        bullets: edu.bullets || ''
+      })
+    );
+
+    applyPatch(this.projectForms, response.project,
+      (pj) => this.createProjectGroup(pj),
+      (pj) => ({
+        ...pj,
+        bullets: pj.bullets || '',
+        name: pj.name || '',
+        subtitle: pj.subtitle || '',
+      })
+    );
+
+    applyPatch(this.skillsForms, response.skills,
+      (s) => this.createSkillGroup(s),
+      (s) => ({
+        skills: s.skills || [],
+        languages: s.languages || [],
+        additional: s.additional || []
+      })
+    );
   }
 
-  private loadCvData(): void {
-    const savedData = this.saveDataService.loadData();
-
-    if (savedData) {
-      // Si hay datos, poblamos los FormArrays primero
-      (savedData.education || []).forEach(edu => {
-        this.educationForms.push(this.createEducationGroup(edu));
-      });
-
-      (savedData.experience || []).forEach(exp => {
-        this.experienceForms.push(this.createExperienceGroup(exp));
-      });
-
-      // Usamos patchValue para el resto del formulario (incluyendo personalInfo, profileSummary y skills)
-      this.cvForm.patchValue(savedData);
-
-      this.alerts.open('CV cargado desde la sesión anterior', {
-        appearance: 'info',
-        autoClose: 3000
-      }).subscribe();
-
-    } else {
-      // Si no hay datos guardados, creamos los campos vacíos por defecto
-      this.addExperience();
-      this.addEducation();
-    }
+  downloadPdf(): void {
+    const data: CvFormShape = this.cvForm.getRawValue() as CvFormShape;
+    this.pdfService.downloadPdf(data);
   }
 
   saveCv(): void {
     this.saveDataService.saveData(this.cvForm.getRawValue() as CvFormShape);
+    this.alerts.open('Datos guardados localmente.', { appearance: 'info', autoClose: 3000 }).subscribe();
   }
+
   clearCv(): void {
     this.experienceForms.clear();
     this.educationForms.clear();
+    this.skillsForms.clear();
+    this.projectForms.clear()
 
     this.cvForm.reset();
 
     this.addExperience();
     this.addEducation();
+    this.addSkill();
+    this.addProject()
 
     this.saveDataService.clearData();
+    this.alerts.open('CV limpiado. Inicie un nuevo CV.', { appearance: 'warning', autoClose: 3000 }).subscribe();
   }
 
-  get experienceForms() {
-    return this.cvForm.get('experience') as FormArray<FormGroup<ExperienceControls>>;
+  private loadCvData(): void {
+    const savedData = this.saveDataService.loadData();
+    if (!savedData) return;
+
+    this.educationForms.clear();
+    (savedData.education || []).forEach((e: any) => this.educationForms.push(this.createEducationGroup(e)));
+
+    this.experienceForms.clear();
+    (savedData.experience || []).forEach((e: any) => this.experienceForms.push(this.createExperienceGroup(e)));
+
+    this.experienceForms.clear();
+    (savedData.projects || []).forEach((e: any) => this.projectForms.push(this.createProjectGroup(e)));
+
+
+    this.skillsForms.clear();
+    (savedData.skills || []).forEach((s: any) => {
+      this.skillsForms.push(this.createSkillGroup({
+        skills: s.skills || [],
+        languages: s.languages || [],
+        certifications: s.certifications || [],
+        additional: s.additional || []
+      }));
+    });
+
+    if (!this.experienceForms.length) this.addExperience();
+    if (!this.projectForms.length) this.addProject();
+    if (!this.educationForms.length) this.addEducation();
+    if (!this.skillsForms.length) this.addSkill();
+
+    this.cvForm.patchValue(savedData);
+    this.alerts.open('CV cargado desde la sesión anterior', { appearance: 'info', autoClose: 3000 }).subscribe();
   }
-  get educationForms() {
-    return this.cvForm.get('education') as FormArray<FormGroup<EducationControls>>;
-  }
-  protected readonly Boolean = Boolean;
 }

@@ -1,41 +1,84 @@
-import {FormArray, FormControl, FormGroup} from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+
+// RESPUESTA DEL BACKEND
 
 export interface TailoredCvResponse {
   profileSummary: string;
+  job: string;
   experience: {
     role: string;
     company: string;
+    dateIn?: string | null;
+    dateFin?: string | null;
+    bullets: string[];
+  }[];
+  projects: {
+    name: string;
+    subtitle: string | null;
+    dateIn?: string | null;
+    dateFin?: string | null;
     bullets: string[];
   }[];
   education: {
-    bullets: string | null;
-  }
-  skills: string[];
+    title: string | null;
+    institution: string;
+    dateIn?: string | null;
+    dateFin?: string | null;
+    bullets: string[];
+  }[];
+  skills: {
+    skills: string[];
+    languages: string[];
+    certifications: {
+      name: string;
+      date: string;
+    }[];
+    additional: string[];
+  }[];
 }
-export type ExperienceValue = CvFormShape['experience'][number];
-export type EducationValue = CvFormShape['education'][number];
 
-export type TransformedExperience = Omit<TailoredCvResponse['experience'][0], 'bullets'> & {
-  role: string;
-  company: string;
-  bullets: string;
+// TRANSFORMED TYPES (para el form)
+export type TransformedExperience = {
+  role: string | null;
+  company: string | null;
+  bullets: string | null;
+  dateIn?: string | null;
+  dateFin?: string | null;
 };
 
-export interface TransformedCvResponse extends Omit<TailoredCvResponse, 'experience'> {
+export type TransformedEducation = {
+  title: string | null;
+  institution: string | null;
+  bullets: string | null;
+  dateIn?: string | null;
+  dateFin?: string | null;
+};
+
+export type TransformedProject = {
+  name: string | null;
+  subtitle: string | null;
+  bullets: string | null;
+  dateIn?: string | null;
+  dateFin?: string | null;
+};
+
+export interface TransformedCvResponse
+  extends Omit<TailoredCvResponse, 'experience' | 'education'> {
   experience: TransformedExperience[];
+  education: TransformedEducation[];
+  project: TransformedProject[];
 }
 
-export interface CvPayload {
-  baseCv: CvFormShape;
-  jobDesc: string;
-}
-
+// FORM CONTROLS
 export interface PersonalInfoControls {
   name: FormControl<string | null>;
   job: FormControl<string | null>;
   email: FormControl<string | null>;
+  location: FormControl<string | null>;
   phone: FormControl<string | null>;
   linkedin: FormControl<string | null>;
+  web: FormControl<string | null>;
+  github: FormControl<string | null>
   profileSummary: FormControl<string | null>;
 }
 
@@ -50,31 +93,56 @@ export interface EducationControls {
 export interface ExperienceControls {
   role: FormControl<string | null>;
   company: FormControl<string | null>;
+  bullets: FormControl<string | null>;
   dateIn: FormControl<string | null>;
   dateFin: FormControl<string | null>;
+}
+
+export interface ProjectControls {
+  name: FormControl<string | null>;
+  subtitle: FormControl<string | null>;
   bullets: FormControl<string | null>;
+  dateIn: FormControl<string | null>;
+  dateFin: FormControl<string | null>;
+
+}
+
+export interface CertificationControls {
+  name: FormControl<string | null>;
+  date: FormControl<string | null>;
+}
+
+export interface SkillsControls {
+  skills: FormControl<string[] | null>;
+  languages: FormControl<string[] | null>;
+  certifications: FormArray<FormGroup<CertificationControls>>;
+  additional: FormControl<string[] | null>;
 }
 
 export interface CvFormControls {
   personalInfo: FormGroup<PersonalInfoControls>;
   education: FormArray<FormGroup<EducationControls>>;
   experience: FormArray<FormGroup<ExperienceControls>>;
-  skills: FormControl<string[] | null>;
+  projects: FormArray<FormGroup<ProjectControls>>;
+  skills: FormArray<FormGroup<SkillsControls>>;
 }
 
-export interface iaFormControls {
+export interface IaFormControls {
   jobDescription: FormControl<string | null>;
-  makeEnglish: FormControl<Boolean | null>;
-
+  makeEnglish: FormControl<boolean | null>;
 }
 
+// ESTRUCTURA DEL CV
 export interface CvFormShape {
   personalInfo: {
     name: string | null;
     job: string | null;
     email: string | null;
     phone: string | null;
+    location: string | null;
     linkedin: string | null;
+    github: string | null;
+    web: string | null;
     profileSummary: string | null;
   };
   education: {
@@ -91,12 +159,28 @@ export interface CvFormShape {
     dateFin: string | null;
     bullets: string | null;
   }[];
-  skills: string[] | null;
+  projects: {
+    name: string;
+    dateIn: string | null;
+    dateFin: string | null;
+    bullets: string | null;
+    subtitle: string | null;
+  }[];
+  skills: {
+    skills: string[];
+    languages: string[];
+    certifications: {
+      name: string | null; // Se asume que estos también pueden ser null después de getRawValue()
+      date: string | null;
+    }[];
+    additional: string[];
+  }[];
 }
-export interface ModelConfig{
-  model: string;
 
-}
+
+// ======================================================
+// PAYLOADS
+// ======================================================
 
 export interface CvPayload {
   baseCv: CvFormShape;
@@ -109,3 +193,8 @@ export interface CvProfile {
   jobTitle: string;
   data: CvFormShape;
 }
+
+export interface ModelConfig {
+  model: string;
+}
+
