@@ -1,11 +1,11 @@
 import {Component, computed, inject, Signal, signal} from '@angular/core';
-import {TuiAlertService, TuiButton, TuiIcon, TuiLoader, TuiTextfield} from '@taiga-ui/core';
+import {TuiAlertService, TuiButton, TuiIcon, TuiTextfield} from '@taiga-ui/core';
 import {
   TuiButtonLoading,
   TuiCheckbox,
   TuiFade,
   TuiInputChip,
-  tuiInputPhoneInternationalOptionsProvider, TuiTabs, TuiTextarea
+  tuiInputPhoneInternationalOptionsProvider, TuiInputSlider, TuiTabs, TuiTextarea
 } from '@taiga-ui/kit';
 import {
   FormArray,
@@ -32,6 +32,9 @@ import {
 } from '../../../../shared/types/types';
 import {SaveDataService} from '../../services/save-data.service';
 import {DummyView} from './dummy-view/dummy-view';
+import {KeyValuePipe} from '@angular/common';
+import {ExxagerationLevelPipe} from '../../utils/pipes/exxageration-pipe';
+import {TemperatureLevel} from '../../../../shared/types/promptTypes';
 
 @Component({
   selector: 'app-home',
@@ -51,6 +54,9 @@ import {DummyView} from './dummy-view/dummy-view';
     TuiCheckbox,
     TuiButtonLoading,
     DummyView,
+    TuiInputSlider,
+    KeyValuePipe,
+    ExxagerationLevelPipe
   ],
   providers: [
     tuiInputPhoneInternationalOptionsProvider({
@@ -62,14 +68,40 @@ import {DummyView} from './dummy-view/dummy-view';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-// Importaciones mantienen igual
-
 export class Home {
   private readonly alerts = inject(TuiAlertService);
   private readonly fb = inject(FormBuilder);
   private readonly pdfService = inject(PdfService);
   private readonly iaService = inject(IaService);
   private readonly saveDataService = inject(SaveDataService);
+
+  protected readonly exaggerationLevel: Record<number, string> = {
+    0: 'low',
+    1: 'medium',
+    2: 'high',
+  };
+  protected readonly exaggerationDescriptions: Record<number, string> = {
+    0: 'Fiel al CV, mantiene el tono profesional y realista. No inventa logros ni resultados.',
+    1: 'Resalta logros existentes y los adapta ligeramente para enfatizar impacto, manteniendo credibilidad.',
+    2: 'Maximiza el impacto, exagera logros y habilidades de forma creativa. Revisar cuidadosamente antes de usar.',
+  };
+
+  protected readonly max = 2;
+  protected readonly min = 0;
+  protected readonly step = 1;
+  protected value = 0;
+
+  protected get segments(): number {
+    return this.max - this.min;
+  }
+
+  protected increase(): void {
+    this.value = Math.min(this.value + this.step, this.max);
+  }
+
+  protected decrease(): void {
+    this.value = Math.max(this.value - this.step, this.min);
+  }
 
   activeTab = signal(0);
   isLoading = signal(false);
@@ -149,8 +181,8 @@ export class Home {
   private createIaForm(): FormGroup<IaFormControls> {
     return this.fb.group<IaFormControls>({
       jobDescription: this.fb.control<string | null>('', Validators.required),
-      makeEnglish: this.fb.control<boolean | null>(false)
-    });
+      makeEnglish: this.fb.control<boolean | null>(false),
+      exaggeration: this.fb.control<number | null>(0)    });
   }
 
   // Definiciones de grupos con tipos explícitos para string | null (compatible con FormBuilder)
@@ -300,9 +332,14 @@ export class Home {
     this.isLoading.set(true);
     const rawCv: CvFormShape = this.cvForm.getRawValue() as CvFormShape;
 
+    const temperature = this.detectTemperature(this.iaForm.getRawValue().exaggeration ?? 0)
+
     const payload: CvPayload = {
       baseCv: rawCv,
-      jobDesc: this.iaForm.getRawValue().jobDescription ?? ''
+      jobDesc: this.iaForm.getRawValue().jobDescription ?? '',
+      promptOption: {
+        temperature: temperature
+      }
     };
 
     this.iaService.generateCvWithIA(payload)
@@ -330,7 +367,15 @@ export class Home {
       });
   }
 
-  // Lógica de parcheo de FormArrays
+  private detectTemperature(num: number): TemperatureLevel {
+    switch (num) {
+      case 0: return 'low'
+      case 1: return 'medium'
+      case 2: return 'high'
+      default: return 'low'
+    }
+  }
+
   private patchFormArrays(response: TransformedCvResponse): void {
     const applyPatch = <T extends FormGroup>(
       array: FormArray<T>,

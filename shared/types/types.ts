@@ -1,4 +1,5 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import {BuildPromptOptions} from './promptTypes';
 
 // RESPUESTA DEL BACKEND
 
@@ -37,7 +38,6 @@ export interface TailoredCvResponse {
   }[];
 }
 
-// TRANSFORMED TYPES (para el form)
 export type TransformedExperience = {
   role: string | null;
   company: string | null;
@@ -130,6 +130,7 @@ export interface CvFormControls {
 export interface IaFormControls {
   jobDescription: FormControl<string | null>;
   makeEnglish: FormControl<boolean | null>;
+  exaggeration: FormControl<number | null>;
 }
 
 // ESTRUCTURA DEL CV
@@ -187,6 +188,7 @@ export interface CvPayload {
   jobDesc: string;
   modelProvider?: string;
   modelVersion?: string;
+  promptOption?: BuildPromptOptions
 }
 
 export interface CvProfile {
@@ -195,8 +197,3 @@ export interface CvProfile {
   jobTitle: string;
   data: CvFormShape;
 }
-
-export interface ModelConfig {
-  model: string;
-}
-

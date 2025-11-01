@@ -92,7 +92,7 @@
             @for (eduGroup of educationForms.controls; track $index) {
               <div
                 [formGroupName]="$index"
-                class="p-4 border rounded relative flex flex-col gap-4 bg-gray-50"
+                class="p-4 border rounded border-gray-200 relative flex flex-col gap-4 bg-gray-50"
               >
                 <div class="flex flex-row-reverse">
                   <button
@@ -163,7 +163,7 @@
             <h2 class="text-xl font-semibold text-gray-800">Experiencia Laboral</h2>
 
             @for (expGroup of experienceForms.controls; track $index) {
-              <div [formGroupName]="$index" class="p-4 border rounded relative flex flex-col gap-4 bg-gray-50">
+              <div [formGroupName]="$index" class="p-4 border-gray-200 border rounded relative flex flex-col gap-4 bg-gray-50">
                 <div class="flex flex-row-reverse">
                   <button
                     tuiIconButton
@@ -226,7 +226,7 @@
             <h2 class="text-xl font-semibold text-gray-800">Proyectos</h2>
 
             @for (expGroup of projectForms.controls; track $index) {
-              <div [formGroupName]="$index" class="p-4 border rounded relative flex flex-col gap-4 bg-gray-50">
+              <div [formGroupName]="$index" class="p-4 border border-gray-200 rounded relative flex flex-col gap-4 bg-gray-50">
                 <div class="flex flex-row-reverse">
                   <button
                     tuiIconButton
@@ -289,7 +289,7 @@
             <h2 class="text-xl font-semibold text-gray-800">Habilidades & Certificaciones</h2>
 
             @for (skillGroup of skillsForms.controls; track $index) {
-              <div [formGroupName]="$index" class="p-4 border rounded relative flex flex-col gap-4 bg-gray-50">
+              <div [formGroupName]="$index" class="p-4 border border-gray-200 rounded relative flex flex-col gap-4 bg-gray-50">
                 <div class="flex flex-row-reverse">
                   <button
                     tuiIconButton
@@ -381,7 +381,7 @@
           <form [formGroup]="iaForm" class="flex flex-col gap-6">
             <h2 class="text-xl font-semibold text-gray-800">Optimización con IA</h2>
 
-            <div class="p-4 border rounded relative flex flex-col gap-4 bg-gray-50">
+            <div class="p-4 border border-gray-200 rounded relative flex flex-col gap-4 bg-gray-50">
               <tui-textfield>
                 <label tuiLabel>Pegá acá la descripción del puesto (Job Description)</label>
                 <textarea
@@ -394,6 +394,46 @@
               <div class="text-sm text-gray-600">
                 <p>Al hacer clic en "Optimizar CV", la IA reescribirá tu <span class="font-semibold">Resumen Profesional</span>, <span class="font-semibold">Puesto</span> y los <span class="font-semibold">Logros</span> de tu experiencia y educación para que coincidan con la terminología y las palabras clave de la oferta laboral.</p>
                 <p class="mt-1 font-medium">¡Siempre revisá el resultado de la IA antes de descargar!</p>
+              </div>
+            </div>
+
+            <div class="w-full  border-gray-200 p-4 border rounded bg-gray-50 flex flex-col gap-2">
+              <label tuiLabel class="block text-sm font-medium text-gray-700">
+                Nivel de exageración
+              </label>
+
+              <input
+                tuiSlider
+                type="range"
+                class="w-full" [readOnly]="false"
+                [segments]="segments"
+                [step]="step"
+                [min]="min"
+                [max]="max"
+                formControlName="exaggeration"
+              />
+
+              <div class="flex justify-between mt-1">
+                @for (level of exaggerationLevel | keyvalue; track level.key) {
+                  <button
+                    type="button"
+                    (click)="iaForm.controls.exaggeration.setValue(+level.key)"
+
+                    class="text-sm cursor-pointer focus:outline-none transition-colors px-1 rounded
+                   focus-visible:ring-2 focus-visible:ring-blue-500"
+
+                    [class.text-gray-500]="iaForm.controls.exaggeration.value !== +level.key"
+                    [class.text-blue-600]="iaForm.controls.exaggeration.value === +level.key"
+                    [class.font-bold]="iaForm.controls.exaggeration.value === +level.key"
+                    [class.hover:text-blue-700]="iaForm.controls.exaggeration.value !== +level.key"
+                  >
+                    {{ level.value }}
+                  </button>
+                }
+              </div>
+
+              <div class="text-center text-xs text-gray-500 mt-2 text-balance min-h-[2.5rem]">
+                {{ iaForm.controls.exaggeration.value | exxagerationLevel:exaggerationDescriptions }}
               </div>
             </div>
 
