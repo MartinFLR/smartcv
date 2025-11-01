@@ -191,17 +191,12 @@ export class Home {
     });
   }
 
-  /**
-   * Corrige el problema de tipado para TuiInputChip.
-   * Se utiliza `FormControl<string[] | null>` y se inicializa con `[]` para que sea un array válido.
-   */
   private createSkillGroup(skillObj?: Partial<{ skills: string[]; languages: string[]; certifications: {name:string;date:string}[]; additional: string[] }>): FormGroup<SkillsControls> {
     const certsArray = this.fb.array<FormGroup<CertificationControls>>(
       (skillObj?.certifications || []).map(c => this.createCertificationGroup(c))
     );
 
     return this.fb.group<SkillsControls>({
-      // CORRECCIÓN CLAVE: El tipo debe ser `string[] | null` para TuiInputChip.
       skills: this.fb.control<string[] | null>(skillObj?.skills || []),
       languages: this.fb.control<string[] | null>(skillObj?.languages || []),
       certifications: certsArray,
@@ -209,7 +204,6 @@ export class Home {
     });
   }
 
-  // Getters para los FormArrays (FormArray tipado con los grupos internos)
   get experienceForms(): FormArray<FormGroup<ExperienceControls>> {
     return this.cvForm.get('experience') as FormArray<FormGroup<ExperienceControls>>;
   }
@@ -225,7 +219,6 @@ export class Home {
     return this.cvForm.get('skills') as FormArray<FormGroup<SkillsControls>>;
   }
 
-  // Métodos de acción (CRUD básico de FormArrays)
   addExperience(): void {
     this.experienceForms.push(this.createExperienceGroup());
   }
@@ -273,15 +266,6 @@ export class Home {
     }
   }
 
-  // --- MÉTODOS DE UTILIDAD PARA EL TEMPLATE ---
-
-  /**
-   * Reemplaza el uso de .filter(Boolean) en el template para la vista previa.
-   */
-  protected filterTruthy(arr: (string | null | undefined)[]): string[] {
-    return arr.filter(value => value && value.length > 0) as string[];
-  }
-
   /**
    * Obtiene el FormArray de certificaciones de forma segura para usar en el template.
    */
@@ -305,7 +289,6 @@ export class Home {
     return this.getCertificationsArray(skillGroup).controls;
   }
 
-  // Optimización con IA
   optimizarCv(): void {
     if (this.isLoading()) return;
 

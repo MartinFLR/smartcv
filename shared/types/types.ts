@@ -185,6 +185,8 @@ export interface CvFormShape {
 export interface CvPayload {
   baseCv: CvFormShape;
   jobDesc: string;
+  modelProvider?: string;
+  modelVersion?: string;
 }
 
 export interface CvProfile {

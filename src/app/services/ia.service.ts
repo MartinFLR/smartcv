@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import {map, Observable, Observer} from 'rxjs';
 import {
   CvPayload,
   TailoredCvResponse,
@@ -13,6 +13,7 @@ import {
 export class IaService {
   private readonly http = inject(HttpClient);
   private readonly apiUrl = 'http://localhost:3000/api/generate-cv';
+  private readonly streamApiUrl = 'http://localhost:3000/api/generate-cv-stream';
 
   generateCvWithIA(payload: CvPayload): Observable<TransformedCvResponse > {
     return this.http.post<TailoredCvResponse>(this.apiUrl, payload).pipe(
@@ -46,4 +47,5 @@ export class IaService {
           }))
         } as TransformedCvResponse;
       }));
-  }}
+  }
+}

@@ -1,7 +1,6 @@
 import {Component, HostListener, signal} from '@angular/core';
-import {NgClass} from '@angular/common';
+import {NgClass, NgOptimizedImage} from '@angular/common';
 import {RouterLink, RouterLinkActive} from '@angular/router';
-import {TuiButton, TuiDataList, TuiDropdownDirective, TuiDropdownOpen} from '@taiga-ui/core';
 import {TuiAppBar} from '@taiga-ui/layout';
 import {TuiTabs} from '@taiga-ui/kit';
 
@@ -10,13 +9,10 @@ import {TuiTabs} from '@taiga-ui/kit';
   imports: [
     NgClass,
     RouterLink,
-    TuiButton,
-    TuiDataList,
-    TuiDropdownOpen,
     TuiAppBar,
-    TuiDropdownDirective,
     TuiTabs,
-    RouterLinkActive
+    RouterLinkActive,
+    NgOptimizedImage
   ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
