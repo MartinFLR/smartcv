@@ -176,5 +176,5 @@ ${jobDesc}
 // --- Iniciar servidor ---
 app.listen(port, () => {
   console.log(`✅ Servidor escuchando en http://localhost:${port}`);
-  console.log('Asegúrate de tener GEMINI_API_KEY en tu archivo .env');
+  console.log('Asegúrate de tener GEMINI_API_KEY en tu archivo env.ts');
 });
