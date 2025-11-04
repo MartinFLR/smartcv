@@ -1,5 +1,7 @@
 
 <p>{{coverLetterForm.getRawValue() | json}}</p>
+<p>{{isApplicationForm()}}</p>
+
 <fieldset [formGroup]="coverLetterForm" class="flex flex-col gap-6">
   <div class="flex flex-col gap-2">
     <h2 class="text-xl font-semibold text-gray-800">
@@ -13,14 +15,28 @@
 
   <h3 class="text-sm font-semibold text-gray-800">Campos opcionales</h3>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-    <tui-textfield>
-      <label tuiLabel>Nombre del Reclutador/a</label>
-      <input
-        tuiTextfield
-        formControlName="recruiterName"
-        placeholder="Ej: Ana Pérez"
-      />
-    </tui-textfield>
+    @if (isInternalReference()){
+      <tui-textfield>
+        <label tuiLabel>Nombre de tu referente interno</label>
+        <input
+          tuiTextfield
+          [state]="isApplicationForm() ? 'active' : null"
+          formControlName="referralName"
+          placeholder="Ej: Ana Pérez"
+        />
+      </tui-textfield>
+    }
+      <tui-textfield>
+        <label tuiLabel>Nombre del Reclutador/a</label>
+        <input
+          tuiTextfield
+          [state]="isApplicationForm() ? 'active' : null"
+          formControlName="recruiterName"
+          placeholder="Ej: Ana Pérez"
+        />
+      </tui-textfield>
+
+
     <tui-textfield>
       <label tuiLabel>Nombre de la Empresa</label>
       <input
@@ -56,6 +72,33 @@
       }
     </div>
   </fieldset>
+
+
+  <fieldset  class="flex flex-col gap-2 py-2" >
+    <label tuiLabel class="text-sm font-medium text-gray-700"
+    >Canal de comunicacíón</label
+    >
+    <div tuiItemGroup   class="flex flex-wrap gap-2">
+      @for (channel of channelDeliverys; track $index) {
+        <label
+          tuiChip
+          [iconStart]="channel.icon"
+          class="cursor-pointer"
+          [appearance]="channel.value === coverLetterForm.controls.deliveryChannel.value ? 'accent' : 'neutral'"
+        >
+          <input
+            type="radio"
+            formControlName="deliveryChannel"
+            tuiChip
+            appearance=""
+            [value]="channel.value"
+            class="sr-only"
+          />
+          {{ channel.name }}
+        </label>
+      }
+    </div>
+  </fieldset>
 </fieldset>
 
 <fieldset [formGroup]="iaForm()" class="flex flex-col gap-6">
@@ -83,27 +126,23 @@
   </button>
 </div>
 
-@if (isLoading() ) {
   <div class="mt-8 flex flex-col gap-4">
     <h3 class="text-lg font-semibold text-gray-800">
       Tu carta de presentación generada
     </h3>
 
-    <tui-loader [showLoader]="isLoading()" class="w-full">
       <tui-textfield>
         <textarea
           tuiTextarea
           [min]="15"
           [max]="25"
+          [value]="generatedLetter()"
         >
-          {{generatedLetter()}}
         </textarea>
         <tui-icon
           icon="@tui.copy"
           tuiCopy
         />
       </tui-textfield>
-
-    </tui-loader>
   </div>
-}
+

@@ -62,8 +62,6 @@ export class Home {
   protected hasSkills: Signal<boolean>;
   protected hasProjects: Signal<boolean>;
 
-  protected generatedLetter =  signal('');
-
   constructor() {
     this.cvForm = this.cvFormBuilderService.buildCvForm();
     this.iaForm = this.createIaForm();
@@ -100,7 +98,7 @@ export class Home {
 
   private createIaForm(): FormGroup<IaFormControls> {
     return this.fb.group<IaFormControls>({
-      jobDescription: this.fb.control<string | null>('', Validators.required),
+      jobDescription: this.fb.control<string | null>(''),
       makeEnglish: this.fb.control<boolean | null>(false),
       exaggeration: this.fb.control<number | null>(0)
     });
@@ -188,17 +186,6 @@ export class Home {
       case 1: return 'medium';
       case 2: return 'high';
       default: return 'low';
-    }
-  }
-
-  private detectTone(num: number): ToneLevel {
-    switch (num) {
-      case 0: return 'formal';
-      case 1: return 'enthusiast';
-      case 2: return 'casual';
-      case 3: return 'neutral';
-      case 4: return 'confident';
-      default: return 'formal';
     }
   }
 

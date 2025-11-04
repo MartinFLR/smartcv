@@ -2,6 +2,7 @@ export type PromptLanguage = 'es' | 'en';
 export type PromptType = 'tailoredCv' | 'coverLetter' | 'summary';
 export type TemperatureLevel = 'low' | 'medium' | 'high';
 export type ToneLevel = 'formal' | 'enthusiast' | 'casual' | 'neutral' | 'confident';
+export type DeliveryChannel = 'email' | 'linkedinMessage' | 'applicationForm' | 'internalReferral';
 
 export interface BuildPromptOptions {
   lang?: PromptLanguage;
@@ -11,4 +12,6 @@ export interface BuildPromptOptions {
   tone?: ToneLevel;
   recruiterName?: string;     // Nombre de la persona a la que va dirigida la cover
   companyName?: string;
+  referralName?: string;
+  deliveryChannel?: DeliveryChannel;
 }

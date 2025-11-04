@@ -122,7 +122,9 @@ export interface TransformedCoverLetterResponse {
 export interface CoverLetterControls {
   companyName: FormControl<string | null>;
   recruiterName: FormControl<string | null>;
+  referralName: FormControl<string | null>;
   tone: FormControl<number | null>;
+  deliveryChannel: FormControl<number | null>;
 }
 
 export interface PersonalInfoControls {

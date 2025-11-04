@@ -44,15 +44,6 @@ export class CvFormBuilderService {
     });
   }
 
-
-  public createCoverLetterGroup(): FormGroup<CoverLetterControls> {
-    return this.fb.group<CoverLetterControls>({
-      recruiterName: this.fb.control<string | null>(''),
-      companyName: this.fb.control<string | null>(''),
-      tone: this.fb.control<number | null>(0),
-    });
-  }
-
   public createExperienceGroup(exp?: Partial<TransformedExperience>): FormGroup<ExperienceControls> {
     return this.fb.group<ExperienceControls>({
       role: this.fb.control<string | null>(exp?.role || ''),
@@ -117,7 +108,9 @@ export class CvFormBuilderService {
     return this.fb.group<CoverLetterControls>({
       recruiterName: this.fb.control<string | null>(''),
       companyName: this.fb.control<string | null>(''),
+      referralName: this.fb.control<string | null>(''),
       tone: this.fb.control<number | null>(0),
+      deliveryChannel: this.fb.control<number | null>(0),
     });
   }
 

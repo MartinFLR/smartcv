@@ -24,6 +24,9 @@ export class CoverLetterService {
 
           const response = await fetch(this.apiUrl, {
             method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
             body: JSON.stringify(payload),
             signal: controller.signal,
           });
