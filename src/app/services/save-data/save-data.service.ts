@@ -1,5 +1,5 @@
 import {DOCUMENT, inject, Injectable} from '@angular/core';
-import {CvFormShape} from '../../../shared/types/types';
+import {CvFormShape} from '../../../../shared/types/types';
 import {TuiAlertService} from '@taiga-ui/core';
 
 @Injectable({
@@ -13,13 +13,8 @@ export class SaveDataService {
 
   private readonly STORAGE_KEY = 'angular-cv-data';
 
-  /**
-   * Guarda el estado actual del CV en localStorage.
-   * @param cvData Los datos del formulario (CvFormShape).
-   */
   saveData(cvData: CvFormShape): void {
     if (!this.storage) {
-      // No hacer nada si no hay 'localStorage' (ej: SSR)
       return;
     }
 
@@ -38,10 +33,6 @@ export class SaveDataService {
     }
   }
 
-  /**
-   * Carga los datos del CV desde localStorage.
-   * @returns Los datos del CV (CvFormShape) o null si no hay nada guardado o hay error.
-   */
   loadData(): CvFormShape | null {
     if (!this.storage) {
       return null;
@@ -52,20 +43,14 @@ export class SaveDataService {
       if (serializedData === null) {
         return null;
       }
-      // Parseamos los datos guardados
       return JSON.parse(serializedData) as CvFormShape;
     } catch (e) {
       console.error('Error al cargar datos de localStorage (datos corruptos?):', e);
-      // Si hay datos corruptos, los limpiamos para evitar futuros errores
-      this.clearData(false); // false para no mostrar alerta de limpieza
+      this.clearData(false);
       return null;
     }
   }
 
-  /**
-   * Limpia los datos del CV guardados en localStorage.
-   * @param showAlert Notificar al usuario (default: true)
-   */
   clearData(showAlert: boolean = true): void {
     if (!this.storage) {
       return;

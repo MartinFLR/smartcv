@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IaTools } from './ia-tools';
+import { IaSection } from './ia-section.component';
 
 describe('IaTools', () => {
-  let component: IaTools;
-  let fixture: ComponentFixture<IaTools>;
+  let component: IaSection;
+  let fixture: ComponentFixture<IaSection>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [IaTools]
+      imports: [IaSection]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(IaTools);
+    fixture = TestBed.createComponent(IaSection);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,7 +1,7 @@
-import {Component, input, output} from '@angular/core';
+import {Component, inject, input, output} from '@angular/core';
 import {ExperienceControls} from '../../../../../../shared/types/types';
-import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {TuiButton, TuiIcon, TuiTextfield} from '@taiga-ui/core';
+import {ControlContainer, FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {TuiButton, TuiTextfield} from '@taiga-ui/core';
 import {TuiRipple} from '@taiga-ui/addon-mobile';
 import {TuiTextarea} from '@taiga-ui/kit';
 
@@ -11,9 +11,14 @@ import {TuiTextarea} from '@taiga-ui/kit';
     ReactiveFormsModule,
     TuiButton,
     TuiRipple,
-    TuiIcon,
     TuiTextfield,
     TuiTextarea
+  ],
+  viewProviders: [
+    {
+      provide: ControlContainer,
+      useFactory: () => inject(ControlContainer, {skipSelf: true})
+    }
   ],
   templateUrl: './experience-section.html',
   styleUrl: './experience-section.css',

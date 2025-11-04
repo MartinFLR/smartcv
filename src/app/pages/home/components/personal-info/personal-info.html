@@ -1,5 +1,5 @@
-<fieldset [formGroup]="personalInfoGroup()" class="contents">
-  <h2 class="text-xl font-semibold text-gray-800">Información Personal</h2>
+<fieldset [formGroup]="personalInfoGroup()" class="flex flex-col gap-4">
+  <h2 class="text-xl font-semibold  text-gray-800">Información Personal</h2>
   <tui-textfield>
     <label tuiLabel>Nombre Completo</label>
     <input tuiTextfield formControlName="name" />
@@ -8,7 +8,7 @@
     <label tuiLabel>Puesto</label>
     <input tuiTextfield placeholder="FullStack Developer, etc.." formControlName="job" />
   </tui-textfield>
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 ">
     <tui-textfield>
       <label tuiLabel>Email</label>
       <input tuiTextfield placeholder="ejemplo@gmail.com" type="email" formControlName="email" />
@@ -16,7 +16,7 @@
     <tui-textfield [tuiTextfieldCleaner]="true">
       <label tuiLabel>Teléfono</label>
       <input tuiInputPhoneInternational
-             [countries]="countries()"
+             [countries]="countries"
              countryIsoCode="AR"
              autocomplete="tel"
              formControlName="phone" />

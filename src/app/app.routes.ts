@@ -4,19 +4,16 @@ import {Home} from './pages/home/home';
 
 export const routes: Routes = [
   {
-    // Ruta para "Resume"
     path: '',
     component: Home,
     title: 'SmartCV - Resume Generator',
   },
   {
-    // Ruta para "Config"
     path: 'configuracion',
     component: Config,
     title: 'SmartCV - Configuración',
   },
   {
-    // Un simple redirect por si acaso
     path: '**',
     redirectTo: '',
   },

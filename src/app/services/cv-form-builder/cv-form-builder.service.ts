@@ -10,7 +10,7 @@ import {
   EducationControls,
   TransformedEducation,
   SkillsControls,
-  CertificationControls
+  CertificationControls, IaFormControls, CoverLetterControls
 } from '../../../../shared/types/types';
 
 @Injectable({
@@ -19,18 +19,17 @@ import {
 export class CvFormBuilderService {
   private readonly fb = inject(FormBuilder);
 
-  // Construye el formulario principal
   public buildCvForm(): FormGroup<CvFormControls> {
     return this.fb.group<CvFormControls>({
       personalInfo: this.createPersonalInfoGroup(),
       education: this.fb.array<FormGroup<EducationControls>>([]),
       experience: this.fb.array<FormGroup<ExperienceControls>>([]),
       projects: this.fb.array<FormGroup<ProjectControls>>([]),
-      skills: this.fb.array<FormGroup<SkillsControls>>([])
+      skills: this.fb.array<FormGroup<SkillsControls>>([]),
     });
   }
 
-  // Métodos "factory" para cada sub-grupo
+  // Métodos factory
   public createPersonalInfoGroup(): FormGroup<PersonalInfoControls> {
     return this.fb.group<PersonalInfoControls>({
       name: this.fb.control<string | null>('', Validators.required),
@@ -42,6 +41,15 @@ export class CvFormBuilderService {
       github: this.fb.control<string | null>(''),
       web: this.fb.control<string | null>(''),
       profileSummary: this.fb.control<string | null>(''),
+    });
+  }
+
+
+  public createCoverLetterGroup(): FormGroup<CoverLetterControls> {
+    return this.fb.group<CoverLetterControls>({
+      recruiterName: this.fb.control<string | null>(''),
+      companyName: this.fb.control<string | null>(''),
+      tone: this.fb.control<number | null>(0),
     });
   }
 
@@ -94,4 +102,23 @@ export class CvFormBuilderService {
       additional: this.fb.control<string[] | null>(skillObj?.additional || [])
     });
   }
+
+
+  private createIaForm(): FormGroup<IaFormControls> {
+    return this.fb.group<IaFormControls>({
+      jobDescription: this.fb.control<string | null>('', Validators.required),
+      makeEnglish: this.fb.control<boolean | null>(false),
+      exaggeration: this.fb.control<number | null>(0)
+    });
+  }
+
+
+  public buildCoverLetterForm(): FormGroup<CoverLetterControls> {
+    return this.fb.group<CoverLetterControls>({
+      recruiterName: this.fb.control<string | null>(''),
+      companyName: this.fb.control<string | null>(''),
+      tone: this.fb.control<number | null>(0),
+    });
+  }
+
 }

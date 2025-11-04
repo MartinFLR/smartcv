@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'exxagerationLevel'
+  name: 'exaggerationLevel'
 })
-export class ExxagerationLevelPipe implements PipeTransform {
+export class ExaggerationLevelPipe implements PipeTransform {
   transform(
     value: number | null | undefined,
     levelMap: Record<number, string>

@@ -1,7 +1,7 @@
-import {Component, input, output} from '@angular/core';
-import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {Component, inject, input, output} from '@angular/core';
+import {ControlContainer, FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {EducationControls} from '../../../../../../shared/types/types';
-import {TuiButton, TuiIcon, TuiTextfield} from '@taiga-ui/core';
+import {TuiButton, TuiTextfield} from '@taiga-ui/core';
 import {TuiTextarea} from '@taiga-ui/kit';
 import {TuiRipple} from '@taiga-ui/addon-mobile';
 
@@ -12,8 +12,13 @@ import {TuiRipple} from '@taiga-ui/addon-mobile';
     TuiTextarea,
     ReactiveFormsModule,
     TuiButton,
-    TuiIcon,
     TuiRipple
+  ],
+  viewProviders: [
+    {
+      provide: ControlContainer,
+      useFactory: () => inject(ControlContainer, {skipSelf: true})
+    }
   ],
   templateUrl: './education-section.html',
   styleUrl: './education-section.css',

@@ -1,517 +1,142 @@
-<div class="max-w-8xl md:px-8 mx-auto justify-center grid grid-cols-1 md:grid-cols-12 gap-6 p-4 ">
+<div class="max-w-8xl md:px-8 mx-auto justify-center grid grid-cols-1 md:grid-cols-12 gap-6 p-4">
 
   <div class="md:col-span-6 flex flex-col gap-6">
-
-    <form [formGroup]="cvForm" class="flex flex-col gap-6 p-6 border rounded-lg shadow-sm bg-white">
-      <tui-tabs [(activeItemIndex)]="activeTab" tuiFade>
-        <button tuiTab>
-          <tui-icon icon="@tui.user" class="mr-2"></tui-icon>
+    <!-- Para texto
+    <p>{{this.iaForm.getRawValue() | json}}</p>
+    <p>{{this.cvForm.getRawValue() | json}}</p>
+    -->
+    <div class="p-6 border rounded-lg shadow-sm bg-white">
+      <tui-tabs-with-more
+        [itemsLimit]="6"
+        [(activeItemIndex)]="activeTab"
+        tuiFade>
+        <button
+          *tuiItem
+          iconStart="@tui.user"
+          tuiTab>
           Personal
         </button>
-        <button tuiTab>
-          <tui-icon icon="@tui.book-open" class="mr-2"></tui-icon>
+        <button
+          *tuiItem
+          iconStart="@tui.book-open"
+          tuiTab>
           Educación
         </button>
-        <button tuiTab>
-          <tui-icon icon="@tui.briefcase" class="mr-2"></tui-icon>
+        <button
+          *tuiItem
+          iconStart="@tui.briefcase"
+          tuiTab>
           Experiencia
         </button>
-        <button tuiTab>
-          <tui-icon icon="@tui.briefcase" class="mr-2"></tui-icon>
+        <button
+          *tuiItem
+          iconStart="@tui.folder"
+          tuiTab>
           Proyectos
         </button>
-        <button tuiTab>
-          <tui-icon icon="@tui.code" class="mr-2"></tui-icon>
+        <button
+          *tuiItem
+          iconStart="@tui.code"
+          tuiTab>
           Habilidades
         </button>
-        <button tuiTab>
-          <tui-icon icon="@tui.sparkles" class="mr-2"></tui-icon>
+        <button
+          *tuiItem
+          iconStart="@tui.sparkles"
+          tuiTab>
           IA
         </button>
-      </tui-tabs>
-
-      @switch (activeTab()) {
-        @case (0) {
-          <fieldset formGroupName="personalInfo" class="contents">
-            <h2 class="text-xl font-semibold text-gray-800">Información Personal</h2>
-            <tui-textfield>
-              <label tuiLabel>Nombre Completo</label>
-              <input tuiTextfield formControlName="name" />
-            </tui-textfield>
-            <tui-textfield>
-              <label tuiLabel>Puesto</label>
-              <input tuiTextfield placeholder="FullStack Developer, etc.." formControlName="job" />
-            </tui-textfield>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <tui-textfield>
-                <label tuiLabel>Email</label>
-                <input tuiTextfield placeholder="ejemplo@gmail.com" type="email" formControlName="email" />
-              </tui-textfield>
-              <tui-textfield [tuiTextfieldCleaner]="true">
-                <label tuiLabel>Teléfono</label>
-                <input tuiInputPhoneInternational
-                       [countries]="countries"
-                       countryIsoCode="AR"
-                       autocomplete="tel"
-                       formControlName="phone" />
-              </tui-textfield>
-              <tui-textfield>
-                <label tuiLabel>Ubicacion (URL)</label>
-                <input tuiTextfield placeholder="Tu Ubicación" formControlName="location" />
-              </tui-textfield>
-              <tui-textfield>
-                <label tuiLabel>LinkedIn (URL)</label>
-                <input tuiTextfield placeholder="linkedin.com/in/#####" formControlName="linkedin" />
-              </tui-textfield>
-              <tui-textfield>
-                <label tuiLabel>Github (URL)</label>
-                <input tuiTextfield placeholder="Tu github" formControlName="github" />
-              </tui-textfield>
-              <tui-textfield>
-                <label tuiLabel>Website (URL)</label>
-                <input tuiTextfield placeholder="Tu web" formControlName="web" />
-              </tui-textfield>
-            </div>
+        <button
+          *tuiItem
+          iconStart="@tui.filter"
+          tuiTab>
+          ATS
+        </button>
+        <button
+          *tuiItem
+          iconStart="@tui.notepad-text"
+          tuiTab>
+          Carta de Presentación
+        </button>
+      </tui-tabs-with-more>
 
 
-            <h2 class="text-xl font-semibold mt-4 text-gray-800">Perfil Profesional</h2>
-            <tui-textfield iconStart="@tui.pencil">
-              <textarea
-                tuiTextarea
-                placeholder="Escribí tu perfil profesional acá..."
-                formControlName="profileSummary"
-                [min]="8"
-                [max]="10"
-              ></textarea>
-            </tui-textfield>
-          </fieldset>
+      <form [formGroup]="cvForm" class="flex flex-col gap-6 pt-6">
+        @switch (activeTab()) {
+          @case (0) {
+            <app-personal-info
+              [personalInfoGroup]="personalInfoGroup"
+            />
+          }
+          @case (1) {
+            <app-education-section
+              [educationForms]="educationForms"
+              (add)="addEducation()"
+              (remove)="removeEducation($event)"
+            />
+          }
+          @case (2) {
+            <app-experience-section
+              [experienceForms]="experienceForms"
+              (add)="addExperience()"
+              (remove)="removeExperience($event)"
+            />
+          }
+          @case (3) {
+            <app-projects-section
+              [projectForms]="projectForms"
+              (add)="addProject()"
+              (remove)="removeProject($event)"
+            />
+          }
+          @case (4) {
+            <app-skills-section
+              [skillsForms]="skillsForms"
+              (addSkillGroup)="addSkill()"
+              (removeSkillGroup)="removeSkill($event)"
+              (addCert)="addCertification($event)"
+              (removeCert)="removeCertification($event)"
+            />
+          }
+          @case (5) {
+            <app-ia-section
+              [iaForm]="iaForm"
+              [isLoading]="isLoading()"
+              (optimize)="optimizarCv()"
+            />
+          }
+          @case (6) {
+            <app-ats-section
+              [isLoading]="isLoading()"
+              [score]="80"
+            />
+          }
+          @case (7) {
+            <app-cover-letter-section
+              [iaForm]="iaForm"
+              [cvForm]="cvForm"
+            />
+          }
         }
-        @case (1) {
-          <fieldset formArrayName="education" class="flex flex-col gap-4">
-            <h2 class="text-xl font-semibold text-gray-800">Educación</h2>
-            @for (eduGroup of educationForms.controls; track $index) {
-              <div
-                [formGroupName]="$index"
-                class="p-4 border rounded border-gray-200 relative flex flex-col gap-4 bg-gray-50"
-              >
-                <div class="flex flex-row-reverse">
-                  <button
-                    tuiIconButton
-                    type="button"
-                    appearance="action-destructive"
-                    size="s"
-                    tuiRipple
-                    iconStart="@tui.trash"
-                    (click)="removeEducacion($index)"
-                  ></button>
-                </div>
-                <tui-textfield>
-                  <label tuiLabel>Título</label>
-                  <input
-                    tuiTextfield
-                    placeholder="Ej: Lic. en Sistemas"
-                    formControlName="title"
-                  />
-                </tui-textfield>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <tui-textfield>
-                    <label tuiLabel>Institución</label>
-                    <input tuiTextfield formControlName="institution" />
-                  </tui-textfield>
-                  <div class="flex flex-row ">
-                    <tui-textfield class="w-full">
-                      <label tuiLabel>Fecha Inicio</label>
-                      <input tuiTextfield formControlName="dateIn"
-                             placeholder="Ej: Ene 2023"
-                      />
-                    </tui-textfield>
-                    <tui-textfield class="w-full">
-                      <label tuiLabel>Fecha Finalizacion</label>
-                      <input tuiTextfield formControlName="dateFin"
-                             placeholder="Ej: Presente"
-                      />
-                    </tui-textfield>
-                  </div>
-                </div>
-                <tui-textfield>
-                  <label tuiLabel>Logros (un bullet por línea)</label>
-                  <textarea
-                    tuiTextarea
-                    placeholder="- Lideré la migración de..."
-                    formControlName="bullets"
-                    [min]="8"
-                    [max]="10"
-                  ></textarea>
-                </tui-textfield>
-              </div>
-            }
-            <button
-              tuiButton
-              tuiRipple
-              type="button"
-              appearance="outline"
-              (click)="addEducation()"
-              class="mt-2 self-start"
-            >
-              <tui-icon icon="@tui.plus" class="mr-2"></tui-icon>
-              Agregar Educación
-            </button>
-          </fieldset>
-        }
-        @case (2) {
-          <fieldset formArrayName="experience" class="contents">
-            <h2 class="text-xl font-semibold text-gray-800">Experiencia Laboral</h2>
-
-            @for (expGroup of experienceForms.controls; track $index) {
-              <div [formGroupName]="$index" class="p-4 border-gray-200 border rounded relative flex flex-col gap-4 bg-gray-50">
-                <div class="flex flex-row-reverse">
-                  <button
-                    tuiIconButton
-                    type="button"
-                    appearance="action-destructive"
-                    size="s"
-                    tuiRipple
-                    iconStart="@tui.trash"
-                    (click)="removeExperience($index)">
-                  </button>
-                </div>
-
-                <tui-textfield>
-                  <label tuiLabel>Puesto</label>
-                  <input tuiTextfield
-                         placeholder="Ej: Desarrollador Frontend"
-                         formControlName="role" />
-                </tui-textfield>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <tui-textfield>
-                    <label tuiLabel>Empresa</label>
-                    <input tuiTextfield
-                           formControlName="company" />
-                  </tui-textfield>
-                  <div class="flex flex-row ">
-                    <tui-textfield class="w-full">
-                      <label tuiLabel>Fecha Inicio</label>
-                      <input tuiTextfield formControlName="dateIn"
-                             placeholder="Ej: Ene 2023"
-                      />
-                    </tui-textfield>
-                    <tui-textfield class="w-full">
-                      <label tuiLabel>Fecha Finalizacion</label>
-                      <input tuiTextfield formControlName="dateFin"
-                             placeholder="Ej: Presente"
-                      />
-                    </tui-textfield>
-                  </div>
-                </div>
-                <tui-textfield>
-                  <label tuiLabel>Logros y Tareas (un bullet por línea)</label>
-                  <textarea
-                    tuiTextarea
-                    placeholder="- Lideré la migración de..."
-                    formControlName="bullets"
-                    [min]="8"
-                    [max]="10"
-                  ></textarea>
-                </tui-textfield>
-              </div>
-            }
-            <button tuiButton tuiRipple type="button" appearance="outline" (click)="addExperience()" class="mt-2 self-start">
-              <tui-icon icon="@tui.plus" class="mr-2"></tui-icon>
-              Agregar Experiencia
-            </button>
-          </fieldset>
-        }
-        @case (3) {
-          <fieldset formArrayName="projects" class="contents">
-            <h2 class="text-xl font-semibold text-gray-800">Proyectos</h2>
-
-            @for (expGroup of projectForms.controls; track $index) {
-              <div [formGroupName]="$index" class="p-4 border border-gray-200 rounded relative flex flex-col gap-4 bg-gray-50">
-                <div class="flex flex-row-reverse">
-                  <button
-                    tuiIconButton
-                    type="button"
-                    appearance="action-destructive"
-                    size="s"
-                    tuiRipple
-                    iconStart="@tui.trash"
-                    (click)="removeProject($index)">
-                  </button>
-                </div>
-
-                <tui-textfield>
-                  <label tuiLabel>Nombre</label>
-                  <input tuiTextfield
-                         placeholder="Nombre del proyecto"
-                         formControlName="name" />
-                </tui-textfield>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <tui-textfield>
-                    <label tuiLabel>Subtitulo</label>
-                    <input tuiTextfield
-                           formControlName="subtitle" />
-                  </tui-textfield>
-                  <div class="flex flex-row ">
-                    <tui-textfield class="w-full">
-                      <label tuiLabel>Fecha Inicio</label>
-                      <input tuiTextfield formControlName="dateIn"
-                             placeholder="Ej: Ene 2023"
-                      />
-                    </tui-textfield>
-                    <tui-textfield class="w-full">
-                      <label tuiLabel>Fecha Finalizacion</label>
-                      <input tuiTextfield formControlName="dateFin"
-                             placeholder="Ej: Presente"
-                      />
-                    </tui-textfield>
-                  </div>
-                </div>
-                <tui-textfield>
-                  <label tuiLabel>Logros y Tareas (un bullet por línea)</label>
-                  <textarea
-                    tuiTextarea
-                    placeholder="- Lideré la migración de..."
-                    formControlName="bullets"
-                    [min]="8"
-                    [max]="10"
-                  ></textarea>
-                </tui-textfield>
-              </div>
-            }
-            <button tuiButton tuiRipple type="button" appearance="outline" (click)="addProject()" class="mt-2 self-start">
-              <tui-icon icon="@tui.plus" class="mr-2"></tui-icon>
-              Agregar Proyecto
-            </button>
-          </fieldset>
-        }
-        @case (4){
-          <fieldset formArrayName="skills" class="contents">
-            <h2 class="text-xl font-semibold text-gray-800">Habilidades & Certificaciones</h2>
-
-            @for (skillGroup of skillsForms.controls; track $index) {
-              <div [formGroupName]="$index" class="p-4 border border-gray-200 rounded relative flex flex-col gap-4 bg-gray-50">
-                <div class="flex flex-row-reverse">
-                  <button
-                    tuiIconButton
-                    type="button"
-                    appearance="action-destructive"
-                    size="s"
-                    tuiRipple
-                    iconStart="@tui.trash"
-                    (click)="removeSkill($index)">
-                  </button>
-                </div>
-
-                <tui-textfield multi>
-                  <label tuiLabel>Habilidades Técnicas / Hard Skills (separadas por coma)</label>
-                  <input
-                    placeholder="Angular, React, Node.js..."
-                    formControlName="skills"
-                    tuiInputChip
-                  />
-                  <tui-input-chip *tuiItem />
-                </tui-textfield>
-
-                <tui-textfield multi>
-                  <label tuiLabel>Idiomas</label>
-                  <input
-                    placeholder="Español, Inglés C1, Francés..."
-                    formControlName="languages"
-                    tuiInputChip
-                  />
-                  <tui-input-chip *tuiItem />
-                </tui-textfield>
-
-                <h3 class="text-lg font-medium mt-2 text-gray-700">Certificaciones</h3>
-                <fieldset formArrayName="certifications" class="flex flex-col gap-2">
-
-                  @if (getCertificationsArray(skillGroup).length === 0) {
-                    <p class="text-sm text-gray-500">Agregá certificaciones aquí.</p>
-                  }
-
-                  @for (certGroup of getCertificationControls(skillGroup); track $index) {
-                    <div [formGroupName]="$index" class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-end">
-                      <tui-textfield class="sm:col-span-6">
-                        <label tuiLabel>Nombre Certificado</label>
-                        <input tuiTextfield formControlName="name" />
-                      </tui-textfield>
-                      <tui-textfield class="sm:col-span-4">
-                        <label tuiLabel>Fecha Obtención</label>
-                        <input tuiTextfield formControlName="date" placeholder="Ej: 2024" />
-                      </tui-textfield>
-                      <button
-                        tuiIconButton
-                        type="button"
-                        appearance="action-destructive"
-                        size="s"
-                        tuiRipple
-                        iconStart="@tui.trash"
-                        (click)="removeCertification(getSkillGroupIndex(skillGroup), $index)"
-                        class="sm:col-span-2">
-                      </button>
-                    </div>
-                  }
-                  <button
-                    tuiButton
-                    tuiRipple
-                    type="button"
-                    appearance="outline"
-                    size="s"
-                    (click)="addCertification($index)"
-                    class="mt-2 self-start">
-                    <tui-icon icon="@tui.plus" class="mr-2"></tui-icon>
-                    Agregar Certificación
-                  </button>
-                </fieldset>
-
-                <tui-textfield multi>
-                  <label tuiLabel>Habilidades Adicionales / Otros (Ej: Herramientas, Metodologías)</label>
-                  <input
-                    placeholder="Scrum, Kanban, Docker, AWS..."
-                    formControlName="additional"
-                    tuiInputChip
-                  />
-                  <tui-input-chip *tuiItem />
-                </tui-textfield>
-              </div>
-            }
-          </fieldset>
-        }
-        @case (5){
-          <form [formGroup]="iaForm" class="flex flex-col gap-6">
-            <h2 class="text-xl font-semibold text-gray-800">Optimización con IA</h2>
-
-            <div class="p-4 border border-gray-200 rounded relative flex flex-col gap-4 bg-gray-50">
-              <tui-textfield>
-                <label tuiLabel>Pegá acá la descripción del puesto (Job Description)</label>
-                <textarea
-                  tuiTextarea
-                  formControlName="jobDescription"
-                  [min]="8"
-                  [max]="10"
-                ></textarea>
-              </tui-textfield>
-              <div class="text-sm text-gray-600">
-                <p>Al hacer clic en "Optimizar CV", la IA reescribirá tu <span class="font-semibold">Resumen Profesional</span>, <span class="font-semibold">Puesto</span> y los <span class="font-semibold">Logros</span> de tu experiencia y educación para que coincidan con la terminología y las palabras clave de la oferta laboral.</p>
-                <p class="mt-1 font-medium">¡Siempre revisá el resultado de la IA antes de descargar!</p>
-              </div>
-            </div>
-
-            <div class="w-full  border-gray-200 p-4 border rounded bg-gray-50 flex flex-col gap-2">
-              <label tuiLabel class="block text-sm font-medium text-gray-700">
-                Nivel de exageración
-              </label>
-
-              <input
-                tuiSlider
-                type="range"
-                class="w-full" [readOnly]="false"
-                [segments]="segments"
-                [step]="step"
-                [min]="min"
-                [max]="max"
-                formControlName="exaggeration"
-              />
-
-              <div class="flex justify-between mt-1">
-                @for (level of exaggerationLevel | keyvalue; track level.key) {
-                  <button
-                    type="button"
-                    (click)="iaForm.controls.exaggeration.setValue(+level.key)"
-
-                    class="text-sm cursor-pointer focus:outline-none transition-colors px-1 rounded
-                   focus-visible:ring-2 focus-visible:ring-blue-500"
-
-                    [class.text-gray-500]="iaForm.controls.exaggeration.value !== +level.key"
-                    [class.text-blue-600]="iaForm.controls.exaggeration.value === +level.key"
-                    [class.font-bold]="iaForm.controls.exaggeration.value === +level.key"
-                    [class.hover:text-blue-700]="iaForm.controls.exaggeration.value !== +level.key"
-                  >
-                    {{ level.value }}
-                  </button>
-                }
-              </div>
-
-              <div class="text-center text-xs text-gray-500 mt-2 text-balance min-h-[2.5rem]">
-                {{ iaForm.controls.exaggeration.value | exxagerationLevel:exaggerationDescriptions }}
-              </div>
-            </div>
-
-            <label tuiLabel class="flex items-center gap-2 mt-4 text-gray-800">
-              <input
-                tuiCheckbox
-                type="checkbox"
-                formControlName="makeEnglish"
-                tuiRipple
-              />
-              Traducir CV a Inglés (Experimental)
-            </label>
-
-            <button
-              tuiButton
-              type="button"
-              size="l"
-              appearance="primary"
-              (click)="optimizarCv()"
-              [loading]="isLoading()"
-              [disabled]="iaForm.invalid"
-              class="w-full sm:w-auto self-start">
-              Optimizar CV con IA
-            </button>
-          </form>
-        }
-      }
-    </form>
-    <div class="flex flex-col sm:flex-row gap-4 mt-4">
-      <button
-        tuiButton
-        type="button"
-        size="l"
-        tuiRipple
-        appearance="secondary"
-        (click)="saveCv()"
-        [disabled]="isLoading()"
-        class="flex-1">
-        <tui-icon icon="@tui.save" class="mr-2"></tui-icon>
-        Guardar Progreso
-      </button>
-
-      <button
-        tuiButton
-        type="button"
-        size="l"
-        tuiRipple
-        appearance="primary"
-        (click)="downloadPdf()"
-        [disabled]="isLoading() || cvForm.invalid"
-        class="flex-1">
-        <tui-icon icon="@tui.download" class="mr-2"></tui-icon>
-        Descargar PDF
-      </button>
-
-      <button
-        tuiButton
-        type="button"
-        size="l"
-        tuiRipple
-        appearance="action-destructive"
-        (click)="clearCv()"
-        [disabled]="isLoading()"
-        class="flex-1 sm:flex-none">
-        <tui-icon icon="@tui.trash" class="mr-2"></tui-icon>
-        Limpiar
-      </button>
+      </form>
     </div>
+
+    <app-actions
+      [isLoading]="isLoading()"
+      [isCvValid]="cvForm.valid"
+      (save)="saveCv()"
+      (download)="downloadPdf()"
+      (clear)="clearCv()"
+    />
   </div>
 
   <div class="md:col-span-6 md:sticky md:top-8 h-full">
     <app-dummy-view
       [cvPreview]="cvPreview()"
       [hasEducation]="hasEducation()"
-      [hasExperience]="hasEducation()"
+      [hasExperience]="hasExperience()"
       [hasSkills]="hasSkills()"
       [hasProjects]="hasProjects()"
     />
   </div>
-
 </div>

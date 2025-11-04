@@ -1,28 +1,36 @@
-import {Component, computed, input, output} from '@angular/core';
-import {FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {Component, computed, inject, Injector, input, OnInit, output, signal, Signal} from '@angular/core';
+import {ControlContainer, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {IaFormControls} from '../../../../../../shared/types/types';
 import {TuiButton, TuiTextfield} from '@taiga-ui/core';
 import {TuiButtonLoading, TuiCheckbox, TuiSlider, TuiTextarea} from '@taiga-ui/kit';
 import {KeyValuePipe} from '@angular/common';
-import {ExxagerationLevelPipe} from '../../../../utils/pipes/exxageration-pipe';
+import {ExaggerationLevelPipe} from '../../../../utils/pipes/exxageration-pipe';
+import {map, startWith} from 'rxjs';
+import {toSignal} from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'app-ia-tools',
+  selector: 'app-ia-section',
   imports: [
     ReactiveFormsModule,
     TuiTextfield,
     TuiTextarea,
     TuiSlider,
     KeyValuePipe,
-    ExxagerationLevelPipe,
+    ExaggerationLevelPipe,
     TuiCheckbox,
     TuiButton,
     TuiButtonLoading
   ],
-  templateUrl: './ia-tools.html',
-  styleUrl: './ia-tools.css',
+  viewProviders: [
+    {
+      provide: ControlContainer,
+      useFactory: () => inject(ControlContainer, {skipSelf: true})
+    }
+  ],
+  templateUrl: './ia-section.component.html',
+  styleUrl: './ia-section.component.css',
 })
-export class IaTools {
+export class IaSection implements OnInit {
   iaForm = input.required<FormGroup<IaFormControls>>();
   isLoading = input.required<boolean>();
   optimize = output<void>();
@@ -42,8 +50,25 @@ export class IaTools {
 
   protected segments = computed(() => this.max - this.min);
 
-  // Usamos un computed signal para el valor, asegurando reactividad
-  protected currentExaggeration = computed(() => {
-    return this.iaForm()?.get('exaggeration')?.value ?? 0;
-  });
+  protected currentExaggeration: Signal<number> = signal(0);
+
+  private readonly injector = inject(Injector);
+
+  ngOnInit(): void {
+    const exaggerationControl = this.iaForm().get('exaggeration');
+
+    if (exaggerationControl) {
+      const initialValue = exaggerationControl.value ?? 0;
+
+      this.currentExaggeration = toSignal(
+        exaggerationControl.valueChanges.pipe(
+          map(value => value ?? 0)
+        ),
+        {
+          injector: this.injector,
+          initialValue: initialValue
+        }
+      );
+    }
+  }
 }

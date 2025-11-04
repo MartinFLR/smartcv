@@ -1,19 +1,24 @@
-import {Component, input, output} from '@angular/core';
-import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {Component, inject, input, output} from '@angular/core';
+import {ControlContainer, FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {ProjectControls} from '../../../../../../shared/types/types';
-import {TuiButton, TuiIcon, TuiTextfield} from '@taiga-ui/core';
+import {TuiButton, TuiTextfield} from '@taiga-ui/core';
 import {TuiRipple} from '@taiga-ui/addon-mobile';
 import {TuiTextarea} from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-projects-section',
   imports: [
-    TuiIcon,
     TuiButton,
     TuiRipple,
     ReactiveFormsModule,
     TuiTextfield,
     TuiTextarea
+  ],
+  viewProviders: [
+    {
+      provide: ControlContainer,
+      useFactory: () => inject(ControlContainer, {skipSelf: true})
+    }
   ],
   templateUrl: './projects-section.html',
   styleUrl: './projects-section.css',

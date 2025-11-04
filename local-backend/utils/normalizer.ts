@@ -26,3 +26,5 @@ export function normalizeCv(cv: TailoredCvResponse): TailoredCvResponse {
     }))
   };
 }
+
+

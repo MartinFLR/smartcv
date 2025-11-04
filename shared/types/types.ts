@@ -1,8 +1,6 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import {BuildPromptOptions} from './promptTypes';
 
-// RESPUESTA DEL BACKEND
-
 export interface TailoredCvResponse {
   profileSummary: string;
   job: string;
@@ -38,6 +36,54 @@ export interface TailoredCvResponse {
   }[];
 }
 
+export interface CvFormShape {
+  personalInfo: {
+    name: string | null;
+    job: string | null;
+    email: string | null;
+    phone: string | null;
+    location: string | null;
+    linkedin: string | null;
+    github: string | null;
+    web: string | null;
+    profileSummary: string | null;
+  };
+  education: {
+    title: string | null;
+    institution: string | null;
+    dateIn: string | null;
+    dateFin: string | null;
+    bullets: string | null;
+  }[];
+  experience: {
+    role: string | null;
+    company: string | null;
+    dateIn: string | null;
+    dateFin: string | null;
+    bullets: string | null;
+  }[];
+  projects: {
+    name: string;
+    dateIn: string | null;
+    dateFin: string | null;
+    bullets: string | null;
+    subtitle: string | null;
+  }[];
+  skills: {
+    skills: string[];
+    languages: string[];
+    certifications: {
+      name: string | null;
+      date: string | null;
+    }[];
+    additional: string[];
+  }[];
+}
+
+export interface CoverLetter {
+
+}
+
 export type TransformedExperience = {
   role: string | null;
   company: string | null;
@@ -69,7 +115,16 @@ export interface TransformedCvResponse
   project: TransformedProject[];
 }
 
-// FORM CONTROLS
+export interface TransformedCoverLetterResponse {
+  result: string;
+}
+
+export interface CoverLetterControls {
+  companyName: FormControl<string | null>;
+  recruiterName: FormControl<string | null>;
+  tone: FormControl<number | null>;
+}
+
 export interface PersonalInfoControls {
   name: FormControl<string | null>;
   job: FormControl<string | null>;
@@ -133,62 +188,23 @@ export interface IaFormControls {
   exaggeration: FormControl<number | null>;
 }
 
-// ESTRUCTURA DEL CV
-export interface CvFormShape {
-  personalInfo: {
-    name: string | null;
-    job: string | null;
-    email: string | null;
-    phone: string | null;
-    location: string | null;
-    linkedin: string | null;
-    github: string | null;
-    web: string | null;
-    profileSummary: string | null;
-  };
-  education: {
-    title: string | null;
-    institution: string | null;
-    dateIn: string | null;
-    dateFin: string | null;
-    bullets: string | null;
-  }[];
-  experience: {
-    role: string | null;
-    company: string | null;
-    dateIn: string | null;
-    dateFin: string | null;
-    bullets: string | null;
-  }[];
-  projects: {
-    name: string;
-    dateIn: string | null;
-    dateFin: string | null;
-    bullets: string | null;
-    subtitle: string | null;
-  }[];
-  skills: {
-    skills: string[];
-    languages: string[];
-    certifications: {
-      name: string | null; // Se asume que estos también pueden ser null después de getRawValue()
-      date: string | null;
-    }[];
-    additional: string[];
-  }[];
-}
 
-
-// ======================================================
 // PAYLOADS
-// ======================================================
-
 export interface CvPayload {
   baseCv: CvFormShape;
   jobDesc: string;
   modelProvider?: string;
   modelVersion?: string;
   promptOption?: BuildPromptOptions
+}
+
+
+export interface CoverLetterPayload {
+  baseCv: CvFormShape;
+  jobDesc: string;
+  modelProvider?: string;
+  modelVersion?: string;
+  promptOption?: BuildPromptOptions;
 }
 
 export interface CvProfile {

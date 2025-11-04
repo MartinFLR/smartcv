@@ -2,8 +2,10 @@
   <div class="md:col-span-8 md:col-start-3 flex flex-col gap-6">
     <div class="flex justify-between items-center">
       <h1 class="text-3xl font-bold text-gray-900">Configuración</h1>
-      <a tuiButton appearance="outline" routerLink="/">
-        <tui-icon icon="@tui.arrow-left" class="mr-2"></tui-icon>
+      <a tuiButton
+         iconStart="@tui.arrow-left"
+         appearance="outline"
+         routerLink="/">
         Volver
       </a>
     </div>
@@ -35,19 +37,6 @@
         />
       </tui-textfield>
       </label>
-      <tui-textfield formControlName="apiKey">
-        API Key
-        <input tuiTextfield />
-      </tui-textfield>
-
-      <tui-textfield formControlName="systemPrompt" >
-        System Prompt (Instrucciones para la IA)
-        <textarea
-          tuiTextarea
-          [max]="8" [min]="4"
-          placeholder="Ej: Sos un experto en RRHH..."
-        ></textarea>
-      </tui-textfield>
 
       <button
         tuiButton

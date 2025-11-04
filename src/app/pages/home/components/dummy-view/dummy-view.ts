@@ -1,5 +1,5 @@
 import {Component, input, Signal} from '@angular/core';
-import {CvFormShape} from '../../../../../shared/types/types';
+import {CvFormShape} from '../../../../../../shared/types/types';
 
 @Component({
   selector: 'app-dummy-view',

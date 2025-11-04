@@ -1,5 +1,5 @@
-import {Component, input, output} from '@angular/core';
-import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {Component, inject, input, output} from '@angular/core';
+import {ControlContainer, FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {CertificationControls, SkillsControls} from '../../../../../../shared/types/types';
 import {TuiButton, TuiIcon, TuiTextfield} from '@taiga-ui/core';
 import {TuiInputChip} from '@taiga-ui/kit';
@@ -14,6 +14,12 @@ import {TuiRipple} from '@taiga-ui/addon-mobile';
     TuiButton,
     TuiRipple,
     TuiIcon
+  ],
+  viewProviders: [
+    {
+      provide: ControlContainer,
+      useFactory: () => inject(ControlContainer, {skipSelf: true})
+    }
   ],
   templateUrl: './skills-section.html',
 })

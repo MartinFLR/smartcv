@@ -1,19 +1,30 @@
 import { provideEventPlugins } from "@taiga-ui/event-plugins";
 import { provideAnimations } from "@angular/platform-browser/animations";
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import {
+  APP_INITIALIZER,
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+  provideZonelessChangeDetection
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
+import {TUI_LANGUAGE, TUI_SPANISH_LANGUAGE} from '@taiga-ui/i18n';
 
 import { routes } from './app.routes';
 import {provideHttpClient} from '@angular/common/http';
+import {of} from 'rxjs';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimations(),
     provideHttpClient(),
+    {
+      provide: TUI_LANGUAGE,
+      useValue: of(TUI_SPANISH_LANGUAGE),
+    },
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
         provideEventPlugins(),
         provideEventPlugins()
-    ]
+    ],
 };
