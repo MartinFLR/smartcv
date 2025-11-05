@@ -3,7 +3,7 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 // @ts-ignore
-import { CvPayload, TailoredCvResponse } from '../shared/types/types';
+import { CvPayload, CvResponse } from '../shared/types/Types';
 
 // --- Configuración del servidor ---
 const app = express();
@@ -35,7 +35,7 @@ app.post('/api/generate-cv', async (req: Request, res: Response) => {
     // Limpieza del texto y parseo seguro
     const cleaned = text.replace(/```json/g, '').replace(/```/g, '').trim();
 
-    let parsed: TailoredCvResponse;
+    let parsed: CvResponse;
     try {
       parsed = JSON.parse(cleaned);
 
@@ -69,7 +69,7 @@ app.post('/api/generate-cv', async (req: Request, res: Response) => {
       return res.status(500).json({ error: 'La IA devolvió una respuesta no válida.' });
     }
 
-    res.status(200).json(parsed as TailoredCvResponse);
+    res.status(200).json(parsed as CvResponse);
   } catch (error) {
     console.error('❌ Error llamando a la API de Gemini:', error);
     res.status(500).json({ error: 'Error interno del servidor al procesar la IA.' });

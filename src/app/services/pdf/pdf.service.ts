@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import jsPDF from 'jspdf';
-import { CvFormShape } from '../../../../shared/types/types';
+import { CvForm } from '../../../../shared/types/Types';
 
 type ItemSectionKey = 'experience' | 'projects' | 'education';
-type ItemType = CvFormShape['experience'][number] | CvFormShape['projects'][number] | CvFormShape['education'][number];
+type ItemType = CvForm['experience'][number] | CvForm['projects'][number] | CvForm['education'][number];
 
 interface ItemMap {
   title: string;
@@ -38,11 +38,11 @@ export class PdfService {
     { title: 'EDUCACIÓN', dataKey: 'education', subtitleKey: 'institution', roleKey: 'title' },
   ];
 
-  downloadPdf(data: CvFormShape): void {
+  downloadPdf(data: CvForm): void {
     this.createAtsPdf(data);
   }
 
-  private createAtsPdf(data: CvFormShape): void {
+  private createAtsPdf(data: CvForm): void {
     this.doc = new jsPDF('p', 'pt', 'a4');
     this.pageWidth = this.doc.internal.pageSize.getWidth();
     this.pageHeight = this.doc.internal.pageSize.getHeight();
@@ -89,7 +89,7 @@ export class PdfService {
     this.doc.setFont('times', 'normal');
   }
 
-  private drawPersonalInfo(info: CvFormShape['personalInfo']): void {
+  private drawPersonalInfo(info: CvForm['personalInfo']): void {
     const midPage = this.pageWidth / 2;
 
     if (info.name) {
@@ -165,7 +165,7 @@ export class PdfService {
     this.currentY += requiredHeight + 4;
   }
 
-  private drawItemSections(data: CvFormShape): void {
+  private drawItemSections(data: CvForm): void {
     this.itemSectionsMap.forEach(section => {
       const items = data[section.dataKey] as ItemType[] | undefined;
 
@@ -221,7 +221,7 @@ export class PdfService {
     });
   }
 
-  private drawSkillsSection(skillGroup: CvFormShape['skills'][number] | undefined): void {
+  private drawSkillsSection(skillGroup: CvForm['skills'][number] | undefined): void {
     if (!skillGroup) return;
 
     this.drawSectionTitle('HABILIDADES CLAVE');

@@ -1,4 +1,4 @@
-import { PromptLanguage, ToneLevel } from '../../../shared/types/promptTypes';
+import { PromptLanguage, ToneLevel } from '../../../../shared/types/PromptTypes';
 
 const coverLetterToneTexts: Record<ToneLevel, Record<PromptLanguage, string>> = {
   formal: {

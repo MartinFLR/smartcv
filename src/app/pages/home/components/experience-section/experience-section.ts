@@ -1,9 +1,9 @@
 import {Component, inject, input, output} from '@angular/core';
-import {ExperienceControls} from '../../../../../../shared/types/types';
 import {ControlContainer, FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {TuiButton, TuiTextfield} from '@taiga-ui/core';
 import {TuiRipple} from '@taiga-ui/addon-mobile';
 import {TuiTextarea} from '@taiga-ui/kit';
+import {ExperienceControls} from '../../../../../../shared/types/Controls';
 
 @Component({
   selector: 'app-experience-section',

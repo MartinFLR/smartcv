@@ -1,18 +1,10 @@
 import {TuiFade, TuiTabs} from '@taiga-ui/kit';
 import {Component, computed, inject, Signal, signal} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {TuiAlertService} from '@taiga-ui/core';
 import {defer, finalize, map, startWith} from 'rxjs';
 import {PdfService} from '../../services/pdf/pdf.service';
 import {SaveDataService} from '../../services/save-data/save-data.service';
-import {
-  CertificationControls, CoverLetterControls, CoverLetterPayload,
-  CvFormControls,
-  CvFormShape, CvPayload,
-  EducationControls, ExperienceControls,
-  IaFormControls,
-  PersonalInfoControls, ProjectControls, SkillsControls, TransformedCvResponse
-} from '../../../../shared/types/types';
 import {CvFormBuilderService} from '../../services/cv-form-builder/cv-form-builder.service';
 import {IaService} from '../../services/ia.service';
 import {toSignal} from '@angular/core/rxjs-interop';
@@ -24,10 +16,18 @@ import {ExperienceSection} from './components/experience-section/experience-sect
 import {EducationSection} from './components/education-section/education-section';
 import {PersonalInfo} from './components/personal-info/personal-info';
 import {Actions} from './components/actions/actions';
-import {TemperatureLevel, ToneLevel} from '../../../../shared/types/promptTypes';
+import {TemperatureLevel, ToneLevel} from '../../../../shared/types/PromptTypes';
 import {ATSSection} from './components/ats-section/ats-section';
 import {CoverLetterSection} from './components/cover-letter-section/cover-letter-section';
-import {CoverLetterService} from '../../services/cover-letter/cover-letter.service';
+import {CoverLetterService} from './components/cover-letter-section/cover-letter-service/cover-letter.service';
+import {
+  CertificationControls,
+  CvFormControls,
+  EducationControls, ExperienceControls,
+  IaFormControls,
+  PersonalInfoControls, ProjectControls, SkillsControls
+} from '../../../../shared/types/Controls';
+import {CvForm, CvPayload, TransformedCvResponse} from '../../../../shared/types/Types';
 
 @Component({
   selector: 'app-home',
@@ -56,7 +56,7 @@ export class Home {
   protected cvForm: FormGroup<CvFormControls>;
   protected iaForm: FormGroup<IaFormControls>;
 
-  protected cvPreview: Signal<CvFormShape>;
+  protected cvPreview: Signal<CvForm>;
   protected hasExperience: Signal<boolean>;
   protected hasEducation: Signal<boolean>;
   protected hasSkills: Signal<boolean>;
@@ -70,9 +70,9 @@ export class Home {
     this.cvPreview = toSignal(
       this.cvForm.valueChanges.pipe(
         startWith(this.cvForm.getRawValue()),
-        map(() => this.cvForm.getRawValue() as CvFormShape)
+        map(() => this.cvForm.getRawValue() as CvForm)
       ),
-      { initialValue: this.cvForm.getRawValue() as CvFormShape }
+      { initialValue: this.cvForm.getRawValue() as CvForm }
     );
 
     this.hasEducation = computed(() => !!this.cvPreview().education?.length);
@@ -116,7 +116,7 @@ export class Home {
     }
 
     this.isLoading.set(true);
-    const rawCv: CvFormShape = this.cvForm.getRawValue() as CvFormShape;
+    const rawCv: CvForm = this.cvForm.getRawValue() as CvForm;
     const temperature = this.detectTemperature(this.iaForm.getRawValue().exaggeration ?? 0);
     const payload: CvPayload = {
       baseCv: rawCv,
@@ -136,7 +136,7 @@ export class Home {
               job: response.job
             }
           });
-          this.saveDataService.saveData(this.cvForm.getRawValue() as CvFormShape);
+          this.saveDataService.saveData(this.cvForm.getRawValue() as CvForm);
           this.alerts.open('CV optimizado con IA. ¡Revisá los cambios!', { appearance: 'success', autoClose: 5000 }).subscribe();
         },
         error: (err) => {
@@ -152,12 +152,12 @@ export class Home {
   }
 
   downloadPdf(): void {
-    const data: CvFormShape = this.cvForm.getRawValue() as CvFormShape;
+    const data: CvForm = this.cvForm.getRawValue() as CvForm;
     this.pdfService.downloadPdf(data);
   }
 
   saveCv(): void {
-    this.saveDataService.saveData(this.cvForm.getRawValue() as CvFormShape);
+    this.saveDataService.saveData(this.cvForm.getRawValue() as CvForm);
     this.alerts.open('Datos guardados localmente.', { appearance: 'info', autoClose: 3000 }).subscribe();
   }
 

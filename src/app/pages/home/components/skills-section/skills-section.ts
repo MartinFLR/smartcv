@@ -1,9 +1,9 @@
 import {Component, inject, input, output} from '@angular/core';
 import {ControlContainer, FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {CertificationControls, SkillsControls} from '../../../../../../shared/types/types';
 import {TuiButton, TuiIcon, TuiTextfield} from '@taiga-ui/core';
 import {TuiInputChip} from '@taiga-ui/kit';
 import {TuiRipple} from '@taiga-ui/addon-mobile';
+import {CertificationControls, SkillsControls} from '../../../../../../shared/types/Controls';
 
 @Component({
   selector: 'app-skills-section',

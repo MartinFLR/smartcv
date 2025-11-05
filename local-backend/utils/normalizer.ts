@@ -1,6 +1,6 @@
-import { TailoredCvResponse } from '../../shared/types/types';
+import { CvResponse } from '../../shared/types/Types';
 
-export function normalizeCv(cv: TailoredCvResponse): TailoredCvResponse {
+export function normalizeCv(cv: CvResponse): CvResponse {
   return {
     ...cv,
     experience: (cv.experience ?? []).map(e => ({

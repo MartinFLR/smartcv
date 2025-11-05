@@ -4,7 +4,7 @@ import {
   PromptLanguage,
   PromptType,
   TemperatureLevel
-} from '../../../shared/types/promptTypes';
+} from '../../../../shared/types/PromptTypes';
 import { getExaggeration } from './exaggeration';
 import {getCoverLetterStrictRules, getCVStrictRules} from './rules';
 import {getCoverLetterMainTasks, getCVMainTasks} from './tasks';

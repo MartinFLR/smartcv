@@ -1,15 +1,15 @@
 import { AIFactory } from './ai/ai.factory';
 import { Response } from 'express';
-import { buildPrompt } from './prompt/prompt-builder';
+import { buildPrompt } from './prompt/cv/prompt-cv-builder';
 import { cleanJson } from '../utils/json-cleaner';
 import { normalizeCv} from '../utils/normalizer';
 import {
   CoverLetterPayload,
   CvPayload,
-  TailoredCvResponse,
-} from '../../shared/types/types';
+  CvResponse,
+} from '../../shared/types/Types';
 
-export async function generateTailoredCv(body: CvPayload): Promise<TailoredCvResponse> {
+export async function generateTailoredCv(body: CvPayload): Promise<CvResponse> {
   const { baseCv, jobDesc, modelProvider = 'gemini', modelVersion , promptOption } = body;
 
   const jobTitle = baseCv.personalInfo.job || 'Puesto sin especificar';
@@ -18,7 +18,7 @@ export async function generateTailoredCv(body: CvPayload): Promise<TailoredCvRes
   const ai = AIFactory.create({ provider: modelProvider, version: modelVersion });
 
   const text = await ai.generate(prompt);
-  const parsed = cleanJson<TailoredCvResponse>(text);
+  const parsed = cleanJson<CvResponse>(text);
 
   return normalizeCv(parsed);
 }

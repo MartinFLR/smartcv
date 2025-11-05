@@ -1,12 +1,12 @@
 import {Component, computed, inject, Injector, input, OnInit, output, signal, Signal} from '@angular/core';
 import {ControlContainer, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {IaFormControls} from '../../../../../../shared/types/types';
 import {TuiButton, TuiTextfield} from '@taiga-ui/core';
 import {TuiButtonLoading, TuiCheckbox, TuiSlider, TuiTextarea} from '@taiga-ui/kit';
 import {KeyValuePipe} from '@angular/common';
-import {ExaggerationLevelPipe} from '../../../../utils/pipes/exxageration-pipe';
+import {ExaggerationLevelPipe} from '../../../../utils/pipes/exaggeration-pipe';
 import {map, startWith} from 'rxjs';
 import {toSignal} from '@angular/core/rxjs-interop';
+import {IaFormControls} from '../../../../../../shared/types/Controls';
 
 @Component({
   selector: 'app-ia-section',

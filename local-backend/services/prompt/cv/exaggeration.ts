@@ -1,4 +1,4 @@
-import { PromptLanguage, TemperatureLevel } from '../../../shared/types/promptTypes';
+import { PromptLanguage, TemperatureLevel } from '../../../../shared/types/PromptTypes';
 
 const exaggerationTexts: Record<PromptLanguage, Record<TemperatureLevel, string>> = {
   en: {

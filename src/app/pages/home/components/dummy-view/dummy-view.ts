@@ -1,5 +1,5 @@
-import {Component, input, Signal} from '@angular/core';
-import {CvFormShape} from '../../../../../../shared/types/types';
+import {Component, input} from '@angular/core';
+import {CvForm} from '../../../../../../shared/types/Types';
 
 @Component({
   selector: 'app-dummy-view',
@@ -8,7 +8,7 @@ import {CvFormShape} from '../../../../../../shared/types/types';
   styleUrl: './dummy-view.css',
 })
 export class DummyView {
-  cvPreview = input<CvFormShape>();
+  cvPreview = input<CvForm>();
   hasExperience = input<boolean>()
   hasEducation = input<boolean>()
   hasSkills = input<boolean>()

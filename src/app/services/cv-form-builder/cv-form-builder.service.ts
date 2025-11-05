@@ -1,17 +1,17 @@
 import { inject, Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import {
-  CvFormControls,
-  PersonalInfoControls,
-  ExperienceControls,
   TransformedExperience,
-  ProjectControls,
   TransformedProject,
-  EducationControls,
   TransformedEducation,
-  SkillsControls,
-  CertificationControls, IaFormControls, CoverLetterControls
-} from '../../../../shared/types/types';
+} from '../../../../shared/types/Types';
+import {
+  CertificationControls, CoverLetterControls,
+  CvFormControls, EducationControls,
+  ExperienceControls, IaFormControls,
+  PersonalInfoControls, ProjectControls,
+  SkillsControls
+} from '../../../../shared/types/Controls';
 
 @Injectable({
   providedIn: 'root'

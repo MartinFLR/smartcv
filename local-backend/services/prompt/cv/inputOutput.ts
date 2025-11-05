@@ -1,4 +1,4 @@
-import { PromptLanguage } from '../../../shared/types/promptTypes';
+import { PromptLanguage } from '../../../../shared/types/PromptTypes';
 
 export function getInputOutputTemplate(baseCv: string, jobDesc: string, lang: PromptLanguage) {
   if (lang === 'en') {

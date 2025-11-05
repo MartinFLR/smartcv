@@ -1,4 +1,4 @@
-import { PromptLanguage } from '../../../shared/types/promptTypes';
+import { PromptLanguage } from '../../../../shared/types/PromptTypes';
 
 export function getCVMainTasks(lang: PromptLanguage, jobTitle: string) {
   if (lang === 'en') {

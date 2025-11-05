@@ -1,5 +1,5 @@
-import { PromptLanguage } from '../../../shared/types/promptTypes';
-import { DeliveryChannel } from '../../../shared/types/promptTypes';
+import { PromptLanguage } from '../../../../shared/types/PromptTypes';
+import { DeliveryChannel } from '../../../../shared/types/PromptTypes';
 
 const coverLetterDeliveryChannelTexts: Record<
   DeliveryChannel,

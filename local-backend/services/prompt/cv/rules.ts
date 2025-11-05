@@ -1,4 +1,4 @@
-import { PromptLanguage } from '../../../shared/types/promptTypes';
+import { PromptLanguage } from '../../../../shared/types/PromptTypes';
 
 const strictCVRulesTexts: Record<PromptLanguage, string> = {
   en: `Strict rules:

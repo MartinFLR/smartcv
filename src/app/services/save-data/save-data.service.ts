@@ -1,5 +1,5 @@
 import {DOCUMENT, inject, Injectable} from '@angular/core';
-import {CvFormShape} from '../../../../shared/types/types';
+import {CvForm} from '../../../../shared/types/Types';
 import {TuiAlertService} from '@taiga-ui/core';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class SaveDataService {
 
   private readonly STORAGE_KEY = 'angular-cv-data';
 
-  saveData(cvData: CvFormShape): void {
+  saveData(cvData: CvForm): void {
     if (!this.storage) {
       return;
     }
@@ -33,7 +33,7 @@ export class SaveDataService {
     }
   }
 
-  loadData(): CvFormShape | null {
+  loadData(): CvForm | null {
     if (!this.storage) {
       return null;
     }
@@ -43,7 +43,7 @@ export class SaveDataService {
       if (serializedData === null) {
         return null;
       }
-      return JSON.parse(serializedData) as CvFormShape;
+      return JSON.parse(serializedData) as CvForm;
     } catch (e) {
       console.error('Error al cargar datos de localStorage (datos corruptos?):', e);
       this.clearData(false);

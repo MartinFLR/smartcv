@@ -2,18 +2,16 @@ import {Component, computed, effect, inject, input, Signal, signal} from '@angul
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {TuiButton, TuiIcon, TuiTextfield} from '@taiga-ui/core';
 import {
-  CoverLetterControls,
-  CoverLetterPayload, CvFormControls, CvFormShape,
-  IaFormControls
-} from '../../../../../../shared/types/types';
+  CoverLetterPayload, CvForm,
+} from '../../../../../../shared/types/Types';
 import {TuiButtonLoading, TuiChip, TuiCopy, TuiTextarea} from '@taiga-ui/kit';
 import {TuiItemGroup} from '@taiga-ui/layout';
 import {CvFormBuilderService} from '../../../../services/cv-form-builder/cv-form-builder.service';
-import {DeliveryChannel, ToneLevel} from '../../../../../../shared/types/promptTypes';
-import {CoverLetterService} from '../../../../services/cover-letter/cover-letter.service';
-import {JsonPipe} from '@angular/common';
+import {DeliveryChannel, ToneLevel} from '../../../../../../shared/types/PromptTypes';
+import {CoverLetterService} from './cover-letter-service/cover-letter.service';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {startWith} from 'rxjs';
+import {CoverLetterControls, CvFormControls, IaFormControls} from '../../../../../../shared/types/Controls';
 
 @Component({
   selector: 'app-cover-letter-section',
@@ -27,8 +25,6 @@ import {startWith} from 'rxjs';
     TuiItemGroup,
     TuiButton,
     TuiButtonLoading,
-    JsonPipe,
-
   ],
   templateUrl: './cover-letter-section.html',
   styleUrl: './cover-letter-section.css',
@@ -153,7 +149,7 @@ export class CoverLetterSection {
   generateCoverLetter(): void {
     this.isLoading.set(true);
     this.generatedLetter.set('')
-    const rawCv: CvFormShape = this.cvForm().getRawValue() as CvFormShape;
+    const rawCv: CvForm = this.cvForm().getRawValue() as CvForm;
     const tone = this.detectTone(this.coverLetterForm.getRawValue().tone ?? 0);
     const deliveryChannel = this.detectDeliveryChannel(this.coverLetterForm.getRawValue().deliveryChannel ?? 0);
 

@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import {map, Observable, Observer} from 'rxjs';
 import {
   CvPayload,
-  TailoredCvResponse,
+  CvResponse,
   TransformedCvResponse,
-} from '../../../shared/types/types';
+} from '../../../shared/types/Types';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class IaService {
   private readonly apiUrl = 'http://localhost:3000/api/generate-cv';
 
   generateCvWithIA(payload: CvPayload): Observable<TransformedCvResponse > {
-    return this.http.post<TailoredCvResponse>(this.apiUrl, payload).pipe(
+    return this.http.post<CvResponse>(this.apiUrl, payload).pipe(
       map((response) => {
         const experience = Array.isArray(response.experience) ? response.experience : [];
         const education = Array.isArray(response.education) ? response.education : [];

@@ -4,7 +4,7 @@ import {AiSettings, AiSettingsService} from '../../services/ai-settings/ai-setti
 import {TuiAlertService, TuiButton, TuiTextfield} from '@taiga-ui/core';
 import {ProfileService} from '../../services/profile/profile.service';
 import {SaveDataService} from '../../services/save-data/save-data.service';
-import {CvProfile} from '../../../../shared/types/types';
+import {CvProfile} from '../../../../shared/types/Types';
 import {TuiCard} from '@taiga-ui/layout';
 import {TuiChevron, TuiDataListWrapper, TuiSelect} from '@taiga-ui/kit';
 import {Router, RouterLink} from '@angular/router';

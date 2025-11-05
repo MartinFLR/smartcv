@@ -1,8 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import {
   CoverLetterPayload,
-  TransformedCoverLetterResponse,
-} from '../../../../shared/types/types';
+} from '../../../../../../../shared/types/Types';
 import { Observable, Subscriber } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -68,11 +67,5 @@ export class CoverLetterService {
         controller.abort();
       };
     });
-  }
-
-  generateCoverLetter(
-    payload: CoverLetterPayload,
-  ): Observable<TransformedCoverLetterResponse> {
-    return this.http.post<TransformedCoverLetterResponse>(this.apiUrl, payload);
   }
 }

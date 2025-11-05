@@ -1,4 +1,4 @@
-import { ExxagerationPipe } from './exxageration-pipe';
+import { ExxagerationPipe } from './exaggeration-pipe';
 
 describe('ExxagerationPipe', () => {
   it('create an instance', () => {

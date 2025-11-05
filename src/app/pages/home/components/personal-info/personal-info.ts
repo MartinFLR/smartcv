@@ -1,11 +1,11 @@
 import {Component, inject, input} from '@angular/core';
-import {PersonalInfoControls} from '../../../../../../shared/types/types';
 import {TuiCountryIsoCode} from '@taiga-ui/i18n';
 import {ControlContainer, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {TuiTextfield} from '@taiga-ui/core';
 import {TuiInputPhoneInternational} from '@taiga-ui/experimental';
 import {tuiInputPhoneInternationalOptionsProvider, TuiTextarea} from '@taiga-ui/kit';
 import {defer} from 'rxjs';
+import {PersonalInfoControls} from '../../../../../../shared/types/Controls';
 
 @Component({
   selector: 'app-personal-info',

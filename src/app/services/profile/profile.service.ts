@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {CvProfile} from '../../../../shared/types/types';
+import {CvProfile} from '../../../../shared/types/Types';
 import {SaveDataService} from '../save-data/save-data.service';
 
 @Injectable({
