@@ -17,11 +17,22 @@ import {
 } from '@taiga-ui/kit';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {IaFormControls} from '../../../../../../shared/types/Controls';
-import {CvAtsPayload, CvAtsResponse, SectionScoreItem} from '../../../../../../shared/types/AtsTypes';
+import {CvAtsPayload, CvAtsResponse, SectionAnalysis, SectionScoreItem} from '../../../../../../shared/types/AtsTypes';
 import {AtsSectionService} from './ats-service/ats-section.service';
 import {TuiItemGroup} from '@taiga-ui/layout';
 import {AsyncPipe, TitleCasePipe} from '@angular/common';
 import {catchError, finalize, map, Observable, of, Subject, switchMap, tap, timer} from 'rxjs';
+import {BuildPromptOptions} from '../../../../../../shared/types/PromptTypes';
+import {TuiLanguageSwitcherService} from '@taiga-ui/i18n/utils';
+
+type SectionKey = keyof CvAtsResponse['sectionScores'];
+
+// 2. Usamos ese tipo en 'DisplayableSection'
+type DisplayableSection = {
+  name: SectionKey; // <--- Ahora 'name' es del tipo específico, no 'string'
+  score: number;
+  analysis: SectionAnalysis;
+}
 
 @Component({
   selector: 'app-ats-section',
@@ -51,75 +62,19 @@ import {catchError, finalize, map, Observable, of, Subject, switchMap, tap, time
 export class ATSSection {
   iaForm = input.required<FormGroup<IaFormControls>>();
 
+  protected readonly switcher = inject(TuiLanguageSwitcherService);
   private atsService = inject(AtsSectionService);
   private alerts = inject(TuiAlertService);
 
-  isLoading = signal<boolean>(false);
-  response = signal<CvAtsResponse | null>(null);
+  isLoading = this.atsService.isLoading;
+  response = this.atsService.response;
+  protected cvFile = signal<TuiFileLike | null>(null);
 
   protected readonly control = new FormControl<TuiFileLike | null>(
     null,
     Validators.required,
   );
 
-  protected readonly failedFiles$ = new Subject<TuiFileLike | null>();
-  protected readonly loadingFiles$ = new Subject<TuiFileLike | null>();
-
-  protected cvFileBuffer = signal<string | ArrayBuffer | null>(null);
-
-  protected readonly loadedFiles$ = this.control.valueChanges.pipe(
-    switchMap((file) => this.processFile(file)),
-  );
-
-  protected removeFile(): void {
-    this.control.setValue(null);
-  }
-
-  private processFile(file: TuiFileLike | null): Observable<TuiFileLike | null> {
-
-    queueMicrotask(() => {
-      this.failedFiles$.next(null);
-      this.cvFileBuffer.set(null);
-    });
-
-    if (this.control.invalid || !file) {
-      return of(null);
-    }
-
-    queueMicrotask(() => {
-      this.loadingFiles$.next(file);
-    });
-
-    // El resto de tu lógica de FileReader...
-    return new Observable<ArrayBuffer>(subscriber => {
-      if (file.type !== 'application/pdf') {
-        subscriber.error(new Error('El archivo no es PDF'));
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        subscriber.next(e.target?.result as ArrayBuffer);
-        subscriber.complete();
-      };
-      reader.onerror = (e) => {
-        subscriber.error(e.target?.error ?? new Error('Error al leer el archivo'));
-      };
-      reader.readAsArrayBuffer(file as File);
-    }).pipe(
-      tap(buffer => {
-        this.cvFileBuffer.set(buffer);
-      }),
-      map(() => file),
-      catchError(error => {
-        console.error(error);
-        this.failedFiles$.next(file);
-        return of(null);
-      }),
-      finalize(() => {
-        this.loadingFiles$.next(null);
-      })
-    );
-  }
   score: Signal<number | null> = computed(() => this.response()?.matchScore ?? null);
 
   protected scoreColor: Signal<string> = computed(() => {
@@ -129,7 +84,6 @@ export class ATSSection {
     if (s < 80) return 'var(--tui-status-warning)';
     return 'var(--tui-status-positive)';
   });
-
   protected scoreText: Signal<string> = computed(() => {
     const s = this.score();
     if (s === null) return '--';
@@ -137,7 +91,6 @@ export class ATSSection {
   });
 
   protected fitLevel = computed(() => this.response()?.fitLevel);
-
   protected fitLevelColor: Signal<string> = computed(() => {
     switch (this.fitLevel()) {
       case 'Low': return 'var(--tui-status-negative)';
@@ -146,44 +99,66 @@ export class ATSSection {
       default: return 'var(--tui-support-08)';
     }
   });
-
   protected matchedKeywords = computed(() => this.response()?.matchedKeywords ?? []);
   protected missingKeywords = computed(() => this.response()?.missingKeywords ?? []);
   protected recommendations = computed(() => this.response()?.recommendations ?? []);
   protected warnings = computed(() => this.response()?.warnings ?? []);
+  protected generalText = computed(() =>
+    this.response()?.text
+  );
+  protected analyzedSections: Signal<DisplayableSection[]> = computed(() => {
+    const sectionsObj = this.response()?.sections;
+    const scoresObj = this.response()?.sectionScores;
 
-  protected sectionScores: Signal<SectionScoreItem[]> = computed(() => {
-    const scores = this.response()?.sectionScores;
-    if (!scores) return [];
-    return Object.entries(scores)
-      .filter(([, value]) => value !== undefined && value !== null) as SectionScoreItem[];
+    if (!sectionsObj || !scoresObj) {
+      return [];
+    }
+
+    return Object.keys(scoresObj)
+      .map(key => {
+        const sectionName = key as keyof typeof scoresObj;
+        const score = scoresObj[sectionName];
+        const analysis = sectionsObj[sectionName];
+
+        if (score == null || analysis == null) {
+          return null;
+        }
+
+        return {
+          name: sectionName,
+          score: score,
+          analysis: analysis
+        };
+      })
+      .filter((value): value is DisplayableSection => value != null);
   });
 
-
   calculateAtsScore(): void {
-    const fileBuffer = this.cvFileBuffer();
+    const file = this.cvFile();
     const jobDesc = this.iaForm().getRawValue().jobDescription ?? '';
+    const promptOption = {
+      lang : this.switcher.language,
+      type : 'ats'
+    } as BuildPromptOptions
 
-    if (!fileBuffer) {
+    if (!file) {
       this.alerts.open('Por favor, subí tu CV en formato PDF para continuar.', {
         label: 'Archivo Faltante',
-        appearance: 'warning' // 'status' es la prop correcta para TuiAlert
+        appearance: 'warning'
       }).subscribe();
       return;
     }
 
-    this.isLoading.set(true);
-    this.response.set(null);
+    const formData = new FormData();
 
-    const payload: CvAtsPayload = {
-      file: fileBuffer,
-      jobDesc: jobDesc,
-    };
+    formData.append('file', file as File, file.name);
+    formData.append('jobDesc', jobDesc);
+    formData.append('promptOption', JSON.stringify(promptOption));
+    console.log("Esto mando yo: " + JSON.stringify(promptOption, null, 2));
 
-    this.atsService.getAtsScore(payload).subscribe({
+    this.atsService.getAtsScore(formData).subscribe({
       next: (response: CvAtsResponse) => {
-        this.response.set(response);
-        this.isLoading.set(false);
+        console.log(response)
       },
       error: (err) => {
         console.error('Error al calcular puntaje ATS:', err);
@@ -191,9 +166,48 @@ export class ATSSection {
           label: 'Error de API',
           appearance: 'error'
         }).subscribe();
-        this.isLoading.set(false);
-        this.response.set(null);
       },
     });
+  }
+
+
+
+
+
+  protected readonly failedFiles$ = new Subject<TuiFileLike | null>();
+  protected readonly loadingFiles$ = new Subject<TuiFileLike | null>();
+  protected readonly loadedFiles$ = this.control.valueChanges.pipe(
+    switchMap((file) => this.processFile(file)),
+  );
+
+  protected removeFile(): void {
+    this.control.setValue(null);
+    this.cvFile.set(null);
+  }
+
+  private processFile(file: TuiFileLike | null): Observable<TuiFileLike | null> {
+    this.failedFiles$.next(null);
+    this.cvFile.set(null);
+
+    if (this.control.invalid || !file) {
+      this.loadingFiles$.next(null);
+      return of(null);
+    }
+
+    queueMicrotask(() => {
+      this.loadingFiles$.next(file);
+    });
+
+    if (file.type !== 'application/pdf') {
+      console.error('El archivo no es PDF. Tipo detectado:', file.type);
+      this.failedFiles$.next(file);
+      this.loadingFiles$.next(null);
+      return of(null);
+    }
+
+    this.cvFile.set(file);
+
+    this.loadingFiles$.next(null);
+    return of(file);
   }
 }

@@ -1,6 +1,6 @@
 import { AIFactory } from './ai/ai.factory';
 import { Response } from 'express';
-import { buildPrompt } from './prompt/cv/prompt-cv-builder';
+import { buildPrompt } from './prompt/prompt-builder';
 import { cleanJson } from '../utils/json-cleaner';
 import { normalizeCv} from '../utils/normalizer';
 import {
@@ -11,9 +11,7 @@ import {
 
 export async function generateTailoredCv(body: CvPayload): Promise<CvResponse> {
   const { baseCv, jobDesc, modelProvider = 'gemini', modelVersion , promptOption } = body;
-
-  const jobTitle = baseCv.personalInfo.job || 'Puesto sin especificar';
-  const prompt = buildPrompt(JSON.stringify(baseCv, null, 2), jobDesc, jobTitle, promptOption);
+  const prompt = buildPrompt(JSON.stringify(baseCv, null, 2), jobDesc, promptOption);
 
   const ai = AIFactory.create({ provider: modelProvider, version: modelVersion });
 
@@ -23,13 +21,14 @@ export async function generateTailoredCv(body: CvPayload): Promise<CvResponse> {
   return normalizeCv(parsed);
 }
 
+
+
 export async function generateCoverLetterStream(
   body: CoverLetterPayload,
   res: Response
 ) {
   const { baseCv, jobDesc, promptOption, modelProvider = 'gemini', modelVersion } = body;
-  const jobTitle = baseCv.personalInfo.job || 'Puesto sin especificar';
-  const prompt = buildPrompt(JSON.stringify(baseCv, null, 2), jobDesc, jobTitle,promptOption);
+  const prompt = buildPrompt(JSON.stringify(baseCv, null, 2), jobDesc,promptOption);
 
   const ai = AIFactory.create({ provider: modelProvider, version: modelVersion });
 

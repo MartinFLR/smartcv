@@ -1,7 +1,8 @@
-import {inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {inject, Injectable, signal} from '@angular/core';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {CvAtsPayload, CvAtsResponse} from '../../../../../../../shared/types/AtsTypes';
-import {delay, Observable, of} from 'rxjs';
+import {finalize, Observable, tap, throwError} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -10,47 +11,44 @@ export class AtsSectionService {
   private readonly http = inject(HttpClient);
   private readonly apiUrl = 'http://localhost:3000/api/ats';
 
-  getAtsScore(payload: CvAtsPayload): Observable<CvAtsResponse> {
-    console.log('Enviando payload a la API de ATS:', payload);
+  private readonly _response = signal<CvAtsResponse | null>(null);
+  private readonly _isLoading = signal<boolean>(false);
 
-    const mockScore = Math.floor(Math.random() * (95 - 40 + 1)) + 40;
-    let fitLevel: 'Low' | 'Medium' | 'High' = 'Medium';
-    if (mockScore < 50) fitLevel = 'Low';
-    if (mockScore >= 80) fitLevel = 'High';
+  public readonly response = this._response.asReadonly();
+  public readonly isLoading = this._isLoading.asReadonly();
 
-    const mockResponse: CvAtsResponse = {
-      text: 'Análisis completo del CV contra la descripción del puesto.',
-      matchScore: mockScore,
-      matchedKeywords: ['React', 'TypeScript', 'Angular', 'Tailwind CSS', 'Signals'],
-      missingKeywords: ['Node.js', 'Jest', 'CI/CD', 'Azure'],
-      sections: {
-        summary: { content: '...', score: 85, highlights: ['Claro y conciso'], issues: [] },
-        experience: { content: '...', score: mockScore - 5, highlights: ['Experiencia relevante en 3 proyectos'], issues: ['Falta cuantificar logros'] },
-        education: { content: '...', score: 90, highlights: [], issues: [] },
-        skills: { content: '...', score: mockScore + 10 > 100 ? 95 : mockScore + 10, highlights: ['Buena mezcla de hard y soft skills'], issues: [] },
-      },
-      sectionScores: {
-        summary: 85,
-        experience: mockScore - 5,
-        education: 90,
-        skills: mockScore + 10 > 100 ? 95 : mockScore + 10,
-      },
-      recommendations: [
-        'Cuantificar los logros en la sección de experiencia (ej. "aumenté las ventas un 20%").',
-        'Agregar las keywords "Node.js" y "Jest" si tenés experiencia en ellas.',
-        'Mover la sección de "Skills" antes que "Educación".',
-      ],
-      warnings: [
-        'El formato de fechas no es consistente en toda la sección de experiencia.',
-      ],
-      fitLevel: fitLevel,
-      skillAnalysis: {
-        hardSkills: ['Angular', 'React', 'TypeScript', 'Tailwind CSS', 'Signals', 'RxJS'],
-        softSkills: ['Comunicación', 'Trabajo en equipo', 'Proactividad'],
-      },
-    };
+  getAtsScore(payload: FormData): Observable<CvAtsResponse> {
+    this._isLoading.set(true);
+    this._response.set(null);
 
-    return of(mockResponse).pipe(delay(1500)); // Simula 1.5 seg de red
+    return this.http.post<CvAtsResponse>(this.apiUrl, payload).pipe(
+      tap({
+        next: (res: CvAtsResponse) => {
+          this._response.set(res);
+        }
+      }),
+      catchError((err: HttpErrorResponse) => {
+        return this.handleError(err);
+      }),
+      finalize(() => {
+        this._isLoading.set(false);
+      })
+    );
   }
 
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    this._response.set(null);
+
+    let errorMessage: string;
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      errorMessage = `Error del servidor (código ${error.status}): ${error.message}`;
+    }
+
+    console.error(errorMessage);
+    return throwError(() => new Error
+      ('Falló la conexión con el servicio de ATS. Por favor, intentá más tarde.')
+    );
+  }
 }

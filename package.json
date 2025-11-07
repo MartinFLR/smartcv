@@ -31,6 +31,7 @@
     "@angular/router": "^20.1.0",
     "@anthropic-ai/sdk": "^0.68.0",
     "@google/generative-ai": "^0.24.1",
+    "@taiga-ui/addon-doc": "^4.60.0",
     "@taiga-ui/addon-mobile": "^4.60.0",
     "@taiga-ui/cdk": "^4.60.0",
     "@taiga-ui/core": "^4.60.0",

@@ -7,8 +7,8 @@ import {
   provideZonelessChangeDetection
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import {TUI_LANGUAGE, TUI_SPANISH_LANGUAGE} from '@taiga-ui/i18n';
-
+import {TUI_LANGUAGE,TUI_DEFAULT_LANGUAGE, TUI_SPANISH_LANGUAGE} from '@taiga-ui/i18n';
+import {TuiLanguage} from '@taiga-ui/i18n/types';
 import { routes } from './app.routes';
 import {provideHttpClient} from '@angular/common/http';
 import {of} from 'rxjs';
@@ -18,8 +18,12 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideHttpClient(),
     {
-      provide: TUI_LANGUAGE,
+      provide: TUI_DEFAULT_LANGUAGE,
       useValue: of(TUI_SPANISH_LANGUAGE),
+    },
+    {
+      provide: TUI_LANGUAGE,
+      useValue: of(TUI_SPANISH_LANGUAGE as TuiLanguage),
     },
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),

@@ -1,40 +1,150 @@
-<div class="flex flex-col sm:flex-row gap-4 mt-4">
-  <button
-    tuiButton
-    type="button"
-    size="l"
-    tuiRipple
-    appearance="secondary"
-    (click)="save.emit()"
-    [disabled]="isLoading()"
-    class="flex-1">
-    <tui-icon icon="@tui.save" class="mr-2"></tui-icon>
-    Guardar Progreso
-  </button>
+<div class="flex flex-wrap items-center justify-center gap-4 sm:justify-between">
 
-  <button
-    tuiButton
-    type="button"
-    size="l"
-    tuiRipple
-    appearance="primary"
-    (click)="download.emit()"
-    [disabled]="isLoading() || !isCvValid()"
-    class="flex-1">
-    <tui-icon icon="@tui.download" class="mr-2"></tui-icon>
-    Descargar PDF
-  </button>
+  <div class="flex flex-wrap items-center justify-center gap-2">
+    <button
+      tuiButton
+      type="button"
+      size="s"
+      iconStart="@tui.save"
+      appearance="outline-grayscale"
+      (click)="save.emit()"
+      [disabled]="isLoading()"
+    >
+      Guardar Progreso
+    </button>
 
-  <button
-    tuiButton
-    type="button"
-    size="l"
-    tuiRipple
-    appearance="action-destructive"
-    (click)="clear.emit()"
-    [disabled]="isLoading()"
-    class="flex-1 sm:flex-none">
-    <tui-icon icon="@tui.trash" class="mr-2"></tui-icon>
-    Limpiar
-  </button>
+    <button
+      tuiButton
+      type="button"
+      size="s"
+      iconStart="@tui.download"
+      appearance="secondary-grayscale"
+      (click)="download.emit()"
+      [disabled]="isLoading() || !isCvValid()"
+    >
+      Descargar PDF
+    </button>
+
+    <button
+      tuiIconButton
+      type="button"
+      size="s"
+      appearance="action-destructive"
+      iconStart="@tui.trash"
+      tuiTooltip="Limpiar Formulario (Reset)"
+      (click)="clearForm()"
+      [disabled]="isLoading()"
+    ></button>
+  </div>
+
+  <div class="flex w-full flex-wrap items-center justify-center gap-3 sm:w-auto sm:justify-end">
+
+    <button
+      tuiIconButton
+      type="button"
+      size="s"
+      appearance="outline"
+      iconStart="@tui.plus"
+      tuiTooltip="Crear nuevo CV"
+      (click)="createNewProfile()"
+      [disabled]="isLoading()"
+    ></button>
+
+    <tui-textfield
+      class="grow min-w-[180px] sm:grow-0 sm:w-64"
+      iconStart="@tui.user-round"
+      tuiChevron
+      [stringify]="profileStringifier"
+      tuiTextfieldSize="s"
+      [tuiTextfieldCleaner]="false"
+    >
+      <input
+        placeholder="Cargar CV..."
+        tuiSelect
+        [(ngModel)]="selectedProfileId"
+      />
+
+      <tui-data-list-wrapper
+        *tuiTextfieldDropdown
+        new
+        [items]="profiles()"
+        [itemContent]="profileListTemplate"
+      />
+
+      @if (selectedProfileId()) {
+        <button
+          tuiIconButton
+          type="button"
+          size="xs"
+          appearance="flat"
+          iconStart="@tui.x"
+          tuiTooltip="Limpiar selección"
+          (click)="clearSelection()"
+          [disabled]="isLoading()"
+        ></button>
+      }
+
+      <tui-icon tuiTooltip="Elegí alguno de tus CVs guardados" />
+    </tui-textfield>
+
+    <button
+      tuiIconButton
+      appearance="outline"
+      iconStart="@tui.rotate-ccw"
+      size="s"
+      tuiTooltip="Recargar CV (Descartar cambios)"
+      type="button"
+      (click)="reloadProfile()"
+      [disabled]="isLoading() || !selectedProfileId()"
+    ></button>
+
+    <label
+      tuiLabel
+      tuiHint="Bloquea el CV para que todas las optimizaciones se basen siempre en esta versión."
+      class="flex flex-shrink-0 !text-sm items-center gap-2"
+    >
+      <input
+        tuiSwitch
+        type="checkbox"
+        [ngModel]="true"
+        size="s"
+      />
+      Bloquear
+    </label>
+  </div>
 </div>
+
+<ng-template #profileListTemplate let-profile>
+  <div class="flex w-full items-center justify-between gap-4">
+    <div class="flex flex-col">
+      <span class="truncate">{{ profile.name }}</span>
+      <span class="truncate tui-font-text-xs text-gray-500">{{ profile.jobTitle }}</span>
+    </div>
+
+    <div class="flex flex-shrink-0">
+      <button
+        tuiIconButton
+        type="button"
+        size="xs"
+        appearance="flat"
+        iconStart="@tui.edit-2"
+        tuiTooltip="Editar nombre"
+        [disabled]="isLoading()"
+        (click)="editProfileName(profile); $event.stopPropagation()"
+      >
+      </button>
+
+      <button
+        tuiIconButton
+        type="button"
+        size="xs"
+        appearance="flat-destructive"
+        iconStart="@tui.trash"
+        tuiTooltip="Eliminar este CV"
+        [disabled]="isLoading()"
+        (click)="deleteProfile(profile.id); $event.stopPropagation()"
+      >
+      </button>
+    </div>
+  </div>
+</ng-template>

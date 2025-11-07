@@ -55,13 +55,7 @@
         (remove)="removeFile()"
       />
     }
-    @if (loadingFiles$ | async; as file) {
-      <tui-file
-        state="loading"
-        [file]="file"
-        (remove)="removeFile()"
-      />
-    }
+
 
   </tui-files>
 
@@ -111,7 +105,7 @@
     type="button"
     class="w-full sm:w-auto"
     [loading]="isLoading()"
-    [disabled]="iaForm().invalid || !cvFileBuffer() || isLoading()"
+    [disabled]="iaForm().invalid || isLoading()"
     (click)="calculateAtsScore()"
   >
     Calcular Puntaje ATS
@@ -140,7 +134,7 @@
             [icon]="'@tui.alert-triangle'"
             class="w-full"
           >
-            <h5 class="font-semibold mb-1">Advertencias de Formato</h5>
+            <h5 class="font-semibold mb-1">Advertencias</h5>
             <ul class="list-disc list-inside text-sm">
               @for (warning of warnings(); track $index) {
                 <li>{{ warning }}</li>
@@ -150,6 +144,13 @@
         </div>
       }
     </div>
+    <div>
+      <h2 class="text-base font-semibold text-gray-800">Vision General</h2>
+      <p>
+        {{generalText()}}
+      </p>
+    </div>
+
 
     <div class="flex flex-col gap-2">
       <h4 class="text-base font-semibold text-gray-800">Análisis de Palabras Clave</h4>
@@ -168,17 +169,41 @@
 
     <div class="flex flex-col gap-3">
       <h4 class="text-base font-semibold text-gray-800">Puntaje por Sección</h4>
-      @for (item of sectionScores(); track item[0]) {
+
+      @for (section of analyzedSections(); track section.name) {
         <div class="flex flex-col">
           <label class="text-sm font-medium text-gray-700 capitalize mb-1">
-            {{ item[0] | titlecase }} <span class="font-bold ml-2">{{ item[1] }}%</span>
+            {{ section.name | titlecase }}
+            <span class="font-bold ml-2">{{ section.score }}%</span>
           </label>
+
           <progress
             tuiProgressBar
-            [value]="item[1]"
+            [value]="section.score"
             [max]="100"
             class="w-full"
           ></progress>
+
+          <div class="mt-2 text-xs text-gray-600 space-y-1">
+
+            @for (highlight of section.analysis.highlights; track $index) {
+              <div class="flex items-start text-green-700">
+                <svg class="w-4 h-4 mr-1.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span>{{ highlight }}</span>
+              </div>
+            }
+
+            @for (issue of section.analysis.issues; track $index) {
+              <div class="flex items-start text-red-700">
+                <svg class="w-4 h-4 mr-1.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                </svg>
+                <span>{{ issue }}</span>
+              </div>
+            }
+          </div>
         </div>
       }
     </div>

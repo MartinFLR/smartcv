@@ -32,5 +32,51 @@
       </a>
     </tui-tabs>
 
+    <tui-badged-content
+    tuiSlot="right"
+    >
+      <img
+        alt=""
+        size="s"
+        tuiBadge
+        tuiSlot="bottom"
+        [src]="flags.get(languageControl.value!) || flags.get(switcher.language) | tuiFlag"
+      />
+
+      <button
+        appearance="outline-grayscale"
+        size="m"
+        tuiButtonSelect
+        tuiIconButton
+        type="button"
+        [formControl]="languageControl"
+        [iconStart]="icons.languages"
+      >
+
+        <tui-data-list *tuiTextfieldDropdown>
+          <tui-opt-group label="Lenguaje">
+            @for (name of names; track $index) {
+              <button
+                new
+                tuiOption
+                size="s"
+                type="button"
+                [value]="name | titlecase"
+                (click)="setLang(name)"
+              >
+                <img
+                  alt=""
+                  class="t-flag"
+                  [src]="flags.get(name) | tuiFlag"
+                />
+                {{ name | titlecase }}
+              </button>
+            }
+
+          </tui-opt-group>
+        </tui-data-list>
+      </button>
+    </tui-badged-content>
+
   </tui-app-bar>
 </header>

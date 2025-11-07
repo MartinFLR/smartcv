@@ -1,5 +1,5 @@
-export type PromptLanguage = 'es' | 'en';
-export type PromptType = 'tailoredCv' | 'coverLetter' | 'summary';
+export type PromptLanguage = 'spanish' | 'english';
+export type PromptType = 'tailoredCv' | 'coverLetter' | 'summary' | 'ats';
 export type TemperatureLevel = 'low' | 'medium' | 'high';
 export type ToneLevel = 'formal' | 'enthusiast' | 'casual' | 'neutral' | 'confident';
 export type DeliveryChannel = 'email' | 'linkedinMessage' | 'applicationForm' | 'internalReferral';

@@ -25,11 +25,11 @@ export class ProfileService {
     return false;
   }
 
-  saveCurrentCvAsProfile(name: string): CvProfile | null {
+  saveCurrentCvAsProfile(name: string): CvProfile {
     const currentCv = this.saveDataService.loadData();
     if (!currentCv) {
-      console.error('No hay CV activo para guardar.');
-      return null;
+      // Es mejor tirar un error que devolver null si la operación falla
+      throw new Error('No hay CV activo para guardar.');
     }
 
     const newProfile: CvProfile = {
@@ -46,9 +46,21 @@ export class ProfileService {
     return newProfile;
   }
 
-  deleteProfile(id: string): void {
+  deleteProfile(id: string): CvProfile[] {
     let profiles = this.getProfiles();
     profiles = profiles.filter((p) => p.id !== id);
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(profiles));
+    return profiles; // Devuelve la nueva lista
+  }
+
+  updateProfileName(id: string, newName: string): CvProfile[] {
+    const profiles = this.getProfiles();
+    const profileToUpdate = profiles.find((p) => p.id === id);
+
+    if (profileToUpdate) {
+      profileToUpdate.name = newName;
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(profiles));
+    }
+    return profiles;
   }
 }

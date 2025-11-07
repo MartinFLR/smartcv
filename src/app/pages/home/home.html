@@ -5,7 +5,15 @@
     <p>{{this.iaForm.getRawValue() | json}}</p>
     <p>{{this.cvForm.getRawValue() | json}}</p>
     -->
+
     <div class="p-6 border rounded-lg shadow-sm bg-white">
+      <app-actions
+        [isLoading]="isLoading()"
+        [isCvValid]="cvForm.valid"
+        (save)="saveCv()"
+        (download)="downloadPdf()"
+        (clear)="clearCv()"
+      />
       <tui-tabs-with-more
         [itemsLimit]="6"
         [(activeItemIndex)]="activeTab"
@@ -120,13 +128,6 @@
       </form>
     </div>
 
-    <app-actions
-      [isLoading]="isLoading()"
-      [isCvValid]="cvForm.valid"
-      (save)="saveCv()"
-      (download)="downloadPdf()"
-      (clear)="clearCv()"
-    />
   </div>
 
   <div class="md:col-span-6 md:sticky md:top-8 h-full">

@@ -1,10 +1,10 @@
 import { AIFactory } from './ai/ai.factory';
 import { cleanJson } from '../utils/json-cleaner';
 import { } from '../../shared/types/Types';
-import * as pdfParse from 'pdf-parse';
-import {buildATSPrompt} from './prompt/cover-letter/cover-letter-builder';
 import {CvAtsPayload, CvAtsResponse} from '../../shared/types/AtsTypes';
+import {buildPrompt} from './prompt/prompt-builder';
 
+import pdfParse = require('pdf-parse');
 
 export async function analyzeCvAts(body: CvAtsPayload): Promise<CvAtsResponse> {
   const {
@@ -23,11 +23,17 @@ export async function analyzeCvAts(body: CvAtsPayload): Promise<CvAtsResponse> {
   } else {
     pdfBuffer = Buffer.from(file as ArrayBuffer);
   }
+  const pdfParser = new pdfParse.PDFParse({ data: pdfBuffer });
 
-  const parsed = await (pdfParse as any)(pdfBuffer);
+  const parsed: pdfParse.TextResult = await pdfParser.getText();
+
   const cvText = parsed.text.slice(0, 15000);
 
-  const prompt = buildATSPrompt(cvText, jobDesc, promptOption);
+  if (!jobDesc) {
+    throw new Error('jobDesc no puede ser undefined en ats.service');
+  }
+
+  const prompt = buildPrompt(cvText, jobDesc,promptOption);
 
   const ai = AIFactory.create({ provider: modelProvider, version: modelVersion });
   const text = await ai.generate(prompt);
