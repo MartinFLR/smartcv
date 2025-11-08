@@ -1,31 +1,53 @@
 <form [formGroup]="iaForm()" class="flex flex-col gap-6">
   <h2 class="text-xl font-semibold text-gray-800">Optimización con IA</h2>
 
-  <div class="p-4 border border-gray-200 rounded relative flex flex-col gap-4 bg-gray-50">
+  <div
+    class="p-4 border border-gray-200 rounded relative flex flex-col gap-4 bg-gray-50"
+  >
     <tui-textfield>
-      <label tuiLabel>Pegá acá la descripción del puesto (Job Description)</label>
+      <label tuiLabel [for]="'iaJobDescriptionInput'"
+        >Pegá acá la descripción del puesto (Job Description)</label
+      >
       <textarea
         tuiTextarea
         formControlName="jobDescription"
+        [id]="'iaJobDescriptionInput'"
         [min]="8"
         [max]="10"
       ></textarea>
     </tui-textfield>
     <div class="text-sm text-gray-600">
-      <p>Al hacer clic english "Optimizar CV", la IA reescribirá tu <span class="font-semibold">Resumen Profesional</span>, <span class="font-semibold">Puesto</span> y los <span class="font-semibold">Logros</span> de tu experiencia y educación para que coincidan con la terminología y las palabras clave de la oferta laboral.</p>
-      <p class="mt-1 font-medium">¡Siempre revisá el resultado de la IA antes de descargar!</p>
+      <p>
+        Al hacer clic english "Optimizar CV", la IA reescribirá tu
+        <span class="font-semibold">Resumen Profesional</span>,
+        <span class="font-semibold">Puesto</span> y los
+        <span class="font-semibold">Logros</span> de tu experiencia y educación
+        para que coincidan con la terminología y las palabras clave de la oferta
+        laboral.
+      </p>
+      <p class="mt-1 font-medium">
+        ¡Siempre revisá el resultado de la IA antes de descargar!
+      </p>
     </div>
   </div>
 
-  <div class="w-full  border-gray-200 p-4 border rounded bg-gray-50 flex flex-col gap-2">
-    <label tuiLabel class="block text-sm font-medium text-gray-700">
+  <div
+    class="w-full border-gray-200 p-4 border rounded bg-gray-50 flex flex-col gap-2"
+  >
+    <label
+      tuiLabel
+      [for]="'iaExaggeration'"
+      class="block text-sm font-medium text-gray-700"
+    >
       Nivel de exageración
     </label>
 
     <input
       tuiSlider
+      [id]="'iaExaggeration'"
       type="range"
-      class="w-full" [readOnly]="false"
+      class="w-full"
+      [readOnly]="false"
       [segments]="segments()"
       [step]="step"
       [min]="min"
@@ -38,8 +60,7 @@
         <button
           type="button"
           (click)="iaForm().controls.exaggeration.setValue(+level.key)"
-          class="text-sm cursor-pointer focus:outline-none transition-colors px-1 rounded
-                     focus-visible:ring-2 focus-visible:ring-blue-500"
+          class="text-sm cursor-pointer focus:outline-none transition-colors px-1 rounded focus-visible:ring-2 focus-visible:ring-blue-500"
           [class.text-gray-500]="currentExaggeration() !== +level.key"
           [class.text-blue-600]="currentExaggeration() === +level.key"
           [class.font-bold]="currentExaggeration() === +level.key"
@@ -50,17 +71,15 @@
       }
     </div>
 
-    <div class="text-center text-xs text-gray-500 mt-2 text-balance min-h-[2.5rem]">
-      {{ currentExaggeration() | exaggerationLevel:exaggerationDescriptions }}
+    <div
+      class="text-center text-xs text-gray-500 mt-2 text-balance min-h-[2.5rem]"
+    >
+      {{ currentExaggeration() | exaggerationLevel: exaggerationDescriptions }}
     </div>
   </div>
 
   <label tuiLabel class="flex items-center gap-2 mt-4 text-gray-800">
-    <input
-      tuiCheckbox
-      type="checkbox"
-      formControlName="makeEnglish"
-    />
+    <input tuiCheckbox type="checkbox" formControlName="makeEnglish" />
     Traducir CV a Inglés (Experimental)
   </label>
 
@@ -72,7 +91,8 @@
     (click)="optimize.emit()"
     [loading]="isLoading()"
     [disabled]="iaForm().invalid"
-    class="w-full sm:w-auto self-start">
+    class="w-full sm:w-auto self-start"
+  >
     Optimizar CV con IA
   </button>
 </form>

@@ -1,43 +1,51 @@
-import {DOCUMENT, inject, Injectable} from '@angular/core';
-import {CvForm} from '../../../../shared/types/Types';
-import {TuiAlertService} from '@taiga-ui/core';
+import { DOCUMENT, inject, Injectable, signal } from '@angular/core';
+import { CvForm } from '../../../../shared/types/Types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SaveDataService {
   private readonly document = inject(DOCUMENT);
-  private readonly alerts = inject(TuiAlertService);
-
-  private readonly storage: Storage | null = this.document.defaultView?.localStorage ?? null;
-
+  private readonly storage: Storage | null =
+    this.document.defaultView?.localStorage ?? null;
   private readonly STORAGE_KEY = 'angular-cv-data';
+
+  private readonly cvDataSignal = signal<CvForm | null>(
+    this.loadDataInternal(),
+  );
+  public readonly activeCv = this.cvDataSignal.asReadonly();
 
   saveData(cvData: CvForm): void {
     if (!this.storage) {
       return;
     }
-
     try {
       const serializedData = JSON.stringify(cvData);
       this.storage.setItem(this.STORAGE_KEY, serializedData);
-      this.alerts.open('CV guardado localmente', {
-        appearance: 'success',
-        autoClose: 3000
-      }).subscribe();
+      this.cvDataSignal.set(cvData);
     } catch (e) {
       console.error('Error al guardar datos en localStorage:', e);
-      this.alerts.open('No se pudo guardar el CV', {
-        appearance: 'error'
-      }).subscribe();
+      throw new Error('No se pudo guardar el CV');
     }
   }
 
-  loadData(): CvForm | null {
+  clearData(): void {
+    if (!this.storage) {
+      return;
+    }
+    try {
+      this.storage.removeItem(this.STORAGE_KEY);
+      this.cvDataSignal.set(null);
+    } catch (e) {
+      console.error('Error al limpiar datos de localStorage:', e);
+      throw new Error('No se pudo limpiar los datos');
+    }
+  }
+
+  private loadDataInternal(): CvForm | null {
     if (!this.storage) {
       return null;
     }
-
     try {
       const serializedData = this.storage.getItem(this.STORAGE_KEY);
       if (serializedData === null) {
@@ -45,27 +53,9 @@ export class SaveDataService {
       }
       return JSON.parse(serializedData) as CvForm;
     } catch (e) {
-      console.error('Error al cargar datos de localStorage (datos corruptos?):', e);
-      this.clearData(false);
+      console.error('Error al cargar datos (datos corruptos?):', e);
+      this.storage?.removeItem(this.STORAGE_KEY);
       return null;
-    }
-  }
-
-  clearData(showAlert: boolean = true): void {
-    if (!this.storage) {
-      return;
-    }
-
-    try {
-      this.storage.removeItem(this.STORAGE_KEY);
-      if (showAlert) {
-        this.alerts.open('Datos locales eliminados', {
-          appearance: 'info',
-          autoClose: 3000
-        }).subscribe();
-      }
-    } catch (e) {
-      console.error('Error al limpiar datos de localStorage:', e);
     }
   }
 }

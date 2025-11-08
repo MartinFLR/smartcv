@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DummyView } from './dummy-view';
+import { EditProfile } from './edit-profile';
 
-describe('DummyView', () => {
-  let component: DummyView;
-  let fixture: ComponentFixture<DummyView>;
+describe('EditProfile', () => {
+  let component: EditProfile;
+  let fixture: ComponentFixture<EditProfile>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DummyView],
+      imports: [EditProfile],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DummyView);
+    fixture = TestBed.createComponent(EditProfile);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

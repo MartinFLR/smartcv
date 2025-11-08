@@ -3,7 +3,10 @@ import jsPDF from 'jspdf';
 import { CvForm } from '../../../../shared/types/Types';
 
 type ItemSectionKey = 'experience' | 'projects' | 'education';
-type ItemType = CvForm['experience'][number] | CvForm['projects'][number] | CvForm['education'][number];
+type ItemType =
+  | CvForm['experience'][number]
+  | CvForm['projects'][number]
+  | CvForm['education'][number];
 
 interface ItemMap {
   title: string;
@@ -16,7 +19,6 @@ interface ItemMap {
   providedIn: 'root',
 })
 export class PdfService {
-
   private readonly MARGIN = 40;
   private readonly FONT_SIZE_NORMAL = 10;
   private readonly FONT_SIZE_TITLE = 12;
@@ -33,9 +35,24 @@ export class PdfService {
   private usableWidth = 0;
 
   private readonly itemSectionsMap: ItemMap[] = [
-    { title: 'EXPERIENCIA LABORAL', dataKey: 'experience', subtitleKey: 'company', roleKey: 'role' },
-    { title: 'PROYECTOS RELEVANTES', dataKey: 'projects', subtitleKey: 'subtitle', roleKey: 'name' },
-    { title: 'EDUCACIÓN', dataKey: 'education', subtitleKey: 'institution', roleKey: 'title' },
+    {
+      title: 'EXPERIENCIA LABORAL',
+      dataKey: 'experience',
+      subtitleKey: 'company',
+      roleKey: 'role',
+    },
+    {
+      title: 'PROYECTOS RELEVANTES',
+      dataKey: 'projects',
+      subtitleKey: 'subtitle',
+      roleKey: 'name',
+    },
+    {
+      title: 'EDUCACIÓN',
+      dataKey: 'education',
+      subtitleKey: 'institution',
+      roleKey: 'title',
+    },
   ];
 
   downloadPdf(data: CvForm): void {
@@ -82,7 +99,12 @@ export class PdfService {
     this.currentY += 2;
 
     this.doc.setDrawColor(209, 213, 219);
-    this.doc.line(this.MARGIN, this.currentY, this.pageWidth - this.MARGIN, this.currentY);
+    this.doc.line(
+      this.MARGIN,
+      this.currentY,
+      this.pageWidth - this.MARGIN,
+      this.currentY,
+    );
 
     this.currentY += 16;
     this.doc.setFontSize(this.FONT_SIZE_NORMAL);
@@ -95,19 +117,25 @@ export class PdfService {
     if (info.name) {
       this.doc.setFontSize(this.FONT_SIZE_HEADER);
       this.doc.setFont('times', 'bold');
-      this.doc.text(info.name.trim(), midPage, this.currentY, { align: 'center' });
+      this.doc.text(info.name.trim(), midPage, this.currentY, {
+        align: 'center',
+      });
       this.currentY += this.FONT_SIZE_HEADER + 1;
     }
 
     if (info.job) {
       this.doc.setFontSize(this.FONT_SIZE_TITLE);
       this.doc.setFont('times', 'italic');
-      this.doc.text(info.job.trim(), midPage, this.currentY, { align: 'center' });
+      this.doc.text(info.job.trim(), midPage, this.currentY, {
+        align: 'center',
+      });
       this.currentY += this.FONT_SIZE_TITLE + 2;
     }
 
     const normalizeUrl = (url: string) =>
-      url.startsWith('http://') || url.startsWith('https://') ? url : `https://${url}`;
+      url.startsWith('http://') || url.startsWith('https://')
+        ? url
+        : `https://${url}`;
 
     const row1: { label: string }[] = [];
     if (info.email) row1.push({ label: info.email });
@@ -115,9 +143,11 @@ export class PdfService {
     if (info.location) row1.push({ label: info.location });
 
     const row2: { label: string; link: string }[] = [];
-    if (info.linkedin) row2.push({ label: info.linkedin, link: normalizeUrl(info.linkedin) });
+    if (info.linkedin)
+      row2.push({ label: info.linkedin, link: normalizeUrl(info.linkedin) });
     if (info.web) row2.push({ label: info.web, link: normalizeUrl(info.web) });
-    if (info.github) row2.push({ label: info.github, link: normalizeUrl(info.github) });
+    if (info.github)
+      row2.push({ label: info.github, link: normalizeUrl(info.github) });
 
     const colCount = 3;
     const startY = this.currentY + 3;
@@ -128,7 +158,10 @@ export class PdfService {
 
     row1.forEach((item, col) => {
       const y = startY + 0 * rowGap; // fila1
-      const xCenter = colCount > 0 ? (this.pageWidth / colCount) * col + (this.pageWidth / colCount) / 2 : 0;
+      const xCenter =
+        colCount > 0
+          ? (this.pageWidth / colCount) * col + this.pageWidth / colCount / 2
+          : 0;
       const textWidth = this.doc.getTextWidth(item.label);
       const xText = xCenter - textWidth / 2;
       this.doc.setTextColor(0, 0, 0);
@@ -137,7 +170,10 @@ export class PdfService {
 
     row2.forEach((item, col) => {
       const y = startY + 1 * rowGap; // fila2
-      const xCenter = colCount > 0 ? (this.pageWidth / colCount) * col + (this.pageWidth / colCount) / 2 : 0;
+      const xCenter =
+        colCount > 0
+          ? (this.pageWidth / colCount) * col + this.pageWidth / colCount / 2
+          : 0;
       const textWidth = this.doc.getTextWidth(item.label);
       const xText = xCenter - textWidth / 2;
       this.doc.setTextColor(40, 80, 160); // azul para links
@@ -153,7 +189,10 @@ export class PdfService {
 
     this.drawSectionTitle('PERFIL PROFESIONAL');
 
-    const lines = this.doc.splitTextToSize(summary, this.usableWidth) as string[];
+    const lines = this.doc.splitTextToSize(
+      summary,
+      this.usableWidth,
+    ) as string[];
     const requiredHeight = lines.length * this.LINE_HEIGHT_NORMAL;
 
     this.checkPageBreak(requiredHeight);
@@ -166,14 +205,14 @@ export class PdfService {
   }
 
   private drawItemSections(data: CvForm): void {
-    this.itemSectionsMap.forEach(section => {
+    this.itemSectionsMap.forEach((section) => {
       const items = data[section.dataKey] as ItemType[] | undefined;
 
       if (!items?.length) return;
 
       this.drawSectionTitle(section.title);
 
-      items.forEach(item => {
+      items.forEach((item) => {
         const mainKey = section.roleKey as keyof ItemType;
         if (!item[mainKey]) return;
 
@@ -185,7 +224,9 @@ export class PdfService {
 
         this.doc.setFont('times', 'italic');
         const dates = [item.dateIn, item.dateFin].filter(Boolean).join(' - ');
-        this.doc.text(dates, this.pageWidth - this.MARGIN, this.currentY, { align: 'right' });
+        this.doc.text(dates, this.pageWidth - this.MARGIN, this.currentY, {
+          align: 'right',
+        });
         this.currentY += this.LINE_HEIGHT_NORMAL;
 
         const subKey = section.subtitleKey as keyof ItemType;
@@ -198,14 +239,22 @@ export class PdfService {
         }
 
         this.doc.setFont('times', 'normal');
-        const bulletsContent = (item as any).bullets as string | null | undefined;
+        const bulletsContent = item.bullets as string | null | undefined;
 
-        const bullets = (bulletsContent || '').split('\n').filter((b: string) => b.trim());
+        const bullets = (bulletsContent || '')
+          .split('\n')
+          .filter((b: string) => b.trim());
         const bulletUsableWidth = this.usableWidth - this.BULLET_INDENT;
 
         bullets.forEach((b: string) => {
-          const bulletText = `• ${b.trim().replace(/^[•–-]/, '').trim()}`;
-          const lines = this.doc.splitTextToSize(bulletText, bulletUsableWidth) as string[];
+          const bulletText = `• ${b
+            .trim()
+            .replace(/^[•–-]/, '')
+            .trim()}`;
+          const lines = this.doc.splitTextToSize(
+            bulletText,
+            bulletUsableWidth,
+          ) as string[];
 
           this.checkPageBreak(lines.length * this.LINE_HEIGHT_NORMAL + 2);
 
@@ -221,7 +270,9 @@ export class PdfService {
     });
   }
 
-  private drawSkillsSection(skillGroup: CvForm['skills'][number] | undefined): void {
+  private drawSkillsSection(
+    skillGroup: CvForm['skills'][number] | undefined,
+  ): void {
     if (!skillGroup) return;
 
     this.drawSectionTitle('HABILIDADES CLAVE');
@@ -232,11 +283,13 @@ export class PdfService {
       const labelText = `${label.toUpperCase()}: `;
       const fullText = labelText + values.join(' | ');
 
-      const lines = this.doc.splitTextToSize(fullText, this.usableWidth) as string[];
+      const lines = this.doc.splitTextToSize(
+        fullText,
+        this.usableWidth,
+      ) as string[];
       const requiredHeight = lines.length * this.LINE_HEIGHT_NORMAL;
 
       this.checkPageBreak(requiredHeight + 4);
-
 
       const firstLine: string = lines[0];
       let currentX = this.MARGIN;
@@ -275,7 +328,7 @@ export class PdfService {
     }
     if (skillGroup.certifications?.length) {
       const certs: string[] = skillGroup.certifications.map(
-        (cert: any) => `${cert.name}${cert.date ? ` (${cert.date})` : ''}`
+        (cert) => `${cert.name}${cert.date ? ` (${cert.date})` : ''}`,
       );
       printSkillCategory('Certificaciones', certs);
     }
@@ -284,4 +337,3 @@ export class PdfService {
     }
   }
 }
-

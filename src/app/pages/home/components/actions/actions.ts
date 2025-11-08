@@ -1,125 +1,212 @@
-import {Component, effect, inject, INJECTOR, input, output, signal} from '@angular/core';
-import {TuiButton, TuiDialog, TuiDialogService, TuiHint} from '@taiga-ui/core';
 import {
-  TuiSelectDirective, TuiSwitch,
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  input,
+  output,
+  signal,
+} from '@angular/core';
+import {
+  TuiAlertService,
+  TuiButton,
+  TuiHint,
+  TuiTextfield,
+} from '@taiga-ui/core';
+import {
+  TuiSelect,
+  TuiSwitch,
+  TuiChevron,
+  TuiDataListWrapper,
 } from '@taiga-ui/kit';
-import {FormsModule} from '@angular/forms';
-import {TuiIcon, TuiTextfield} from '@taiga-ui/core';
-import {TuiChevron, TuiDataListWrapper, TuiTooltip} from '@taiga-ui/kit';
-import {ProfileService} from '../../../../services/profile/profile.service';
-import {CvProfile} from '../../../../../../shared/types/Types';
+import { FormsModule } from '@angular/forms';
+import { ProfileService } from '../../../../services/profile/profile.service';
+import { CvProfile } from '../../../../../../shared/types/Types';
+import { TuiDialogService } from '@taiga-ui/experimental';
+import { CreateProfile } from './profile/create-profile/create-profile';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
+import { EditProfile } from './profile/edit-profile/edit-profile';
+import { TuiRipple } from '@taiga-ui/addon-mobile';
 
 @Component({
   selector: 'app-actions',
+  standalone: true, // Agregado
   imports: [
     TuiButton,
-    TuiSelectDirective,
     TuiTextfield,
+    TuiSelect,
     TuiChevron,
     TuiDataListWrapper,
-    TuiIcon,
-    TuiTooltip,
     FormsModule,
     TuiSwitch,
-    TuiHint
+    TuiHint,
+    TuiRipple,
   ],
   templateUrl: './actions.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './actions.css',
 })
 export class Actions {
   private readonly profileService = inject(ProfileService);
   private readonly dialogs = inject(TuiDialogService);
-  private readonly injector = inject(INJECTOR);
+  private readonly alerts = inject(TuiAlertService);
 
   isLoading = input.required<boolean>();
   isCvValid = input.required<boolean>();
+  isCvLocked = input.required<boolean>();
 
+  lockCv = output<boolean>();
   save = output<void>();
   download = output<void>();
   clear = output<void>();
 
-  protected readonly profiles = signal<CvProfile[]>([]);
-  protected selectedProfileId = signal<string | null>(null);
+  protected readonly profiles = this.profileService.profiles;
+  protected selectedProfile = signal<CvProfile | null>(null);
 
-  protected readonly profileStringifier = (profile: CvProfile): string => profile.name;
+  protected readonly profileStringifier = (profile: CvProfile): string =>
+    profile.name;
 
   constructor() {
-    this.loadProfiles();
-
     effect(() => {
-      const id = this.selectedProfileId();
-      if (id) {
-        this.profileService.loadProfileToActive(id);
+      const currentProfile = this.selectedProfile();
+      if (currentProfile) {
+        this.profileService.loadProfileToActive(currentProfile.id);
+      } else {
+        this.clear.emit();
       }
     });
   }
 
-  private loadProfiles(): void {
-    this.profiles.set(this.profileService.getProfiles());
+  protected onProfileChange(profile: CvProfile | null): void {
+    const previousProfile = this.selectedProfile();
+
+    if (previousProfile && this.isCvValid()) {
+      try {
+        this.save.emit();
+        this.profileService.updateActiveProfileData(previousProfile.id);
+        this.showAlert(`Perfil "${previousProfile.name}" guardado.`);
+      } catch (e) {
+        this.showError((e as Error).message);
+      }
+    }
+
+    this.selectedProfile.set(profile);
+
+    if (profile) {
+      this.showAlert(`Perfil "${profile.name}" cargado.`, 'info');
+    }
   }
 
   protected createNewProfile(): void {
+    const cvEsValido = this.isCvValid();
+
+    if (cvEsValido && this.selectedProfile()) {
+      this.saveCv();
+    }
+
     this.dialogs
-      .open<string>(
-        new PolymorpheusComponent(TuiDialog, this.injector),
-        {
-          label: 'Crear nuevo perfil de CV',
-          data: {
-            heading: '¿Qué nombre querés darle?',
-            button: 'Crear',
-          },
-        }
-      )
+      .open<string>(new PolymorpheusComponent(CreateProfile), {
+        label: 'Crear Nuevo Perfil',
+        size: 's',
+      })
       .subscribe((name) => {
         if (name) {
-          const newProfile = this.profileService.saveCurrentCvAsProfile(name);
-          this.profiles.set(this.profileService.getProfiles());
-          this.selectedProfileId.set(newProfile.id);
+          try {
+            let newProfile: CvProfile;
+
+            if (cvEsValido) {
+              this.save.emit();
+              newProfile = this.profileService.saveCurrentCvAsProfile(name);
+              this.showAlert('Perfil guardado y cargado.');
+            } else {
+              newProfile = this.profileService.createEmptyProfile(name);
+              this.showAlert('Nuevo perfil vacío creado.');
+            }
+
+            this.selectedProfile.set(newProfile);
+          } catch (e) {
+            this.showError((e as Error).message);
+          }
         }
       });
   }
 
   protected editProfileName(profile: CvProfile): void {
     this.dialogs
-      .open<string>({
-        label: 'Editar nombre',
-        data: {
-          heading: 'Ingresá el nuevo nombre',
-          value: profile.name,
-          button: 'Guardar',
-        },
-        injector: this.injector,
+      .open<string>(new PolymorpheusComponent(EditProfile), {
+        label: 'Editar Perfil',
+        size: 's',
+        data: profile.name,
       })
       .subscribe((newName) => {
         if (newName && newName !== profile.name) {
-          const updatedProfiles = this.profileService.updateProfileName(profile.id, newName);
-          this.profiles.set(updatedProfiles);
+          try {
+            const updatedProfile = this.profileService.updateProfileName(
+              profile.id,
+              newName,
+            );
+            if (this.selectedProfile()?.id === updatedProfile.id) {
+              this.selectedProfile.set(updatedProfile);
+              this.showAlert(`Perfil actualizado.`);
+            }
+          } catch (e) {
+            this.showError((e as Error).message);
+          }
         }
       });
   }
 
-  protected reloadProfile(): void {
-    const id = this.selectedProfileId();
-    if (id) {
-      this.profileService.loadProfileToActive(id);
+  protected deleteProfile(id: string): void {
+    this.profileService.deleteProfile(id);
+    if (this.selectedProfile()?.id === id) {
+      this.selectedProfile.set(null);
     }
   }
 
-  protected deleteProfile(id: string): void {
-    const updatedProfiles = this.profileService.deleteProfile(id);
-    this.profiles.set(updatedProfiles);
-    if (this.selectedProfileId() === id) {
-      this.selectedProfileId.set(null);
+  protected reloadProfile(): void {
+    const profile = this.selectedProfile();
+    if (profile) {
+      try {
+        this.profileService.loadProfileToActive(profile.id);
+        this.showAlert('CV Recargado correctamente.');
+      } catch (e) {
+        this.showError((e as Error).message);
+      }
+    }
+  }
+
+  protected saveCv(): void {
+    this.save.emit();
+
+    const profile = this.selectedProfile();
+    if (profile) {
+      try {
+        this.profileService.updateActiveProfileData(profile.id);
+        this.showAlert('CV Guardado y perfil actualizado.');
+      } catch (e) {
+        this.showError((e as Error).message);
+      }
     }
   }
 
   protected clearSelection(): void {
-    this.selectedProfileId.set(null);
+    this.selectedProfile.set(null);
   }
 
   protected clearForm(): void {
-    this.clearSelection();
-    this.clear.emit();
+    this.selectedProfile.set(null); // Esto dispara el effect, que va llamar a clear.emit()
+  }
+
+  private showAlert(
+    message: string,
+    appearance: 'success' | 'warning' | 'error' | 'info' = 'success',
+  ): void {
+    this.alerts.open(message, { appearance, autoClose: 3000 }).subscribe();
+  }
+
+  private showError(message: string): void {
+    this.alerts
+      .open(message, { appearance: 'error', autoClose: 5000 })
+      .subscribe();
   }
 }

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import {Config} from './pages/config/config';
-import {Home} from './pages/home/home';
+import { Config } from './pages/config/config';
+import { Home } from './pages/home/home';
 
 export const routes: Routes = [
   {
@@ -17,5 +17,4 @@ export const routes: Routes = [
     path: '**',
     redirectTo: '',
   },
-
 ];

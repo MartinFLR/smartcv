@@ -1,12 +1,31 @@
-import {Component, computed, inject, Injector, input, OnInit, output, signal, Signal} from '@angular/core';
-import {ControlContainer, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {TuiButton, TuiTextfield} from '@taiga-ui/core';
-import {TuiButtonLoading, TuiCheckbox, TuiSlider, TuiTextarea} from '@taiga-ui/kit';
-import {KeyValuePipe} from '@angular/common';
-import {ExaggerationLevelPipe} from '../../../../utils/pipes/exaggeration-pipe';
-import {map, startWith} from 'rxjs';
-import {toSignal} from '@angular/core/rxjs-interop';
-import {IaFormControls} from '../../../../../../shared/types/Controls';
+import {
+  Component,
+  computed,
+  inject,
+  Injector,
+  input,
+  OnInit,
+  output,
+  signal,
+  Signal,
+} from '@angular/core';
+import {
+  ControlContainer,
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { TuiButton, TuiTextfield } from '@taiga-ui/core';
+import {
+  TuiButtonLoading,
+  TuiCheckbox,
+  TuiSlider,
+  TuiTextarea,
+} from '@taiga-ui/kit';
+import { KeyValuePipe } from '@angular/common';
+import { ExaggerationLevelPipe } from '../../../../utils/pipes/exaggeration-pipe';
+import { map } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { IaFormControls } from '../../../../../../shared/types/Controls';
 
 @Component({
   selector: 'app-ia-section',
@@ -19,16 +38,15 @@ import {IaFormControls} from '../../../../../../shared/types/Controls';
     ExaggerationLevelPipe,
     TuiCheckbox,
     TuiButton,
-    TuiButtonLoading
+    TuiButtonLoading,
   ],
   viewProviders: [
     {
       provide: ControlContainer,
-      useFactory: () => inject(ControlContainer, {skipSelf: true})
-    }
+      useFactory: () => inject(ControlContainer, { skipSelf: true }),
+    },
   ],
   templateUrl: './ia-section.component.html',
-  styleUrl: './ia-section.component.css',
 })
 export class IaSection implements OnInit {
   iaForm = input.required<FormGroup<IaFormControls>>();
@@ -36,7 +54,9 @@ export class IaSection implements OnInit {
   optimize = output<void>();
 
   protected readonly exaggerationLevel: Record<number, string> = {
-    0: 'low', 1: 'medium', 2: 'high',
+    0: 'low',
+    1: 'medium',
+    2: 'high',
   };
   protected readonly exaggerationDescriptions: Record<number, string> = {
     0: 'Fiel al CV, mantiene el tono profesional y realista. No inventa logros ni resultados.',
@@ -61,13 +81,11 @@ export class IaSection implements OnInit {
       const initialValue = exaggerationControl.value ?? 0;
 
       this.currentExaggeration = toSignal(
-        exaggerationControl.valueChanges.pipe(
-          map(value => value ?? 0)
-        ),
+        exaggerationControl.valueChanges.pipe(map((value) => value ?? 0)),
         {
           injector: this.injector,
-          initialValue: initialValue
-        }
+          initialValue: initialValue,
+        },
       );
     }
   }

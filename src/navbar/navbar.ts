@@ -1,14 +1,26 @@
-import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
-import {NgClass, NgOptimizedImage, TitleCasePipe} from '@angular/common';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  inject,
+  signal,
+} from '@angular/core';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TuiAppBar } from '@taiga-ui/layout';
-import { TuiBadge, TuiBadgedContent, TuiButtonSelect, TuiTabs } from '@taiga-ui/kit';
-import {TuiButton, TuiDataList, TuiFlagPipe, tuiScrollbarOptionsProvider, TuiTextfield} from '@taiga-ui/core';
+import { TuiBadgedContent, TuiTabs } from '@taiga-ui/kit';
+import { tuiScrollbarOptionsProvider } from '@taiga-ui/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { TUI_DOC_ICONS } from '@taiga-ui/addon-doc/tokens';
 import { TuiLanguageSwitcherService } from '@taiga-ui/i18n/utils';
-import { type TuiCountryIsoCode, type TuiLanguageName } from '@taiga-ui/i18n/types';
-import { toSignal } from '@angular/core/rxjs-interop';
+import {
+  type TuiCountryIsoCode,
+  type TuiLanguageName,
+} from '@taiga-ui/i18n/types';
+
+/* TODO: Agregar funcionalidad con Transloco
+import { TuiBadge, TuiButtonSelect } from '@taiga-ui/kit';
+import {TuiButton, TuiDataList, TuiFlagPipe, TuiTextfield} from '@taiga-ui/core';
+*/
 
 function capitalize(value: string): string {
   if (typeof value !== 'string' || value.length === 0) {
@@ -26,16 +38,19 @@ function capitalize(value: string): string {
     TuiAppBar,
     TuiTabs,
     RouterLinkActive,
-    TuiButton,
+    ReactiveFormsModule,
+    NgOptimizedImage,
     TuiBadgedContent,
+    /* TODO: Agregar funcionalidad con Transloco
+    TuiButton,
     TuiBadge,
     TuiDataList,
     TitleCasePipe,
-    ReactiveFormsModule,
     TuiButtonSelect,
     TuiFlagPipe,
-    NgOptimizedImage,
     TuiTextfield,
+
+     */
   ],
   providers: [tuiScrollbarOptionsProvider({ mode: 'hover' })],
   templateUrl: './navbar.html',
@@ -43,7 +58,6 @@ function capitalize(value: string): string {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Navbar {
-
   readonly menuOpen = signal(false);
   readonly isScrolled = signal(false);
 
@@ -57,12 +71,12 @@ export class Navbar {
   public readonly names: TuiLanguageName[] = Array.from(this.flags.keys());
 
   protected readonly languageControl = new FormControl<string>(
-    capitalize(this.switcher.language )
+    capitalize(this.switcher.language),
   );
 
   constructor() {
-    if(!this.switcher.language){
-      this.setLang('spanish')
+    if (!this.switcher.language) {
+      this.setLang('spanish');
     }
   }
 
@@ -70,5 +84,4 @@ export class Navbar {
     this.languageControl.setValue(lang, { emitEvent: false });
     this.switcher.setLanguage(lang);
   }
-
 }

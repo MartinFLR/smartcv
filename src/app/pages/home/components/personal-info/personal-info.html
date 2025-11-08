@@ -1,52 +1,88 @@
 <fieldset [formGroup]="personalInfoGroup()" class="flex flex-col gap-4">
-  <h2 class="text-xl font-semibold  text-gray-800">Información Personal</h2>
+  <h2 class="text-xl font-semibold text-gray-800">Información Personal</h2>
   <tui-textfield>
-    <label tuiLabel>Nombre Completo</label>
-    <input tuiTextfield formControlName="name" />
+    <label tuiLabel [for]="'personalNameInput'">Nombre Completo</label>
+    <input tuiTextfield [id]="'personalNameInput'" formControlName="name" />
   </tui-textfield>
   <tui-textfield>
-    <label tuiLabel>Puesto</label>
-    <input tuiTextfield placeholder="FullStack Developer, etc.." formControlName="job" />
+    <label [for]="'personalJobInput'" tuiLabel>Puesto</label>
+    <input
+      tuiTextfield
+      [id]="'personalJobInput'"
+      placeholder="FullStack Developer, etc.."
+      formControlName="job"
+    />
   </tui-textfield>
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 ">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
     <tui-textfield>
-      <label tuiLabel>Email</label>
-      <input tuiTextfield placeholder="ejemplo@gmail.com" type="email" formControlName="email" />
+      <label tuiLabel [for]="'personalEmail'">Email</label>
+      <input
+        tuiTextfield
+        [id]="'personalEmail'"
+        placeholder="ejemplo@gmail.com"
+        type="email"
+        formControlName="email"
+      />
     </tui-textfield>
     <tui-textfield [tuiTextfieldCleaner]="true">
-      <label tuiLabel>Teléfono</label>
-      <input tuiInputPhoneInternational
-             [countries]="countries"
-             countryIsoCode="AR"
-             autocomplete="tel"
-             formControlName="phone" />
+      <label tuiLabel [for]="'personalTelephone'">Teléfono</label>
+      <input
+        tuiInputPhoneInternational
+        [id]="'personalTelephone'"
+        [countries]="countries"
+        countryIsoCode="AR"
+        autocomplete="tel"
+        formControlName="phone"
+      />
     </tui-textfield>
     <tui-textfield>
-      <label tuiLabel>Ubicacion (URL)</label>
-      <input tuiTextfield placeholder="Tu Ubicación" formControlName="location" />
+      <label tuiLabel [for]="'personalUbication'"> Ubicacion (URL)</label>
+      <input
+        tuiTextfield
+        [id]="'personalUbication'"
+        placeholder="Tu Ubicación"
+        formControlName="location"
+      />
+    </tui-textfield>
+
+    <tui-textfield>
+      <label tuiLabel [for]="'personalLinkedin'">LinkedIn (URL)</label>
+      <input
+        tuiTextfield
+        [id]="'personalLinkedin'"
+        placeholder="linkedin.com/in/#####"
+        formControlName="linkedin"
+      />
+    </tui-textfield>
+
+    <tui-textfield>
+      <label tuiLabel [for]="'personalGithub'">Github (URL)</label>
+      <input
+        tuiTextfield
+        [id]="'personalGithub'"
+        placeholder="Tu github"
+        formControlName="github"
+      />
     </tui-textfield>
     <tui-textfield>
-      <label tuiLabel>LinkedIn (URL)</label>
-      <input tuiTextfield placeholder="linkedin.com/in/#####" formControlName="linkedin" />
-    </tui-textfield>
-    <tui-textfield>
-      <label tuiLabel>Github (URL)</label>
-      <input tuiTextfield placeholder="Tu github" formControlName="github" />
-    </tui-textfield>
-    <tui-textfield>
-      <label tuiLabel>Website (URL)</label>
-      <input tuiTextfield placeholder="Tu web" formControlName="web" />
+      <label tuiLabel [for]="'personalWebsite'"> Website (URL)</label>
+      <input
+        tuiTextfield
+        [id]="'personalWebsite'"
+        placeholder="Tu web"
+        formControlName="web"
+      />
     </tui-textfield>
   </div>
 
   <h2 class="text-xl font-semibold mt-4 text-gray-800">Perfil Profesional</h2>
   <tui-textfield iconStart="@tui.pencil">
-        <textarea
-          tuiTextarea
-          placeholder="Escribí tu perfil profesional acá..."
-          formControlName="profileSummary"
-          [min]="8"
-          [max]="10"
-        ></textarea>
+    <textarea
+      tuiTextarea
+      placeholder="Escribí tu perfil profesional acá..."
+      formControlName="profileSummary"
+      [min]="8"
+      [max]="10"
+    ></textarea>
   </tui-textfield>
 </fieldset>

@@ -2,13 +2,15 @@
   "name": "smartcv",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start:frontend": "ng serve",
+    "start:frontend": "npx ng serve",
     "start:backend": "ts-node local-backend/index.ts",
     "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "build": "npx ng build",
+    "watch": "npx ng build --watch --configuration development",
+    "test": "npx ng test",
+    "pretty-quick": "pretty-quick --staged",
+    "lint": "ng lint --fix",
+    "prepare": "husky install"
   },
   "prettier": {
     "overrides": [
@@ -63,7 +65,11 @@
     "@types/jasmine": "~5.1.0",
     "@types/multer": "^2.0.0",
     "@types/node": "^24.10.0",
+    "angular-eslint": "20.5.1",
     "concurrently": "^9.2.1",
+    "eslint": "^9.38.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
     "jasmine-core": "~5.8.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -71,7 +77,11 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "less": "^4.4.2",
+    "prettier": "^3.6.2",
+    "pretty-quick": "^4.2.2",
     "ts-node": "^10.9.2",
-    "typescript": "~5.8.2"
+    "typescript": "~5.8.2",
+    "typescript-eslint": "8.46.2",
+    "husky": "^8.0.0"
   }
 }

@@ -1,11 +1,15 @@
-<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 p-4 md:p-8">
+<div
+  class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 p-4 md:p-8"
+>
   <div class="md:col-span-8 md:col-start-3 flex flex-col gap-6">
     <div class="flex justify-between items-center">
       <h1 class="text-3xl font-bold text-gray-900">Configuración</h1>
-      <a tuiButton
-         iconStart="@tui.arrow-left"
-         appearance="outline"
-         routerLink="/">
+      <a
+        tuiButton
+        iconStart="@tui.arrow-left"
+        appearance="outline"
+        routerLink="/"
+      >
         Volver
       </a>
     </div>
@@ -14,28 +18,19 @@
       [formGroup]="aiForm"
       class="flex flex-col gap-6 p-6 border rounded-lg shadow-sm bg-white"
     >
-      <h2 class="text-xl font-semibold text-gray-800">
-        Configuración de IA
-      </h2>
+      <h2 class="text-xl font-semibold text-gray-800">Configuración de IA</h2>
 
       <label tuiLabel>
         Modelo de IA
-      <tui-textfield
-        iconStart="@tui.user-round"
-        tuiChevron
-        tuiTextfieldSize="m"
-        [tuiTextfieldCleaner]="false"
-      >
-        <input
-          tuiSelect
-          formControlName="model"
-        />
-        <tui-data-list-wrapper
-          *tuiTextfieldDropdown
-          new
-          [items]="aiModels"
-        />
-      </tui-textfield>
+        <tui-textfield
+          iconStart="@tui.user-round"
+          tuiChevron
+          tuiTextfieldSize="m"
+          [tuiTextfieldCleaner]="false"
+        >
+          <input tuiSelect formControlName="model" />
+          <tui-data-list-wrapper *tuiTextfieldDropdown new [items]="aiModels" />
+        </tui-textfield>
       </label>
 
       <button
@@ -48,66 +43,5 @@
         Guardar Ajustes de IA
       </button>
     </form>
-
-    <div class="flex flex-col gap-6 p-6 border rounded-lg shadow-sm bg-white">
-      <h2 class="text-xl font-semibold text-gray-800">Perfiles de CV</h2>
-
-      <div class="flex flex-col sm:flex-row gap-4">
-        <tui-textfield class="flex-1">
-          <label tuiLabel>Nombre del nuevo perfil</label>
-          <input tuiTextfield [ngModel]="newProfileName()" (ngModelChange)="newProfileName.set($event)" />
-        </tui-textfield>
-        <button
-          tuiButton
-          type="button"
-          appearance="primary"
-          (click)="saveNewProfile()"
-          class="sm:self-end"
-        >
-          Guardar CV actual como Perfil
-        </button>
-      </div>
-
-      <h3 class="text-lg font-semibold text-gray-800 mt-4">
-        Perfiles Guardados
-      </h3>
-      <div class="flex flex-col gap-3">
-        @if (profiles().length === 0) {
-          <p class="text-gray-500">
-            No tenés perfiles guardados. Guardá tu CV actual para empezar.
-          </p>
-        } @for (profile of profiles(); track profile.id) {
-        <div
-          tuiCardLarge
-          class="flex justify-between items-center"
-        >
-          <div class="flex flex-col">
-            <span class="font-semibold">{{ profile.name }}</span>
-            <span class="text-sm text-gray-600">{{ profile.jobTitle }}</span>
-          </div>
-          <div class="flex gap-2">
-            <button
-              tuiButton
-              type="button"
-              appearance="outline"
-              size="s"
-              (click)="loadProfile(profile.id)"
-            >
-              Cargar
-            </button>
-            <button
-              tuiButton
-              type="button"
-              appearance="action-destructive"
-              size="s"
-              (click)="deleteProfile(profile.id)"
-            >
-              Eliminar
-            </button>
-          </div>
-        </div>
-      }
-      </div>
-    </div>
   </div>
 </div>

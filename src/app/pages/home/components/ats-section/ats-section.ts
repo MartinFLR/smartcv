@@ -1,35 +1,53 @@
-import {Component, computed, inject, input, signal, Signal} from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  input,
+  signal,
+  Signal,
+} from '@angular/core';
 import {
   TuiAlertService,
   TuiButton,
   TuiHint,
   TuiLabel,
   TuiNotification,
-  TuiTextfieldComponent
+  TuiTextfieldComponent,
 } from '@taiga-ui/core';
 import {
   TuiButtonLoading,
   TuiChip,
   TuiFile,
-  TuiFileLike, TuiFileRejectedPipe,
-  TuiFiles, TuiFilesComponent, TuiInputFilesDirective,
-  TuiProgress, TuiTextarea
+  TuiFileLike,
+  TuiFileRejectedPipe,
+  TuiFiles,
+  TuiFilesComponent,
+  TuiInputFilesDirective,
+  TuiProgress,
+  TuiTextarea,
 } from '@taiga-ui/kit';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {IaFormControls} from '../../../../../../shared/types/Controls';
-import {CvAtsPayload, CvAtsResponse, SectionAnalysis, SectionScoreItem} from '../../../../../../shared/types/AtsTypes';
-import {AtsSectionService} from './ats-service/ats-section.service';
-import {TuiItemGroup} from '@taiga-ui/layout';
-import {AsyncPipe, TitleCasePipe} from '@angular/common';
-import {catchError, finalize, map, Observable, of, Subject, switchMap, tap, timer} from 'rxjs';
-import {BuildPromptOptions} from '../../../../../../shared/types/PromptTypes';
-import {TuiLanguageSwitcherService} from '@taiga-ui/i18n/utils';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { IaFormControls } from '../../../../../../shared/types/Controls';
+import {
+  CvAtsResponse,
+  SectionAnalysis,
+} from '../../../../../../shared/types/AtsTypes';
+import { AtsSectionService } from './ats-service/ats-section.service';
+import { TuiItemGroup } from '@taiga-ui/layout';
+import { AsyncPipe, TitleCasePipe } from '@angular/common';
+import { Observable, of, Subject, switchMap } from 'rxjs';
+import { BuildPromptOptions } from '../../../../../../shared/types/PromptTypes';
+import { TuiLanguageSwitcherService } from '@taiga-ui/i18n/utils';
 
 type SectionKey = keyof CvAtsResponse['sectionScores'];
 
-// 2. Usamos ese tipo en 'DisplayableSection'
-type DisplayableSection = {
-  name: SectionKey; // <--- Ahora 'name' es del tipo específico, no 'string'
+interface DisplayableSection {
+  name: SectionKey;
   score: number;
   analysis: SectionAnalysis;
 }
@@ -75,7 +93,9 @@ export class ATSSection {
     Validators.required,
   );
 
-  score: Signal<number | null> = computed(() => this.response()?.matchScore ?? null);
+  score: Signal<number | null> = computed(
+    () => this.response()?.matchScore ?? null,
+  );
 
   protected scoreColor: Signal<string> = computed(() => {
     const s = this.score();
@@ -93,19 +113,27 @@ export class ATSSection {
   protected fitLevel = computed(() => this.response()?.fitLevel);
   protected fitLevelColor: Signal<string> = computed(() => {
     switch (this.fitLevel()) {
-      case 'Low': return 'var(--tui-status-negative)';
-      case 'Medium': return 'var(--tui-status-warning)';
-      case 'High': return 'var(--tui-status-positive)';
-      default: return 'var(--tui-support-08)';
+      case 'Low':
+        return 'var(--tui-status-negative)';
+      case 'Medium':
+        return 'var(--tui-status-warning)';
+      case 'High':
+        return 'var(--tui-status-positive)';
+      default:
+        return 'var(--tui-support-08)';
     }
   });
-  protected matchedKeywords = computed(() => this.response()?.matchedKeywords ?? []);
-  protected missingKeywords = computed(() => this.response()?.missingKeywords ?? []);
-  protected recommendations = computed(() => this.response()?.recommendations ?? []);
-  protected warnings = computed(() => this.response()?.warnings ?? []);
-  protected generalText = computed(() =>
-    this.response()?.text
+  protected matchedKeywords = computed(
+    () => this.response()?.matchedKeywords ?? [],
   );
+  protected missingKeywords = computed(
+    () => this.response()?.missingKeywords ?? [],
+  );
+  protected recommendations = computed(
+    () => this.response()?.recommendations ?? [],
+  );
+  protected warnings = computed(() => this.response()?.warnings ?? []);
+  protected generalText = computed(() => this.response()?.text);
   protected analyzedSections: Signal<DisplayableSection[]> = computed(() => {
     const sectionsObj = this.response()?.sections;
     const scoresObj = this.response()?.sectionScores;
@@ -115,7 +143,7 @@ export class ATSSection {
     }
 
     return Object.keys(scoresObj)
-      .map(key => {
+      .map((key) => {
         const sectionName = key as keyof typeof scoresObj;
         const score = scoresObj[sectionName];
         const analysis = sectionsObj[sectionName];
@@ -127,7 +155,7 @@ export class ATSSection {
         return {
           name: sectionName,
           score: score,
-          analysis: analysis
+          analysis: analysis,
         };
       })
       .filter((value): value is DisplayableSection => value != null);
@@ -137,15 +165,17 @@ export class ATSSection {
     const file = this.cvFile();
     const jobDesc = this.iaForm().getRawValue().jobDescription ?? '';
     const promptOption = {
-      lang : this.switcher.language,
-      type : 'ats'
-    } as BuildPromptOptions
+      lang: this.switcher.language,
+      type: 'ats',
+    } as BuildPromptOptions;
 
     if (!file) {
-      this.alerts.open('Por favor, subí tu CV en formato PDF para continuar.', {
-        label: 'Archivo Faltante',
-        appearance: 'warning'
-      }).subscribe();
+      this.alerts
+        .open('Por favor, subí tu CV en formato PDF para continuar.', {
+          label: 'Archivo Faltante',
+          appearance: 'warning',
+        })
+        .subscribe();
       return;
     }
 
@@ -154,25 +184,23 @@ export class ATSSection {
     formData.append('file', file as File, file.name);
     formData.append('jobDesc', jobDesc);
     formData.append('promptOption', JSON.stringify(promptOption));
-    console.log("Esto mando yo: " + JSON.stringify(promptOption, null, 2));
+    console.log('Esto mando yo: ' + JSON.stringify(promptOption, null, 2));
 
     this.atsService.getAtsScore(formData).subscribe({
       next: (response: CvAtsResponse) => {
-        console.log(response)
+        console.log(response);
       },
       error: (err) => {
         console.error('Error al calcular puntaje ATS:', err);
-        this.alerts.open('Hubo un error al analizar tu CV. Intenta de nuevo.', {
-          label: 'Error de API',
-          appearance: 'error'
-        }).subscribe();
+        this.alerts
+          .open('Hubo un error al analizar tu CV. Intenta de nuevo.', {
+            label: 'Error de API',
+            appearance: 'error',
+          })
+          .subscribe();
       },
     });
   }
-
-
-
-
 
   protected readonly failedFiles$ = new Subject<TuiFileLike | null>();
   protected readonly loadingFiles$ = new Subject<TuiFileLike | null>();
@@ -185,7 +213,9 @@ export class ATSSection {
     this.cvFile.set(null);
   }
 
-  private processFile(file: TuiFileLike | null): Observable<TuiFileLike | null> {
+  private processFile(
+    file: TuiFileLike | null,
+  ): Observable<TuiFileLike | null> {
     this.failedFiles$.next(null);
     this.cvFile.set(null);
 

@@ -1,9 +1,14 @@
-import {Component, inject, input, output} from '@angular/core';
-import {ControlContainer, FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {TuiButton, TuiTextfield} from '@taiga-ui/core';
-import {TuiRipple} from '@taiga-ui/addon-mobile';
-import {TuiTextarea} from '@taiga-ui/kit';
-import {ProjectControls} from '../../../../../../shared/types/Controls';
+import { Component, inject, input, output } from '@angular/core';
+import {
+  ControlContainer,
+  FormArray,
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { TuiButton, TuiTextfield } from '@taiga-ui/core';
+import { TuiRipple } from '@taiga-ui/addon-mobile';
+import { TuiTextarea } from '@taiga-ui/kit';
+import { ProjectControls } from '../../../../../../shared/types/Controls';
 
 @Component({
   selector: 'app-projects-section',
@@ -12,16 +17,15 @@ import {ProjectControls} from '../../../../../../shared/types/Controls';
     TuiRipple,
     ReactiveFormsModule,
     TuiTextfield,
-    TuiTextarea
+    TuiTextarea,
   ],
   viewProviders: [
     {
       provide: ControlContainer,
-      useFactory: () => inject(ControlContainer, {skipSelf: true})
-    }
+      useFactory: () => inject(ControlContainer, { skipSelf: true }),
+    },
   ],
   templateUrl: './projects-section.html',
-  styleUrl: './projects-section.css',
 })
 export class ProjectsSection {
   projectForms = input.required<FormArray<FormGroup<ProjectControls>>>();

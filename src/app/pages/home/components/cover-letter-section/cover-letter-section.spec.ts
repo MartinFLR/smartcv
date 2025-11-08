@@ -8,9 +8,8 @@ describe('CoverLetterSection', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CoverLetterSection]
-    })
-    .compileComponents();
+      imports: [CoverLetterSection],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CoverLetterSection);
     component = fixture.componentInstance;

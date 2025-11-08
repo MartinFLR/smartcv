@@ -7,13 +7,17 @@
       type="button"
       iconStart="@tui.plus"
       size="s"
-      (click)="add.emit()">
+      (click)="add.emit()"
+    >
       Agregar
     </button>
   </div>
 
-  @for (eduGroup of educationForms().controls; track $index; let i = $index) {
-    <div [formGroupName]="i" class="p-4 border rounded border-gray-200 relative flex flex-col gap-4 bg-gray-50 mb-4">
+  @for (eduGroup of getEducationsControls(); track $index; let i = $index) {
+    <div
+      [formGroupName]="i"
+      class="p-4 border rounded border-gray-200 relative flex flex-col gap-4 bg-gray-50 mb-4"
+    >
       <div class="flex flex-row-reverse">
         <button
           tuiIconButton
@@ -23,42 +27,58 @@
           tuiRipple
           iconStart="@tui.trash"
           (click)="remove.emit(i)"
-        ></button>
+        >
+          <span class="sr-only">Eliminar registro de educación</span>
+        </button>
       </div>
       <tui-textfield>
-        <label tuiLabel>Título</label>
+        <label tuiLabel [for]="'educationTitleInput'">Título</label>
         <input
           tuiTextfield
           placeholder="Ej: Lic. english Sistemas"
           formControlName="title"
+          [id]="'educationTitleInput'"
         />
       </tui-textfield>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <tui-textfield>
-          <label tuiLabel>Institución</label>
-          <input tuiTextfield formControlName="institution" />
+          <label tuiLabel [for]="'institutionInput'">Institución</label>
+          <input
+            tuiTextfield
+            [id]="'institutionInput'"
+            formControlName="institution"
+          />
         </tui-textfield>
-        <div class="flex flex-row ">
+        <div class="flex flex-row">
           <tui-textfield class="w-full">
-            <label tuiLabel>Fecha Inicio</label>
-            <input tuiTextfield formControlName="dateIn"
-                   placeholder="Ej: Ene 2023"
+            <label tuiLabel [for]="'dateInInput'">Fecha Inicio</label>
+            <input
+              tuiTextfield
+              formControlName="dateIn"
+              placeholder="Ej: Ene 2023"
+              [id]="'dateInInput'"
             />
           </tui-textfield>
           <tui-textfield class="w-full">
-            <label tuiLabel>Fecha Finalizacion</label>
-            <input tuiTextfield formControlName="dateFin"
-                   placeholder="Ej: Presente"
+            <label tuiLabel [for]="'dateFinInput'">Fecha Finalizacion</label>
+            <input
+              tuiTextfield
+              formControlName="dateFin"
+              [id]="'dateFinInput'"
+              placeholder="Ej: Presente"
             />
           </tui-textfield>
         </div>
       </div>
       <tui-textfield>
-        <label tuiLabel>Logros (un bullet por línea)</label>
+        <label tuiLabel [for]="'educationBulletsInput'"
+          >Logros (un bullet por línea)</label
+        >
         <textarea
           tuiTextarea
           placeholder="- Lideré la migración de..."
           formControlName="bullets"
+          [id]="'educationBulletsInput'"
           [min]="8"
           [max]="10"
         ></textarea>

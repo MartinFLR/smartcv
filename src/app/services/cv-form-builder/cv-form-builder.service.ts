@@ -1,20 +1,24 @@
 import { inject, Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   TransformedExperience,
   TransformedProject,
   TransformedEducation,
 } from '../../../../shared/types/Types';
 import {
-  CertificationControls, CoverLetterControls,
-  CvFormControls, EducationControls,
-  ExperienceControls, IaFormControls,
-  PersonalInfoControls, ProjectControls,
-  SkillsControls
+  CertificationControls,
+  CoverLetterControls,
+  CvFormControls,
+  EducationControls,
+  ExperienceControls,
+  IaFormControls,
+  PersonalInfoControls,
+  ProjectControls,
+  SkillsControls,
 } from '../../../../shared/types/Controls';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CvFormBuilderService {
   private readonly fb = inject(FormBuilder);
@@ -29,7 +33,6 @@ export class CvFormBuilderService {
     });
   }
 
-  // Métodos factory
   public createPersonalInfoGroup(): FormGroup<PersonalInfoControls> {
     return this.fb.group<PersonalInfoControls>({
       name: this.fb.control<string | null>('', Validators.required),
@@ -44,27 +47,33 @@ export class CvFormBuilderService {
     });
   }
 
-  public createExperienceGroup(exp?: Partial<TransformedExperience>): FormGroup<ExperienceControls> {
+  public createExperienceGroup(
+    exp?: Partial<TransformedExperience>,
+  ): FormGroup<ExperienceControls> {
     return this.fb.group<ExperienceControls>({
       role: this.fb.control<string | null>(exp?.role || ''),
       company: this.fb.control<string | null>(exp?.company || ''),
       dateIn: this.fb.control<string | null>(exp?.dateIn || ''),
       dateFin: this.fb.control<string | null>(exp?.dateFin || ''),
-      bullets: this.fb.control<string | null>(exp?.bullets || '')
+      bullets: this.fb.control<string | null>(exp?.bullets || ''),
     });
   }
 
-  public createProjectGroup(proj?: Partial<TransformedProject>): FormGroup<ProjectControls> {
+  public createProjectGroup(
+    proj?: Partial<TransformedProject>,
+  ): FormGroup<ProjectControls> {
     return this.fb.group<ProjectControls>({
       name: this.fb.control<string | null>(proj?.name || ''),
       subtitle: this.fb.control<string | null>(proj?.subtitle || ''),
       dateIn: this.fb.control<string | null>(proj?.dateIn || ''),
       dateFin: this.fb.control<string | null>(proj?.dateFin || ''),
-      bullets: this.fb.control<string | null>(proj?.bullets || '')
+      bullets: this.fb.control<string | null>(proj?.bullets || ''),
     });
   }
 
-  public createEducationGroup(edu?: Partial<TransformedEducation>): FormGroup<EducationControls> {
+  public createEducationGroup(
+    edu?: Partial<TransformedEducation>,
+  ): FormGroup<EducationControls> {
     return this.fb.group<EducationControls>({
       title: this.fb.control<string | null>(edu?.title || ''),
       institution: this.fb.control<string | null>(edu?.institution || ''),
@@ -74,35 +83,49 @@ export class CvFormBuilderService {
     });
   }
 
-  public createCertificationGroup(cert?: { name?: string | null; date?: string | null }): FormGroup<CertificationControls> {
+  public createCertificationGroup(cert?: {
+    name?: string | null;
+    date?: string | null;
+  }): FormGroup<CertificationControls> {
     return this.fb.group<CertificationControls>({
       name: this.fb.control<string | null>(cert?.name ?? null),
-      date: this.fb.control<string | null>(cert?.date ?? null)
+      date: this.fb.control<string | null>(cert?.date ?? null),
     });
   }
 
-  public createSkillGroup(skillObj?: Partial<{ skills: string[]; languages: string[]; certifications: { name: string; date: string }[]; additional: string[] }>): FormGroup<SkillsControls> {
+  public createSkillGroup(
+    skillObj?: Partial<{
+      skills: string[];
+      languages: string[];
+      certifications: {
+        name: string | null;
+        date: string | null;
+      }[];
+      additional: string[];
+    }>,
+  ): FormGroup<SkillsControls> {
     const certsArray = this.fb.array<FormGroup<CertificationControls>>(
-      (skillObj?.certifications || []).map(c => this.createCertificationGroup(c))
+      (skillObj?.certifications || []).map((c) =>
+        this.createCertificationGroup(c),
+      ),
     );
 
     return this.fb.group<SkillsControls>({
       skills: this.fb.control<string[] | null>(skillObj?.skills || []),
       languages: this.fb.control<string[] | null>(skillObj?.languages || []),
       certifications: certsArray,
-      additional: this.fb.control<string[] | null>(skillObj?.additional || [])
+      additional: this.fb.control<string[] | null>(skillObj?.additional || []),
     });
   }
 
-
+  //TODO: Hay que hacer que el ia form se instancie aca directo, desacoplarlo del home
   private createIaForm(): FormGroup<IaFormControls> {
     return this.fb.group<IaFormControls>({
       jobDescription: this.fb.control<string | null>('', Validators.required),
       makeEnglish: this.fb.control<boolean | null>(false),
-      exaggeration: this.fb.control<number | null>(0)
+      exaggeration: this.fb.control<number | null>(0),
     });
   }
-
 
   public buildCoverLetterForm(): FormGroup<CoverLetterControls> {
     return this.fb.group<CoverLetterControls>({
@@ -113,5 +136,4 @@ export class CvFormBuilderService {
       deliveryChannel: this.fb.control<number | null>(0),
     });
   }
-
 }

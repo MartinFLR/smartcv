@@ -1,47 +1,77 @@
-import {TuiFade, TuiTabs} from '@taiga-ui/kit';
-import {Component, computed, inject, Signal, signal} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {TuiAlertService} from '@taiga-ui/core';
-import {defer, finalize, map, startWith} from 'rxjs';
-import {PdfService} from '../../services/pdf/pdf.service';
-import {SaveDataService} from '../../services/save-data/save-data.service';
-import {CvFormBuilderService} from '../../services/cv-form-builder/cv-form-builder.service';
-import {IaService} from '../../services/ia.service';
-import {toSignal} from '@angular/core/rxjs-interop';
-import {DummyView} from './components/dummy-view/dummy-view';
-import {IaSection} from './components/ia-section/ia-section.component';
-import {SkillsSection} from './components/skills-section/skills-section';
-import {ProjectsSection} from './components/projects-section/projects-section';
-import {ExperienceSection} from './components/experience-section/experience-section';
-import {EducationSection} from './components/education-section/education-section';
-import {PersonalInfo} from './components/personal-info/personal-info';
-import {Actions} from './components/actions/actions';
-import {TemperatureLevel, ToneLevel} from '../../../../shared/types/PromptTypes';
-import {ATSSection} from './components/ats-section/ats-section';
-import {CoverLetterSection} from './components/cover-letter-section/cover-letter-section';
-import {CoverLetterService} from './components/cover-letter-section/cover-letter-service/cover-letter.service';
+import { TuiFade, TuiTabs } from '@taiga-ui/kit';
+import {
+  ChangeDetectorRef,
+  Component,
+  computed,
+  effect,
+  inject,
+  Signal,
+  signal,
+} from '@angular/core';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { TuiAlertService } from '@taiga-ui/core';
+import { finalize, map, startWith } from 'rxjs';
+import { PdfService } from '../../services/pdf/pdf.service';
+import { SaveDataService } from '../../services/save-data/save-data.service';
+import { CvFormBuilderService } from '../../services/cv-form-builder/cv-form-builder.service';
+import { IaService } from '../../services/ia.service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { DummyView } from './components/dummy-view/dummy-view';
+import { IaSection } from './components/ia-section/ia-section.component';
+import { SkillsSection } from './components/skills-section/skills-section';
+import { ProjectsSection } from './components/projects-section/projects-section';
+import { ExperienceSection } from './components/experience-section/experience-section';
+import { EducationSection } from './components/education-section/education-section';
+import { PersonalInfo } from './components/personal-info/personal-info';
+import { Actions } from './components/actions/actions';
+import { TemperatureLevel } from '../../../../shared/types/PromptTypes';
+import { ATSSection } from './components/ats-section/ats-section';
+import { CoverLetterSection } from './components/cover-letter-section/cover-letter-section';
+import { CoverLetterService } from './components/cover-letter-section/cover-letter-service/cover-letter.service';
 import {
   CertificationControls,
   CvFormControls,
-  EducationControls, ExperienceControls,
+  EducationControls,
+  ExperienceControls,
   IaFormControls,
-  PersonalInfoControls, ProjectControls, SkillsControls
+  PersonalInfoControls,
+  ProjectControls,
+  SkillsControls,
 } from '../../../../shared/types/Controls';
-import {CvForm, CvPayload, TransformedCvResponse} from '../../../../shared/types/Types';
+import {
+  CvForm,
+  CvPayload,
+  TransformedCvResponse,
+} from '../../../../shared/types/Types';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    ReactiveFormsModule, TuiTabs, TuiFade,
-    DummyView, IaSection, SkillsSection,
-    ProjectsSection, ExperienceSection, EducationSection,
-    PersonalInfo, Actions, ATSSection, CoverLetterSection
+    ReactiveFormsModule,
+    TuiTabs,
+    TuiFade,
+    DummyView,
+    IaSection,
+    SkillsSection,
+    ProjectsSection,
+    ExperienceSection,
+    EducationSection,
+    PersonalInfo,
+    Actions,
+    ATSSection,
+    CoverLetterSection,
   ],
   templateUrl: './home.html',
-  styleUrl: './home.css',
 })
 export class Home {
+  private readonly cdr = inject(ChangeDetectorRef);
   private readonly alerts = inject(TuiAlertService);
   private readonly fb = inject(FormBuilder);
   private readonly pdfService = inject(PdfService);
@@ -62,17 +92,35 @@ export class Home {
   protected hasSkills: Signal<boolean>;
   protected hasProjects: Signal<boolean>;
 
+  protected isCvLocked = signal(false);
+  protected lockedCv = signal<CvForm | null>(null);
+
   constructor() {
     this.cvForm = this.cvFormBuilderService.buildCvForm();
     this.iaForm = this.createIaForm();
-    this.loadCvData();
+
+    effect(() => {
+      const activeCv = this.saveDataService.activeCv();
+      if (activeCv) {
+        this.patchCvData(activeCv);
+      } else {
+        this.resetCvForm();
+      }
+    });
+
+    effect(() => {
+      if (this.saveDataService.activeCv() === null) {
+        this.isCvLocked.set(false);
+        this.lockedCv.set(null);
+      }
+    });
 
     this.cvPreview = toSignal(
       this.cvForm.valueChanges.pipe(
         startWith(this.cvForm.getRawValue()),
-        map(() => this.cvForm.getRawValue() as CvForm)
+        map(() => this.cvForm.getRawValue() as CvForm),
       ),
-      { initialValue: this.cvForm.getRawValue() as CvForm }
+      { initialValue: this.cvForm.getRawValue() as CvForm },
     );
 
     this.hasEducation = computed(() => !!this.cvPreview().education?.length);
@@ -81,11 +129,12 @@ export class Home {
     this.hasSkills = computed(() => {
       const skillsArray = this.cvPreview().skills;
       if (!skillsArray || skillsArray.length === 0) return false;
-      return skillsArray.some(group =>
-        (group.skills && group.skills.length > 0) ||
-        (group.languages && group.languages.length > 0) ||
-        (group.certifications && group.certifications.length > 0) ||
-        (group.additional && group.additional.length > 0)
+      return skillsArray.some(
+        (group) =>
+          (group.skills && group.skills.length > 0) ||
+          (group.languages && group.languages.length > 0) ||
+          (group.certifications && group.certifications.length > 0) ||
+          (group.additional && group.additional.length > 0),
       );
     });
 
@@ -95,12 +144,11 @@ export class Home {
     if (!this.skillsForms.length) this.addSkill();
   }
 
-
   private createIaForm(): FormGroup<IaFormControls> {
     return this.fb.group<IaFormControls>({
       jobDescription: this.fb.control<string | null>(''),
       makeEnglish: this.fb.control<boolean | null>(false),
-      exaggeration: this.fb.control<number | null>(0)
+      exaggeration: this.fb.control<number | null>(0),
     });
   }
 
@@ -108,23 +156,33 @@ export class Home {
     if (this.isLoading()) return;
 
     if (this.iaForm.invalid) {
-      this.alerts.open(
-        'Falta la descripción del puesto (Job Description).',
-        { appearance: 'error' }
-      ).subscribe();
+      this.alerts
+        .open('Falta la descripción del puesto (Job Description).', {
+          appearance: 'error',
+        })
+        .subscribe();
       return;
     }
 
     this.isLoading.set(true);
-    const rawCv: CvForm = this.cvForm.getRawValue() as CvForm;
-    const temperature = this.detectTemperature(this.iaForm.getRawValue().exaggeration ?? 0);
+
+    const baseCvForIa =
+      this.isCvLocked() && this.lockedCv()
+        ? this.lockedCv()!
+        : (this.cvForm.getRawValue() as CvForm);
+
+    const temperature = this.detectTemperature(
+      this.iaForm.getRawValue().exaggeration ?? 0,
+    );
+
     const payload: CvPayload = {
-      baseCv: rawCv,
+      baseCv: baseCvForIa,
       jobDesc: this.iaForm.getRawValue().jobDescription ?? '',
-      promptOption: { temperature }
+      promptOption: { temperature },
     };
 
-    this.iaService.generateCvWithIA(payload)
+    this.iaService
+      .generateCvWithIA(payload)
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: (response: TransformedCvResponse) => {
@@ -133,21 +191,32 @@ export class Home {
             personalInfo: {
               ...this.cvForm.value.personalInfo,
               profileSummary: response.profileSummary,
-              job: response.job
-            }
+              job: response.job,
+            },
           });
           this.saveDataService.saveData(this.cvForm.getRawValue() as CvForm);
-          this.alerts.open('CV optimizado con IA. ¡Revisá los cambios!', { appearance: 'success', autoClose: 5000 }).subscribe();
+          this.alerts
+            .open('CV optimizado con IA. ¡Revisá los cambios!', {
+              appearance: 'success',
+              autoClose: 5000,
+            })
+            .subscribe();
+
+          this.cdr.markForCheck();
         },
         error: (err) => {
           console.error('Error de IA:', err);
-          const message = err.message || 'Error al conectar con la IA. Intente de nuevo.';
-          this.alerts.open(message,
-            {
-            appearance: 'error',
-            autoClose: 7000
-            }).subscribe();
-        }
+          const message =
+            err.message || 'Error al conectar con la IA. Intente de nuevo.';
+          this.alerts
+            .open(message, {
+              appearance: 'error',
+              autoClose: 7000,
+            })
+            .subscribe();
+
+          this.cdr.markForCheck();
+        },
       });
   }
 
@@ -157,165 +226,256 @@ export class Home {
   }
 
   saveCv(): void {
-    this.saveDataService.saveData(this.cvForm.getRawValue() as CvForm);
-    this.alerts.open('Datos guardados localmente.', { appearance: 'info', autoClose: 3000 }).subscribe();
+    try {
+      this.saveDataService.saveData(this.cvForm.getRawValue() as CvForm);
+    } catch (e) {
+      this.showAlert((e as Error).message, 'error');
+    }
   }
 
   clearCv(): void {
-    this.experienceForms.clear();
-    this.educationForms.clear();
-    this.skillsForms.clear();
-    this.projectForms.clear();
-    this.cvForm.reset();
-    this.addExperience();
-    this.addEducation();
-    this.addSkill();
-    this.addProject();
-    this.saveDataService.clearData();
-    this.alerts.open(
-      'CV limpiado. Inicie un nuevo CV.', {
-      appearance: 'warning',
-      autoClose: 3000
-      }).subscribe();
+    try {
+      this.saveDataService.clearData();
+    } catch (e) {
+      this.showAlert((e as Error).message, 'error');
+    }
   }
 
   // --- Lógica  ---
   private detectTemperature(num: number): TemperatureLevel {
     switch (num) {
-      case 0: return 'low';
-      case 1: return 'medium';
-      case 2: return 'high';
-      default: return 'low';
+      case 0:
+        return 'low';
+      case 1:
+        return 'medium';
+      case 2:
+        return 'high';
+      default:
+        return 'low';
+    }
+  }
+
+  protected onLockCv(isLocked: boolean): void {
+    if (isLocked) {
+      this.lockedCv.set(this.cvForm.getRawValue() as CvForm);
+      this.isCvLocked.set(true);
+      this.showAlert(
+        'CV bloqueado. Las optimizaciones usarán esta versión.',
+        'info',
+      );
+    } else {
+      this.isCvLocked.set(false);
+      this.lockedCv.set(null);
+      this.showAlert('CV desbloqueado.', 'info');
     }
   }
 
   private patchFormArrays(response: TransformedCvResponse): void {
-    const applyPatch = <T extends FormGroup>(
-      array: FormArray<T>,
-      data: any[],
-      creator: (item: any) => T,
-      patchFields: (item: any) => Partial<T['controls']>
-    ) => {
-      array.clear();
-      data.forEach(item => {
-        const newGroup = creator(item);
-        newGroup.patchValue(patchFields(item));
-        array.push(newGroup);
-      });
-    };
+    // Ya no definimos 'const createArray' aquí.
 
-    applyPatch(this.experienceForms, response.experience,
-      (exp) => this.cvFormBuilderService.createExperienceGroup(exp),
-      (exp) => ({ ...exp, bullets: exp.bullets || '' }),
+    this.cvForm.setControl(
+      'experience',
+      this.createArray(
+        response.experience,
+        (
+          exp, // <--- Agregamos 'this.'
+        ) => this.cvFormBuilderService.createExperienceGroup(exp),
+      ),
     );
 
-    applyPatch(this.educationForms, response.education,
-      (edu) => this.cvFormBuilderService.createEducationGroup(edu),
-      (edu) => ({ ...edu, bullets: edu.bullets || '' })
+    this.cvForm.setControl(
+      'education',
+      this.createArray(
+        response.education,
+        (
+          edu, // <--- Agregamos 'this.'
+        ) => this.cvFormBuilderService.createEducationGroup(edu),
+      ),
     );
 
-    applyPatch(this.projectForms, response.project,
-      (pj) => this.cvFormBuilderService.createProjectGroup(pj),
-      (pj) => ({ ...pj, bullets: pj.bullets || '', name: pj.name || '', subtitle: pj.subtitle || '' })
+    this.cvForm.setControl(
+      'projects',
+      this.createArray(
+        response.project,
+        (
+          pj, // <--- Agregamos 'this.'
+        ) => this.cvFormBuilderService.createProjectGroup(pj),
+      ),
     );
 
-    applyPatch(this.skillsForms, response.skills,
-      (s) => this.cvFormBuilderService.createSkillGroup(s),
-      (s) => ({
-        skills: s.skills || [],
-        languages: s.languages || [],
-        certifications: s.certifications || [], // Asumimos que la IA puede devolver certificaciones
-        additional: s.additional || []
-      })
+    this.cvForm.setControl(
+      'skills',
+      this.createArray(
+        response.skills,
+        (
+          s, // <--- Agregamos 'this.'
+        ) => this.cvFormBuilderService.createSkillGroup(s),
+      ),
     );
+
+    this.ensureMinimumFormArrays();
   }
 
-  private loadCvData(): void {
-    const savedData = this.saveDataService.loadData();
-    if (!savedData) return;
+  private resetCvForm(): void {
+    this.cvForm.setControl(
+      'education',
+      this.fb.array<FormGroup<EducationControls>>([]),
+    );
+    this.cvForm.setControl(
+      'experience',
+      this.fb.array<FormGroup<ExperienceControls>>([]),
+    );
+    this.cvForm.setControl(
+      'projects',
+      this.fb.array<FormGroup<ProjectControls>>([]),
+    );
+    this.cvForm.setControl(
+      'skills',
+      this.fb.array<FormGroup<SkillsControls>>([]),
+    );
 
-    this.educationForms.clear();
-    (savedData.education || []).forEach((e: any) => this.educationForms.push(this.cvFormBuilderService.createEducationGroup(e)));
-
-    this.experienceForms.clear();
-    (savedData.experience || []).forEach((e: any) => this.experienceForms.push(this.cvFormBuilderService.createExperienceGroup(e)));
-
-    this.projectForms.clear();
-    (savedData.projects || []).forEach((e: any) => this.projectForms.push(this.cvFormBuilderService.createProjectGroup(e)));
-
-    this.skillsForms.clear();
-    (savedData.skills || []).forEach((s: any) => {
-      this.skillsForms.push(this.cvFormBuilderService.createSkillGroup(s));
-    });
-
-    if (!this.experienceForms.length) this.addExperience();
-    if (!this.projectForms.length) this.addProject();
-    if (!this.educationForms.length) this.addEducation();
-    if (!this.skillsForms.length) this.addSkill();
-
-    this.cvForm.patchValue(savedData);
-    this.alerts.open('CV cargado desde la sesión anterior', { appearance: 'info', autoClose: 3000 }).subscribe();
+    this.cvForm.reset();
+    this.ensureMinimumFormArrays();
+    this.cdr.markForCheck();
   }
 
+  private patchCvData(cvData: CvForm): void {
+    this.cvForm.setControl(
+      'education',
+      this.createArray(cvData.education, (edu) =>
+        this.cvFormBuilderService.createEducationGroup(edu),
+      ),
+    );
 
+    this.cvForm.setControl(
+      'experience',
+      this.createArray(cvData.experience, (exp) =>
+        this.cvFormBuilderService.createExperienceGroup(exp),
+      ),
+    );
+
+    this.cvForm.setControl(
+      'projects',
+      this.createArray(cvData.projects, (proj) =>
+        this.cvFormBuilderService.createProjectGroup(proj),
+      ),
+    );
+
+    this.cvForm.setControl(
+      'skills',
+      this.createArray(cvData.skills, (skill) =>
+        this.cvFormBuilderService.createSkillGroup(skill),
+      ),
+    );
+
+    this.ensureMinimumFormArrays();
+
+    this.cvForm.patchValue(cvData, { emitEvent: false });
+    this.cvForm.get('personalInfo')?.patchValue(cvData.personalInfo);
+
+    this.cdr.markForCheck();
+  }
+
+  private ensureMinimumFormArrays(): void {
+    if (!this.experienceForms().length) this.addExperience();
+    if (!this.projectForms().length) this.addProject();
+    if (!this.educationForms().length) this.addEducation();
+    if (!this.skillsForms().length) this.addSkill();
+  }
 
   // --- Manipulación  ---
   addEducation(): void {
-    this.educationForms.push(this.cvFormBuilderService.createEducationGroup());
+    this.educationForms().push(
+      this.cvFormBuilderService.createEducationGroup(),
+    );
   }
   removeEducation(i: number): void {
-    this.educationForms.removeAt(i);
+    this.educationForms().removeAt(i);
   }
-
   addExperience(): void {
-    this.experienceForms.push(this.cvFormBuilderService.createExperienceGroup());
+    this.experienceForms().push(
+      this.cvFormBuilderService.createExperienceGroup(),
+    );
   }
   removeExperience(i: number): void {
-    this.experienceForms.removeAt(i);
+    this.experienceForms().removeAt(i);
   }
-
   addProject(): void {
-    this.projectForms.push(this.cvFormBuilderService.createProjectGroup());
+    this.projectForms().push(this.cvFormBuilderService.createProjectGroup());
   }
   removeProject(i: number): void {
-    this.projectForms.removeAt(i);
+    this.projectForms().removeAt(i);
   }
-
   addSkill(): void {
-    this.skillsForms.push(this.cvFormBuilderService.createSkillGroup());
+    this.skillsForms().push(this.cvFormBuilderService.createSkillGroup());
   }
   removeSkill(i: number): void {
-    this.skillsForms.removeAt(i);
+    this.skillsForms().removeAt(i);
+  }
+
+  private createArray<TData, TGroup extends AbstractControl>(
+    data: TData[] | undefined,
+    creator: (item: TData) => TGroup,
+  ): FormArray<TGroup> {
+    const formGroups = (data || []).map((item) => creator(item));
+    return new FormArray(formGroups);
   }
 
   addCertification(skillGroupIndex: number): void {
-    const certificationsArray = this.skillsForms.at(skillGroupIndex)?.get('certifications') as FormArray<FormGroup<CertificationControls>> | null;
+    const certificationsArray = this.skillsForms()
+      .at(skillGroupIndex)
+      ?.get('certifications') as FormArray<
+      FormGroup<CertificationControls>
+    > | null;
     if (certificationsArray) {
-      certificationsArray.push(this.cvFormBuilderService.createCertificationGroup());
+      certificationsArray.push(
+        this.cvFormBuilderService.createCertificationGroup(),
+      );
     }
   }
-  removeCertification(event: { skillGroupIndex: number; certIndex: number }): void {
-    const certificationsArray = this.skillsForms.at(event.skillGroupIndex)?.get('certifications') as FormArray<FormGroup<CertificationControls>> | null;
+  removeCertification(event: {
+    skillGroupIndex: number;
+    certIndex: number;
+  }): void {
+    const certificationsArray = this.skillsForms()
+      .at(event.skillGroupIndex)
+      ?.get('certifications') as FormArray<
+      FormGroup<CertificationControls>
+    > | null;
     if (certificationsArray) {
       certificationsArray.removeAt(event.certIndex);
     }
   }
 
-
-  // --- Getters ---
-  get personalInfoGroup(): FormGroup<PersonalInfoControls> {
+  protected readonly personalInfoGroup = computed(() => {
+    this.cvPreview();
     return this.cvForm.get('personalInfo') as FormGroup<PersonalInfoControls>;
-  }
-  get educationForms(): FormArray<FormGroup<EducationControls>> {
-    return this.cvForm.get('education') as FormArray<FormGroup<EducationControls>>;
-  }
-  get experienceForms(): FormArray<FormGroup<ExperienceControls>> {
-    return this.cvForm.get('experience') as FormArray<FormGroup<ExperienceControls>>;
-  }
-  get projectForms(): FormArray<FormGroup<ProjectControls>> {
+  });
+  protected readonly educationForms = computed(() => {
+    this.cvPreview();
+    return this.cvForm.get('education') as FormArray<
+      FormGroup<EducationControls>
+    >;
+  });
+  protected readonly experienceForms = computed(() => {
+    this.cvPreview();
+    return this.cvForm.get('experience') as FormArray<
+      FormGroup<ExperienceControls>
+    >;
+  });
+  protected readonly projectForms = computed(() => {
+    this.cvPreview();
     return this.cvForm.get('projects') as FormArray<FormGroup<ProjectControls>>;
-  }
-  get skillsForms(): FormArray<FormGroup<SkillsControls>> {
+  });
+  protected readonly skillsForms = computed(() => {
+    this.cvPreview();
     return this.cvForm.get('skills') as FormArray<FormGroup<SkillsControls>>;
+  });
+
+  private showAlert(
+    message: string,
+    appearance: 'success' | 'warning' | 'error' | 'info' = 'success',
+  ): void {
+    this.alerts.open(message, { appearance, autoClose: 3000 }).subscribe();
   }
 }

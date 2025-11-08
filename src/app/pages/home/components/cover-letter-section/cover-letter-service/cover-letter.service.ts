@@ -1,26 +1,19 @@
-import { inject, Injectable } from '@angular/core';
-import {
-  CoverLetterPayload,
-} from '../../../../../../../shared/types/Types';
+import { Injectable } from '@angular/core';
+import { CoverLetterPayload } from '../../../../../../../shared/types/Types';
 import { Observable, Subscriber } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CoverLetterService {
-  private readonly http = inject(HttpClient);
   private readonly apiUrl = 'http://localhost:3000/api/generate-cover-letter';
 
-  generateCoverLetterStream(
-    payload: CoverLetterPayload,
-  ): Observable<string> {
+  generateCoverLetterStream(payload: CoverLetterPayload): Observable<string> {
     return new Observable((subscriber: Subscriber<string>) => {
       const controller = new AbortController();
 
       const fetchData = async () => {
         try {
-
           const response = await fetch(this.apiUrl, {
             method: 'POST',
             headers: {
