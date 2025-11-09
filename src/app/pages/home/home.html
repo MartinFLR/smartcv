@@ -38,7 +38,7 @@
       <form [formGroup]="cvForm" class="flex flex-col gap-6 pt-6">
         @switch (activeTab()) {
           @case (0) {
-            <app-personal-info [personalInfoGroup]="personalInfoGroup()" />
+            <app-personal-info />
           }
           @case (1) {
             <app-education-section

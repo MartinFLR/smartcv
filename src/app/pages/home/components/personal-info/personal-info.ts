@@ -1,26 +1,17 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TuiCountryIsoCode } from '@taiga-ui/i18n';
-import {
-  ControlContainer,
-  FormGroup,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { ControlContainer, ReactiveFormsModule } from '@angular/forms';
 import { TuiTextfield } from '@taiga-ui/core';
 import { TuiInputPhoneInternational } from '@taiga-ui/experimental';
-import {
-  tuiInputPhoneInternationalOptionsProvider,
-  TuiTextarea,
-} from '@taiga-ui/kit';
-import { defer } from 'rxjs';
-import { PersonalInfoControls } from '../../../../../../shared/types/Controls';
+import { TuiTextarea } from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-personal-info',
   imports: [
     ReactiveFormsModule,
     TuiTextfield,
-    TuiInputPhoneInternational,
     TuiTextarea,
+    TuiInputPhoneInternational,
   ],
   viewProviders: [
     {
@@ -28,18 +19,10 @@ import { PersonalInfoControls } from '../../../../../../shared/types/Controls';
       useFactory: () => inject(ControlContainer, { skipSelf: true }),
     },
   ],
-  providers: [
-    tuiInputPhoneInternationalOptionsProvider({
-      metadata: defer(async () =>
-        import('libphonenumber-js/max/metadata').then((m) => m.default),
-      ),
-    }),
-  ],
+  providers: [],
   templateUrl: './personal-info.html',
 })
 export class PersonalInfo {
-  personalInfoGroup = input.required<FormGroup<PersonalInfoControls>>();
-
   protected readonly countries: readonly TuiCountryIsoCode[] = [
     'AR',
     'BO',

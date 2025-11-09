@@ -1,4 +1,4 @@
-<fieldset [formGroup]="personalInfoGroup()" class="flex flex-col gap-4">
+<fieldset formGroupName="personalInfo" class="flex flex-col gap-4">
   <h2 class="text-xl font-semibold text-gray-800">Información Personal</h2>
   <tui-textfield>
     <label tuiLabel [for]="'personalNameInput'">Nombre Completo</label>
@@ -28,13 +28,14 @@
       <label tuiLabel [for]="'personalTelephone'">Teléfono</label>
       <input
         tuiInputPhoneInternational
+        countryIsoCode="AR"
         [id]="'personalTelephone'"
         [countries]="countries"
-        countryIsoCode="AR"
-        autocomplete="tel"
+        [countrySearch]="true"
         formControlName="phone"
       />
     </tui-textfield>
+
     <tui-textfield>
       <label tuiLabel [for]="'personalUbication'"> Ubicacion (URL)</label>
       <input

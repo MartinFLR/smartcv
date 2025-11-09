@@ -14,7 +14,8 @@ import {
 import { TuiLanguage } from '@taiga-ui/i18n/types';
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+import { defer, of } from 'rxjs';
+import { tuiInputPhoneInternationalOptionsProvider } from '@taiga-ui/kit';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -28,6 +29,12 @@ export const appConfig: ApplicationConfig = {
       provide: TUI_LANGUAGE,
       useValue: of(TUI_SPANISH_LANGUAGE as TuiLanguage),
     },
+    tuiInputPhoneInternationalOptionsProvider({
+      metadata: defer(async () =>
+        import('libphonenumber-js/max/metadata').then((m) => m.default),
+      ),
+      separator: '-',
+    }),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
