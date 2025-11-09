@@ -272,6 +272,7 @@ export class Home {
 
   private patchFormArrays(response: TransformedCvResponse): void {
     // Ya no definimos 'const createArray' aquí.
+
     this.cvForm.setControl(
       'experience',
       this.createArray(
