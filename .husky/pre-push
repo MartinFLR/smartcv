@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npx husky add .husky/pre-push "ng build --configuration production"
+npx husky add .husky/pre-push "ng test --watch=false"
