@@ -1,4 +1,0 @@
-export * from './sheet-dialog.component';
-export * from './sheet-dialog.directive';
-export * from './sheet-dialog.options';
-export * from './sheet-dialog.service';
