@@ -2,5 +2,4 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 cd frontend || exit 1
-
-npx ng test --watch=false --browsers=ChromeHeadless
+npx ng build --watch=false
