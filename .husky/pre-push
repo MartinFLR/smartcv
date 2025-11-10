@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-cd frontend || exit 1
+cd apps/frontend || exit 1
 npx ng build --watch=false
