@@ -1,10 +1,9 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "defaultBase": "master",
-  "nxCloudId": "69116f3a32ad553ebebc1318",
   "parallel": 5,
   "maxCacheSize": "10GB",
-  "neverConnectToCloud": false,
+  "neverConnectToCloud": true,
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "{workspaceRoot}/**/*"],
     "production": ["!{projectRoot}/**/*.spec.ts", "!{projectRoot}/**/*.test.ts"]
