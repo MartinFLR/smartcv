@@ -83,7 +83,7 @@ export class MistralService implements AIModel {
 
     for await (const chunk of stream) {
       const text = chunk.toString();
-      const lines = text.split('\n').filter((line) => line.trim().startsWith('data: '));
+      const lines = text.split('\n').filter((line: string) => line.trim().startsWith('data: '));
 
       for (const line of lines) {
         if (line.includes('[DONE]')) return;

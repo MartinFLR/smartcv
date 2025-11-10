@@ -8,7 +8,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/martinFLR/smartcv">
-    <img src="/public/assets/logo.png" alt="Logo" width="100" height="100">
+    <img src="/frontend/public/assets/logo.png" alt="Logo" width="100" height="100">
   </a>
 
 <h3 align="center">SmartCV</h3>
@@ -94,18 +94,28 @@ Its goal is to help candidates improve their CVs, identify missing keywords, and
 
 <!-- GETTING STARTED -->
 
-## Getting Started
+## 🚀 Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Follow these steps to get a local copy of **SmartCV** up and running.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+Make sure you have the following installed:
 
-- npm
+- **Git** – to clone the repository  
+  [Download Git](https://git-scm.com/)  
+  Verify installation:
+
   ```sh
-  npm install npm@latest -g
+  git --version
+  ```
+
+- **Node.js** (v20.19.0 or newer) – includes npm  
+  [Download Node.js](https://nodejs.org/)  
+  Verify installation:
+  ```sh
+  node -v
+  npm -v
   ```
 
 ## 🚀 Installation
@@ -157,25 +167,13 @@ Follow these steps to set up and run **SmartCV** locally:
 
 <!-- USAGE EXAMPLES -->
 
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ROADMAP -->
-
 ## Roadmap
 
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
 - [ ] Multi-language Support
-  - [ ] Chinese
-  - [ ] Spanish
+  - [x] Spanish
+  - [ ] English
+  - [ ] Brazilian
+- [ ] Add Additional Templates
 
 See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
 
@@ -185,21 +183,37 @@ See the [open issues](https://github.com/othneildrew/Best-README-Template/issues
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**!
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+If you have a suggestion that would make **SmartCV** better, you can:
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
+- Fork the repository
+- Create a pull request
+- Or open an issue with the `enhancement` label
+
+Don't forget to ⭐ the project if you find it useful!
+
+### How to Contribute
+
+1. **Fork the Project**
+2. **Create your Feature Branch**
+   ```bash
+   git checkout -b feature/AmazingFeature
+   ```
+3. Commit your Changes
+   ```bash
+   git commit -m "Add some AmazingFeature"
+   ```
+4. Push to the Branch
+   ```bash
+   git push origin feature/AmazingFeature
+   ```
 5. Open a Pull Request
 
 ### Top contributors:
 
-<a href="https://github.com/othneildrew/Best-README-Template/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=othneildrew/Best-README-Template" alt="contrib.rocks image" />
+<a href="https://github.com/MartinFLR/smartcv/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=MartinFLR/smartcv" alt="contrib.rocks image" />
 </a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -216,9 +230,8 @@ Distributed under the Unlicense License. See `LICENSE.txt` for more information.
 
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+[![GitHub][github-shield]][github-url]  
+[![LinkedIn][linkedin-shield]](https://linkedin.com/in//martin-leonardo-flores)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -267,3 +280,7 @@ Use this space to list resources you find helpful and would like to give credit 
 [TypeScript-url]: https://www.typescriptlang.org
 [TaigaUI]: https://img.shields.io/badge/Taiga%20UI-00BFA6?style=for-the-badge&logo=angular&logoColor=white
 [TaigaUI-url]: https://taiga-ui.dev
+[github-shield]: https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white
+[github-url]: https://github.com/MartinFLR
+[linkedin-url]: https://linkedin.com/in/martinflr
+[linkedin-shield]: https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white
