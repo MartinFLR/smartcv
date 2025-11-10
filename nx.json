@@ -11,7 +11,7 @@
   },
   "targetDefaults": {
     "build": {
-      "inputs": ["default", "{projectRoot}/tsconfig.*.json", "package.json"]
+      "inputs": ["default", "{projectRoot}/tsconfig.*.json"]
     },
     "lint": {
       "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
