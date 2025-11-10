@@ -1,0 +1,159 @@
+<div class="flex flex-wrap items-center justify-center gap-4 sm:justify-between">
+  <div class="flex flex-wrap items-center justify-center gap-2">
+    <button
+      tuiButton
+      type="button"
+      size="s"
+      tuiRipple
+      iconStart="@tui.download"
+      appearance="primary"
+      (click)="download.emit()"
+      [disabled]="isLoading() || !isCvValid()"
+    >
+      Descargar PDF
+    </button>
+  </div>
+
+  <div class="flex w-full flex-wrap items-center justify-center gap-3 sm:w-auto sm:justify-end">
+    <button
+      tuiButton
+      type="button"
+      size="s"
+      tuiRipple
+      appearance="outline"
+      iconStart="@tui.plus"
+      tuiTooltip="Guardar CV actual como nuevo perfil"
+      (click)="createNewProfile()"
+      [disabled]="isLoading()"
+    >
+      <span class="sr-only">Guardar Cv</span>
+    </button>
+
+    <tui-textfield
+      class="grow min-w-[180px] sm:grow-0 sm:w-64"
+      iconStart="@tui.user-round"
+      tuiChevron
+      [stringify]="profileStringifier"
+      tuiTextfieldSize="s"
+      [tuiTextfieldCleaner]="false"
+    >
+      <input
+        placeholder="Cargar Perfil..."
+        tuiSelect
+        [ngModel]="selectedProfile()"
+        (ngModelChange)="onProfileChange($event)"
+      />
+
+      <tui-data-list-wrapper
+        *tuiTextfieldDropdown
+        new
+        [items]="profiles()"
+        [itemContent]="profileListTemplate"
+      />
+
+      @if (selectedProfile()) {
+        <button
+          tuiButton
+          type="button"
+          size="xs"
+          appearance="flat"
+          iconStart="@tui.x"
+          tuiTooltip="Limpiar selección"
+          (click)="clearSelection()"
+          [disabled]="isLoading()"
+        >
+          <span class="sr-only">Limpiar selección</span>
+        </button>
+      }
+
+      <button
+        tuiButton
+        type="button"
+        size="s"
+        iconStart="@tui.save"
+        (click)="saveCv()"
+        [disabled]="isLoading()"
+      >
+        <span class="sr-only">Guardar CV</span>
+      </button>
+    </tui-textfield>
+
+    <button
+      tuiButton
+      appearance="outline"
+      iconStart="@tui.rotate-ccw"
+      tuiRipple
+      size="s"
+      tuiTooltip="Recargar Perfil (Descartar cambios)"
+      type="button"
+      (click)="reloadProfile()"
+      [disabled]="isLoading() || !selectedProfile()"
+    >
+      <span class="sr-only">Recargar Cv</span>
+    </button>
+
+    <button
+      tuiButton
+      type="button"
+      size="s"
+      tuiRipple
+      appearance="action-destructive"
+      iconStart="@tui.trash"
+      tuiTooltip="Limpiar Formulario (Reset)"
+      (click)="clearForm()"
+      [disabled]="isLoading()"
+    >
+      <span class="sr-only">Limpiar</span>
+    </button>
+    <label
+      tuiLabel
+      tuiHint="Bloquea el CV para que todas las optimizaciones se basen siempre en esta versión."
+      class="flex flex-shrink-0 !text-sm items-center gap-2"
+    >
+      <input
+        tuiSwitch
+        type="checkbox"
+        size="s"
+        [ngModel]="isCvLocked()"
+        [disabled]="!isCvValid() && !isCvLocked()"
+        (ngModelChange)="lockCv.emit($event)"
+      />
+      Bloquear
+    </label>
+  </div>
+</div>
+
+<ng-template #profileListTemplate let-profile>
+  <div class="flex w-full items-center justify-between gap-4">
+    <div class="flex flex-col overflow-hidden">
+      <span class="truncate">{{ profile.name }}</span>
+      <span class="truncate tui-font-text-xs text-gray-500">{{ profile.jobTitle }}</span>
+    </div>
+    <div class="flex flex-shrink-0">
+      <button
+        tuiButton
+        type="button"
+        size="xs"
+        appearance="flat"
+        iconStart="@tui.edit-2"
+        tuiTooltip="Editar nombre"
+        [disabled]="isLoading()"
+        (click)="editProfileName(profile); $event.stopPropagation()"
+      >
+        <span class="sr-only">Editar Nombre</span>
+      </button>
+      <button
+        tuiButton
+        type="button"
+        size="xs"
+        appearance="flat-destructive"
+        iconStart="@tui.trash"
+        tuiTooltip="Eliminar este CV"
+        [disabled]="isLoading()"
+        (click)="deleteProfile(profile.id); $event.stopPropagation()"
+      >
+        <span class="sr-only">Eliminar Cv</span>
+      </button>
+    </div>
+  </div>
+</ng-template>

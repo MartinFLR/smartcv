@@ -1,0 +1,23 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "types",
+  "projectType": "library",
+  "root": "libs/types",
+  "sourceRoot": "libs/types/src",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "dist/libs/types",
+        "tsConfig": "libs/types/tsconfig.lib.json",
+        "main": "libs/types/src/index.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/types/src/**/*.ts"]
+      }
+    }
+  }
+}

@@ -1,0 +1,236 @@
+@if (cvPreview(); as cv) {
+  <div
+    class="font-['Times_New_Roman',_Times,_serif] text-black bg-white shadow-lg rounded-lg border p-[40pt] max-w-[595pt] mx-auto min-h-[842pt]"
+  >
+    @if (cv.personalInfo.name) {
+      <div class="mb-[12pt]">
+        <h2 class="text-center text-[18pt] font-bold break-words">{{ cv.personalInfo.name }}</h2>
+
+        @if (cv.personalInfo.job) {
+          <h3 class="text-center text-[12pt] italic font-medium mt-[1pt] break-words">
+            {{ cv.personalInfo.job }}
+          </h3>
+        }
+
+        <div class="text-[10pt] {{ cv.personalInfo.job ? 'mt-[5pt]' : 'mt-[22pt]' }}">
+          <div class="leading-[9pt]">
+            <div class="grid grid-cols-3">
+              <div class="text-center break-words">
+                @if (cv.personalInfo.email) {
+                  <span>{{ cv.personalInfo.email }}</span>
+                }
+              </div>
+              <div class="text-center break-words">
+                @if (cv.personalInfo.phone) {
+                  <span>{{ cv.personalInfo.phone }}</span>
+                }
+              </div>
+              <div class="text-center break-words">
+                @if (cv.personalInfo.location) {
+                  <span>{{ cv.personalInfo.location }}</span>
+                }
+              </div>
+            </div>
+
+            <div class="grid grid-cols-3 mt-[9pt]">
+              <div class="text-center break-words">
+                @if (cv.personalInfo.linkedin) {
+                  <a
+                    [href]="
+                      cv.personalInfo.linkedin.startsWith('http')
+                        ? cv.personalInfo.linkedin
+                        : 'https://' + cv.personalInfo.linkedin
+                    "
+                    target="_blank"
+                    class="text-[#2850a0]"
+                  >
+                    {{ cv.personalInfo.linkedin }}
+                  </a>
+                }
+              </div>
+              <div class="text-center break-words">
+                @if (cv.personalInfo.web) {
+                  <a
+                    [href]="
+                      cv.personalInfo.web.startsWith('http')
+                        ? cv.personalInfo.web
+                        : 'https://' + cv.personalInfo.web
+                    "
+                    target="_blank"
+                    class="text-[#2850a0]"
+                  >
+                    {{ cv.personalInfo.web }}
+                  </a>
+                }
+              </div>
+              <div class="text-center break-words">
+                @if (cv.personalInfo.github) {
+                  <a
+                    [href]="
+                      cv.personalInfo.github.startsWith('http')
+                        ? cv.personalInfo.github
+                        : 'https://' + cv.personalInfo.github
+                    "
+                    target="_blank"
+                    class="text-[#2850a0]"
+                  >
+                    {{ cv.personalInfo.github }}
+                  </a>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+    @if (cv.personalInfo.profileSummary) {
+      <div class="mt-[12pt]">
+        <h4 class="text-[12pt] font-bold border-b border-gray-300 pb-[2pt] mb-[16pt] break-words">
+          PERFIL PROFESIONAL
+        </h4>
+        <p class="text-[10pt] whitespace-pre-line break-words leading-[12pt]">
+          {{ cv.personalInfo.profileSummary }}
+        </p>
+      </div>
+    }
+    @if (hasExperience()) {
+      <div class="mt-[12pt]">
+        <h4 class="text-[12pt] font-bold border-b border-gray-300 pb-[2pt] mb-[16pt]">
+          EXPERIENCIA LABORAL
+        </h4>
+
+        @for (exp of cv.experience; track $index) {
+          @if (exp.role) {
+            <div class="mb-[15pt] break-words">
+              <div class="flex justify-between items-baseline">
+                <h5 class="text-[10pt] font-bold">{{ exp.role }}</h5>
+                <span class="text-[10pt] italic text-right ml-4 shrink-0">
+                  {{ filterTruthy([exp.dateIn, exp.dateFin]).join(' - ') }}
+                </span>
+              </div>
+              <h6 class="text-[10pt] mb-1 leading-[12pt]">{{ exp.company }}</h6>
+              <ul class="list-none">
+                @for (bullet of (exp.bullets || '').split('\n'); track $index) {
+                  @if (bullet.trim().length > 0) {
+                    <li class="text-[10pt] mb-[2pt] pl-[18pt] relative">
+                      <span class="absolute left-0 top-0 leading-[12pt]">•</span>
+                      <span class="leading-[12pt]">
+                        {{ bullet.trim().replace('/^[•–-]\s*/', '').trim() }}
+                      </span>
+                    </li>
+                  }
+                }
+              </ul>
+            </div>
+          }
+        }
+      </div>
+    }
+    @if (hasProjects()) {
+      <div class="mt-[12pt]">
+        <h4 class="text-[12pt] font-bold border-b border-gray-300 pb-[2pt] mb-[16pt]">
+          PROYECTOS RELEVANTES
+        </h4>
+        @for (proj of cv.projects; track $index) {
+          @if (proj.name) {
+            <div class="mb-[15pt] break-words">
+              <div class="flex justify-between items-baseline">
+                <h5 class="text-[10pt] font-bold">{{ proj.name }}</h5>
+                <span class="text-[10pt] italic text-right ml-4 shrink-0">
+                  {{ filterTruthy([proj.dateIn, proj.dateFin]).join(' - ') }}
+                </span>
+              </div>
+              <h6 class="text-[10pt] mb-1 leading-[12pt]">{{ proj.subtitle }}</h6>
+              <ul class="list-none">
+                @for (bullet of (proj.bullets || '').split('\n'); track $index) {
+                  @if (bullet.trim().length > 0) {
+                    <li class="text-[10pt] mb-[2pt] pl-[18pt] relative">
+                      <span class="absolute left-0 top-0 leading-[12pt]">•</span>
+                      <span class="leading-[12pt]">
+                        {{ bullet.trim().replace('/^[•–-]\s*/', '').trim() }}
+                      </span>
+                    </li>
+                  }
+                }
+              </ul>
+            </div>
+          }
+        }
+      </div>
+    }
+    @if (hasEducation()) {
+      <div class="mt-[12pt]">
+        <h4 class="text-[12pt] font-bold border-b border-gray-300 pb-[2pt] mb-[16pt] break-words">
+          EDUCACIÓN
+        </h4>
+        @for (edu of cv.education; track $index) {
+          @if (edu.title) {
+            <div class="mb-[15pt] break-words">
+              <div class="flex justify-between items-baseline">
+                <h5 class="text-[10pt] font-bold">{{ edu.title }}</h5>
+                <span class="text-[10pt] italic text-right ml-4 shrink-0">
+                  {{ filterTruthy([edu.dateIn, edu.dateFin]).join(' - ') }}
+                </span>
+              </div>
+              <h6 class="text-[10pt] mb-1 leading-[12pt]">{{ edu.institution }}</h6>
+              @if (edu.bullets) {
+                <ul class="list-none">
+                  @for (bullet of (edu.bullets || '').split('\n'); track $index) {
+                    @if (bullet.trim().length > 0) {
+                      <li class="text-[10pt] mb-[2pt] pl-[18pt] relative">
+                        <span class="absolute left-0 top-0 leading-[12pt]">•</span>
+                        <span class="leading-[12pt]">
+                          {{ bullet.trim().replace('/^[•–-]\s*/', '').trim() }}
+                        </span>
+                      </li>
+                    }
+                  }
+                </ul>
+              }
+            </div>
+          }
+        }
+      </div>
+    }
+    @if (hasSkills()) {
+      <div class="mt-[12pt]">
+        <h4 class="text-[12pt] font-bold border-b border-gray-300 pb-[2pt] mb-[16pt]">
+          HABILIDADES CLAVE
+        </h4>
+
+        @for (skillGroup of cv.skills; track $index) {
+          <div class="text-[10pt] break-words leading-[12pt]">
+            @if (skillGroup.skills.length > 0) {
+              <div class="mb-[4pt]">
+                <span class="font-bold">SKILLS TÉCNICAS:</span> {{ skillGroup.skills.join(' | ') }}
+              </div>
+            }
+            @if (skillGroup.languages.length > 0) {
+              <div class="mb-[4pt]">
+                <span class="font-bold">IDIOMAS:</span> {{ skillGroup.languages.join(' | ') }}
+              </div>
+            }
+            @if (skillGroup.certifications.length > 0) {
+              <div class="mb-[4pt]">
+                <span class="font-bold">CERTIFICACIONES:</span>
+                {{ formatCertifications(skillGroup.certifications) }}
+              </div>
+            }
+            @if (skillGroup.additional.length > 0) {
+              <div class="mb-[4pt]">
+                <span class="font-bold">HABILIDADES ADICIONALES:</span>
+                {{ skillGroup.additional.join(' | ') }}
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+} @else {
+  <div
+    class="p-8 bg-white shadow-lg rounded-lg border min-h-[80vh] flex items-center justify-center"
+  >
+    <p class="text-gray-500">Completá el formulario para ver la vista previa.</p>
+  </div>
+}

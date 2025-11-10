@@ -4,28 +4,76 @@
   "private": true,
   "description": "Your free self-hosted intelligent assistant for analyzing, optimizing, and comparing resumes with job descriptions using AI.",
   "scripts": {
-    "postinstall": "cd frontend && npm install && cd ../backend && npm install",
-    "start": "concurrently \"npm run start --prefix frontend\" \"npm run start --prefix backend\"",
-    "build": "npm run build --prefix frontend",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --ext .ts --fix",
+    "start": "concurrently \"nx serve frontend\" \"nx serve backend\"",
+    "build": "nx build apps/frontend",
+    "lint": "nx lint apps/frontend && nx lint apps/backend",
     "format": "prettier --write .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "serve:frontend": "nx serve apps/frontend",
+    "serve:backend": "nx serve apps/backend",
+    "build:frontend": "nx build apps/frontend"
+  },
+  "dependencies": {
+    "@angular/cdk": "^20.0.0",
+    "@angular/common": "^20.1.0",
+    "@angular/compiler": "^20.1.0",
+    "@angular/core": "^20.1.0",
+    "@angular/forms": "^20.1.0",
+    "@angular/platform-browser": "^20.1.0",
+    "@angular/router": "^20.1.0",
+    "@anthropic-ai/sdk": "^0.68.0",
+    "@babel/runtime": "^7.28.4",
+    "@google/generative-ai": "^0.24.1",
+    "@taiga-ui/addon-doc": "^4.60.0",
+    "@taiga-ui/addon-mobile": "^4.60.0",
+    "@taiga-ui/cdk": "^4.60.0",
+    "@taiga-ui/core": "^4.60.0",
+    "@taiga-ui/event-plugins": "^4.0.2",
+    "@taiga-ui/experimental": "^4.60.0",
+    "@taiga-ui/icons": "^4.60.0",
+    "@taiga-ui/kit": "^4.60.0",
+    "@taiga-ui/layout": "^4.60.0",
+    "@tailwindcss/postcss": "^4.1.16",
+    "axios": "^1.13.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "jspdf": "^3.0.3",
+    "multer": "^2.0.2",
+    "openai": "^6.7.0",
+    "pdf-parse": "^2.4.5",
+    "postcss": "^8.5.6",
+    "rxjs": "~7.8.0",
+    "tailwindcss": "^4.1.16",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "^20.3.9",
+    "@angular/build": "^20.1.2",
+    "@angular/cli": "^20.1.2",
+    "@angular/compiler-cli": "^20.1.0",
     "@eslint/js": "^9.39.1",
-    "angular-eslint": "^20.6.0",
+    "@nx/angular": "^22.0.2",
+    "@nx/eslint": "^22.0.2",
+    "@nx/js": "^22.0.2",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^24.10.0",
+    "angular-eslint": "20.5.1",
     "concurrently": "^9.2.1",
     "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "husky": "^8.0.0",
+    "less": "^4.4.2",
     "lint-staged": "^15.4.0",
+    "nx": "22.0.2",
     "prettier": "^3.6.2",
     "pretty-quick": "^4.2.2",
-    "ts-node": "^10.9.2",
     "typescript": "~5.8.2",
-    "typescript-eslint": "^8.46.3"
+    "typescript-eslint": "8.46.2"
   },
   "lint-staged": {
     "*.{ts,js,json,css,html,md}": [
@@ -47,5 +95,6 @@
         }
       }
     ]
-  }
+  },
+  "nx": {}
 }

@@ -8,7 +8,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/martinFLR/smartcv">
-    <img src="/frontend/public/assets/logo.png" alt="Logo" width="100" height="100">
+    <img src="/apps/frontend/public/assets/logo.png" alt="Logo" width="100" height="100">
   </a>
 
 <h3 align="center">SmartCV</h3>
