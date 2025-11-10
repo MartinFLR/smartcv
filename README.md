@@ -139,7 +139,9 @@ Follow these steps to set up and run **SmartCV** locally:
    Rename the `.env.example` file to `.env`:
 
    ```bash
+   cd backend
    mv .env.example .env
+   cd ..
    ```
 
    Then open it and add your API key:
