@@ -1,0 +1,12 @@
+export declare const SCROLL_DEBOUNCE_TIME = 80;
+export declare const YEARS_IN_ROW = 5;
+export declare const STARTING_YEAR = 1900;
+export declare const RANGE = 196;
+export declare const BUFFER = 500;
+export declare const ANDROID_LABEL = 64;
+export declare const ANDROID_WEEK = 48;
+export declare const IOS_LABEL = 50;
+export declare const IOS_WEEK = 50;
+export declare const YEARLY_CYCLE = 28;
+export declare const ANDROID_CYCLE: readonly (readonly number[])[];
+export declare const IOS_CYCLE: readonly (readonly number[])[];

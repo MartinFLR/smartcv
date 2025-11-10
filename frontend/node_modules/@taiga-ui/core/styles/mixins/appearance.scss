@@ -1,0 +1,72 @@
+@import 'mixins.scss';
+@import '../variables/media.scss';
+
+@mixin appearance-hover {
+    @include interactive {
+        @media ($tui-mouse) {
+            &:hover:not([data-state]) {
+                @content;
+            }
+        }
+    }
+
+    &[data-state='hover'] {
+        @content;
+    }
+
+    /* @deprecated TODO remove in v5 */
+    @media ($tui-mouse) {
+        &[tuiWrapper]:hover:not(._no-hover),
+        &[tuiWrapper][data-state='hover'] {
+            @content;
+        }
+    }
+}
+
+@mixin appearance-active {
+    @include interactive {
+        &:active:not([data-state]) {
+            @content;
+        }
+    }
+
+    &[data-state='active'] {
+        @content;
+    }
+
+    /* @deprecated TODO remove in v5 */
+    &[tuiWrapper]:active:not(._no-active),
+    &[tuiWrapper][data-state='active'],
+    &[tuiWrapper][data-state='active']:hover {
+        @content;
+    }
+}
+
+@mixin appearance-disabled {
+    &:disabled:not([data-state]),
+    &[data-state='disabled'] {
+        @content;
+    }
+
+    /* @deprecated TODO remove in v5 */
+    &[tuiWrapper]:disabled:not([data-state]),
+    &[tuiWrapper][data-state='disabled'] {
+        @content;
+    }
+}
+
+@mixin appearance-focus {
+    &:focus-visible:not([data-focus='false']) {
+        @content;
+    }
+
+    &[data-focus='true'] {
+        @content;
+    }
+
+    /* @deprecated TODO remove in v5 */
+    &[tuiWrapper]:not(._focused):has(:focus-visible),
+    &[tuiWrapper]._focused {
+        @content;
+    }
+}

@@ -1,0 +1,7 @@
+import { isIos } from '@ng-web-apis/platform';
+/**
+ * @deprecated: drop in v5, use import {isApple} from '@ng-web-apis/platform';
+ * @param navigator
+ */
+export const tuiIsIos = isIos;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaXMtaW9zLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vcHJvamVjdHMvY2RrL3V0aWxzL2Jyb3dzZXIvaXMtaW9zLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sRUFBQyxLQUFLLEVBQUMsTUFBTSx1QkFBdUIsQ0FBQztBQUU1Qzs7O0dBR0c7QUFDSCxNQUFNLENBQUMsTUFBTSxRQUFRLEdBQUcsS0FBSyxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHtpc0lvc30gZnJvbSAnQG5nLXdlYi1hcGlzL3BsYXRmb3JtJztcblxuLyoqXG4gKiBAZGVwcmVjYXRlZDogZHJvcCBpbiB2NSwgdXNlIGltcG9ydCB7aXNBcHBsZX0gZnJvbSAnQG5nLXdlYi1hcGlzL3BsYXRmb3JtJztcbiAqIEBwYXJhbSBuYXZpZ2F0b3JcbiAqL1xuZXhwb3J0IGNvbnN0IHR1aUlzSW9zID0gaXNJb3M7XG4iXX0=

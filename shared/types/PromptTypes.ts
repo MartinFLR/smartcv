@@ -10,7 +10,7 @@ export interface BuildPromptOptions {
   type?: PromptType;
   temperature?: TemperatureLevel;
   tone?: ToneLevel;
-  recruiterName?: string;     // Nombre de la persona a la que va dirigida la cover
+  recruiterName?: string; // Nombre de la persona a la que va dirigida la cover
   companyName?: string;
   referralName?: string;
   deliveryChannel?: DeliveryChannel;

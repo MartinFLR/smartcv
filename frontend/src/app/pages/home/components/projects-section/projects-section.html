@@ -1,0 +1,76 @@
+<fieldset formArrayName="projects" class="contents">
+  <div class="flex justify-between items-center mb-3">
+    <h2 class="text-xl font-semibold text-gray-800">Proyectos</h2>
+    <button tuiButton tuiRipple type="button" size="s" iconStart="@tui.plus" (click)="add.emit()">
+      Agregar
+    </button>
+  </div>
+
+  @for (group of projectForms().controls; track $index; let i = $index) {
+  <div
+    [formGroupName]="i"
+    class="p-4 border border-gray-200 rounded relative flex flex-col gap-4 bg-gray-50 mb-4"
+  >
+    <div class="flex flex-row-reverse">
+      <button
+        tuiButton
+        type="button"
+        appearance="action-destructive"
+        size="s"
+        tuiRipple
+        iconStart="@tui.trash"
+        (click)="remove.emit(i)"
+      >
+        <span class="sr-only">Eliminar projecto</span>
+      </button>
+    </div>
+
+    <tui-textfield>
+      <label tuiLabel [for]="'projectsName'"> Nombre</label>
+      <input
+        tuiTextfield
+        [id]="'projectsName'"
+        placeholder="Nombre del proyecto"
+        formControlName="name"
+      />
+    </tui-textfield>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <tui-textfield>
+        <label tuiLabel [for]="'projectsSubtitle'">Subtitulo</label>
+        <input tuiTextfield [id]="'projectsSubtitle'" formControlName="subtitle" />
+      </tui-textfield>
+      <div class="flex flex-row">
+        <tui-textfield class="w-full">
+          <label tuiLabel [for]="'projectsDateIn'">Fecha Inicio</label>
+          <input
+            tuiTextfield
+            [id]="'projectsDateIn'"
+            formControlName="dateIn"
+            placeholder="Ej: Ene 2023"
+          />
+        </tui-textfield>
+        <tui-textfield class="w-full">
+          <label tuiLabel [for]="'projectsDateFin'"> Fecha Finalizacion</label>
+          <input
+            tuiTextfield
+            [id]="'projectsDateFin'"
+            formControlName="dateFin"
+            placeholder="Ej: Presente"
+          />
+        </tui-textfield>
+      </div>
+    </div>
+    <tui-textfield>
+      <label tuiLabel [for]="'projectsBullets'">Logros y Tareas (un bullet por línea)</label>
+      <textarea
+        tuiTextarea
+        [id]="'projectsBullets'"
+        placeholder="- Lideré la migración de..."
+        formControlName="bullets"
+        [min]="8"
+        [max]="10"
+      ></textarea>
+    </tui-textfield>
+  </div>
+  }
+</fieldset>

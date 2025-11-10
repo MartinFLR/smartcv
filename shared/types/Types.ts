@@ -1,4 +1,4 @@
-import {BuildPromptOptions} from './PromptTypes';
+import { BuildPromptOptions } from './PromptTypes';
 
 export interface CvResponse {
   profileSummary: string;
@@ -79,32 +79,31 @@ export interface CvForm {
   }[];
 }
 
-export type TransformedExperience = {
+export interface TransformedExperience {
   role: string | null;
   company: string | null;
   bullets: string | null;
   dateIn?: string | null;
   dateFin?: string | null;
-};
+}
 
-export type TransformedEducation = {
+export interface TransformedEducation {
   title: string | null;
   institution: string | null;
   bullets: string | null;
   dateIn?: string | null;
   dateFin?: string | null;
-};
+}
 
-export type TransformedProject = {
+export interface TransformedProject {
   name: string | null;
   subtitle: string | null;
   bullets: string | null;
   dateIn?: string | null;
   dateFin?: string | null;
-};
+}
 
-export interface TransformedCvResponse
-  extends Omit<CvResponse, 'experience' | 'education'> {
+export interface TransformedCvResponse extends Omit<CvResponse, 'experience' | 'education'> {
   experience: TransformedExperience[];
   education: TransformedEducation[];
   project: TransformedProject[];
@@ -120,9 +119,8 @@ export interface CvPayload {
   jobDesc: string;
   modelProvider?: string;
   modelVersion?: string;
-  promptOption?: BuildPromptOptions
+  promptOption?: BuildPromptOptions;
 }
-
 
 export interface CoverLetterPayload {
   baseCv: CvForm;
@@ -138,4 +136,3 @@ export interface CvProfile {
   jobTitle: string;
   data: CvForm;
 }
-

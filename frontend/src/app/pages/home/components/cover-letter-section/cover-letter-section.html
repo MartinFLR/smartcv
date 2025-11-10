@@ -1,0 +1,146 @@
+<fieldset [formGroup]="coverLetterForm" class="flex flex-col gap-6">
+  <div class="flex flex-col gap-2">
+    <h2 class="text-xl font-semibold text-gray-800">Generá tu carta de presentacion</h2>
+    <p class="text-sm text-gray-600">
+      La IA va a analizar lo que tenés ahora english el CV y va a generar una cover letter
+      personalizada para que le puedas enviar a los recruiters.
+    </p>
+  </div>
+
+  <h3 class="text-sm font-semibold text-gray-800">Campos opcionales</h3>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    @if (isInternalReference()) {
+    <tui-textfield>
+      <label tuiLabel [for]="'referralNameInput'">Nombre de tu referente interno</label>
+      <input
+        tuiTextfield
+        [state]="isApplicationForm() ? 'active' : null"
+        formControlName="referralName"
+        placeholder="Ej: Ana Pérez"
+        [id]="'referralNameInput'"
+      />
+    </tui-textfield>
+    }
+    <tui-textfield>
+      <label tuiLabel [for]="'recruiterNameInput'">Nombre del Reclutador/a</label>
+      <input
+        tuiTextfield
+        [state]="isApplicationForm() ? 'active' : null"
+        formControlName="recruiterName"
+        placeholder="Ej: Ana Pérez"
+        [id]="'recruiterNameInput'"
+      />
+    </tui-textfield>
+
+    <tui-textfield>
+      <label tuiLabel [for]="'companyNameInput'">Nombre de la Empresa</label>
+      <input
+        tuiTextfield
+        formControlName="companyName"
+        placeholder="Ej: Mercado Libre"
+        [id]="'companyNameInput'"
+      />
+    </tui-textfield>
+  </div>
+
+  <fieldset class="flex flex-col gap-2 py-2">
+    <div tuiLabel class="text-sm font-medium text-gray-700">Tono de la carta</div>
+    <div tuiItemGroup class="flex flex-wrap gap-2">
+      @for (tone of tones; track $index) {
+      <label
+        tuiChip
+        [iconStart]="tone.icon"
+        [for]="'toneInput'"
+        class="cursor-pointer"
+        [appearance]="tone.value === coverLetterForm.controls.tone.value ? 'accent' : 'neutral'"
+      >
+        <input
+          type="radio"
+          formControlName="tone"
+          tuiChip
+          appearance=""
+          [value]="tone.value"
+          [id]="'toneInput'"
+          class="sr-only"
+        />
+        {{ tone.name }}
+      </label>
+      }
+    </div>
+  </fieldset>
+
+  <fieldset class="flex flex-col gap-2 py-2">
+    <div tuiLabel class="text-sm font-medium text-gray-700">Canal de comunicacíón</div>
+    <div tuiItemGroup class="flex flex-wrap gap-2">
+      @for (channel of channelDeliverys; track $index) {
+      <label
+        tuiChip
+        [iconStart]="channel.icon"
+        [for]="'channelInput'"
+        class="cursor-pointer"
+        [appearance]="
+            channel.value === coverLetterForm.controls.deliveryChannel.value ? 'accent' : 'neutral'
+          "
+      >
+        <input
+          type="radio"
+          formControlName="deliveryChannel"
+          tuiChip
+          appearance=""
+          [value]="channel.value"
+          class="sr-only"
+          [id]="'channelInput'"
+        />
+        {{ channel.name }}
+      </label>
+      }
+    </div>
+  </fieldset>
+</fieldset>
+
+<div [formGroup]="iaForm()" class="flex flex-col gap-6">
+  <div class="p-4 border border-gray-200 rounded relative flex flex-col gap-4 bg-gray-50">
+    <tui-textfield>
+      <label tuiLabel [for]="'jobDescriptionInput'"
+        >Pegá acá la descripción del puesto (Job Description)</label
+      >
+      <textarea
+        tuiTextarea
+        formControlName="jobDescription"
+        [min]="8"
+        [max]="10"
+        [id]="'jobDescriptionInput'"
+      ></textarea>
+    </tui-textfield>
+    <div class="text-sm text-gray-600 mt-2">
+      <p>
+        Pegá la descripción del puesto aquí para que la IA pueda generar tu carta de presentación
+        teniendo english cuenta las responsabilidades, habilidades y requisitos clave del trabajo.
+      </p>
+      <p class="mt-1 font-medium">
+        Esto ayuda a la IA a adaptar tu experiencia y logros específicamente para esta oferta.
+      </p>
+    </div>
+  </div>
+  <div class="mt-6">
+    <button
+      tuiButton
+      type="button"
+      class="w-full sm:w-auto"
+      [loading]="isLoading()"
+      [disabled]="iaForm().invalid"
+      (click)="generateCoverLetter()"
+    >
+      Generar carta
+    </button>
+  </div>
+
+  <div class="mt-8 flex flex-col gap-4">
+    <h3 class="text-lg font-semibold text-gray-800">Tu carta de presentación generada</h3>
+
+    <tui-textfield>
+      <textarea tuiTextarea [min]="15" [max]="25" [value]="generatedLetter()"> </textarea>
+      <tui-icon icon="@tui.copy" tuiCopy />
+    </tui-textfield>
+  </div>
+</div>

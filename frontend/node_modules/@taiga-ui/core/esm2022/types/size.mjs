@@ -1,0 +1,13 @@
+/**
+ * Various sizes for components
+ *
+ * 'xxs' - extra extra small
+ * 'xs' - extra small
+ * 's' - small
+ * 'm' - medium (typically default)
+ * 'l' - large
+ * 'xl' - extra large
+ * 'xxl' - extra extra large
+ */
+export {};
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2l6ZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3Byb2plY3RzL2NvcmUvdHlwZXMvc2l6ZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7Ozs7Ozs7OztHQVVHIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBWYXJpb3VzIHNpemVzIGZvciBjb21wb25lbnRzXG4gKlxuICogJ3h4cycgLSBleHRyYSBleHRyYSBzbWFsbFxuICogJ3hzJyAtIGV4dHJhIHNtYWxsXG4gKiAncycgLSBzbWFsbFxuICogJ20nIC0gbWVkaXVtICh0eXBpY2FsbHkgZGVmYXVsdClcbiAqICdsJyAtIGxhcmdlXG4gKiAneGwnIC0gZXh0cmEgbGFyZ2VcbiAqICd4eGwnIC0gZXh0cmEgZXh0cmEgbGFyZ2VcbiAqL1xuXG5leHBvcnQgdHlwZSBUdWlTaXplTSA9ICdtJztcblxuZXhwb3J0IHR5cGUgVHVpU2l6ZVMgPSBUdWlTaXplTSB8ICdzJztcblxuZXhwb3J0IHR5cGUgVHVpU2l6ZUwgPSBUdWlTaXplTSB8ICdsJztcblxuZXhwb3J0IHR5cGUgVHVpU2l6ZVhTID0gVHVpU2l6ZVMgfCAneHMnO1xuXG5leHBvcnQgdHlwZSBUdWlTaXplWFhTID0gVHVpU2l6ZVhTIHwgJ3h4cyc7XG5cbmV4cG9ydCB0eXBlIFR1aVNpemVYTCA9IFR1aVNpemVMIHwgJ3hsJztcblxuZXhwb3J0IHR5cGUgVHVpU2l6ZVhYTCA9IFR1aVNpemVYTCB8ICd4eGwnO1xuIl19

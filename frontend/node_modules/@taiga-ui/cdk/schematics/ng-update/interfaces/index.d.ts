@@ -1,0 +1,14 @@
+export type * from './asset';
+export type * from './html-comment';
+export type * from './migration-warning';
+export type * from './removable-input';
+export type * from './removed-module';
+export type * from './replacement-attribute';
+export type * from './replacement-attribute-to-directive';
+export type * from './replacement-attribute-value';
+export type * from './replacement-enum';
+export type * from './replacement-identifier';
+export type * from './replacement-service';
+export type * from './replacement-tag';
+export type * from './replacement-type';
+export type * from './template-resource';

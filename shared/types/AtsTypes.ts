@@ -1,26 +1,22 @@
-import {BuildPromptOptions} from './PromptTypes';
+import { BuildPromptOptions } from './PromptTypes';
 
 export type SectionScoreItem = [string, number];
 
-export interface CvAtsPayload{
+export interface CvAtsPayload {
   file: string | ArrayBuffer;
-  jobDesc: string,
-  modelProvider?: string,
-  modelVersion?: string,
-  promptOption? :BuildPromptOptions
+  jobDesc: string;
+  modelProvider?: string;
+  modelVersion?: string;
+  promptOption?: BuildPromptOptions;
 }
 
 export interface CvAtsResponse {
   text: string;
-
-  // Coincidencia general con la oferta (%)
   matchScore: number; // 0-100
 
-  // Keywords detectadas en el CV vs oferta
-  matchedKeywords: string[];   // palabras clave encontradas en el CV
-  missingKeywords: string[];   // palabras clave importantes de la oferta que no aparecen
+  matchedKeywords: string[];
+  missingKeywords: string[];
 
-  // Evaluación de secciones del CV
   sections: {
     summary: SectionAnalysis;
     experience: SectionAnalysis;
@@ -31,7 +27,6 @@ export interface CvAtsResponse {
     additional?: SectionAnalysis;
   };
 
-  // Puntuación de cada sección (0-100)
   sectionScores: {
     summary: number;
     experience: number;
@@ -42,16 +37,12 @@ export interface CvAtsResponse {
     additional?: number;
   };
 
-  // Recomendaciones concretas de mejora
   recommendations: string[];
 
-  // Alertas de formato o ATS-friendliness
   warnings: string[];
 
-  // Nivel de adecuación al puesto
   fitLevel?: 'Low' | 'Medium' | 'High';
 
-  // Habilidades soft / hard categorizadas (opcional)
   skillAnalysis?: {
     hardSkills: string[];
     softSkills: string[];
@@ -60,8 +51,8 @@ export interface CvAtsResponse {
 }
 
 export interface SectionAnalysis {
-  content: string;        // el texto que se analizó de esa sección
-  score: number;          // puntuación de 0-100
-  highlights: string[];   // puntos positivos detectados
-  issues: string[];       // puntos negativos detectados
+  content: string;
+  score: number;
+  highlights: string[];
+  issues: string[];
 }

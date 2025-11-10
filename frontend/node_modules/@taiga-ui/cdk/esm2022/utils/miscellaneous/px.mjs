@@ -1,0 +1,9 @@
+/// <reference types="@taiga-ui/tsconfig/ng-dev-mode" />
+/**
+ * Adds 'px' to the number and turns it into a string
+ */
+export function tuiPx(value) {
+    ngDevMode && console.assert(Number.isFinite(value), 'Value must be finite number');
+    return `${value}px`;
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi9wcm9qZWN0cy9jZGsvdXRpbHMvbWlzY2VsbGFuZW91cy9weC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSx3REFBd0Q7QUFFeEQ7O0dBRUc7QUFDSCxNQUFNLFVBQVUsS0FBSyxDQUFDLEtBQWE7SUFDL0IsU0FBUyxJQUFJLE9BQU8sQ0FBQyxNQUFNLENBQUMsTUFBTSxDQUFDLFFBQVEsQ0FBQyxLQUFLLENBQUMsRUFBRSw2QkFBNkIsQ0FBQyxDQUFDO0lBRW5GLE9BQU8sR0FBRyxLQUFLLElBQUksQ0FBQztBQUN4QixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLy8vIDxyZWZlcmVuY2UgdHlwZXM9XCJAdGFpZ2EtdWkvdHNjb25maWcvbmctZGV2LW1vZGVcIiAvPlxuXG4vKipcbiAqIEFkZHMgJ3B4JyB0byB0aGUgbnVtYmVyIGFuZCB0dXJucyBpdCBpbnRvIGEgc3RyaW5nXG4gKi9cbmV4cG9ydCBmdW5jdGlvbiB0dWlQeCh2YWx1ZTogbnVtYmVyKTogc3RyaW5nIHtcbiAgICBuZ0Rldk1vZGUgJiYgY29uc29sZS5hc3NlcnQoTnVtYmVyLmlzRmluaXRlKHZhbHVlKSwgJ1ZhbHVlIG11c3QgYmUgZmluaXRlIG51bWJlcicpO1xuXG4gICAgcmV0dXJuIGAke3ZhbHVlfXB4YDtcbn1cbiJdfQ==

@@ -1,0 +1,9 @@
+export * from './tab.directive';
+export * from './tabs';
+export * from './tabs.directive';
+export * from './tabs.options';
+export * from './tabs.providers';
+export * from './tabs-horizontal.directive';
+export * from './tabs-vertical.directive';
+export * from './tabs-with-more.component';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi9wcm9qZWN0cy9raXQvY29tcG9uZW50cy90YWJzL2luZGV4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLGNBQWMsaUJBQWlCLENBQUM7QUFDaEMsY0FBYyxRQUFRLENBQUM7QUFDdkIsY0FBYyxrQkFBa0IsQ0FBQztBQUNqQyxjQUFjLGdCQUFnQixDQUFDO0FBQy9CLGNBQWMsa0JBQWtCLENBQUM7QUFDakMsY0FBYyw2QkFBNkIsQ0FBQztBQUM1QyxjQUFjLDJCQUEyQixDQUFDO0FBQzFDLGNBQWMsNEJBQTRCLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgKiBmcm9tICcuL3RhYi5kaXJlY3RpdmUnO1xuZXhwb3J0ICogZnJvbSAnLi90YWJzJztcbmV4cG9ydCAqIGZyb20gJy4vdGFicy5kaXJlY3RpdmUnO1xuZXhwb3J0ICogZnJvbSAnLi90YWJzLm9wdGlvbnMnO1xuZXhwb3J0ICogZnJvbSAnLi90YWJzLnByb3ZpZGVycyc7XG5leHBvcnQgKiBmcm9tICcuL3RhYnMtaG9yaXpvbnRhbC5kaXJlY3RpdmUnO1xuZXhwb3J0ICogZnJvbSAnLi90YWJzLXZlcnRpY2FsLmRpcmVjdGl2ZSc7XG5leHBvcnQgKiBmcm9tICcuL3RhYnMtd2l0aC1tb3JlLmNvbXBvbmVudCc7XG4iXX0=

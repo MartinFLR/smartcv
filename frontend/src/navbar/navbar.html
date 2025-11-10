@@ -1,0 +1,82 @@
+<header
+  class="relative top-0 left-0 z-50 w-full shadow-lg transition-all duration-300 ease-in-out"
+  [ngClass]="isScrolled() ? 'bg-base-100/90 backdrop-blur-sm' : 'bg-base-100'"
+>
+  <tui-app-bar
+    class="mx-auto max-w-7xl px-4 py-9"
+    style="--tui-primitive-header-background: transparent; --tui-primitive-header-border: none"
+  >
+    <img
+      tuiSlot="left"
+      [ngSrc]="'/assets/logo.png'"
+      alt="SmartCv-logo"
+      [routerLink]="['/']"
+      width="1024"
+      height="1024"
+      priority
+      class="h-16 w-auto cursor-pointer"
+    />
+
+    <tui-tabs class="hidden md:flex mx-auto">
+      <a tuiTab [routerLink]="['/']" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive>
+        <span class="text-sm font-medium">Currículum</span>
+      </a>
+      <a
+        tuiTab
+        [routerLink]="['/configuracion']"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive
+      >
+        <span class="text-sm font-medium">Configuración</span>
+      </a>
+    </tui-tabs>
+
+    <!-- TODO: Agregar funcionalidad con Transloco
+    <tui-badged-content
+    tuiSlot="right"
+    >
+      <img
+        alt=""
+        size="s"
+        tuiBadge
+        tuiSlot="bottom"
+        [src]="flags.get(languageControl.value!) || flags.get(switcher.language) | tuiFlag"
+      />
+
+      <button
+        appearance="outline-grayscale"
+        size="m"
+        tuiButtonSelect
+        tuiIconButton
+        type="button"
+        [formControl]="languageControl"
+        [iconStart]="icons.languages"
+      >
+
+        <tui-data-list *tuiTextfieldDropdown>
+          <tui-opt-group label="Lenguaje">
+            @for (name of names; track $index) {
+              <button
+                new
+                tuiOption
+                size="s"
+                type="button"
+                [value]="name | titlecase"
+                (click)="setLang(name)"
+              >
+                <img
+                  alt=""
+                  class="t-flag"
+                  [src]="flags.get(name) | tuiFlag"
+                />
+                {{ name | titlecase }}
+              </button>
+            }
+
+          </tui-opt-group>
+        </tui-data-list>
+      </button>
+    </tui-badged-content>
+    -->
+  </tui-app-bar>
+</header>
