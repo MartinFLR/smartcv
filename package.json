@@ -14,7 +14,13 @@
     "lint:backend": "nx lint apps/backend",
     "lint": "nx lint apps/frontend && nx lint apps/backend",
     "format": "prettier --write .",
+    "commitlint": "commitlint --from HEAD~1 --to HEAD --verbose",
     "prepare": "husky install"
+  },
+  "config": {
+    "commitizen":{
+      "path": "@commitlint/cz-commitlint"
+    }
   },
   "dependencies": {
     "@angular/cdk": "^20.0.0",
@@ -26,6 +32,7 @@
     "@angular/router": "^20.1.0",
     "@anthropic-ai/sdk": "^0.68.0",
     "@babel/runtime": "^7.28.4",
+    "@commitlint/types": "^20.0.0",
     "@google/generative-ai": "^0.24.1",
     "@taiga-ui/addon-doc": "^4.60.0",
     "@taiga-ui/addon-mobile": "^4.60.0",
@@ -56,6 +63,10 @@
     "@angular/build": "^20.1.2",
     "@angular/cli": "^20.1.2",
     "@angular/compiler-cli": "^20.1.0",
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@commitlint/prompt": "^20.1.0",
+    "@commitlint/prompt-cli": "^20.1.0",
     "@eslint/js": "^9.39.1",
     "@nx/angular": "^22.0.2",
     "@nx/eslint": "^22.0.2",
@@ -69,7 +80,7 @@
     "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
-    "husky": "^8.0.0",
+    "husky": "^8.0.3",
     "less": "^4.4.2",
     "lint-staged": "^15.4.0",
     "nx": "22.0.2",
