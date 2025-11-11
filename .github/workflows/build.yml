@@ -30,6 +30,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build types library
+        run: npx nx build types --skip-nx-cache
+
       - name: Build frontend
         run: npx nx build apps/frontend --skip-nx-cache
 
