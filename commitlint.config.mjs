@@ -4,7 +4,7 @@ export default {
     'type-empty': [2, 'never'],
     'scope-empty': [2, 'never'],
     'subject-empty': [2, 'never'],
-    'require-full-header': [2, 'always'] // nota: guiones normales
+    'require-full-header': [2, 'always']
   },
   plugins: [
     {
@@ -14,17 +14,17 @@ export default {
           const errors = [];
 
           if (!type) {
-            errors.push('❌ Debes definir el tipo del commit (feat, fix, docs, chore…)');
+            errors.push('You must specify the commit type (feat, fix, docs, chore, etc.)');
           }
           if (!scope) {
-            errors.push('❌ Debes definir el scope del commit (módulo o área afectada)');
+            errors.push('You must specify the scope of the commit (module or affected area)');
           }
           if (!subject) {
-            errors.push('❌ Debes escribir un asunto que explique qué se hizo');
+            errors.push('You must provide a subject describing what was changed');
           }
 
           if (errors.length > 0) {
-            errors.push('\nEjemplo de commit válido:\nfeat(auth): agregar login con token');
+            errors.push('\nExample of a valid commit:\nfeat(auth): add login with token');
             return [false, errors.join('\n')];
           }
 
