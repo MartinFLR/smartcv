@@ -36,7 +36,7 @@ jobs:
       - name: Build frontend
         run: npx nx build apps/frontend --skip-nx-cache
 
-      - name: Build backend (with deps)
+      - name: Build backend
         run: npx nx run backend:build --with-deps --skip-nx-cache
 
       - name: Save Nx cache
