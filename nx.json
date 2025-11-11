@@ -5,8 +5,8 @@
   "maxCacheSize": "10GB",
   "neverConnectToCloud": true,
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "{workspaceRoot}/**/*"],
-    "production": ["!{projectRoot}/**/*.spec.ts", "!{projectRoot}/**/*.test.ts"]
+    "default": ["{projectRoot}/**/*"],
+    "production": ["default", "!{projectRoot}/**/*.spec.ts", "!{projectRoot}/**/*.test.ts"]
   },
   "targetDefaults": {
     "build": {
