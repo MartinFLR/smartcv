@@ -1,38 +1,35 @@
 ---
-name: Bug report
-about: Create a report to help us improve
-title: ''
+name: 🐞 - Bug Report
+about: Report a bug or unexpected behavior 🐞
+title: "[BUG]"
 labels: bug
-assignees: ''
+assignees: ""
+---
+
+## Add a title *
+Provide a brief title for the bug.  
+**Example:** "PDF export crashes when uploading images in SmartCV"
+
+## Reproduction URL *
+Provide a link to reproduce the issue in our online playground (Stackblitz or similar).  
+**Example:**  
+https://stackblitz.com/edit/angular-smartcv-...
+
+## Description *
+Describe the bug clearly and concisely. Include any relevant details about the behavior in SmartCV.  
+**Example:** "The CV preview fails to render when uploading images larger than 2MB."
+
+## Additional context
+Add any other context about the problem, such as screenshots, videos, or links to CV examples.
+
+## Browser Used *
+Select the browser where the bug was observed.  
+**Example:** Chrome, Firefox, Safari
+
+## OS Used *
+Select the operating system where the bug was observed.  
+**Example:** Windows 11, macOS Monterey
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
-
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
-
-**Expected behavior**
-A clear and concise description of what you expected to happen.
-
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
-
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
-
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
-
-**Additional context**
-Add any other context about the problem here.
+⚠️ Remember, contributions to **SmartCV** should follow our [Contributing Guidelines](https://github.com/MartinFLR/smartcv/blob/main/CONTRIBUTING.md), [Security Policy](https://github.com/MartinFLR/smartcv/blob/main/SECURITY.md), and [Code of Conduct](https://github.com/MartinFLR/smartcv/blob/main/CODE_OF_CONDUCT.md).
