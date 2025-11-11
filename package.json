@@ -34,7 +34,7 @@
     "@taiga-ui/core": "^4.60.0",
     "@taiga-ui/event-plugins": "^4.0.2",
     "@taiga-ui/experimental": "^4.60.0",
-    "@taiga-ui/icons": "^4.60.0",
+    "@taiga-ui/icons": "^4.61.0",
     "@taiga-ui/kit": "^4.60.0",
     "@taiga-ui/layout": "^4.60.0",
     "@tailwindcss/postcss": "^4.1.16",
