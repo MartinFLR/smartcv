@@ -1,0 +1,56 @@
+name: 🐞-Bug Report
+description: Report a bug or unexpected behavior in SmartCV 🐞
+title: "[BUG]"
+labels: bug
+assignees: []
+
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Bug title *
+      description: A brief title for the bug
+      placeholder: "PDF export crashes when uploading images"
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description *
+      description: Describe the bug clearly and concisely.
+      placeholder: "The CV preview fails to render when uploading images larger than 2MB."
+
+  - type: input
+    id: reproduction_url
+    attributes:
+      label: Reproduction URL *
+      description: Link to reproduce the issue (Stackblitz, etc.)
+      placeholder: "https://stackblitz.com/edit/angular-smartcv-..."
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser *
+      description: Select the browser where the bug was observed
+    options:
+      - Chrome
+      - Firefox
+      - Safari
+      - Edge
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: OS *
+      description: Select the OS where the bug was observed
+    options:
+      - Windows
+      - macOS
+      - Linux
+      - iOS
+      - Android
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional context
+      description: Add screenshots, videos or links to CV examples
