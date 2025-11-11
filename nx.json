@@ -3,7 +3,7 @@
   "defaultBase": "master",
   "parallel": 5,
   "maxCacheSize": "10GB",
-  "neverConnectToCloud": true,
+  "neverConnectToCloud": false,
   "namedInputs": {
     "default": ["{projectRoot}/**/*"],
     "production": ["default", "!{projectRoot}/**/*.spec.ts", "!{projectRoot}/**/*.test.ts"]
