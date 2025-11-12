@@ -39,8 +39,6 @@ export function buildPrompt(baseCv: string, jobDesc: string, options?: BuildProm
   const exaggeration = getExaggeration(temperature, lang);
 
   if (type === 'tailoredCv') {
-    console.log('entre CV');
-
     return [
       buildCvHeader(lang, userContext),
       `Exaggeration instructions: ${exaggeration}`,
@@ -50,8 +48,6 @@ export function buildPrompt(baseCv: string, jobDesc: string, options?: BuildProm
     ].join('\n\n');
   }
   if (type === 'coverLetter') {
-    console.log('entre CoverLetter');
-
     return [
       buildCoverLetterHeader(lang, userContext, recruiterName, referralName, companyName),
       getCoverLetterToneText(lang, tone),
@@ -62,7 +58,6 @@ export function buildPrompt(baseCv: string, jobDesc: string, options?: BuildProm
     ].join('\n\n');
   }
   if (type === 'ats') {
-    console.log('entre ATS');
     return [
       buildATSHeader(lang),
       getATSMainTasks(lang),

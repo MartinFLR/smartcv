@@ -17,7 +17,7 @@ if (!config.anthropicApiKey) missingKeys.push('ANTHROPIC_API_KEY');
 if (!config.mistralApiKey) missingKeys.push('MISTRAL_API_KEY');
 
 if (missingKeys.length > 0) {
-  console.warn(`⚠️ Faltan las siguientes variables de entorno: ${missingKeys.join(', ')}`);
+  console.warn(`Faltan las siguientes variables de entorno: ${missingKeys.join(', ')}`);
   console.warn(
     'Algunos proveedores de IA no estarán disponibles hasta que se configuren las keys.',
   );
