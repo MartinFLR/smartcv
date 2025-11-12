@@ -20,7 +20,7 @@ body:
       description: Link to reproduce the issue (Stackblitz, etc.)
       placeholder: "https://stackblitz.com/edit/angular-smartcv-..."
     validations:
-      required: true
+      required: false
 
   - type: dropdown
     id: browser
