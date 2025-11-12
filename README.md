@@ -139,12 +139,12 @@ Follow these steps to set up and run **SmartCV** locally:
    Rename the `.env.example` file to `.env`:
 
    ```bash
-   cd backend
+   cd apps/backend
    mv .env.example .env
-   cd ..
+   cd ../..
    ```
 
-   Then open it and add your API key:
+   Then open it and add your API keys:
 
    ```bash
    GEMINI_API_KEY=your_api_key_here
@@ -177,7 +177,7 @@ Follow these steps to set up and run **SmartCV** locally:
   - [ ] Brazilian
 - [ ] Add Additional Templates
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/MartinFLR/smartcv/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
