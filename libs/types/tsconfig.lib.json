@@ -4,7 +4,7 @@
     "outDir": "../../dist/libs/types",
     "composite": true,
     "declaration": true,
-    "emitDeclarationOnly": false
+    "emitDeclarationOnly": true
   },
   "include": ["src/**/*.ts"]
 }

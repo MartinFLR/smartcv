@@ -17,11 +17,9 @@
     "strict": true,
     "paths": {
       "@smartcv/types": ["dist/libs/types"],
-      "@smartcv/types/*": ["dist/libs/types/src/*"],
-
+      "@smartcv/types/*": ["dist/libs/types/*"],
       "@smartcv/shared": ["dist/libs/shared"],
-      "@smartcv/shared/*": ["dist/libs/shared/src/*"],
-      "libs": ["libs/src/index.ts"]
+      "@smartcv/shared/*": ["dist/libs/shared/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]

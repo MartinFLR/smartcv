@@ -29,5 +29,5 @@
       }
     }
   },
-  "implicitDependencies": ["types"]
+  "implicitDependencies": ["types", "shared"]
 }

@@ -1,13 +1,15 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc/apps/backend",
+    "outDir": "../../dist/apps/backend",
     "module": "commonjs",
     "types": ["node", "multer", "cors", "express"],
     "emitDecoratorMetadata": true,
-    "target": "es2020"
+    "target": "es2020",
+    "composite": true,
+    "declaration": true
   },
-
   "include": ["src/**/*.ts"],
-  "exclude": ["../../node_modules", "../tmp", "jest.config.ts"]
+  "exclude": ["../../node_modules", "../tmp", "jest.config.ts"],
+  "references": [{ "path": "../../libs/types" }, { "path": "../../libs/shared" }]
 }

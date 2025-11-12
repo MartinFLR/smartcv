@@ -24,5 +24,6 @@
       }
     }
   },
+  "implicitDependencies": ["types"],
   "tags": []
 }

@@ -6,6 +6,8 @@
     "outDir": "./out-tsc/app",
     "types": []
   },
+
   "include": ["src/**/*.ts", "../shared/types/*.ts"],
-  "exclude": ["src/**/*.spec.ts"]
+  "exclude": ["src/**/*.spec.ts"],
+  "references": [{ "path": "../../libs/types" }, { "path": "../../libs/shared" }]
 }
