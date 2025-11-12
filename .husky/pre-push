@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npx nx build apps/frontend --skip-nx-cache
-npx nx build apps/backend --skip-nx-cache
+npx nx run-many --target=build --all

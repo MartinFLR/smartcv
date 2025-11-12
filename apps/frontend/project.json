@@ -102,5 +102,5 @@
   "cli": {
     "schematicCollections": ["angular-eslint"]
   },
-  "implicitDependencies": ["types"]
+  "implicitDependencies": ["types", "shared"]
 }

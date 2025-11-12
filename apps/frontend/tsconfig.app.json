@@ -7,7 +7,6 @@
     "types": []
   },
 
-  "include": ["src/**/*.ts", "../shared/types/*.ts"],
-  "exclude": ["src/**/*.spec.ts"],
-  "references": [{ "path": "../../libs/types" }, { "path": "../../libs/shared" }]
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.spec.ts"]
 }
