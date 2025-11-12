@@ -3,7 +3,7 @@ import { cleanJson } from '../utils/json-cleaner';
 import { CvAtsPayload, CvAtsResponse } from '@smartcv/types';
 import { buildPrompt } from './prompt/prompt-builder';
 
-import pdfParse = require('pdf-parse');
+import * as pdfParse from 'pdf-parse';
 
 export async function analyzeCvAts(body: CvAtsPayload): Promise<CvAtsResponse> {
   const { file, jobDesc, aiSettings, promptOption } = body;
