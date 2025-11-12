@@ -1,0 +1,50 @@
+name: Feature / Task Request
+description: Suggest a new feature or enhancement for SmartCV ✨
+title: "✨ - "
+assignees: []
+
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description *
+      description: Describe the feature or enhancement clearly.
+      placeholder: "Add the ability to export CVs directly to Google Drive."
+    validations:
+      required: true
+
+  - type: input
+    id: motivation
+    attributes:
+      label: Problem or Motivation *
+      description: Explain why this feature is useful or what problem it solves.
+      placeholder: "Users want to store their CVs in the cloud without downloading manually."
+    validations:
+      required: true
+
+  - type: input
+    id: proposed_solution
+    attributes:
+      label: Proposed Solution
+      description: Describe how you would like the feature to work.
+      placeholder: "Add a 'Save to Drive' button in the export menu with OAuth authentication."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority / Expected Impact
+      description: Rate the importance or impact of this feature.
+      options:
+        - Low
+        - Medium
+        - High
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Add screenshots, mockups, or links to examples
