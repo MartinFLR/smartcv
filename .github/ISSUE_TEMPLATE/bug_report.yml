@@ -1,7 +1,7 @@
-name: 🐞 Bug Report
+name: Bug Report
 description: Report a bug or unexpected behavior in SmartCV
 title: "[BUG]"
-labels: bug
+labels: [bug]
 assignees: []
 
 body:
@@ -18,6 +18,8 @@ body:
       label: Description *
       description: Describe the bug clearly and concisely.
       placeholder: "The CV preview fails to render when uploading images larger than 2MB."
+    validations:
+      required: true
 
   - type: input
     id: reproduction_url
@@ -25,29 +27,35 @@ body:
       label: Reproduction URL *
       description: Link to reproduce the issue (Stackblitz, etc.)
       placeholder: "https://stackblitz.com/edit/angular-smartcv-..."
+    validations:
+      required: true
 
   - type: dropdown
     id: browser
     attributes:
       label: Browser *
       description: Select the browser where the bug was observed
-    options:
-      - Chrome
-      - Firefox
-      - Safari
-      - Edge
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+    validations:
+      required: true
 
   - type: dropdown
     id: os
     attributes:
       label: OS *
       description: Select the OS where the bug was observed
-    options:
-      - Windows
-      - macOS
-      - Linux
-      - iOS
-      - Android
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - iOS
+        - Android
+    validations:
+      required: true
 
   - type: textarea
     id: additional_context
