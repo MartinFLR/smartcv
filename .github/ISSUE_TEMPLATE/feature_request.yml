@@ -1,6 +1,7 @@
-name: Feature / Task Request
+name: ✨ - Feature / Task Request
 description: Suggest a new feature or enhancement for SmartCV ✨
 title: "✨ - "
+labels: [enhancement]
 assignees: []
 
 body:
