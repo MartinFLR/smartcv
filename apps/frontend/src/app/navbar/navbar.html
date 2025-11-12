@@ -1,9 +1,11 @@
 <header
   class="relative top-0 left-0 z-50 w-full shadow-lg transition-all duration-300 ease-in-out"
   [ngClass]="isScrolled() ? 'bg-base-100/90 backdrop-blur-sm' : 'bg-base-100'"
+  xmlns="http://www.w3.org/1999/html"
 >
   <tui-app-bar
-    class="mx-auto max-w-7xl px-4 py-9"
+    [tuiCell]="'m'"
+    class="mx-auto max-w-7xl px-4 py-12"
     style="--tui-primitive-header-background: transparent; --tui-primitive-header-border: none"
   >
     @if (!darkMode()) {
@@ -15,7 +17,7 @@
         width="1024"
         height="1024"
         priority
-        class="h-16 w-auto cursor-pointer"
+        class="h-12 w-auto cursor-pointer"
       />
     } @else {
       <img
@@ -26,7 +28,7 @@
         width="1024"
         height="1024"
         priority
-        class="h-16 w-auto cursor-pointer"
+        class="h-12 w-auto cursor-pointer"
       />
     }
 
@@ -44,13 +46,29 @@
       </a>
     </tui-tabs>
 
-    <input
-      tuiSlot="right"
-      tuiLike
-      type="checkbox"
-      [checked]="darkMode()"
-      (click)="darkMode.set(!darkMode())"
-    />
+    <div tuiSlot="right" class="flex flex-row gap-6">
+      <a
+        tuiButton
+        size="s"
+        appearance="outline-grayscale"
+        href="https://github.com/MartinFLR/smartcv"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="rounded-lg"
+        [iconStart]="'https://raw.githubusercontent.com/MarsiBarsi/readme-icons/main/github.svg'"
+      >
+        Github
+        <tui-icon class="!stroke-1" [style.color]="'#ffc700'" icon="@tui.star" />
+      </a>
+
+      <input
+        size="s"
+        tuiLike
+        type="checkbox"
+        [checked]="darkMode()"
+        (click)="darkMode.set(!darkMode())"
+      />
+    </div>
 
     <!-- TODO: Agregar funcionalidad con Transloco
     <tui-badged-content

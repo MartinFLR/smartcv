@@ -1,9 +1,9 @@
 import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import { NgClass, NgOptimizedImage } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { TuiAppBar } from '@taiga-ui/layout';
+import { TuiAppBar, TuiCell } from '@taiga-ui/layout';
 import { TuiBadgedContent, TuiLike, tuiLikeOptionsProvider, TuiTabs } from '@taiga-ui/kit';
-import { tuiScrollbarOptionsProvider } from '@taiga-ui/core';
+import { TuiAppearance, TuiButton, TuiIcon, tuiScrollbarOptionsProvider } from '@taiga-ui/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { TUI_DOC_ICONS } from '@taiga-ui/addon-doc/tokens';
 import { TuiLanguageSwitcherService } from '@taiga-ui/i18n/utils';
@@ -36,6 +36,10 @@ function capitalize(value: string): string {
     NgOptimizedImage,
     TuiBadgedContent,
     TuiLike,
+    TuiCell,
+    TuiButton,
+    TuiIcon,
+    TuiAppearance,
     /* TODO: Agregar funcionalidad con Transloco
     TuiButton,
     TuiBadge,
