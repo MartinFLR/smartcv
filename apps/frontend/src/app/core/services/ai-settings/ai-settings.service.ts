@@ -13,19 +13,7 @@ export class AiSettingsService {
     if (settings) {
       return JSON.parse(settings);
     }
-
-    // Devuelve un objeto vacío si no hay settings,
-    // para que la lógica del constructor en Config decida los defaults.
     return {};
-
-    /* // O, si prefieres que el servicio defina los defaults, usa los nombres correctos:
-    return settings
-      ? JSON.parse(settings)
-      : {
-          provider: 'google', // <-- Corregido de 'modelProvider'
-          model: 'gemini-1.5-flash', // <-- Corregido de 'modelVersion'
-        };
-    */
   }
 
   saveSettings(settings: AiSettings) {
