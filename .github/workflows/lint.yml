@@ -34,7 +34,7 @@ jobs:
         run: npm ci
 
       - name: Run lint (frontend + backend)
-        run: npm run lint
+        run: npx nx run-many --target=lint --all
 
       - name: Save Nx cache
         uses: actions/cache@v4
