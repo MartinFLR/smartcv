@@ -1,5 +1,6 @@
 export default {
   extends: ['@commitlint/config-conventional'],
+  ignores: [(commit) => commit.includes('dependabot[bot]')],
   rules: {
     'type-empty': [2, 'never'],
     'scope-empty': [2, 'never'],
