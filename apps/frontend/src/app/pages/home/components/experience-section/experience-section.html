@@ -1,6 +1,6 @@
 <fieldset formArrayName="experience" class="contents">
   <div class="flex justify-between items-center mb-3">
-    <h2 class="text-xl font-semibold text-gray-800">Experiencia Laboral</h2>
+    <h2 class="text-xl font-semibold">Experiencia Laboral</h2>
     <button tuiButton tuiRipple iconStart="@tui.plus" type="button" size="s" (click)="add.emit()">
       Agregar
     </button>
@@ -8,8 +8,9 @@
 
   @for (group of experienceForms().controls; track $index; let i = $index) {
     <div
+      tuiCardLarge
       [formGroupName]="i"
-      class="p-4 border-gray-200 border rounded relative flex flex-col gap-4 bg-gray-50 mb-4"
+      class="p-4 border-gray-200 border rounded relative flex flex-col gap-4 mb-4"
     >
       <div class="flex flex-row-reverse">
         <button

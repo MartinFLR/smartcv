@@ -15,7 +15,7 @@ import {
   FormGroup,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { TuiAlertService } from '@taiga-ui/core';
+import { TUI_DARK_MODE, TuiAlertService } from '@taiga-ui/core';
 import { finalize, map, startWith } from 'rxjs';
 import { PdfService } from '../../services/pdf/pdf.service';
 import { SaveDataService } from '../../services/save-data/save-data.service';
@@ -45,6 +45,7 @@ import {
   SkillsControls,
 } from '../../../../types/Controls';
 import { CvForm, CvPayload, TransformedCvResponse } from '../../../../../../libs/types/src/Types';
+import { TuiCardLarge } from '@taiga-ui/layout';
 
 @Component({
   selector: 'app-home',
@@ -63,6 +64,7 @@ import { CvForm, CvPayload, TransformedCvResponse } from '../../../../../../libs
     Actions,
     ATSSection,
     CoverLetterSection,
+    TuiCardLarge,
   ],
   templateUrl: './home.html',
 })
@@ -75,6 +77,8 @@ export class Home {
   private readonly saveDataService = inject(SaveDataService);
   private readonly cvFormBuilderService = inject(CvFormBuilderService);
   private readonly coverLetterService = inject(CoverLetterService);
+
+  protected readonly darkMode = inject(TUI_DARK_MODE);
 
   protected activeTab = signal(0);
   protected isLoading = signal(false);

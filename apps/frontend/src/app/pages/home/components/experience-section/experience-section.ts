@@ -4,10 +4,11 @@ import { TuiButton, TuiTextfield } from '@taiga-ui/core';
 import { TuiRipple } from '@taiga-ui/addon-mobile';
 import { TuiTextarea } from '@taiga-ui/kit';
 import { ExperienceControls } from '../../../../../../types/Controls';
+import { TuiCardLarge } from '@taiga-ui/layout';
 
 @Component({
   selector: 'app-experience-section',
-  imports: [ReactiveFormsModule, TuiButton, TuiRipple, TuiTextfield, TuiTextarea],
+  imports: [ReactiveFormsModule, TuiButton, TuiRipple, TuiTextfield, TuiTextarea, TuiCardLarge],
   viewProviders: [
     {
       provide: ControlContainer,

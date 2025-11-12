@@ -4,10 +4,19 @@ import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { TuiInputChip } from '@taiga-ui/kit';
 import { TuiRipple } from '@taiga-ui/addon-mobile';
 import { CertificationControls, SkillsControls } from '../../../../../../types/Controls';
+import { TuiCard } from '@taiga-ui/layout';
 
 @Component({
   selector: 'app-skills-section',
-  imports: [TuiTextfield, ReactiveFormsModule, TuiInputChip, TuiButton, TuiRipple, TuiIcon],
+  imports: [
+    TuiTextfield,
+    ReactiveFormsModule,
+    TuiInputChip,
+    TuiButton,
+    TuiRipple,
+    TuiIcon,
+    TuiCard,
+  ],
   viewProviders: [
     {
       provide: ControlContainer,

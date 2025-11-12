@@ -1,6 +1,7 @@
 import { Component, computed, inject, input, signal, Signal } from '@angular/core';
 import {
   TuiAlertService,
+  TuiAppearance,
   TuiButton,
   TuiHint,
   TuiLabel,
@@ -23,7 +24,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { IaFormControls } from '../../../../../../types/Controls';
 import { CvAtsResponse, SectionAnalysis } from '../../../../../../../../libs/types/src/AtsTypes';
 import { AtsSectionService } from './ats-service/ats-section.service';
-import { TuiItemGroup } from '@taiga-ui/layout';
+import { TuiCardLarge, TuiItemGroup } from '@taiga-ui/layout';
 import { AsyncPipe, TitleCasePipe } from '@angular/common';
 import { Observable, of, Subject, switchMap } from 'rxjs';
 import { BuildPromptOptions } from '../../../../../../../../libs/types/src/PromptTypes';
@@ -58,6 +59,8 @@ interface DisplayableSection {
     TuiFiles,
     TuiTextarea,
     TuiTextfieldComponent,
+    TuiCardLarge,
+    TuiAppearance,
   ],
   templateUrl: './ats-section.html',
   styleUrl: './ats-section.css',

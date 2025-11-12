@@ -1,9 +1,10 @@
 import { Component, input } from '@angular/core';
 import { CvForm } from '../../../../../../../../libs/types/src/Types';
+import { TuiCardLarge } from '@taiga-ui/layout';
 
 @Component({
   selector: 'app-dummy-view',
-  imports: [],
+  imports: [TuiCardLarge],
   templateUrl: './dummy-view.html',
   styleUrl: './dummy-view.css',
 })

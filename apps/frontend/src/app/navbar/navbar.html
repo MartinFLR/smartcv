@@ -6,16 +6,29 @@
     class="mx-auto max-w-7xl px-4 py-9"
     style="--tui-primitive-header-background: transparent; --tui-primitive-header-border: none"
   >
-    <img
-      tuiSlot="left"
-      [ngSrc]="'/assets/logo.png'"
-      alt="SmartCv-logo"
-      [routerLink]="['/']"
-      width="1024"
-      height="1024"
-      priority
-      class="h-16 w-auto cursor-pointer"
-    />
+    @if (!darkMode()) {
+      <img
+        tuiSlot="left"
+        [ngSrc]="'/assets/logo-white-theme.png'"
+        alt="SmartCv-logo"
+        [routerLink]="['/']"
+        width="1024"
+        height="1024"
+        priority
+        class="h-16 w-auto cursor-pointer"
+      />
+    } @else {
+      <img
+        tuiSlot="left"
+        [ngSrc]="'/assets/logo-dark-theme.png'"
+        alt="SmartCv-logo"
+        [routerLink]="['/']"
+        width="1024"
+        height="1024"
+        priority
+        class="h-16 w-auto cursor-pointer"
+      />
+    }
 
     <tui-tabs class="hidden md:flex mx-auto">
       <a tuiTab [routerLink]="['/']" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive>
@@ -30,6 +43,14 @@
         <span class="text-sm font-medium">Configuración</span>
       </a>
     </tui-tabs>
+
+    <input
+      tuiSlot="right"
+      tuiLike
+      type="checkbox"
+      [checked]="darkMode()"
+      (click)="darkMode.set(!darkMode())"
+    />
 
     <!-- TODO: Agregar funcionalidad con Transloco
     <tui-badged-content

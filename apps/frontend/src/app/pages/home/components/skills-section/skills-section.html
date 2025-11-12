@@ -1,6 +1,6 @@
 <fieldset formArrayName="skills" class="contents">
   <div class="flex justify-between items-center mb-3">
-    <h2 class="text-xl font-semibold text-gray-800">Habilidades & Certificaciones</h2>
+    <h2 class="text-xl font-semibold">Habilidades & Certificaciones</h2>
     @if (skillsForms().controls.length === 0) {
       <button tuiButton tuiRipple type="button" size="s" (click)="addSkillGroup.emit()">
         <tui-icon icon="@tui.plus" class="mr-2"></tui-icon>
@@ -10,10 +10,7 @@
   </div>
 
   @for (skillGroup of skillsForms().controls; track $index; let i = $index) {
-    <div
-      [formGroupName]="i"
-      class="p-4 border border-gray-200 rounded relative flex flex-col gap-4 bg-gray-50"
-    >
+    <div [formGroupName]="i" class="p-4 rounded relative flex flex-col gap-4">
       @if (skillsForms().controls.length > 1) {
         <div class="flex flex-row-reverse">
           <button
@@ -54,17 +51,21 @@
         <tui-input-chip *tuiItem />
       </tui-textfield>
 
-      <h3 class="text-lg font-medium mt-2 text-gray-700">Certificaciones</h3>
+      <h3 class="text-lg font-medium mt-2">Certificaciones</h3>
       <fieldset formArrayName="certifications" class="flex flex-col gap-2">
         @if (getCertificationControls(skillGroup).length === 0) {
-          <p class="text-sm text-gray-500">Agregá certificaciones aquí.</p>
+          <p class="text-sm">Agregá certificaciones aquí.</p>
         }
         @for (
           certGroup of getCertificationControls(skillGroup);
           track $index;
           let certIndex = $index
         ) {
-          <div [formGroupName]="certIndex" class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-end">
+          <div
+            tuiCardLarge
+            [formGroupName]="certIndex"
+            class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-end"
+          >
             <tui-textfield class="sm:col-span-6">
               <label tuiLabel [for]="'skillsCertificationName'"> Nombre Certificado</label>
               <input tuiTextfield [id]="'skillsCertificationName'" formControlName="name" />

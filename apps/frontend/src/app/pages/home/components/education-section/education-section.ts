@@ -4,10 +4,11 @@ import { TuiButton, TuiTextfield } from '@taiga-ui/core';
 import { TuiTextarea } from '@taiga-ui/kit';
 import { TuiRipple } from '@taiga-ui/addon-mobile';
 import { EducationControls } from '../../../../../../types/Controls';
+import { TuiCard } from '@taiga-ui/layout';
 
 @Component({
   selector: 'app-education-section',
-  imports: [TuiTextfield, TuiTextarea, ReactiveFormsModule, TuiButton, TuiRipple],
+  imports: [TuiTextfield, TuiTextarea, ReactiveFormsModule, TuiButton, TuiRipple, TuiCard],
   viewProviders: [
     {
       provide: ControlContainer,

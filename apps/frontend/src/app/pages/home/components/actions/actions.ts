@@ -17,6 +17,7 @@ import { CreateProfile } from './profile/create-profile/create-profile';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { EditProfile } from './profile/edit-profile/edit-profile';
 import { TuiRipple } from '@taiga-ui/addon-mobile';
+import { TuiCell } from '@taiga-ui/layout';
 
 @Component({
   selector: 'app-actions',
@@ -31,6 +32,7 @@ import { TuiRipple } from '@taiga-ui/addon-mobile';
     TuiSwitch,
     TuiHint,
     TuiRipple,
+    TuiCell,
   ],
   templateUrl: './actions.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

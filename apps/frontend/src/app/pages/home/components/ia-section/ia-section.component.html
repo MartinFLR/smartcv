@@ -1,7 +1,7 @@
 <form [formGroup]="iaForm()" class="flex flex-col gap-6">
-  <h2 class="text-xl font-semibold text-gray-800">Optimización con IA</h2>
+  <h2 class="text-xl font-semibold">Optimización con IA</h2>
 
-  <div class="p-4 border border-gray-200 rounded relative flex flex-col gap-4 bg-gray-50">
+  <div tuiCardLarge class="p-4 border border-gray-200 rounded relative flex flex-col gap-4">
     <tui-textfield>
       <label tuiLabel [for]="'iaJobDescriptionInput'"
         >Pegá acá la descripción del puesto (Job Description)</label
@@ -14,7 +14,7 @@
         [max]="10"
       ></textarea>
     </tui-textfield>
-    <div class="text-sm text-gray-600">
+    <div class="text-sm">
       <p>
         Al hacer clic english "Optimizar CV", la IA reescribirá tu
         <span class="font-semibold">Resumen Profesional</span>,
@@ -26,8 +26,11 @@
     </div>
   </div>
 
-  <div class="w-full border-gray-200 p-4 border rounded bg-gray-50 flex flex-col gap-2">
-    <label tuiLabel [for]="'iaExaggeration'" class="block text-sm font-medium text-gray-700">
+  <div
+    tuiCardLarge
+    class="w-full border-gray-200 p-4 border rounded bg-gray-50 flex flex-col gap-2"
+  >
+    <label tuiLabel [for]="'iaExaggeration'" class="block text-sm font-medium">
       Nivel de exageración
     </label>
 
@@ -49,7 +52,7 @@
         <button
           type="button"
           (click)="iaForm().controls.exaggeration.setValue(+level.key)"
-          class="text-sm cursor-pointer focus:outline-none transition-colors px-1 rounded focus-visible:ring-2 focus-visible:ring-blue-500"
+          class="text-sm cursor-pointer focus:outline-none transition-colors px-1 rounded"
           [class.text-gray-500]="currentExaggeration() !== +level.key"
           [class.text-blue-600]="currentExaggeration() === +level.key"
           [class.font-bold]="currentExaggeration() === +level.key"
@@ -60,12 +63,12 @@
       }
     </div>
 
-    <div class="text-center text-xs text-gray-500 mt-2 text-balance min-h-[2.5rem]">
+    <div class="text-center text-xs mt-2 text-balance min-h-[2.5rem]">
       {{ currentExaggeration() | exaggerationLevel: exaggerationDescriptions }}
     </div>
   </div>
 
-  <label tuiLabel class="flex items-center gap-2 mt-4 text-gray-800">
+  <label tuiLabel class="flex items-center gap-2 mt-4">
     <input tuiCheckbox type="checkbox" formControlName="makeEnglish" />
     Traducir CV a Inglés (Experimental)
   </label>

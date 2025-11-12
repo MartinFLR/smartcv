@@ -3,7 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { CoverLetterPayload, CvForm } from '../../../../../../../../libs/types/src/Types';
 import { TuiButtonLoading, TuiChip, TuiCopy, TuiTextarea } from '@taiga-ui/kit';
-import { TuiItemGroup } from '@taiga-ui/layout';
+import { TuiCardLarge, TuiItemGroup } from '@taiga-ui/layout';
 import { CvFormBuilderService } from '../../../../services/cv-form-builder/cv-form-builder.service';
 import { DeliveryChannel, ToneLevel } from '../../../../../../../../libs/types/src/PromptTypes';
 import { CoverLetterService } from './cover-letter-service/cover-letter.service';
@@ -27,6 +27,7 @@ import {
     TuiItemGroup,
     TuiButton,
     TuiButtonLoading,
+    TuiCardLarge,
   ],
   templateUrl: './cover-letter-section.html',
   styleUrl: './cover-letter-section.css',

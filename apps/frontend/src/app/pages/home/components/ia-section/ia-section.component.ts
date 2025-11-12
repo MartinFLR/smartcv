@@ -17,6 +17,7 @@ import { ExaggerationLevelPipe } from '../../../../utils/pipes/exaggeration-pipe
 import { map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IaFormControls } from '../../../../../../types/Controls';
+import { TuiCardLarge } from '@taiga-ui/layout';
 
 @Component({
   selector: 'app-ia-section',
@@ -30,6 +31,7 @@ import { IaFormControls } from '../../../../../../types/Controls';
     TuiCheckbox,
     TuiButton,
     TuiButtonLoading,
+    TuiCardLarge,
   ],
   viewProviders: [
     {

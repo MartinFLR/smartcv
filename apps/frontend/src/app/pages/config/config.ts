@@ -4,6 +4,7 @@ import { AiSettings, AiSettingsService } from '../../services/ai-settings/ai-set
 import { TuiAlertService, TuiButton, TuiTextfield } from '@taiga-ui/core';
 import { TuiChevron, TuiDataListWrapper, TuiSelect } from '@taiga-ui/kit';
 import { RouterLink } from '@angular/router';
+import { TuiCardLarge } from '@taiga-ui/layout';
 
 @Component({
   selector: 'app-config',
@@ -16,6 +17,7 @@ import { RouterLink } from '@angular/router';
     RouterLink,
     TuiSelect,
     TuiChevron,
+    TuiCardLarge,
   ],
   templateUrl: './config.html',
   styleUrl: './config.css',
