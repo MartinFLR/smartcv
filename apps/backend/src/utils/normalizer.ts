@@ -1,4 +1,4 @@
-import { CvResponse } from '@smartcv/shared';
+import { CvResponse } from '@smartcv/types';
 
 export function normalizeCv(cv: CvResponse): CvResponse {
   return {

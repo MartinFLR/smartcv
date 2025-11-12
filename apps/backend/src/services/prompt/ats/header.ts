@@ -1,4 +1,4 @@
-import { PromptLanguage } from '@smartcv/shared';
+import { PromptLanguage } from '@smartcv/types';
 
 export function buildATSHeader(lang: PromptLanguage, userContext?: string, jobTitle?: string) {
   const context = userContext ? `\n\nUser context:\n${userContext}` : '';

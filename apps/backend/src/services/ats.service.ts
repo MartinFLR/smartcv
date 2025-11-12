@@ -1,12 +1,12 @@
-import { AIFactory } from './ai/ai.factory';
+import { AIFactory, AIModel } from './ai/ai.factory';
 import { cleanJson } from '../utils/json-cleaner';
-import { CvAtsPayload, CvAtsResponse } from '@smartcv/shared';
+import { CvAtsPayload, CvAtsResponse } from '@smartcv/types';
 import { buildPrompt } from './prompt/prompt-builder';
 
 import pdfParse = require('pdf-parse');
 
 export async function analyzeCvAts(body: CvAtsPayload): Promise<CvAtsResponse> {
-  const { file, modelProvider = 'gemini', jobDesc, modelVersion, promptOption } = body;
+  const { file, jobDesc, aiSettings, promptOption } = body;
 
   let pdfBuffer: Buffer;
   if (typeof file === 'string' && file.startsWith('data:application/pdf;base64,')) {
@@ -28,7 +28,11 @@ export async function analyzeCvAts(body: CvAtsPayload): Promise<CvAtsResponse> {
 
   const prompt = buildPrompt(cvText, jobDesc, promptOption);
 
-  const ai = AIFactory.create({ provider: modelProvider, version: modelVersion });
+  const ai: AIModel = AIFactory.create({
+    provider: aiSettings?.modelProvider ?? 'gemini',
+    version: aiSettings?.modelVersion,
+  });
+
   const text = await ai.generate(prompt);
 
   const parsedJson = cleanJson<CvAtsResponse>(text);

@@ -1,4 +1,4 @@
-import { PromptLanguage } from '@smartcv/shared';
+import { PromptLanguage } from '@smartcv/types';
 
 /**
  * Define las reglas estrictas que la IA debe seguir para generar un JSON

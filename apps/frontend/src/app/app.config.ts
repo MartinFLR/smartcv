@@ -12,6 +12,8 @@ import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { defer, of } from 'rxjs';
 import { tuiInputPhoneInternationalOptionsProvider } from '@taiga-ui/kit';
+import { AI_MODELS_CONFIG } from './core/config/ai.models.config';
+import { AI_MODELS_DATA } from '@smartcv/shared';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,6 +27,7 @@ export const appConfig: ApplicationConfig = {
       provide: TUI_LANGUAGE,
       useValue: of(TUI_SPANISH_LANGUAGE as TuiLanguage),
     },
+    { provide: AI_MODELS_CONFIG, useValue: AI_MODELS_DATA },
     tuiInputPhoneInternationalOptionsProvider({
       metadata: defer(async () => import('libphonenumber-js/max/metadata').then((m) => m.default)),
       separator: '-',

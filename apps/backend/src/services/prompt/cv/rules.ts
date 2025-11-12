@@ -1,4 +1,4 @@
-import { PromptLanguage } from '@smartcv/shared';
+import { PromptLanguage } from '@smartcv/types';
 
 const strictCVRulesTexts: Record<PromptLanguage, string> = {
   english: `Strict rules:

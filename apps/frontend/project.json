@@ -101,5 +101,6 @@
   },
   "cli": {
     "schematicCollections": ["angular-eslint"]
-  }
+  },
+  "implicitDependencies": ["types"]
 }

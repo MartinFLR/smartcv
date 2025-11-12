@@ -1,4 +1,4 @@
-import { PromptLanguage, TemperatureLevel } from '@smartcv/shared';
+import { PromptLanguage, TemperatureLevel } from '@smartcv/types';
 
 const exaggerationTexts: Record<PromptLanguage, Record<TemperatureLevel, string>> = {
   english: {

@@ -19,7 +19,7 @@ import {
   PromptLanguage,
   PromptType,
   TemperatureLevel,
-} from '@smartcv/shared';
+} from '@smartcv/types';
 
 export function buildPrompt(baseCv: string, jobDesc: string, options?: BuildPromptOptions): string {
   console.log(options);

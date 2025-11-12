@@ -15,10 +15,13 @@
     "skipDefaultLibCheck": true,
     "esModuleInterop": true,
     "strict": true,
-
     "paths": {
-      "@smartcv/shared": ["dist/libs/types/src/index.d.ts"],
-      "@smartcv/shared/*": ["dist/libs/types/src/*"]
+      "@smartcv/types": ["dist/libs/types"],
+      "@smartcv/types/*": ["dist/libs/types/src/*"],
+
+      "@smartcv/shared": ["dist/libs/shared"],
+      "@smartcv/shared/*": ["dist/libs/shared/src/*"],
+      "libs": ["libs/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,5 +1,5 @@
-import { PromptLanguage } from '@smartcv/shared';
-import { DeliveryChannel } from '@smartcv/shared';
+import { PromptLanguage } from '@smartcv/types';
+import { DeliveryChannel } from '@smartcv/types';
 
 const coverLetterDeliveryChannelTexts: Record<DeliveryChannel, Record<PromptLanguage, string>> = {
   email: {

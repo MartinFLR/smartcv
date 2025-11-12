@@ -1,12 +1,12 @@
 import { BuildPromptOptions } from './PromptTypes';
+import { AiSettings } from './Types';
 
 export type SectionScoreItem = [string, number];
 
 export interface CvAtsPayload {
   file: string | ArrayBuffer;
   jobDesc: string;
-  modelProvider?: string;
-  modelVersion?: string;
+  aiSettings?: AiSettings;
   promptOption?: BuildPromptOptions;
 }
 

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { analyzeCvAts } from '../services/ats.service';
-import { CvAtsPayload } from '@smartcv/shared';
-import { BuildPromptOptions } from '@smartcv/shared';
+import { CvAtsPayload } from '@smartcv/types';
+import { BuildPromptOptions } from '@smartcv/types';
 
 interface MulterRequest extends Request {
   file?: Express.Multer.File;
@@ -9,7 +9,7 @@ interface MulterRequest extends Request {
 
 export async function analyzeCvAtsController(req: MulterRequest, res: Response): Promise<void> {
   try {
-    const { jobDesc, modelProvider, modelVersion } = req.body;
+    const { jobDesc, aiSettings } = req.body;
     const file = req.file;
 
     if (!file || !file.buffer) {
@@ -38,8 +38,7 @@ export async function analyzeCvAtsController(req: MulterRequest, res: Response):
     const payload: CvAtsPayload = {
       file: file.buffer,
       jobDesc,
-      modelProvider,
-      modelVersion,
+      aiSettings,
       promptOption,
     };
 

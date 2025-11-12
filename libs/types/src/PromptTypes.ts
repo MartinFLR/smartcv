@@ -4,6 +4,8 @@ export type TemperatureLevel = 'low' | 'medium' | 'high';
 export type ToneLevel = 'formal' | 'enthusiast' | 'casual' | 'neutral' | 'confident';
 export type DeliveryChannel = 'email' | 'linkedinMessage' | 'applicationForm' | 'internalReferral';
 
+export type AiProviderModels = Record<string, string[]>;
+
 export interface BuildPromptOptions {
   lang?: PromptLanguage;
   userContext?: string;

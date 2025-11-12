@@ -1,4 +1,4 @@
-import { PromptLanguage } from '@smartcv/shared';
+import { PromptLanguage } from '@smartcv/types';
 
 const atsTasks: Record<PromptLanguage, () => string> = {
   english: () => `

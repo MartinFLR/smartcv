@@ -1,4 +1,4 @@
-import { PromptLanguage, ToneLevel } from '@smartcv/shared';
+import { PromptLanguage, ToneLevel } from '@smartcv/types';
 
 const coverLetterToneTexts: Record<ToneLevel, Record<PromptLanguage, string>> = {
   formal: {

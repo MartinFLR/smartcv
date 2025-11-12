@@ -1,4 +1,4 @@
-import { PromptLanguage } from '@smartcv/shared';
+import { PromptLanguage } from '@smartcv/types';
 
 export function getCoverLetterMainTasks(lang: PromptLanguage) {
   if (lang === 'english') {

@@ -9,9 +9,28 @@
     "production": ["default", "!{projectRoot}/**/*.spec.ts", "!{projectRoot}/**/*.test.ts"]
   },
   "targetDefaults": {
-    "build": { "inputs": ["default", "{projectRoot}/tsconfig.*.json"] },
-    "lint": { "inputs": ["default", "{workspaceRoot}/.eslintrc.json"] },
-    "test": { "inputs": ["default", "{workspaceRoot}/jest.config.js"] }
+    "build": {
+      "inputs": ["default", "{projectRoot}/tsconfig.*.json"]
+    },
+    "lint": {
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+    },
+    "test": {
+      "inputs": ["default", "{workspaceRoot}/jest.config.js"]
+    },
+    "@nx/js:tsc": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    }
   },
-  "nxCloudId": "691396e57ee27f635d6a2560"
+  "nxCloudId": "691396e57ee27f635d6a2560",
+  "plugins": [
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "eslint:lint"
+      }
+    }
+  ]
 }

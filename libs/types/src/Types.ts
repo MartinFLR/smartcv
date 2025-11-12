@@ -109,24 +109,24 @@ export interface TransformedCvResponse extends Omit<CvResponse, 'experience' | '
   project: TransformedProject[];
 }
 
-export interface TransformedCoverLetterResponse {
-  result: string;
-}
-
 // PAYLOADS
 export interface CvPayload {
   baseCv: CvForm;
   jobDesc: string;
+  aiSettings?: AiSettings;
+  promptOption?: BuildPromptOptions;
+}
+
+export interface AiSettings {
   modelProvider?: string;
   modelVersion?: string;
-  promptOption?: BuildPromptOptions;
+  systemPrompt: string;
 }
 
 export interface CoverLetterPayload {
   baseCv: CvForm;
   jobDesc: string;
-  modelProvider?: string;
-  modelVersion?: string;
+  aiSettings?: AiSettings;
   promptOption?: BuildPromptOptions;
 }
 

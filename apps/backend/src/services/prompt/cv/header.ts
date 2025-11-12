@@ -1,4 +1,4 @@
-import { PromptLanguage } from '@smartcv/shared';
+import { PromptLanguage } from '@smartcv/types';
 
 export function buildCvHeader(lang: PromptLanguage, userContext?: string) {
   const context = userContext ? `\n\nUser context:\n${userContext}` : '';
