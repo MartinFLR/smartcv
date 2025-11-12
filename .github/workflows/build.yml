@@ -27,6 +27,9 @@ jobs:
       - name: Build types library
         run: npx nx build types --skip-nx-cache
 
+      - name: Build shared library
+        run: npx nx build shared --skip-nx-cache
+
       - name: Build frontend
         run: npx nx build apps/frontend --skip-nx-cache
 
