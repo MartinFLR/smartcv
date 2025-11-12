@@ -3,7 +3,6 @@ export default {
   ignores: [(commit) => commit.includes('dependabot[bot]')],
   rules: {
     'type-empty': [2, 'never'],
-    'scope-empty': [2, 'never'],
     'subject-empty': [2, 'never'],
     'require-full-header': [2, 'always']
   },
@@ -11,14 +10,11 @@ export default {
     {
       rules: {
         'require-full-header': (parsed) => {
-          const { type, scope, subject } = parsed;
+          const { type, subject } = parsed;
           const errors = [];
 
           if (!type) {
             errors.push('You must specify the commit type (feat, fix, docs, chore, etc.)');
-          }
-          if (!scope) {
-            errors.push('You must specify the scope of the commit (module or affected area)');
           }
           if (!subject) {
             errors.push('You must provide a subject describing what was changed');
