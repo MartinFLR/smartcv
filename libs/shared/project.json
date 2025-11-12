@@ -12,6 +12,7 @@
         "outputPath": "dist/libs/shared",
         "tsConfig": "libs/shared/tsconfig.lib.json",
         "main": "libs/shared/src/index.ts",
+        "format": ["esm"],
         "assets": [],
         "generatePackageJson": true,
         "skipTypeCheck": false

@@ -11,6 +11,7 @@
         "outputPath": "dist/libs/types",
         "tsConfig": "libs/types/tsconfig.lib.json",
         "main": "libs/types/src/index.ts",
+        "format": ["esm"],
         "assets": [],
         "skipTypeCheck": false,
         "generatePackageJson": true
