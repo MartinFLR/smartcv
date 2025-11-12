@@ -16,11 +16,11 @@
   <p align="center">
     A free self-hosted AI assistant that helps you analyze, optimize, and match resumes to job descriptions.    <br />
     <br />
-    <a href="https://smartcv.vercel.app">View Demo</a>
+    <a href="https://smartcv-demo.vercel.app">View Demo</a>
     &middot;
-    <a href="https://github.com/martinfloresdev/smartcv/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    <a href="https://github.com/MartinFLR/smartcv/issues/new?labels=bug&template=bug_report.yml">Report Bug</a>
     &middot;
-    <a href="https://github.com/martinfloresdev/smartcv/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/MartinFLR/smartcv/issues/new?labels=bug&template=feature_request.yml">Request Feature</a>
   </p>
 </div>
 
