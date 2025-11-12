@@ -9,6 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      NX_SKIP_NX_CACHE: true
+
     steps:
       - uses: actions/checkout@v5
 
@@ -16,22 +19,18 @@ jobs:
         with:
           node-version: 22
 
-      - name: Clean node_modules and Nx cache
-        run: |
-          rm -rf node_modules
-          rm -rf .nx/cache
+      - uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Clean Nx cache
+        run: rm -rf .nx/cache
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build types library
-        run: npx nx build types --skip-nx-cache
-
-      - name: Build shared library
-        run: npx nx build shared --skip-nx-cache
-
-      - name: Build frontend
-        run: npx nx build apps/frontend --skip-nx-cache
-
-      - name: Build backend
-        run: npx nx run backend:build --with-deps --skip-nx-cache
+      - name: Build all projects
+        run: npx nx run-many --target=build --all

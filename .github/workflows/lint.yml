@@ -15,9 +15,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 22
-
-      - name: Install dependencies
-        run: npm ci
+          cache: 'npm'
 
       - name: Restore Nx cache
         uses: actions/cache@v4
@@ -26,6 +24,14 @@ jobs:
           key: ${{ runner.os }}-nx-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-nx-
+
+      - name: Clean possible leftovers
+        run: |
+          rm -rf node_modules
+          rm -rf .angular/cache || true
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Run lint (frontend + backend)
         run: npm run lint
