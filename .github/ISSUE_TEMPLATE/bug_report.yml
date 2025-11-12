@@ -1,17 +1,10 @@
 name: Bug Report
 description: Report a bug or unexpected behavior in SmartCV
 title: "[BUG]"
-labels: [bug]
+labels: 🐞 - 
 assignees: []
 
 body:
-  - type: input
-    id: title
-    attributes:
-      label: Add a Title *
-      description: A brief title for the bug
-      value: "🐞 - "
-
   - type: textarea
     id: description
     attributes:
