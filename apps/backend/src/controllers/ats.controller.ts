@@ -31,7 +31,7 @@ export async function analyzeCvAtsController(req: MulterRequest, res: Response):
           ? (JSON.parse(req.body.promptOption) as BuildPromptOptions)
           : (req.body.promptOption as BuildPromptOptions);
     } catch (err) {
-      console.warn('⚠️ No se pudo parsear promptOption:', err);
+      console.warn('No se pudo parsear promptOption:', err);
       promptOption = undefined;
     }
 
