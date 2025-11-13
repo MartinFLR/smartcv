@@ -10,7 +10,6 @@ const strictCoverLetterRulesTexts: Record<PromptLanguage, string> = {
 - Avoid generic phrases; use confident and authentic language.
 - Ensure correct spelling, grammar, and punctuation.
 - Output must be strict valid JSON, no markdown, bold, emojis, or extra text.
-- Keep it concise: ideally under 300 words, one page.
 - Naturally integrate key terms from the job description without keyword stuffing.`,
 
   spanish: `Reglas estrictas:
@@ -18,12 +17,12 @@ const strictCoverLetterRulesTexts: Record<PromptLanguage, string> = {
 - Enfócate en logros, skills y tecnologías presentes en el CV.
 - Usa una estructura clara: introducción, motivación, experiencia relevante y cierre.
 - Demuestra interés genuino en la empresa y el puesto.
-- Destaca resultados y contribuciones relevantes para el puesto.
 - Evita frases genéricas; usa un lenguaje seguro y auténtico.
 - Asegúrate de ortografía, gramática y puntuación correctas.
 - Salida sin markdown, negritas, emojis ni texto extra.
-- Sé conciso: idealmente menos de 300 palabras.
-- Integra palabras clave de la oferta de manera natural, sin forzar keywords.`,
+- Integra palabras clave de la oferta de manera natural, sin forzar keywords.
+- Respeta la cantidad de palabras del canal de comunicacion al que se va a enviar.
+`,
 };
 
 export function getCoverLetterStrictRules(lang: PromptLanguage) {

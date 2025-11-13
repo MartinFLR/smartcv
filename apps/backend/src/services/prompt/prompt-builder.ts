@@ -2,7 +2,7 @@ import { getExaggeration } from './cv/exaggeration';
 import { getCVStrictRules } from './cv/rules';
 import { getCVMainTasks } from './cv/tasks';
 import { getCvInputOutputTemplate } from './cv/inputOutput';
-import { getCoverLetterDeliveryChannelText } from './cv/deliveryChannel';
+import { getCoverLetterDeliveryChannelText } from './cover-letter/deliveryChannel';
 import { getCoverLetterToneText } from './cover-letter/tone';
 import { buildCvHeader } from './cv/header';
 import { buildCoverLetterHeader } from './cover-letter/header';
@@ -48,6 +48,15 @@ export function buildPrompt(baseCv: string, jobDesc: string, options?: BuildProm
     ].join('\n\n');
   }
   if (type === 'coverLetter') {
+    console.log(
+      buildCoverLetterHeader(lang, userContext, recruiterName, referralName, companyName),
+      getCoverLetterToneText(lang, tone),
+      getCoverLetterDeliveryChannelText(lang, deliveryChannel),
+      getCoverLetterMainTasks(lang),
+      getCoverLetterStrictRules(lang),
+      getCoverLetterInputOutputTemplate(baseCv, jobDesc, lang),
+    );
+
     return [
       buildCoverLetterHeader(lang, userContext, recruiterName, referralName, companyName),
       getCoverLetterToneText(lang, tone),

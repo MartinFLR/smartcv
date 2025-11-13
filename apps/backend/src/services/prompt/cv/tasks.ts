@@ -12,7 +12,9 @@ Main tasks:
 6. Prioritize exact keywords from the job description to pass ATS filters.
 7. Place keywords strategically in profile, experience, and education bullets.
 8. Ensure clarity and ATS readability.
-9. Fit content in a single page and maintain chronological consistency.`;
+9. Keep the professional profile concise (80–150 words), emphasizing relevant experience, key skills, and achievements aligned with the job description.
+10. Ensure the CV reads naturally and convincingly, like it was written by a human. Avoid overly generic phrases or AI-like patterns, while keeping information truthful.
+`;
   } else {
     return `
 **Tareas principales:**
@@ -24,6 +26,8 @@ Main tasks:
 6. Prioriza keywords exactas de la oferta para pasar filtros ATS.
 7. Coloca keywords estratégicamente en perfil, experiencia y educación.
 8. Prioriza claridad y legibilidad ATS.
-9. Todo el contenido debe caber en una sola página y mantener coherencia temporal.`;
+9. Mantén la seccion "perfil profesional" concisa, de 120 a 150 palabras y con forma de "narracion" de experiencias.
+10. Asegúrate de que el CV se lea de manera natural y convincente, como si lo hubiera escrito una persona. Evita frases genéricas o patrones típicos de IA, manteniendo la información veraz.
+`;
   }
 }

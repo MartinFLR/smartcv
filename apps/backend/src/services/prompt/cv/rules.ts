@@ -12,12 +12,12 @@ const strictCVRulesTexts: Record<PromptLanguage, string> = {
 - Maintain semantic density and consistency in dates/titles.`,
   spanish: `Reglas estrictas:
 - Escribe en primera persona, tono profesional IT.
-- Incluye solo skills, logros y tecnologías presentes en el CV.
+- Incluye solo skills, logros y tecnologías presentes en el CV (según el nivel de exageración).
 - Cada bullet debe iniciar con verbo de acción y expresar resultado medible.
 - Evita verbos débiles como "ayudé" o "participé"; usa "diseñé", "implementé", "optimizé".
 - Asegúrate de que no haya errores ortográficos ni gramaticales.
 - Salida en JSON válido estricto, sin markdown, negritas, emojis ni texto extra.
-- Máx. 25 palabras por bullet.
+- Máx. 25 palabras por bullet y almenos 4 bullets por proyecto/experiencia.
 - Mantén consistencia en fechas y títulos.`,
 };
 

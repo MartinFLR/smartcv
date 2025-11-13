@@ -8,8 +8,8 @@ const coverLetterDeliveryChannelTexts: Record<DeliveryChannel, Record<PromptLang
   },
 
   linkedinMessage: {
-    english: `This message will be sent privately on LinkedIn. It should be short, conversational, and engaging — focused on sparking interest rather than full details. Ideal length: 3–5 sentences (under 120 words).`,
-    spanish: `Este mensaje se enviará de forma privada en LinkedIn. Debe ser breve, conversacional y atractivo, enfocado en generar interés más que en detallar todo. Longitud ideal: 3–5 oraciones (menos de 120 palabras).`,
+    english: `This message will be sent privately on LinkedIn. It should be short, conversational, and engaging — focused on sparking interest rather than full details. Ideal length: under 200 characters.`,
+    spanish: `Este mensaje se enviará de forma privada en LinkedIn. Debe ser breve, conversacional y atractivo, enfocado en generar interés más que en detallar todo. Longitud ideal: menos de 200 caracteres.`,
   },
 
   applicationForm: {
