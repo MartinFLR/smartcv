@@ -1,7 +1,7 @@
 import { CoverLetterPayload } from '@smartcv/types';
 import { Response } from 'express';
-import { buildPrompt } from './prompt/prompt-builder';
-import { AIFactory, AIModel } from './ai/ai.factory';
+import { buildPrompt } from '../../core/prompt/prompt-builder';
+import { AIFactory, AIModel } from '../../core/ai/ai.factory';
 
 export async function generateCoverLetterStream(
   body: CoverLetterPayload,

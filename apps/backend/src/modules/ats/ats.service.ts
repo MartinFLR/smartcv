@@ -1,7 +1,7 @@
-import { AIFactory, AIModel } from './ai/ai.factory';
-import { cleanJson } from '../utils/json-cleaner';
+import { AIFactory, AIModel } from '../../core/ai/ai.factory';
+import { cleanJson } from '../../core/utils/json-cleaner';
 import { CvAtsPayload, CvAtsResponse } from '@smartcv/types';
-import { buildPrompt } from './prompt/prompt-builder';
+import { buildPrompt } from '../../core/prompt/prompt-builder';
 
 import * as pdfParse from 'pdf-parse';
 

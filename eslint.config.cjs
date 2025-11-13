@@ -7,9 +7,9 @@ const prettierPlugin = require('eslint-plugin-prettier');
 const prettierConfig = require('eslint-config-prettier');
 
 module.exports = defineConfig([
-  // Bloque global de ignores
   {
     ignores: [
+      // Frontend
       'frontend/.angular/**',
       'frontend/node_modules/**',
       'frontend/dist/**',
@@ -17,7 +17,18 @@ module.exports = defineConfig([
       'frontend/.cache/**',
       'frontend/vite/**',
       'frontend/deps/**',
-      '**/*.js',
+
+      // Backend
+      'backend/node_modules/**',
+      'backend/dist/**',
+      'backend/coverage/**',
+      'backend/.cache/**',
+
+      // Archivos raíz
+      'package*.json',
+      'project.json',
+      'tsconfig*.json',
+      '*.js', // ignora JS compilado o de configuración
     ],
   },
   tseslint.config({

@@ -1,7 +1,7 @@
-import { AIFactory, AIModel } from './ai/ai.factory';
-import { buildPrompt } from './prompt/prompt-builder';
-import { cleanJson } from '../utils/json-cleaner';
-import { normalizeCv } from '../utils/normalizer';
+import { AIFactory, AIModel } from '../../core/ai/ai.factory';
+import { buildPrompt } from '../../core/prompt/prompt-builder';
+import { cleanJson } from '../../core/utils/json-cleaner';
+import { normalizeCv } from '../../core/utils/normalizer';
 import { CvPayload, CvResponse } from '@smartcv/types';
 
 export async function generateTailoredCv(body: CvPayload): Promise<CvResponse> {

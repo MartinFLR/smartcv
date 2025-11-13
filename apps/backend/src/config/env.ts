@@ -2,6 +2,7 @@ import 'dotenv/config';
 
 export const config = {
   port: process.env['PORT'] || 3000,
+  nodeEnv: process.env['NODE_ENV'] || 'development',
   geminiApiKey: process.env['GEMINI_API_KEY'] || undefined,
   openaiApiKey: process.env['OPENAI_API_KEY'] || undefined,
   claudeApiKey: process.env['CLAUDE_API_KEY'] || undefined,

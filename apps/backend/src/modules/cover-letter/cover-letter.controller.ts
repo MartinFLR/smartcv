@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { generateCoverLetterStream } from '../services/cover-letter.service';
+import { generateCoverLetterStream } from './cover-letter.service';
 
 export async function generateCoverLetterController(req: Request, res: Response) {
   try {

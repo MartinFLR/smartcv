@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { generateTailoredCv } from '../services/cv.service';
+import { generateTailoredCv } from './cv.service';
 
 export async function generateCvController(req: Request, res: Response) {
   try {

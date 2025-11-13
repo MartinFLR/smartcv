@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { analyzeCvAts } from '../services/ats.service';
+import { analyzeCvAts } from './ats.service';
 import { CvAtsPayload } from '@smartcv/types';
 import { BuildPromptOptions } from '@smartcv/types';
 

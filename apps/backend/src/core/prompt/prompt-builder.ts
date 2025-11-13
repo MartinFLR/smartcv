@@ -1,18 +1,18 @@
-import { getExaggeration } from './cv/exaggeration';
-import { getCVStrictRules } from './cv/rules';
-import { getCVMainTasks } from './cv/tasks';
-import { getCvInputOutputTemplate } from './cv/inputOutput';
-import { getCoverLetterDeliveryChannelText } from './cover-letter/deliveryChannel';
-import { getCoverLetterToneText } from './cover-letter/tone';
-import { buildCvHeader } from './cv/header';
-import { buildCoverLetterHeader } from './cover-letter/header';
-import { getCoverLetterMainTasks } from './cover-letter/tasks';
-import { getCoverLetterStrictRules } from './cover-letter/rules';
-import { getCoverLetterInputOutputTemplate } from './cover-letter/inputOutput';
-import { getATStrictRules } from './ats/rules';
-import { getATSInputOutputTemplate } from './ats/inputOutput';
-import { getATSMainTasks } from './ats/tasks';
-import { buildATSHeader } from './ats/header';
+import { getExaggeration } from '../../modules/cv/prompt/exaggeration';
+import { getCVStrictRules } from '../../modules/cv/prompt/rules';
+import { getCVMainTasks } from '../../modules/cv/prompt/tasks';
+import { getCvInputOutputTemplate } from '../../modules/cv/prompt/inputOutput';
+import { getCoverLetterDeliveryChannelText } from '../../modules/cover-letter/prompt/deliveryChannel';
+import { getCoverLetterToneText } from '../../modules/cover-letter/prompt/tone';
+import { buildCvHeader } from '../../modules/cv/prompt/header';
+import { buildCoverLetterHeader } from '../../modules/cover-letter/prompt/header';
+import { getCoverLetterMainTasks } from '../../modules/cover-letter/prompt/tasks';
+import { getCoverLetterStrictRules } from '../../modules/cover-letter/prompt/rules';
+import { getCoverLetterInputOutputTemplate } from '../../modules/cover-letter/prompt/inputOutput';
+import { getATStrictRules } from '../../modules/ats/prompt/rules';
+import { getATSInputOutputTemplate } from '../../modules/ats/prompt/inputOutput';
+import { getATSMainTasks } from '../../modules/ats/prompt/tasks';
+import { buildATSHeader } from '../../modules/ats/prompt/header';
 import {
   BuildPromptOptions,
   DeliveryChannel,
