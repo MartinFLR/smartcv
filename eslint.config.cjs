@@ -1,4 +1,4 @@
-// eslint.config.js
+// eslint.config.cjs
 const { defineConfig } = require('eslint/config');
 const eslint = require('@eslint/js');
 const tseslint = require('typescript-eslint');

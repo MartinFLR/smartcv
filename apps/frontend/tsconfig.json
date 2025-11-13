@@ -14,7 +14,13 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
-    "module": "preserve"
+    "module": "preserve",
+    "paths": {
+      "@smartcv/types": ["dist/libs/types"],
+      "@smartcv/types/*": ["dist/libs/types/*"],
+      "@smartcv/shared": ["dist/libs/shared"],
+      "@smartcv/shared/*": ["dist/libs/shared/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -24,12 +30,6 @@
     "strictTemplates": true
   },
   "files": [],
-  "paths": {
-    "@smartcv/types": ["dist/libs/types"],
-    "@smartcv/types/*": ["dist/libs/types/*"],
-    "@smartcv/shared": ["dist/libs/shared"],
-    "@smartcv/shared/*": ["dist/libs/shared/*"]
-  },
   "references": [
     {
       "path": "./tsconfig.app.json"
