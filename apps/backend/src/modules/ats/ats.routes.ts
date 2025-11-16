@@ -1,9 +1,10 @@
-import { analyzeCvAtsController } from './ats.controller';
 import { Router } from 'express';
 import multer from 'multer';
+import { analyzeCvAtsController } from './ats.controller';
 
 const router = Router();
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const upload = multer({ storage: multer.memoryStorage() });
 
 router.post('/ats', upload.single('file'), analyzeCvAtsController);
+
+export default router;

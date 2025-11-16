@@ -1,16 +1,32 @@
-import { AIFactory, AIModel } from '../../core/ai/ai.factory';
+import { AiSettings, CvPayload, CvResponse } from '@smartcv/types';
 import { buildPrompt } from '../../core/prompt/prompt-builder';
+import { AIFactory, AIModel } from '../../core/ai/ai.factory';
 import { cleanJson } from '../../core/utils/json-cleaner';
 import { normalizeCv } from '../../core/utils/normalizer';
-import { CvPayload, CvResponse } from '@smartcv/types';
 
-export async function generateTailoredCv(body: CvPayload): Promise<CvResponse> {
-  const { baseCv, jobDesc, aiSettings, promptOption } = body;
-  const prompt = buildPrompt(JSON.stringify(baseCv, null, 2), jobDesc, promptOption);
+export async function generateTailoredCv(
+  body: CvPayload,
+  headerSettings: AiSettings,
+): Promise<CvResponse> {
+  const { baseCv, jobDesc, aiSettings: bodySettings, promptOption } = body;
+
+  const finalAiSettings: AiSettings = {
+    modelProvider: headerSettings.modelProvider,
+    modelVersion: headerSettings.modelVersion,
+    systemPrompt: bodySettings.systemPrompt,
+  };
+
+  const prompt = buildPrompt(
+    JSON.stringify(baseCv, null, 2),
+    jobDesc,
+    finalAiSettings,
+    promptOption,
+  );
 
   const ai: AIModel = AIFactory.create({
-    provider: aiSettings?.modelProvider ?? 'gemini',
-    version: aiSettings?.modelVersion,
+    modelProvider: finalAiSettings.modelProvider!,
+    modelVersion: finalAiSettings.modelVersion,
+    systemPrompt: finalAiSettings.systemPrompt,
   });
 
   const text = await ai.generate(prompt);

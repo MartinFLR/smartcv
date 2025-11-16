@@ -1,4 +1,8 @@
+import { Router } from 'express';
 import { generateCoverLetterController } from './cover-letter.controller';
-import router from '../cv/cv.routes';
+
+const router = Router();
 
 router.post('/generate-cover-letter', generateCoverLetterController);
+
+export default router;

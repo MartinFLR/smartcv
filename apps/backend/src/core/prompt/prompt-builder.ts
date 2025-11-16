@@ -14,6 +14,7 @@ import { getATSInputOutputTemplate } from '../../modules/ats/prompt/inputOutput'
 import { getATSMainTasks } from '../../modules/ats/prompt/tasks';
 import { buildATSHeader } from '../../modules/ats/prompt/header';
 import {
+  AiSettings,
   BuildPromptOptions,
   DeliveryChannel,
   PromptLanguage,
@@ -21,9 +22,12 @@ import {
   TemperatureLevel,
 } from '@smartcv/types';
 
-export function buildPrompt(baseCv: string, jobDesc: string, options?: BuildPromptOptions): string {
-  console.log(options);
-
+export function buildPrompt(
+  baseCv: string,
+  jobDesc: string,
+  aiSettings: AiSettings,
+  options?: BuildPromptOptions,
+): string {
   const lang: PromptLanguage = options?.lang || 'spanish';
   const type: PromptType = options?.type || 'tailoredCv';
   const temperature: TemperatureLevel = options?.temperature || 'low';
@@ -48,15 +52,6 @@ export function buildPrompt(baseCv: string, jobDesc: string, options?: BuildProm
     ].join('\n\n');
   }
   if (type === 'coverLetter') {
-    console.log(
-      buildCoverLetterHeader(lang, userContext, recruiterName, referralName, companyName),
-      getCoverLetterToneText(lang, tone),
-      getCoverLetterDeliveryChannelText(lang, deliveryChannel),
-      getCoverLetterMainTasks(lang),
-      getCoverLetterStrictRules(lang),
-      getCoverLetterInputOutputTemplate(baseCv, jobDesc, lang),
-    );
-
     return [
       buildCoverLetterHeader(lang, userContext, recruiterName, referralName, companyName),
       getCoverLetterToneText(lang, tone),

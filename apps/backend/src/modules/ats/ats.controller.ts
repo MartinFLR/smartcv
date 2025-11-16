@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { analyzeCvAts } from './ats.service';
-import { CvAtsPayload } from '@smartcv/types';
-import { BuildPromptOptions } from '@smartcv/types';
+import { AiSettings, CvAtsPayload, BuildPromptOptions } from '@smartcv/types';
 
 interface MulterRequest extends Request {
   file?: Express.Multer.File;
@@ -9,6 +8,15 @@ interface MulterRequest extends Request {
 
 export async function analyzeCvAtsController(req: MulterRequest, res: Response): Promise<void> {
   try {
+    const provider = req.headers['x-ai-provider'] as string;
+    const model = req.headers['x-ai-model'] as string;
+
+    const headerSettings: AiSettings = {
+      modelProvider: provider,
+      modelVersion: model,
+      systemPrompt: '',
+    };
+
     const { jobDesc, aiSettings } = req.body;
     const file = req.file;
 
@@ -16,14 +24,12 @@ export async function analyzeCvAtsController(req: MulterRequest, res: Response):
       res.status(400).json({ error: 'No se envió ningún archivo (file) o el buffer está vacío.' });
       return;
     }
-
     if (!jobDesc) {
       res
         .status(400)
         .json({ error: 'Falta la descripción del puesto (jobDesc) en el formulario.' });
       return;
     }
-
     let promptOption: BuildPromptOptions | undefined;
     try {
       promptOption =
@@ -42,7 +48,7 @@ export async function analyzeCvAtsController(req: MulterRequest, res: Response):
       promptOption,
     };
 
-    const result = await analyzeCvAts(payload);
+    const result = await analyzeCvAts(payload, headerSettings);
     res.status(200).json(result);
   } catch (err: unknown) {
     console.error('❌ Error en analyzeCvAtsController:', err);

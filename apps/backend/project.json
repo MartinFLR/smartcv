@@ -6,13 +6,23 @@
   "sourceRoot": "apps/backend/src",
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
+      "dependsOn": [
+        {
+          "target": "build",
+          "projects": "dependencies"
+        }
+      ],
       "options": {
         "outputPath": "dist/apps/backend",
         "main": "apps/backend/src/main.ts",
         "tsConfig": "apps/backend/tsconfig.json",
-        "assets": [".env"]
+        "assets": [".env"],
+        "platform": "node",
+        "bundle": true,
+        "thirdParty": false,
+        "format": ["cjs"]
       }
     },
     "serve": {
