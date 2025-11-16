@@ -9,23 +9,28 @@ const prettierConfig = require('eslint-config-prettier');
 module.exports = defineConfig([
   {
     ignores: [
-      'frontend/.angular/**',
-      'frontend/node_modules/**',
-      'frontend/dist/**',
-      'frontend/coverage/**',
-      'frontend/.cache/**',
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/coverage/**',
+      '**/.cache/**',
+      '**/.angular/**',
+
+      // Nx generated project configs (OK ignorarlos)
+      'project.json',
+
+      // Build artifacts
       'frontend/vite/**',
       'frontend/deps/**',
 
-      'backend/node_modules/**',
-      'backend/dist/**',
-      'backend/coverage/**',
-      'backend/.cache/**',
+      // No ignores peligrosos ↓↓↓
+      // ❌ '*.js' --> rompe porque eslint usa archivos JS de config internamente
+      // ❌ '*.json' --> eslint NECESITA leer tsconfig.json
+      // ❌ 'tsconfig*.json' --> rompe el parser de TS
+      // ❌ 'package.json' --> eslint usa config y scripts
+      // ❌ 'package-lock.json' --> warning innecesario
 
-      'package*.json',
-      'project.json',
-      'tsconfig*.json',
-      '*.js',
+      // Si querés ignorar package-lock específicamente:
+      'package-lock.json',
     ],
   },
   tseslint.config({

@@ -1,4 +1,4 @@
-import { Component, inject, Signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, Signal, ChangeDetectionStrategy, DestroyRef } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AiSettingsService } from '../../core/services/ai-settings/ai-settings.service';
 import { TuiAlertService, TuiButton, TuiTextfield } from '@taiga-ui/core';
@@ -9,7 +9,7 @@ import { AiProviderModels, AiSettings } from '@smartcv/types';
 import { map, skip, startWith } from 'rxjs';
 import { AI_MODELS_CONFIG } from '../../core/config/ai.models.config';
 import { CommonModule } from '@angular/common';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-config',
@@ -32,49 +32,56 @@ export class Config {
   private readonly fb = inject(FormBuilder);
   private readonly alerts = inject(TuiAlertService);
   private readonly aiSettingsService = inject(AiSettingsService);
-
   private readonly modelsByProvider = inject<AiProviderModels>(AI_MODELS_CONFIG);
+  private readonly destroyRef = inject(DestroyRef);
 
-  aiForm!: FormGroup;
+  aiForm: FormGroup;
   protected readonly aiProviders: string[];
   protected availableModels: Signal<string[]>;
 
   constructor() {
     this.aiProviders = Object.keys(this.modelsByProvider);
-
-    this.aiForm = this.fb.group({
-      provider: [this.aiProviders[0]],
-      model: [''],
-      systemPrompt: [''],
-    });
-
+    console.log(this.aiProviders);
     const savedSettings = this.aiSettingsService.loadSettings();
+    console.log(savedSettings);
 
-    if (savedSettings && Object.keys(savedSettings).length > 0) {
-      this.aiForm.patchValue(savedSettings);
-    } else {
-      if (this.modelsByProvider[this.aiProviders[0]]) {
-        this.aiForm.get('model')!.setValue(this.modelsByProvider[this.aiProviders[0]][0]);
-      }
+    const initialProvider =
+      savedSettings?.modelProvider && this.aiProviders.includes(savedSettings.modelProvider)
+        ? savedSettings.modelProvider
+        : this.aiProviders[0];
+
+    console.log(initialProvider);
+
+    const initialModels = this.modelsByProvider[initialProvider] || [];
+
+    let initialModel = savedSettings?.modelVersion || null;
+
+    if (initialModel && !initialModels.includes(initialModel)) {
+      initialModel = null;
     }
 
+    if (!initialModel && initialModels.length > 0) {
+      initialModel = initialModels[0];
+    }
+
+    this.aiForm = this.fb.group({
+      modelProvider: [initialProvider],
+      modelVersion: [initialModel],
+      systemPrompt: [savedSettings?.systemPrompt || ''],
+    });
+
     const providerChanges$ = this.aiForm
-      .get('provider')!
-      .valueChanges.pipe(startWith(this.aiForm.get('provider')!.value));
+      .get('modelProvider')!
+      .valueChanges.pipe(startWith(initialProvider));
 
     this.availableModels = toSignal(
       providerChanges$.pipe(map((provider) => this.modelsByProvider[provider] || [])),
-      {
-        initialValue: this.modelsByProvider[this.aiForm.get('provider')!.value] || [],
-      },
+      { initialValue: initialModels },
     );
 
-    providerChanges$.pipe(skip(1)).subscribe(() => {
-      if (this.availableModels()?.length > 0) {
-        this.aiForm.get('model')!.setValue(this.availableModels()[0]);
-      } else {
-        this.aiForm.get('model')!.setValue(null);
-      }
+    providerChanges$.pipe(skip(1), takeUntilDestroyed(this.destroyRef)).subscribe((newProvider) => {
+      const newModels = this.modelsByProvider[newProvider] || [];
+      this.aiForm.get('modelVersion')!.setValue(newModels[0] || null);
     });
   }
 

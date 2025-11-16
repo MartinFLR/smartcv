@@ -20,7 +20,7 @@
           tuiTextfieldSize="m"
           [tuiTextfieldCleaner]="false"
         >
-          <input tuiSelect formControlName="provider" />
+          <input tuiSelect formControlName="modelProvider" />
           <tui-data-list-wrapper *tuiTextfieldDropdown new [items]="aiProviders" />
         </tui-textfield>
       </label>
@@ -33,7 +33,7 @@
           tuiTextfieldSize="m"
           [tuiTextfieldCleaner]="false"
         >
-          <input tuiSelect formControlName="model" />
+          <input tuiSelect formControlName="modelVersion" />
           <tui-data-list-wrapper *tuiTextfieldDropdown new [items]="availableModels()" />
         </tui-textfield>
       </label>

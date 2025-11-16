@@ -9,16 +9,17 @@ import { provideRouter } from '@angular/router';
 import { TUI_LANGUAGE, TUI_DEFAULT_LANGUAGE, TUI_SPANISH_LANGUAGE } from '@taiga-ui/i18n';
 import { TuiLanguage } from '@taiga-ui/i18n/types';
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { defer, of } from 'rxjs';
 import { tuiInputPhoneInternationalOptionsProvider } from '@taiga-ui/kit';
 import { AI_MODELS_CONFIG } from './core/config/ai.models.config';
 import { AI_MODELS_DATA } from '@smartcv/shared';
+import { aiSettingsInterceptor } from './core/interceptors/ai-settings.interceptors';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimations(),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([aiSettingsInterceptor])),
     {
       provide: TUI_DEFAULT_LANGUAGE,
       useValue: of(TUI_SPANISH_LANGUAGE),

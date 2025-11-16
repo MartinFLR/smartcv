@@ -120,7 +120,7 @@ export interface CvPayload {
 export interface AiSettings {
   modelProvider?: string;
   modelVersion?: string;
-  systemPrompt: string;
+  systemPrompt?: string;
 }
 
 export interface CoverLetterPayload {

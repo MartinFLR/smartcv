@@ -59,6 +59,7 @@
     "@commitlint/prompt-cli": "^20.1.0",
     "@eslint/js": "^9.39.1",
     "@nx/angular": "^22.0.2",
+    "@nx/esbuild": "^22.0.3",
     "@nx/eslint": "^22.0.2",
     "@nx/js": "22.0.3",
     "@swc-node/register": "~1.9.1",
@@ -85,9 +86,11 @@
     "typescript-eslint": "8.46.2"
   },
   "lint-staged": {
+    "*.{ts,js}": [
+      "eslint --fix --no-warn-ignored"
+    ],
     "*.{ts,js,json,css,html,md}": [
-      "prettier --write",
-      "eslint --fix"
+      "prettier --write"
     ]
   },
   "prettier": {
