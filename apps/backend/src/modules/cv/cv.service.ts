@@ -8,12 +8,12 @@ export async function generateTailoredCv(
   body: CvPayload,
   headerSettings: AiSettings,
 ): Promise<CvResponse> {
-  const { baseCv, jobDesc, aiSettings: bodySettings, promptOption } = body;
+  const { baseCv, jobDesc, promptOption } = body;
 
   const finalAiSettings: AiSettings = {
     modelProvider: headerSettings.modelProvider,
     modelVersion: headerSettings.modelVersion,
-    systemPrompt: bodySettings.systemPrompt,
+    systemPrompt: headerSettings.systemPrompt,
   };
 
   const prompt = buildPrompt(
