@@ -1,6 +1,6 @@
 <ng-template #formContent>
   <div class="md:col-span-6 flex flex-col gap-6">
-    <div tuiCardLarge class="p-6 border rounded-lg shadow-sm">
+    <div tuiCardLarge class="p-6 border rounded-lg shadow-sm" (tuiSwipe)="onViewSwipe($event)">
       <app-actions
         [isLoading]="state.isLoading()"
         [isCvValid]="state.cvForm.valid"
@@ -39,7 +39,13 @@
         </tui-tabs-with-more>
       </ng-container>
 
-      <form [formGroup]="state.cvForm" class="flex flex-col gap-6 pt-6">
+      <form
+        [formGroup]="state.cvForm"
+        class="flex flex-col gap-6 pt-6"
+        (tuiSwipe)="onFormSwipe($event)"
+        (touchstart.stop)="('')"
+        (mousedown.stop)="('')"
+      >
         @switch (state.activeTab()) {
           @case (0) {
             <app-personal-info [personalInfo]="state.personalInfoGroup()" />
@@ -92,9 +98,8 @@
     </div>
   </div>
 </ng-template>
-
 <ng-template #previewContent>
-  <div class="md:col-span-6 md:sticky md:top-8 h-full">
+  <div class="md:col-span-6 md:sticky md:top-8 h-full" (tuiSwipe)="onViewSwipe($event)">
     <app-dummy-view
       [cvPreview]="state.cvPreview()"
       [hasEducation]="state.hasEducation()"
@@ -111,7 +116,7 @@
     <button tuiTab>Previsualizar</button>
   </tui-tabs>
 
-  <div class="overflow-hidden" (tuiSwipe)="onSwipe($event)">
+  <div class="overflow-hidden">
     <div
       class="flex transition-transform duration-300 ease-in-out"
       [class.translate-x-0]="mobileView() === 0"
@@ -120,7 +125,6 @@
       <div class="w-full flex-shrink-0 p-4">
         <ng-container *ngTemplateOutlet="formContent"></ng-container>
       </div>
-
       <div class="w-full flex-shrink-0 p-4">
         <ng-container *ngTemplateOutlet="previewContent"></ng-container>
       </div>

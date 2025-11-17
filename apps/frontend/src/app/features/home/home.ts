@@ -45,13 +45,32 @@ import { TuiSwipe, TuiSwipeEvent } from '@taiga-ui/cdk';
 export class Home {
   protected readonly state = inject(HomeStateService);
   mobileView = signal(0);
+  private readonly TOTAL_FORM_TABS = 8;
+  protected readonly darkMode = inject(TUI_DARK_MODE);
 
-  onSwipe(event: TuiSwipeEvent): void {
-    if (event.direction === 'left' && this.mobileView() === 0) {
+  onFormSwipe(event: TuiSwipeEvent): void {
+    const direction = event.direction;
+    const currentTab = this.state.activeTab();
+
+    if (direction === 'right') {
+      if (currentTab > 0) {
+        this.state.activeTab.set(currentTab - 1);
+      }
+    } else if (direction === 'left') {
+      if (currentTab < this.TOTAL_FORM_TABS - 1) {
+        this.state.activeTab.set(currentTab + 1);
+      }
+    }
+  }
+
+  onViewSwipe(event: TuiSwipeEvent): void {
+    const direction = event.direction;
+    const currentView = this.mobileView();
+
+    if (currentView === 0 && direction === 'left') {
       this.mobileView.set(1);
-    } else if (event.direction === 'right' && this.mobileView() === 1) {
+    } else if (currentView === 1 && direction === 'right') {
       this.mobileView.set(0);
     }
   }
-  protected readonly darkMode = inject(TUI_DARK_MODE);
 }
