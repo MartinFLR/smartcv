@@ -19,13 +19,6 @@ jobs:
         with:
           node-version: 22
 
-      - uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
-
       - name: Clean Nx cache
         run: rm -rf .nx/cache
 

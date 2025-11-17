@@ -17,18 +17,11 @@ jobs:
           node-version: 22
           cache: 'npm'
 
-      - name: Restore Nx cache
-        uses: actions/cache@v4
-        with:
-          path: .nx/cache
-          key: ${{ runner.os }}-nx-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nx-
-
       - name: Clean possible leftovers
         run: |
           rm -rf node_modules
           rm -rf .angular/cache || true
+          rm -rf .nx/cache || true
 
       - name: Install dependencies
         run: npm ci
@@ -36,8 +29,3 @@ jobs:
       - name: Run lint (frontend + backend)
         run: npx nx run-many --target=lint --all
 
-      - name: Save Nx cache
-        uses: actions/cache@v4
-        with:
-          path: .nx/cache
-          key: ${{ runner.os }}-nx-${{ hashFiles('**/package-lock.json') }}
