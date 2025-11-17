@@ -1,13 +1,16 @@
-<form tuiForm>
-  <tui-textfield>
-    <label tuiLabel [for]="'profileNameInput'">¿Qué nombre querés darle?</label>
-
-    <input name="name" tuiAutoFocus tuiTextfield [(ngModel)]="value" [id]="'profileNameInput'" />
-  </tui-textfield>
-  <footer>
-    <button appearance="secondary" tuiButton type="button" (click)="context.$implicit.complete()">
-      Cancelar
-    </button>
-    <button tuiButton type="submit">Enviar</button>
-  </footer>
-</form>
+<ng-container *transloco="let t">
+  <form tuiForm>
+    <tui-textfield>
+      <label tuiLabel [for]="'profileNameInput'">{{ t('home.actions.create.title') }}</label>
+      <input name="name" tuiAutoFocus tuiTextfield [(ngModel)]="value" [id]="'profileNameInput'" />
+    </tui-textfield>
+    <footer>
+      <button appearance="secondary" tuiButton type="button" (click)="context.$implicit.complete()">
+        {{ t('home.actions.create.cancel') }}
+      </button>
+      <button tuiButton type="submit">
+        {{ t('home.actions.create.save') }}
+      </button>
+    </footer>
+  </form>
+</ng-container>

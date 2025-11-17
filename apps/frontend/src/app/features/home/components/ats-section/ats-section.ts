@@ -161,7 +161,6 @@ export class ATSSection {
     formData.append('file', file as File, file.name);
     formData.append('jobDesc', jobDesc);
     formData.append('promptOption', JSON.stringify(promptOption));
-    console.log('Esto mando yo: ' + JSON.stringify(promptOption, null, 2));
 
     this.atsService.getAtsScore(formData).subscribe({
       next: (response: CvAtsResponse) => {

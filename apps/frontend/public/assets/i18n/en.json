@@ -1,0 +1,55 @@
+{
+  "home": {
+    "actions": {
+      "profile": "Cargar Perfil...",
+      "block": "Bloquear"
+    },
+
+    "personalInfo": {
+      "title": "Información Personal",
+      "name": {
+        "name": "Nombre Completo",
+        "placeholder": ""
+      },
+      "job": {
+        "name": "Puesto",
+        "placeholder": ""
+      },
+      "email": {
+        "name": "Email",
+        "placeholder": ""
+      },
+      "phone": {
+        "name": "Teléfono",
+        "placeholder": ""
+      },
+      "ubication": {
+        "name": "Ubicación",
+        "placeholder": "Tu ubicación"
+      },
+      "linkedin": {
+        "name": "Linkedin (URL)",
+        "placeholder": "linkedin/in/#####"
+      },
+      "github": {
+        "name": "Github (URL)",
+        "placeholder": "github/"
+      },
+      "web": {
+        "name": "Website (URL)",
+        "placeholder": "Tu sitio web"
+      },
+      "resume": {
+        "title": "Perfil Profesional",
+        "placeholder": "Escribí tu perfil profesional acá..."
+      }
+    },
+    "education": {},
+    "experience": {},
+    "project": {},
+    "skills": {},
+    "ia": {},
+    "coverLetter": {},
+    "ats": {}
+  }
+}

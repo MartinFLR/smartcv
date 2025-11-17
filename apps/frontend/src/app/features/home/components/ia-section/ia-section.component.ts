@@ -9,7 +9,7 @@ import {
   signal,
   Signal,
 } from '@angular/core';
-import { ControlContainer, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TuiButton, TuiTextfield } from '@taiga-ui/core';
 import { TuiButtonLoading, TuiCheckbox, TuiSlider, TuiTextarea } from '@taiga-ui/kit';
 import { KeyValuePipe } from '@angular/common';
@@ -18,6 +18,7 @@ import { map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IaFormControls } from '../../../../core/models/controls.model';
 import { TuiCardLarge } from '@taiga-ui/layout';
+import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-ia-section',
@@ -32,12 +33,8 @@ import { TuiCardLarge } from '@taiga-ui/layout';
     TuiButton,
     TuiButtonLoading,
     TuiCardLarge,
-  ],
-  viewProviders: [
-    {
-      provide: ControlContainer,
-      useFactory: () => inject(ControlContainer, { skipSelf: true }),
-    },
+    TranslocoDirective,
+    TranslocoPipe,
   ],
   templateUrl: './ia-section.component.html',
 })
@@ -47,14 +44,14 @@ export class IaSection implements OnInit {
   optimize = output<void>();
 
   protected readonly exaggerationLevel: Record<number, string> = {
-    0: 'low',
-    1: 'medium',
-    2: 'high',
+    0: 'home.ia.exaggeration.level.low.name',
+    1: 'home.ia.exaggeration.level.medium.name',
+    2: 'home.ia.exaggeration.level.high.name',
   };
   protected readonly exaggerationDescriptions: Record<number, string> = {
-    0: 'Fiel al CV, mantiene el tono profesional y realista. No inventa logros ni resultados.',
-    1: 'Resalta logros existentes y los adapta ligeramente para enfatizar impacto, manteniendo credibilidad.',
-    2: 'Maximiza el impacto, exagera logros y habilidades de forma creativa. Revisar cuidadosamente antes de usar.',
+    0: 'home.ia.exaggeration.level.low.description',
+    1: 'home.ia.exaggeration.level.medium.description',
+    2: 'home.ia.exaggeration.level.high.description',
   };
 
   protected readonly max = 2;

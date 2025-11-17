@@ -7,7 +7,7 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { TuiAlertService, TuiButton, TuiHint, TuiTextfield } from '@taiga-ui/core';
+import { TuiAlertService, TuiButton, TuiGroup, TuiHint, TuiTextfield } from '@taiga-ui/core';
 import { TuiSelect, TuiSwitch, TuiChevron, TuiDataListWrapper } from '@taiga-ui/kit';
 import { FormsModule } from '@angular/forms';
 import { ProfileService } from '../../../../core/services/profile/profile.service';
@@ -18,10 +18,11 @@ import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { EditProfile } from './profile/edit-profile/edit-profile';
 import { TuiRipple } from '@taiga-ui/addon-mobile';
 import { TuiCell } from '@taiga-ui/layout';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-actions',
-  standalone: true, // Agregado
+  standalone: true,
   imports: [
     TuiButton,
     TuiTextfield,
@@ -33,6 +34,8 @@ import { TuiCell } from '@taiga-ui/layout';
     TuiHint,
     TuiRipple,
     TuiCell,
+    TuiGroup,
+    TranslocoDirective,
   ],
   templateUrl: './actions.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

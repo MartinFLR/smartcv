@@ -1,13 +1,5 @@
-<header
-  class="relative top-0 left-0 z-50 w-full shadow-lg transition-all duration-300 ease-in-out"
-  [ngClass]="isScrolled() ? 'bg-base-100/90 backdrop-blur-sm' : 'bg-base-100'"
-  xmlns="http://www.w3.org/1999/html"
->
-  <tui-app-bar
-    [tuiCell]="'m'"
-    class="mx-auto max-w-7xl px-4 py-12"
-    style="--tui-primitive-header-background: transparent; --tui-primitive-header-border: none"
-  >
+<header class="sticky top-0 left-0 z-50 w-full">
+  <tui-app-bar [tuiCell]="'m'" class="mx-auto max-w-7xl px-4 py-3">
     @if (!darkMode()) {
       <img
         tuiSlot="left"
@@ -17,7 +9,7 @@
         width="1024"
         height="1024"
         priority
-        class="h-12 w-auto cursor-pointer"
+        class="h-10 w-auto cursor-pointer"
       />
     } @else {
       <img
@@ -28,10 +20,11 @@
         width="1024"
         height="1024"
         priority
-        class="h-12 w-auto cursor-pointer"
+        class="h-10 w-auto cursor-pointer"
       />
     }
-    <tui-tabs class="hidden md:flex mx-auto">
+
+    <tui-tabs class="!hidden md:!flex mx-auto">
       <a tuiTab [routerLink]="['/']" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive>
         <span class="text-sm font-medium">Currículum</span>
       </a>
@@ -45,20 +38,16 @@
       </a>
     </tui-tabs>
 
-    <div tuiSlot="right" class="flex flex-row gap-6">
+    <div tuiSlot="right" class="flex items-center gap-4">
       <a
-        tuiButton
-        size="s"
+        tuiIconButton
         appearance="outline-grayscale"
         href="https://github.com/MartinFLR/smartcv"
         target="_blank"
         rel="noopener noreferrer"
-        class="rounded-lg"
+        class="rounded-lg md:hidden"
         [iconStart]="'https://raw.githubusercontent.com/MarsiBarsi/readme-icons/main/github.svg'"
-      >
-        Github
-        <tui-icon class="!stroke-1" [style.color]="'#ffc700'" icon="@tui.star" />
-      </a>
+      ></a>
 
       <input
         size="s"
@@ -67,54 +56,49 @@
         [checked]="darkMode()"
         (click)="darkMode.set(!darkMode())"
       />
+
+      <div class="md:hidden">
+        <button
+          tuiIconButton
+          appearance="outline-grayscale"
+          iconStart="@tui.menu"
+          (click)="menuOpen.set(true)"
+        ></button>
+      </div>
     </div>
-
-    <!-- TODO: Agregar funcionalidad con Transloco
-    <tui-badged-content
-    tuiSlot="right"
-    >
-      <img
-        alt=""
-        size="s"
-        tuiBadge
-        tuiSlot="bottom"
-        [src]="flags.get(languageControl.value!) || flags.get(switcher.language) | tuiFlag"
-      />
-
-      <button
-        appearance="outline-grayscale"
-        size="m"
-        tuiButtonSelect
-        tuiIconButton
-        type="button"
-        [formControl]="languageControl"
-        [iconStart]="icons.languages"
-      >
-
-        <tui-data-list *tuiTextfieldDropdown>
-          <tui-opt-group label="Lenguaje">
-            @for (name of names; track $index) {
-              <button
-                new
-                tuiOption
-                size="s"
-                type="button"
-                [value]="name | titlecase"
-                (click)="setLang(name)"
-              >
-                <img
-                  alt=""
-                  class="t-flag"
-                  [src]="flags.get(name) | tuiFlag"
-                />
-                {{ name | titlecase }}
-              </button>
-            }
-
-          </tui-opt-group>
-        </tui-data-list>
-      </button>
-    </tui-badged-content>
-    -->
   </tui-app-bar>
 </header>
+
+<tui-drawer *tuiPopup="menuOpen()" [direction]="'left'" (close)="menuOpen.set(false)">
+  <div tuiHeader class="border-b border-solid border-tui-border-faded">
+    <span tuiTitle>Menú</span>
+    <button
+      tuiButtonClose
+      tuiIconButton
+      type="button"
+      tuiSlot="right"
+      (click)="menuOpen.set(false)"
+    ></button>
+  </div>
+
+  <nav class="flex flex-col gap-5 p-5">
+    <a
+      routerLink="/"
+      [routerLinkActive]="'text-blue-500 font-semibold'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="text-lg font-medium no-underline transition-colors duration-200 hover:text-blue-600"
+      (click)="menuOpen.set(false)"
+    >
+      Currículum
+    </a>
+    <a
+      routerLink="/configuracion"
+      [routerLinkActive]="'text-blue-500 font-semibold'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="text-lg font-medium no-underline transition-colors duration-200 hover:text-blue-600"
+      (click)="menuOpen.set(false)"
+    >
+      Configuración
+    </a>
+  </nav>
+</tui-drawer>

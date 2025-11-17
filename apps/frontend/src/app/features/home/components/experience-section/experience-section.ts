@@ -1,19 +1,22 @@
-import { Component, inject, input, output } from '@angular/core';
-import { ControlContainer, FormArray, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, input, output } from '@angular/core';
+import { FormArray, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TuiButton, TuiTextfield } from '@taiga-ui/core';
 import { TuiRipple } from '@taiga-ui/addon-mobile';
 import { TuiTextarea } from '@taiga-ui/kit';
 import { ExperienceControls } from '../../../../core/models/controls.model';
 import { TuiCardLarge } from '@taiga-ui/layout';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-experience-section',
-  imports: [ReactiveFormsModule, TuiButton, TuiRipple, TuiTextfield, TuiTextarea, TuiCardLarge],
-  viewProviders: [
-    {
-      provide: ControlContainer,
-      useFactory: () => inject(ControlContainer, { skipSelf: true }),
-    },
+  imports: [
+    ReactiveFormsModule,
+    TuiButton,
+    TuiRipple,
+    TuiTextfield,
+    TuiTextarea,
+    TuiCardLarge,
+    TranslocoDirective,
   ],
   templateUrl: './experience-section.html',
 })

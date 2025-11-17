@@ -7,16 +7,16 @@
 
     <div tuiCardLarge class="p-6 border rounded-lg shadow-sm">
       <app-actions
-        [isLoading]="isLoading()"
-        [isCvValid]="cvForm.valid"
-        [isCvLocked]="isCvLocked()"
-        (lockCv)="onLockCv($event)"
-        (save)="saveCv()"
-        (download)="downloadPdf()"
-        (clear)="clearCv()"
+        [isLoading]="state.isLoading()"
+        [isCvValid]="state.cvForm.valid"
+        [isCvLocked]="state.isCvLocked()"
+        (lockCv)="state.onLockCv($event)"
+        (save)="state.saveCv()"
+        (download)="state.downloadPdf()"
+        (clear)="state.clearCv()"
       />
 
-      <tui-tabs-with-more [itemsLimit]="6" [(activeItemIndex)]="activeTab" tuiFade>
+      <tui-tabs-with-more [itemsLimit]="6" [(activeItemIndex)]="state.activeTab" tuiFade>
         <button *tuiItem iconStart="@tui.user" tuiTab>Personal</button>
         <button *tuiItem iconStart="@tui.book-open" tuiTab>Educación</button>
         <button *tuiItem iconStart="@tui.briefcase" tuiTab>Experiencia</button>
@@ -27,53 +27,53 @@
         <button *tuiItem iconStart="@tui.notepad-text" tuiTab>Carta de Presentación</button>
       </tui-tabs-with-more>
 
-      <form [formGroup]="cvForm" class="flex flex-col gap-6 pt-6">
-        @switch (activeTab()) {
+      <form [formGroup]="state.cvForm" class="flex flex-col gap-6 pt-6">
+        @switch (state.activeTab()) {
           @case (0) {
-            <app-personal-info />
+            <app-personal-info [personalInfo]="state.personalInfoGroup()" />
           }
           @case (1) {
             <app-education-section
-              [educationForms]="educationForms()"
-              (add)="addEducation()"
-              (remove)="removeEducation($event)"
+              [educationForms]="state.educationForms()"
+              (add)="state.addEducation()"
+              (remove)="state.removeEducation($event)"
             />
           }
           @case (2) {
             <app-experience-section
-              [experienceForms]="experienceForms()"
-              (add)="addExperience()"
-              (remove)="removeExperience($event)"
+              [experienceForms]="state.experienceForms()"
+              (add)="state.addExperience()"
+              (remove)="state.removeExperience($event)"
             />
           }
           @case (3) {
             <app-projects-section
-              [projectForms]="projectForms()"
-              (add)="addProject()"
-              (remove)="removeProject($event)"
+              [projectForms]="state.projectForms()"
+              (add)="state.addProject()"
+              (remove)="state.removeProject($event)"
             />
           }
           @case (4) {
             <app-skills-section
-              [skillsForms]="skillsForms()"
-              (addSkillGroup)="addSkill()"
-              (removeSkillGroup)="removeSkill($event)"
-              (addCert)="addCertification($event)"
-              (removeCert)="removeCertification($event)"
+              [skillsForms]="state.skillsForms()"
+              (addSkillGroup)="state.addSkill()"
+              (removeSkillGroup)="state.removeSkill($event)"
+              (addCert)="state.addCertification($event)"
+              (removeCert)="state.removeCertification($event)"
             />
           }
           @case (5) {
             <app-ia-section
-              [iaForm]="iaForm"
-              [isLoading]="isLoading()"
-              (optimize)="optimizarCv()"
+              [iaForm]="state.iaForm"
+              [isLoading]="state.isLoading()"
+              (optimize)="state.optimizarCv()"
             />
           }
           @case (6) {
-            <app-ats-section [iaForm]="iaForm" />
+            <app-ats-section [iaForm]="state.iaForm" />
           }
           @case (7) {
-            <app-cover-letter-section [iaForm]="iaForm" [cvForm]="cvForm" />
+            <app-cover-letter-section [iaForm]="state.iaForm" [cvForm]="state.cvForm" />
           }
         }
       </form>
@@ -82,11 +82,11 @@
 
   <div class="md:col-span-6 md:sticky md:top-8 h-full">
     <app-dummy-view
-      [cvPreview]="cvPreview()"
-      [hasEducation]="hasEducation()"
-      [hasExperience]="hasExperience()"
-      [hasSkills]="hasSkills()"
-      [hasProjects]="hasProjects()"
+      [cvPreview]="state.cvPreview()"
+      [hasEducation]="state.hasEducation()"
+      [hasExperience]="state.hasExperience()"
+      [hasProjects]="state.hasProjects()"
+      [hasSkills]="state.hasSkills()"
     />
   </div>
 </div>

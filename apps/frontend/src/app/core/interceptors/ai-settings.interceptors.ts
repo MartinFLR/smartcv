@@ -13,10 +13,7 @@ export const aiSettingsInterceptor: HttpInterceptorFn = (req, next) => {
         .set('X-Ai-Model', settings.modelVersion),
     });
 
-    console.log('✅ Interceptor: Headers agregados', newReq.headers);
-
     return next(newReq);
   }
-  console.warn('⚠️ Interceptor: No se encontraron settings. Request original.');
   return next(req);
 };

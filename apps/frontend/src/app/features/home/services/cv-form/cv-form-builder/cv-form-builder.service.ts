@@ -11,7 +11,7 @@ import {
   PersonalInfoControls,
   ProjectControls,
   SkillsControls,
-} from '../../../../core/models/controls.model';
+} from '../../../../../core/models/controls.model';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +26,24 @@ export class CvFormBuilderService {
       experience: this.fb.array<FormGroup<ExperienceControls>>([]),
       projects: this.fb.array<FormGroup<ProjectControls>>([]),
       skills: this.fb.array<FormGroup<SkillsControls>>([]),
+    });
+  }
+
+  public buildCoverLetterForm(): FormGroup<CoverLetterControls> {
+    return this.fb.group<CoverLetterControls>({
+      recruiterName: this.fb.control<string | null>(''),
+      companyName: this.fb.control<string | null>(''),
+      referralName: this.fb.control<string | null>(''),
+      tone: this.fb.control<number | null>(0),
+      deliveryChannel: this.fb.control<number | null>(0),
+    });
+  }
+
+  public buildIaForm(): FormGroup<IaFormControls> {
+    return this.fb.group<IaFormControls>({
+      jobDescription: this.fb.control<string | null>(''),
+      makeEnglish: this.fb.control<boolean | null>(false),
+      exaggeration: this.fb.control<number | null>(0),
     });
   }
 
@@ -105,25 +123,6 @@ export class CvFormBuilderService {
       languages: this.fb.control<string[] | null>(skillObj?.languages || []),
       certifications: certsArray,
       additional: this.fb.control<string[] | null>(skillObj?.additional || []),
-    });
-  }
-
-  //TODO: Hay que hacer que el ia form se instancie aca directo, desacoplarlo del home
-  private createIaForm(): FormGroup<IaFormControls> {
-    return this.fb.group<IaFormControls>({
-      jobDescription: this.fb.control<string | null>('', Validators.required),
-      makeEnglish: this.fb.control<boolean | null>(false),
-      exaggeration: this.fb.control<number | null>(0),
-    });
-  }
-
-  public buildCoverLetterForm(): FormGroup<CoverLetterControls> {
-    return this.fb.group<CoverLetterControls>({
-      recruiterName: this.fb.control<string | null>(''),
-      companyName: this.fb.control<string | null>(''),
-      referralName: this.fb.control<string | null>(''),
-      tone: this.fb.control<number | null>(0),
-      deliveryChannel: this.fb.control<number | null>(0),
     });
   }
 }

@@ -1,21 +1,18 @@
-import { DOCUMENT, inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { CvForm } from '@smartcv/types';
+import { WA_LOCAL_STORAGE } from '@ng-web-apis/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SaveDataService {
-  private readonly document = inject(DOCUMENT);
-  private readonly storage: Storage | null = this.document.defaultView?.localStorage ?? null;
+  private readonly storage = inject(WA_LOCAL_STORAGE);
   private readonly STORAGE_KEY = 'angular-cv-data';
 
   private readonly cvDataSignal = signal<CvForm | null>(this.loadDataInternal());
   public readonly activeCv = this.cvDataSignal.asReadonly();
 
   saveData(cvData: CvForm): void {
-    if (!this.storage) {
-      return;
-    }
     try {
       const serializedData = JSON.stringify(cvData);
       this.storage.setItem(this.STORAGE_KEY, serializedData);
@@ -27,9 +24,6 @@ export class SaveDataService {
   }
 
   clearData(): void {
-    if (!this.storage) {
-      return;
-    }
     try {
       this.storage.removeItem(this.STORAGE_KEY);
       this.cvDataSignal.set(null);
@@ -40,9 +34,6 @@ export class SaveDataService {
   }
 
   private loadDataInternal(): CvForm | null {
-    if (!this.storage) {
-      return null;
-    }
     try {
       const serializedData = this.storage.getItem(this.STORAGE_KEY);
       if (serializedData === null) {

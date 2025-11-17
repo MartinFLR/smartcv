@@ -1,88 +1,89 @@
-<form [formGroup]="iaForm()" class="flex flex-col gap-6">
-  <h2 class="text-xl font-semibold">Optimización con IA</h2>
+<ng-container *transloco="let t">
+  <form [formGroup]="iaForm()" class="flex flex-col gap-6">
+    <h2 class="text-xl font-semibold">{{ t('home.ia.title') }}</h2>
 
-  <div tuiCardLarge class="p-4 border border-gray-200 rounded relative flex flex-col gap-4">
-    <tui-textfield>
-      <label tuiLabel [for]="'iaJobDescriptionInput'"
-        >Pegá acá la descripción del puesto (Job Description)</label
-      >
-      <textarea
-        tuiTextarea
-        formControlName="jobDescription"
-        [id]="'iaJobDescriptionInput'"
-        [min]="8"
-        [max]="10"
-      ></textarea>
-    </tui-textfield>
-    <div class="text-sm">
-      <p>
-        Al hacer clic english "Optimizar CV", la IA reescribirá tu
-        <span class="font-semibold">Resumen Profesional</span>,
-        <span class="font-semibold">Puesto</span> y los <span class="font-semibold">Logros</span> de
-        tu experiencia y educación para que coincidan con la terminología y las palabras clave de la
-        oferta laboral.
-      </p>
-      <p class="mt-1 font-medium">¡Siempre revisá el resultado de la IA antes de descargar!</p>
+    <div tuiCardLarge class="p-4 border border-gray-200 rounded relative flex flex-col gap-4">
+      <tui-textfield>
+        <label tuiLabel [for]="'iaJobDescriptionInput'">
+          {{ t('home.ia.job.name') }}
+        </label>
+        <textarea
+          tuiTextarea
+          formControlName="jobDescription"
+          [placeholder]="t('home.ia.job.placeholder')"
+          [id]="'iaJobDescriptionInput'"
+          [min]="8"
+          [max]="10"
+        ></textarea>
+      </tui-textfield>
+      <div class="text-sm">
+        <p>
+          {{ t('home.ia.job.description') }}
+        </p>
+        <p class="mt-1 font-medium">
+          {{ t('home.ia.job.highlight') }}
+        </p>
+      </div>
     </div>
-  </div>
 
-  <div
-    tuiCardLarge
-    class="w-full border-gray-200 p-4 border rounded bg-gray-50 flex flex-col gap-2"
-  >
-    <label tuiLabel [for]="'iaExaggeration'" class="block text-sm font-medium">
-      Nivel de exageración
+    <div
+      tuiCardLarge
+      class="w-full border-gray-200 p-4 border rounded bg-gray-50 flex flex-col gap-2"
+    >
+      <label tuiLabel [for]="'iaExaggeration'" class="block text-sm font-medium">
+        {{ t('home.ia.exaggeration.title') }}
+      </label>
+
+      <input
+        tuiSlider
+        [id]="'iaExaggeration'"
+        type="range"
+        class="w-full"
+        [readOnly]="false"
+        [segments]="segments()"
+        [step]="step"
+        [min]="min"
+        [max]="max"
+        formControlName="exaggeration"
+      />
+
+      <div class="flex justify-between mt-1">
+        @for (level of exaggerationLevel | keyvalue; track level.key) {
+          <button
+            type="button"
+            (click)="iaForm().controls.exaggeration.setValue(+level.key)"
+            class="text-sm cursor-pointer focus:outline-none transition-colors px-1 rounded"
+            [class.text-gray-500]="currentExaggeration() !== +level.key"
+            [class.text-blue-600]="currentExaggeration() === +level.key"
+            [class.font-bold]="currentExaggeration() === +level.key"
+            [class.hover:text-blue-700]="currentExaggeration() !== +level.key"
+          >
+            {{ level.value | transloco }}
+          </button>
+        }
+      </div>
+
+      <div class="text-center text-s mt-2 text-balance min-h-[2.5rem]">
+        {{ currentExaggeration() | exaggerationLevel: exaggerationDescriptions | transloco }}
+      </div>
+    </div>
+
+    <label tuiLabel class="flex items-center gap-2 mt-4">
+      <input tuiCheckbox type="checkbox" formControlName="makeEnglish" />
+      Traducir CV a Inglés (Experimental)
     </label>
 
-    <input
-      tuiSlider
-      [id]="'iaExaggeration'"
-      type="range"
-      class="w-full"
-      [readOnly]="false"
-      [segments]="segments()"
-      [step]="step"
-      [min]="min"
-      [max]="max"
-      formControlName="exaggeration"
-    />
-
-    <div class="flex justify-between mt-1">
-      @for (level of exaggerationLevel | keyvalue; track level.key) {
-        <button
-          type="button"
-          (click)="iaForm().controls.exaggeration.setValue(+level.key)"
-          class="text-sm cursor-pointer focus:outline-none transition-colors px-1 rounded"
-          [class.text-gray-500]="currentExaggeration() !== +level.key"
-          [class.text-blue-600]="currentExaggeration() === +level.key"
-          [class.font-bold]="currentExaggeration() === +level.key"
-          [class.hover:text-blue-700]="currentExaggeration() !== +level.key"
-        >
-          {{ level.value }}
-        </button>
-      }
-    </div>
-
-    <div class="text-center text-xs mt-2 text-balance min-h-[2.5rem]">
-      {{ currentExaggeration() | exaggerationLevel: exaggerationDescriptions }}
-    </div>
-  </div>
-
-  <label tuiLabel class="flex items-center gap-2 mt-4">
-    <input tuiCheckbox type="checkbox" formControlName="makeEnglish" />
-    Traducir CV a Inglés (Experimental)
-  </label>
-
-  <button
-    tuiButton
-    type="button"
-    size="l"
-    appearance="primary"
-    (click)="optimize.emit()"
-    [loading]="isLoading()"
-    [disabled]="iaForm().invalid"
-    class="w-full sm:w-auto self-start"
-  >
-    Optimizar CV con IA
-  </button>
-</form>
+    <button
+      tuiButton
+      type="button"
+      size="l"
+      appearance="primary"
+      (click)="optimize.emit()"
+      [loading]="isLoading()"
+      [disabled]="iaForm().invalid"
+      class="w-full sm:w-auto self-start"
+    >
+      {{ t('home.ia.exaggeration.button') }}
+    </button>
+  </form>
+</ng-container>

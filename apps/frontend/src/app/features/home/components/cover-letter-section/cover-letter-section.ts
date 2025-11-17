@@ -4,7 +4,7 @@ import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { CoverLetterPayload, CvForm, DeliveryChannel, ToneLevel } from '@smartcv/types';
 import { TuiButtonLoading, TuiChip, TuiCopy, TuiTextarea } from '@taiga-ui/kit';
 import { TuiCardLarge, TuiItemGroup } from '@taiga-ui/layout';
-import { CvFormBuilderService } from '../../services/cv-form-builder/cv-form-builder.service';
+import { CvFormBuilderService } from '../../services/cv-form/cv-form-builder/cv-form-builder.service';
 import { CoverLetterService } from '../../services/cover-letter-service/cover-letter.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { startWith } from 'rxjs';
@@ -29,7 +29,6 @@ import {
     TuiCardLarge,
   ],
   templateUrl: './cover-letter-section.html',
-  styleUrl: './cover-letter-section.css',
 })
 export class CoverLetterSection {
   cvForm = input.required<FormGroup<CvFormControls>>();

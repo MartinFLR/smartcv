@@ -4,8 +4,9 @@ import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
+  isDevMode,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, RouteReuseStrategy } from '@angular/router';
 import { TUI_LANGUAGE, TUI_DEFAULT_LANGUAGE, TUI_SPANISH_LANGUAGE } from '@taiga-ui/i18n';
 import { TuiLanguage } from '@taiga-ui/i18n/types';
 import { routes } from './app.routes';
@@ -15,6 +16,9 @@ import { tuiInputPhoneInternationalOptionsProvider } from '@taiga-ui/kit';
 import { AI_MODELS_CONFIG } from './core/config/ai.models.config';
 import { AI_MODELS_DATA } from '@smartcv/shared';
 import { aiSettingsInterceptor } from './core/interceptors/ai-settings.interceptors';
+import { CustomRouteReuseStrategy } from './core/strategy/custom-route-reuse.strategy';
+import { TranslocoHttpLoader } from './transloco-loader';
+import { provideTransloco } from '@jsverse/transloco';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -28,15 +32,34 @@ export const appConfig: ApplicationConfig = {
       provide: TUI_LANGUAGE,
       useValue: of(TUI_SPANISH_LANGUAGE as TuiLanguage),
     },
+    { provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy },
     { provide: AI_MODELS_CONFIG, useValue: AI_MODELS_DATA },
     tuiInputPhoneInternationalOptionsProvider({
       metadata: defer(async () => import('libphonenumber-js/max/metadata').then((m) => m.default)),
       separator: '-',
     }),
+    provideTransloco({
+      config: {
+        availableLangs: ['en', 'es'],
+        defaultLang: 'es',
+        reRenderOnLangChange: true,
+        prodMode: !isDevMode(),
+      },
+      loader: TranslocoHttpLoader,
+    }),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
     provideEventPlugins(),
-    provideEventPlugins(),
+    provideHttpClient(),
+    provideTransloco({
+      config: {
+        availableLangs: ['en', 'es'],
+        defaultLang: 'es',
+        reRenderOnLangChange: true,
+        prodMode: !isDevMode(),
+      },
+      loader: TranslocoHttpLoader,
+    }),
   ],
 };

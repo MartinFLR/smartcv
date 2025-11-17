@@ -1,9 +1,16 @@
 import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
-import { NgClass, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { TuiAppBar, TuiCell } from '@taiga-ui/layout';
-import { TuiBadgedContent, TuiLike, tuiLikeOptionsProvider, TuiTabs } from '@taiga-ui/kit';
-import { TuiAppearance, TuiButton, TuiIcon, tuiScrollbarOptionsProvider } from '@taiga-ui/core';
+import { TuiAppBar, TuiCell, TuiHeader } from '@taiga-ui/layout';
+import {
+  TuiBadgedContent,
+  TuiButtonClose,
+  TuiDrawer,
+  TuiLike,
+  tuiLikeOptionsProvider,
+  TuiTabs,
+} from '@taiga-ui/kit';
+import { TuiButton, TuiPopup, tuiScrollbarOptionsProvider, TuiTitle } from '@taiga-ui/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { TUI_DOC_ICONS } from '@taiga-ui/addon-doc/tokens';
 import { TuiLanguageSwitcherService } from '@taiga-ui/i18n/utils';
@@ -16,6 +23,7 @@ import { TuiBadge, TuiButtonSelect } from '@taiga-ui/kit';
 import {TuiButton, TuiDataList, TuiFlagPipe, TuiTextfield} from '@taiga-ui/core';
 */
 
+// Función capitalize (sin cambios)
 function capitalize(value: string): string {
   if (typeof value !== 'string' || value.length === 0) {
     return value;
@@ -27,7 +35,6 @@ function capitalize(value: string): string {
   selector: 'app-navbar',
   standalone: true,
   imports: [
-    NgClass,
     RouterLink,
     TuiAppBar,
     TuiTabs,
@@ -38,8 +45,12 @@ function capitalize(value: string): string {
     TuiLike,
     TuiCell,
     TuiButton,
-    TuiIcon,
-    TuiAppearance,
+    TuiDrawer, // Agregado
+    TuiHeader, // Agregado
+    TuiTitle, // Agregado
+    TuiButtonClose,
+    TuiPopup,
+    // Agregado
     /* TODO: Agregar funcionalidad con Transloco
     TuiButton,
     TuiBadge,
@@ -48,7 +59,6 @@ function capitalize(value: string): string {
     TuiButtonSelect,
     TuiFlagPipe,
     TuiTextfield,
-
      */
   ],
   providers: [
@@ -65,7 +75,6 @@ function capitalize(value: string): string {
 })
 export class Navbar {
   readonly menuOpen = signal(false);
-  readonly isScrolled = signal(false);
   private readonly key = inject(TUI_DARK_MODE_KEY);
   private readonly storage = inject(WA_LOCAL_STORAGE);
   private readonly media = inject(WA_WINDOW).matchMedia('(prefers-color-scheme: dark)');
@@ -87,6 +96,8 @@ export class Navbar {
     if (!this.switcher.language) {
       this.setLang('spanish');
     }
+    // NOTA: Aquí iría la lógica para 'isScrolled'
+    // (por ejemplo, escuchando el evento scroll de WA_WINDOW)
   }
 
   public setLang(lang: TuiLanguageName): void {

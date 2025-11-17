@@ -1,10 +1,11 @@
-import { Component, inject, input, output } from '@angular/core';
-import { ControlContainer, FormArray, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
+import { Component, input, output } from '@angular/core';
+import { FormArray, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { TuiButton, TuiTextfield } from '@taiga-ui/core';
 import { TuiInputChip } from '@taiga-ui/kit';
 import { TuiRipple } from '@taiga-ui/addon-mobile';
 import { CertificationControls, SkillsControls } from '../../../../core/models/controls.model';
 import { TuiCard } from '@taiga-ui/layout';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-skills-section',
@@ -14,14 +15,8 @@ import { TuiCard } from '@taiga-ui/layout';
     TuiInputChip,
     TuiButton,
     TuiRipple,
-    TuiIcon,
     TuiCard,
-  ],
-  viewProviders: [
-    {
-      provide: ControlContainer,
-      useFactory: () => inject(ControlContainer, { skipSelf: true }),
-    },
+    TranslocoDirective,
   ],
   templateUrl: './skills-section.html',
 })

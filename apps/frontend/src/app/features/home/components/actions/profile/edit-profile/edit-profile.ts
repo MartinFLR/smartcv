@@ -10,6 +10,7 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiAutoFocus } from '@taiga-ui/cdk';
 import { TuiForm } from '@taiga-ui/layout';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-edit-profile',
@@ -22,6 +23,7 @@ import { TuiForm } from '@taiga-ui/layout';
     TuiLabel,
     TuiTextfieldComponent,
     TuiTextfieldDirective,
+    TranslocoDirective,
   ],
   templateUrl: './edit-profile.html',
   host: { '(submit.prevent)': 'context.completeWith(value)' },

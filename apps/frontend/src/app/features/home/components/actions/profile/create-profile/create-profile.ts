@@ -4,10 +4,11 @@ import { TuiButton, TuiDialogContext, TuiTextfield } from '@taiga-ui/core';
 import { TuiAutoFocus } from '@taiga-ui/cdk';
 import { FormsModule } from '@angular/forms';
 import { injectContext } from '@taiga-ui/polymorpheus';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-create-profile',
-  imports: [TuiForm, TuiTextfield, TuiAutoFocus, TuiButton, FormsModule],
+  imports: [TuiForm, TuiTextfield, TuiAutoFocus, TuiButton, FormsModule, TranslocoDirective],
   templateUrl: './create-profile.html',
   host: { '(submit.prevent)': 'context.completeWith(value)' },
 })
