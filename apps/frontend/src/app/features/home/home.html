@@ -15,18 +15,34 @@
         (download)="state.downloadPdf()"
         (clear)="state.clearCv()"
       />
-
-      <tui-tabs-with-more [itemsLimit]="6" [(activeItemIndex)]="state.activeTab" tuiFade>
-        <button *tuiItem iconStart="@tui.user" tuiTab>Personal</button>
-        <button *tuiItem iconStart="@tui.book-open" tuiTab>Educación</button>
-        <button *tuiItem iconStart="@tui.briefcase" tuiTab>Experiencia</button>
-        <button *tuiItem iconStart="@tui.folder" tuiTab>Proyectos</button>
-        <button *tuiItem iconStart="@tui.code" tuiTab>Habilidades</button>
-        <button *tuiItem iconStart="@tui.sparkles" tuiTab>IA</button>
-        <button *tuiItem iconStart="@tui.filter" tuiTab>ATS</button>
-        <button *tuiItem iconStart="@tui.notepad-text" tuiTab>Carta de Presentación</button>
-      </tui-tabs-with-more>
-
+      <ng-container *transloco="let t">
+        <tui-tabs-with-more [itemsLimit]="6" [(activeItemIndex)]="state.activeTab" tuiFade>
+          <button *tuiItem iconStart="@tui.user" tuiTab>
+            {{ t('home.tab.personal') }}
+          </button>
+          <button *tuiItem iconStart="@tui.book-open" tuiTab>
+            {{ t('home.tab.education') }}
+          </button>
+          <button *tuiItem iconStart="@tui.briefcase" tuiTab>
+            {{ t('home.tab.experience') }}
+          </button>
+          <button *tuiItem iconStart="@tui.folder" tuiTab>
+            {{ t('home.tab.projects') }}
+          </button>
+          <button *tuiItem iconStart="@tui.code" tuiTab>
+            {{ t('home.tab.skills') }}
+          </button>
+          <button *tuiItem iconStart="@tui.sparkles" tuiTab>
+            {{ t('home.tab.ia') }}
+          </button>
+          <button *tuiItem iconStart="@tui.filter" tuiTab>
+            {{ t('home.tab.ats') }}
+          </button>
+          <button *tuiItem iconStart="@tui.notepad-text" tuiTab>
+            {{ t('home.tab.coverLetter') }}
+          </button>
+        </tui-tabs-with-more>
+      </ng-container>
       <form [formGroup]="state.cvForm" class="flex flex-col gap-6 pt-6">
         @switch (state.activeTab()) {
           @case (0) {

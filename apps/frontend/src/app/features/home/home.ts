@@ -14,6 +14,7 @@ import { ATSSection } from './components/ats-section/ats-section';
 import { CoverLetterSection } from './components/cover-letter-section/cover-letter-section';
 import { TuiCardLarge } from '@taiga-ui/layout';
 import { HomeStateService } from './services/home-state-service/home-state.service';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-home',
@@ -33,6 +34,7 @@ import { HomeStateService } from './services/home-state-service/home-state.servi
     ATSSection,
     CoverLetterSection,
     TuiCardLarge,
+    TranslocoDirective,
   ],
   templateUrl: './home.html',
 })

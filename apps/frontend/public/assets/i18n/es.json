@@ -1,36 +1,54 @@
 {
+  "languages": {
+    "title": "Lenguaje de los Componentes",
+    "spanish": "Español",
+    "english": "Inglés"
+  },
+
   "nav": {
     "resume": "Currículum",
     "config": "Configuración"
   },
 
   "home": {
+    "tab": {
+      "personal": "Personal",
+      "education": "Educación",
+      "experience": "Experiencia",
+      "projects": "Proyectos",
+      "skills": "Habilidades",
+      "ia": "IA",
+      "ats": "ATS",
+      "coverLetter": "Carta de Presentación"
+    },
+
     "actions": {
       "profile": "Cargar Perfil...",
       "block": {
         "name": "Bloquear",
-        "hint": "Bloquea el CV para que todas las optimizaciones se basen siempre en esta versión."
+        "hint": "Bloqueá el CV para que todas las optimizaciones se basen siempre en esta versión."
       },
       "create": {
-        "title": "¿Qué nombre querés darle?",
+        "title": "¿Qué nombre querés ponerle?",
         "cancel": "Cancelar",
         "save": "Guardar"
       },
       "edit": {
-        "title": "¿Qué nombre querés darle?",
+        "title": "¿Qué nombre querés ponerle?",
         "cancel": "Cancelar",
         "save": "Guardar"
       }
     },
+
     "personalInfo": {
       "title": "Información Personal",
       "name": {
         "name": "Nombre Completo",
-        "placeholder": " "
+        "placeholder": "Ej: Juan Pérez"
       },
       "job": {
         "name": "Puesto",
-        "placeholder": " "
+        "placeholder": "Ej: Desarrollador Full Stack"
       },
       "email": {
         "name": "Email",
@@ -38,53 +56,55 @@
       },
       "phone": {
         "name": "Teléfono",
-        "placeholder": " "
+        "placeholder": "Ej: +54 9 11 2345-6789"
       },
       "ubication": {
         "name": "Ubicación",
-        "placeholder": "Tu ubicación"
+        "placeholder": "Ej: Buenos Aires, Argentina"
       },
       "linkedin": {
-        "name": "Linkedin (URL)",
-        "placeholder": "linkedin/in/#####"
+        "name": "LinkedIn (URL)",
+        "placeholder": "linkedin.com/in/usuario"
       },
       "github": {
-        "name": "Github (URL)",
-        "placeholder": "github/"
+        "name": "GitHub (URL)",
+        "placeholder": "github.com/usuario"
       },
       "web": {
-        "name": "Website (URL)",
-        "placeholder": "Tu sitio web"
+        "name": "Sitio web (URL)",
+        "placeholder": "Ej: www.misitio.com"
       },
       "resume": {
         "title": "Perfil Profesional",
-        "placeholder": "Escribí tu perfil profesional acá..."
+        "placeholder": "Escribí acá tu perfil profesional..."
       }
     },
+
     "education": {
       "title": "Educación",
       "add": "Agregar",
       "name": {
         "name": "Título",
-        "placeholder": "Ej: Lic.en Sistemas"
+        "placeholder": "Ej: Lic. en Sistemas"
       },
       "institution": {
         "name": "Institución",
-        "placeholder": " "
+        "placeholder": "Ej: Universidad Nacional..."
       },
       "dateIn": {
-        "name": "Fecha Inicio",
-        "placeholder": " "
+        "name": "Fecha de Inicio",
+        "placeholder": "Ej: 2020"
       },
       "dateFin": {
-        "name": "Fecha Finalización",
-        "placeholder": " "
+        "name": "Fecha de Finalización",
+        "placeholder": "Ej: 2024"
       },
       "achievements": {
         "name": "Logros (un bullet por línea)",
-        "placeholder": "Lideré la migración de..."
+        "placeholder": "Ej: Proyecto final destacado..."
       }
     },
+
     "experience": {
       "title": "Experiencia Laboral",
       "add": "Agregar",
@@ -94,21 +114,22 @@
       },
       "company": {
         "name": "Empresa",
-        "placeholder": " "
+        "placeholder": "Ej: Globant"
       },
       "dateIn": {
-        "name": "Fecha Inicio",
+        "name": "Fecha de Inicio",
         "placeholder": "Ej: Enero 2023"
       },
       "dateFin": {
-        "name": "Fecha Finalización",
-        "placeholder": "Ej: Presente"
+        "name": "Fecha de Finalización",
+        "placeholder": "Ej: Actualidad"
       },
       "achievements": {
         "name": "Logros y Tareas (un bullet por línea)",
-        "placeholder": "-Lidere la migración de..."
+        "placeholder": "- Implementé nuevas funcionalidades..."
       }
     },
+
     "project": {
       "title": "Proyectos",
       "add": "Agregar",
@@ -117,40 +138,41 @@
         "placeholder": "Nombre del Proyecto"
       },
       "subtitle": {
-        "name": "Subtitulo",
-        "placeholder": " "
+        "name": "Subtítulo",
+        "placeholder": "Ej: App móvil de gestión..."
       },
       "dateIn": {
-        "name": "Fecha Inicio",
-        "placeholder": " "
+        "name": "Fecha de Inicio",
+        "placeholder": "Ej: 2023"
       },
       "dateFin": {
-        "name": "Fecha Finalización",
-        "placeholder": " "
+        "name": "Fecha de Finalización",
+        "placeholder": "Ej: 2024"
       },
       "achievements": {
         "name": "Logros y Tareas (un bullet por línea)",
-        "placeholder": "-Lidere la migración de..."
+        "placeholder": "- Diseñé la arquitectura..."
       }
     },
+
     "skills": {
       "title": "Habilidades & Certificaciones",
       "skill": {
-        "name": "Habilidades Técnicas/Hard Skills (separadas por coma)",
+        "name": "Habilidades Técnicas / Hard Skills (separadas por coma)",
         "placeholder": "Angular, React, Node.js"
       },
       "language": {
         "name": "Idiomas",
-        "placeholder": "Español, Ingles C1, Frances.."
+        "placeholder": "Español, Inglés C1, Francés..."
       },
       "certifications": {
         "title": "Certificaciones",
-        "subtitle": "Agregá certificaciones aquí.",
+        "subtitle": "Agregá tus certificaciones acá.",
         "button": "Agregar Certificación",
         "certification": {
           "name": {
-            "name": "Nombre Certificado",
-            "placeholder": "Nombre de tu certificado"
+            "name": "Nombre del Certificado",
+            "placeholder": "Ej: AWS Solutions Architect"
           },
           "date": {
             "name": "Fecha de Obtención",
@@ -159,44 +181,46 @@
         }
       },
       "additional": {
-        "name": "Habilidades Adicionales/Otros (Ej: Herramientas, Metodologías)",
-        "placeholder": "Scrum, Kanban, Docker, AWS...."
+        "name": "Habilidades Adicionales / Otros (Ej: Herramientas, Metodologías)",
+        "placeholder": "Scrum, Kanban, Docker, AWS..."
       }
     },
+
     "ia": {
       "title": "Optimización con IA",
       "job": {
         "name": "Pegá acá la descripción del puesto",
-        "placeholder": " ",
-        "description": "Al hacer clic en 'Optimizar CV', la IA reescribirá tu Resumen Profesional, Puesto y los Logros de tu experiencia y educación para que coincidan con la terminología y las palabras clave de la oferta laboral.",
-        "highlight": "¡Siempre revisá el resultado de la IA antes de descargar!"
+        "placeholder": "Ej: Buscamos desarrollador con experiencia en...",
+        "description": "Cuando hagas clic en 'Optimizar CV', la IA va a adaptar tu Perfil Profesional, Puesto y Logros para que coincidan mejor con lo que pide la oferta.",
+        "highlight": "¡Revisá siempre lo que genera la IA antes de descargar!"
       },
       "exaggeration": {
         "title": "Nivel de exageración",
         "level": {
           "low": {
             "name": "Bajo",
-            "description": "Fiel al CV, mantiene el tono profesional y realista. No inventa logros ni resultados."
+            "description": "Fiel al CV original, profesional y realista."
           },
           "medium": {
             "name": "Medio",
-            "description": "Resalta logros existentes y los adapta ligeramente para enfatizar impacto, manteniendo credibilidad."
+            "description": "Resalta tus logros y los hace un poco más impactantes sin inventar nada raro."
           },
           "high": {
             "name": "Alto",
-            "description": "Maximiza el impacto, exagera logros y habilidades de forma creativa. Revisar cuidadosamente antes de usar."
+            "description": "Exagera tus logros para maximizar impacto. Recomendado revisar antes."
           }
         },
         "button": "Optimizar CV con IA"
       }
     },
+
     "coverLetter": {
-      "title": "Generá tu carta de presentacion",
-      "subtitle": "La IA va a analizar lo que tenés ahora en el CV y va a generar una cover letter personalizada para que le puedas enviar a los recruiters.",
+      "title": "Generá tu carta de presentación",
+      "subtitle": "La IA va a analizar tu CV actual y generar una carta personalizada lista para mandar.",
       "optional": {
         "name": {
-          "name": "Nombre del Reclutador/a",
-          "placeholder": "Ej: Martín Flores"
+          "name": "Nombre del/la Reclutador/a",
+          "placeholder": "Ej: Laura Gómez"
         },
         "company": {
           "name": "Nombre de la Empresa",
@@ -206,59 +230,60 @@
       "tone": {
         "formal": {
           "name": "Formal",
-          "description": " "
+          "description": "Tono serio, respetuoso y profesional."
         },
         "enthusiast": {
           "name": "Entusiasta",
-          "description": " "
+          "description": "Transmite ganas y energía, sin llegar a lo informal."
         },
         "casual": {
           "name": "Casual",
-          "description": " "
+          "description": "Relajado y cercano, ideal para startups."
         },
         "neutral": {
           "name": "Neutral",
-          "description": " "
+          "description": "Equilibrado y directo al punto."
         },
         "confident": {
-          "name": "Confidente",
-          "description": " "
+          "name": "Confiado",
+          "description": "Seguro, claro y enfocado en resultados."
         }
       },
       "deliveryChannel": {
         "linkedin": {
-          "name": "Mensaje de Linkedin",
-          "description": " "
+          "name": "Mensaje de LinkedIn",
+          "description": "Ideal para un contacto rápido y directo."
         },
         "email": {
           "name": "Correo Electrónico",
-          "description": " "
+          "description": "Formato tradicional para postular."
         },
         "form": {
-          "name": "Formulario de postulación",
-          "description": " "
+          "name": "Formulario de Postulación",
+          "description": "Versión corta y directa para plataformas ATS."
         },
         "reference": {
-          "name": "Referente interno",
-          "description": " "
+          "name": "Referente Interno",
+          "description": "Pensada para ser enviada a alguien que te pueda recomendar."
         }
       },
       "job": {
         "name": "Pegá acá la descripción del puesto",
-        "placeholder": " ",
-        "description": "Pegá la descripción del puesto aquí para que la IA pueda generar tu carta de presentación teniendo english cuenta las responsabilidades, habilidades y requisitos clave del trabajo.",
-        "highlight": "Esto ayuda a la IA a adaptar tu experiencia y logros específicamente para esta oferta."
+        "placeholder": "Ej: Responsabilidades, requisitos, tecnologías...",
+        "description": "Pegá la descripción del trabajo para que la IA pueda adaptar tu carta a lo que pide la empresa.",
+        "highlight": "Cuanta más info pegues, mejor se va a ajustar la carta."
       },
-      "generated": "Tu carta de presentación generada: "
+      "generated": "Tu carta de presentación generada:"
     },
+
     "ats": {
       "title": "ATS Checker",
-      "subtitle": "Subí tu CV (formato PDF)",
+      "subtitle": "Subí tu CV (PDF)",
       "job": {
         "name": "Pegá acá la descripción del puesto",
-        "placeholder": " ",
-        "description": "Pegá la descripción del puesto acá para que la IA pueda comparar tu CV con los requisitos y habilidades clave de la oferta.",
-        "highlight": "Esto permite calcular tu puntaje de compatibilidad ATS y detectar palabras clave faltantes o coincidencias importantes."
+        "placeholder": "Ej: Buscamos perfil con experiencia en...",
+        "description": "Pegá la descripción de la oferta para comparar tu CV con los requisitos clave.",
+        "highlight": "Esto ayuda a calcular tu puntaje y detectar qué te falta."
       },
       "button": "Calcular Puntaje ATS",
 
@@ -268,21 +293,21 @@
           "title": "Nivel de Coincidencia",
           "low": {
             "name": "Bajo",
-            "description": "Necesita revisiones."
+            "description": "Conviene mejorar el CV para esta oferta."
           },
           "medium": {
             "name": "Medio",
-            "description": "Buen puntaje."
+            "description": "Buen puntaje, pero puede mejorar."
           },
           "high": {
             "name": "Alto",
-            "description": "Excelente"
+            "description": "Excelente nivel de coincidencia."
           },
           "warning": "Advertencias"
         }
       },
 
-      "general": "Vision General",
+      "general": "Visión General",
       "analisis": "Análisis de Palabras Clave",
 
       "sections": {
@@ -307,6 +332,7 @@
       "recommendations": "Recomendaciones"
     }
   },
+
   "config": {
     "title": "Configuración",
     "back": "Volver",
@@ -317,6 +343,7 @@
       "button": "Guardar Ajustes de IA"
     }
   },
+
   "view": {
     "resume": "PERFIL PROFESIONAL",
     "experience": "EXPERIENCIA LABORAL",

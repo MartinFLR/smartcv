@@ -49,6 +49,47 @@
           class="rounded-lg md:hidden"
           [iconStart]="'https://raw.githubusercontent.com/MarsiBarsi/readme-icons/main/github.svg'"
         ></a>
+        <div>
+          <button
+            appearance="outline-grayscale"
+            size="s"
+            tuiButtonSelect
+            tuiIconButton
+            type="button"
+            [formControl]="languageControl"
+            [iconStart]="icons.languages"
+            class="!w-10"
+          >
+            Language
+            <tui-data-list *tuiTextfieldDropdown>
+              <tui-opt-group [label]="t('languages.title')">
+                @for (name of names; track $index) {
+                  <button
+                    new
+                    tuiOption
+                    type="button"
+                    [value]="name"
+                    (click)="setLang(name)"
+                    class="justify-start gap-2"
+                  >
+                    <img
+                      alt=""
+                      class="w-7 h-7 rounded-full mr-2 ring-1 ring-inset ring-[var(--tui-border-normal)]"
+                      [src]="flags.get(name) | tuiFlag"
+                    />
+                    {{ 'languages.' + name | transloco }}
+                  </button>
+                }
+              </tui-opt-group>
+            </tui-data-list>
+          </button>
+          <img
+            alt=""
+            tuiSlot="bottom"
+            [src]="flags.get(languageControl.value) || flags.get(switcher.language) | tuiFlag"
+            class="absolute ml-4 -mt-3 w-4 h-4 rounded-full backdrop-blur-sm bg-black/20 ring-1 ring-white/10"
+          />
+        </div>
 
         <input
           size="s"

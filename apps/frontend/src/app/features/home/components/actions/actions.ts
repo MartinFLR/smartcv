@@ -17,7 +17,6 @@ import { CreateProfile } from './profile/create-profile/create-profile';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { EditProfile } from './profile/edit-profile/edit-profile';
 import { TuiRipple } from '@taiga-ui/addon-mobile';
-import { TuiCell } from '@taiga-ui/layout';
 import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
@@ -33,7 +32,6 @@ import { TranslocoDirective } from '@jsverse/transloco';
     TuiSwitch,
     TuiHint,
     TuiRipple,
-    TuiCell,
     TuiGroup,
     TranslocoDirective,
   ],
