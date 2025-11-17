@@ -1,10 +1,11 @@
 import { Component, input } from '@angular/core';
 import { CvForm } from '@smartcv/types';
 import { TuiCardLarge } from '@taiga-ui/layout';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-dummy-view',
-  imports: [TuiCardLarge],
+  imports: [TuiCardLarge, TranslocoDirective],
   templateUrl: './dummy-view.html',
   styleUrl: './dummy-view.css',
 })

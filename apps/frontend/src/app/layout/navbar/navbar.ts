@@ -17,6 +17,7 @@ import { TuiLanguageSwitcherService } from '@taiga-ui/i18n/utils';
 import { type TuiCountryIsoCode, type TuiLanguageName } from '@taiga-ui/i18n/types';
 import { WA_LOCAL_STORAGE, WA_WINDOW } from '@ng-web-apis/common';
 import { TUI_DARK_MODE, TUI_DARK_MODE_KEY } from '@taiga-ui/core';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 /* TODO: Agregar funcionalidad con Transloco
 import { TuiBadge, TuiButtonSelect } from '@taiga-ui/kit';
@@ -50,6 +51,7 @@ function capitalize(value: string): string {
     TuiTitle, // Agregado
     TuiButtonClose,
     TuiPopup,
+    TranslocoDirective,
     // Agregado
     /* TODO: Agregar funcionalidad con Transloco
     TuiButton,

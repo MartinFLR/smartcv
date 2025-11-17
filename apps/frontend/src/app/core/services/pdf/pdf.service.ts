@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import jsPDF from 'jspdf';
 import { CvForm } from '@smartcv/types';
+import { TranslocoService } from '@jsverse/transloco';
 
 type ItemSectionKey = 'experience' | 'projects' | 'education';
 type ItemType =
@@ -19,6 +20,8 @@ interface ItemMap {
   providedIn: 'root',
 })
 export class PdfService {
+  private readonly transloco = inject(TranslocoService);
+
   private readonly MARGIN = 40;
   private readonly FONT_SIZE_NORMAL = 10;
   private readonly FONT_SIZE_TITLE = 12;
@@ -34,32 +37,38 @@ export class PdfService {
   private pageHeight = 0;
   private usableWidth = 0;
 
-  private readonly itemSectionsMap: ItemMap[] = [
-    {
-      title: 'EXPERIENCIA LABORAL',
-      dataKey: 'experience',
-      subtitleKey: 'company',
-      roleKey: 'role',
-    },
-    {
-      title: 'PROYECTOS RELEVANTES',
-      dataKey: 'projects',
-      subtitleKey: 'subtitle',
-      roleKey: 'name',
-    },
-    {
-      title: 'EDUCACIÓN',
-      dataKey: 'education',
-      subtitleKey: 'institution',
-      roleKey: 'title',
-    },
-  ];
+  private itemSectionsMap: ItemMap[] = [];
 
-  downloadPdf(data: CvForm): void {
+  private initializeSectionTitles(): void {
+    this.itemSectionsMap = [
+      {
+        title: this.transloco.translate('view.experience'),
+        dataKey: 'experience',
+        subtitleKey: 'company',
+        roleKey: 'role',
+      },
+      {
+        title: this.transloco.translate('view.projects'),
+        dataKey: 'projects',
+        subtitleKey: 'subtitle',
+        roleKey: 'name',
+      },
+      {
+        title: this.transloco.translate('view.education'),
+        dataKey: 'education',
+        subtitleKey: 'institution',
+        roleKey: 'title',
+      },
+    ];
+  }
+
+  public downloadPdf(data: CvForm): void {
     this.createAtsPdf(data);
   }
 
   private createAtsPdf(data: CvForm): void {
+    this.initializeSectionTitles();
+
     this.doc = new jsPDF('p', 'pt', 'a4');
     this.pageWidth = this.doc.internal.pageSize.getWidth();
     this.pageHeight = this.doc.internal.pageSize.getHeight();
@@ -70,9 +79,12 @@ export class PdfService {
     this.doc.setFontSize(this.FONT_SIZE_NORMAL);
 
     this.drawPersonalInfo(data.personalInfo);
-    this.drawProfileSummary(data.personalInfo.profileSummary);
+    this.drawProfileSummary(
+      data.personalInfo.profileSummary,
+      this.transloco.translate('view.resume'),
+    );
     this.drawItemSections(data);
-    this.drawSkillsSection(data.skills?.[0]);
+    this.drawSkillsSection(data.skills?.[0], this.transloco.translate('view.skills'));
 
     this.doc.save('CV_Optimizado_ATS.pdf');
   }
@@ -81,7 +93,6 @@ export class PdfService {
     if (this.currentY + requiredHeight > this.pageHeight - this.MARGIN - 20) {
       this.doc.addPage();
       this.currentY = this.MARGIN;
-      // Reiniciar fuentes y estilos post-salto de página
       this.doc.setFont('times', 'normal');
       this.doc.setFontSize(this.FONT_SIZE_NORMAL);
     }
@@ -89,15 +100,13 @@ export class PdfService {
 
   private drawSectionTitle(title: string): void {
     this.checkPageBreak(this.SECTION_SPACING * 2);
-
     this.currentY += this.SECTION_SPACING;
 
     this.doc.setFontSize(this.FONT_SIZE_TITLE);
     this.doc.setFont('times', 'bold');
-    this.doc.text(title, this.MARGIN, this.currentY);
+    this.doc.text(title.toUpperCase(), this.MARGIN, this.currentY);
 
     this.currentY += 2;
-
     this.doc.setDrawColor(209, 213, 219);
     this.doc.line(this.MARGIN, this.currentY, this.pageWidth - this.MARGIN, this.currentY);
 
@@ -148,7 +157,7 @@ export class PdfService {
     this.doc.setFont('times', 'normal');
 
     row1.forEach((item, col) => {
-      const y = startY + 0 * rowGap; // fila1
+      const y = startY + 0 * rowGap;
       const xCenter =
         colCount > 0 ? (this.pageWidth / colCount) * col + this.pageWidth / colCount / 2 : 0;
       const textWidth = this.doc.getTextWidth(item.label);
@@ -158,12 +167,12 @@ export class PdfService {
     });
 
     row2.forEach((item, col) => {
-      const y = startY + 1 * rowGap; // fila2
+      const y = startY + 1 * rowGap;
       const xCenter =
         colCount > 0 ? (this.pageWidth / colCount) * col + this.pageWidth / colCount / 2 : 0;
       const textWidth = this.doc.getTextWidth(item.label);
       const xText = xCenter - textWidth / 2;
-      this.doc.setTextColor(40, 80, 160); // azul para links
+      this.doc.setTextColor(40, 80, 160);
       this.doc.textWithLink(item.label, xText, y, { url: item.link });
     });
 
@@ -171,10 +180,10 @@ export class PdfService {
     this.currentY = startY + 2 * rowGap + this.SECTION_SPACING - 4;
   }
 
-  private drawProfileSummary(summary: string | null): void {
+  private drawProfileSummary(summary: string | null, title: string): void {
     if (!summary) return;
 
-    this.drawSectionTitle('PERFIL PROFESIONAL');
+    this.drawSectionTitle(title);
 
     const lines = this.doc.splitTextToSize(summary, this.usableWidth) as string[];
     const requiredHeight = lines.length * this.LINE_HEIGHT_NORMAL;
@@ -200,24 +209,43 @@ export class PdfService {
         const mainKey = section.roleKey as keyof ItemType;
         if (!item[mainKey]) return;
 
-        this.checkPageBreak(this.ITEM_SPACING + this.LINE_HEIGHT_NORMAL * 3);
+        const titleText = item[mainKey] as string;
+        const dates = [item.dateIn, item.dateFin].filter(Boolean).join(' - ');
+
+        this.doc.setFont('times', 'italic');
+        const datesWidth = this.doc.getTextWidth(dates) + 5;
+
+        const titleMaxWidth = this.usableWidth - datesWidth;
+
+        this.doc.setFont('times', 'bold');
+        const titleLines = this.doc.splitTextToSize(titleText, titleMaxWidth) as string[];
+
+        const requiredHeight =
+          Math.max(titleLines.length, 1) * this.LINE_HEIGHT_NORMAL + this.ITEM_SPACING;
+        this.checkPageBreak(requiredHeight);
 
         this.doc.setFontSize(this.FONT_SIZE_NORMAL);
         this.doc.setFont('times', 'bold');
-        this.doc.text(item[mainKey] as string, this.MARGIN, this.currentY);
+
+        this.doc.text(titleLines, this.MARGIN, this.currentY);
 
         this.doc.setFont('times', 'italic');
-        const dates = [item.dateIn, item.dateFin].filter(Boolean).join(' - ');
         this.doc.text(dates, this.pageWidth - this.MARGIN, this.currentY, {
           align: 'right',
         });
-        this.currentY += this.LINE_HEIGHT_NORMAL;
+
+        this.currentY += titleLines.length * this.LINE_HEIGHT_NORMAL;
 
         const subKey = section.subtitleKey as keyof ItemType;
         if (item[subKey]) {
           this.doc.setFont('times', 'normal');
-          this.doc.text(item[subKey] as string, this.MARGIN, this.currentY);
-          this.currentY += this.LINE_HEIGHT_NORMAL;
+          const subtitleLines = this.doc.splitTextToSize(
+            item[subKey] as string,
+            this.usableWidth,
+          ) as string[];
+          this.checkPageBreak(subtitleLines.length * this.LINE_HEIGHT_NORMAL);
+          this.doc.text(subtitleLines, this.MARGIN, this.currentY);
+          this.currentY += subtitleLines.length * this.LINE_HEIGHT_NORMAL;
         } else {
           this.currentY += 2;
         }
@@ -249,65 +277,61 @@ export class PdfService {
     });
   }
 
-  private drawSkillsSection(skillGroup: CvForm['skills'][number] | undefined): void {
+  private drawSkillsSection(skillGroup: CvForm['skills'][number] | undefined, title: string): void {
     if (!skillGroup) return;
 
-    this.drawSectionTitle('HABILIDADES CLAVE');
+    this.drawSectionTitle(title);
 
     const printSkillCategory = (label: string, values?: string[]): void => {
       if (!values?.length) return;
 
-      const labelText = `${label.toUpperCase()}: `;
-      const fullText = labelText + values.join(' | ');
-
-      const lines = this.doc.splitTextToSize(fullText, this.usableWidth) as string[];
-      const requiredHeight = lines.length * this.LINE_HEIGHT_NORMAL;
-
-      this.checkPageBreak(requiredHeight + 4);
-
-      const firstLine: string = lines[0];
-      let currentX = this.MARGIN;
+      const labelText = label;
+      const valuesText = values.join(' | ');
 
       this.doc.setFont('times', 'bold');
-      this.doc.text(labelText, currentX, this.currentY);
-
       const labelWidth = this.doc.getTextWidth(labelText);
-      currentX += labelWidth;
+      const spaceWidth = this.doc.getTextWidth(' ');
+
+      const valuesX = this.MARGIN + labelWidth + spaceWidth;
+
+      const valuesMaxWidth = this.pageWidth - this.MARGIN - valuesX;
 
       this.doc.setFont('times', 'normal');
-      const restOfLine = firstLine.slice(labelText.length);
+      const valueLines = this.doc.splitTextToSize(valuesText, valuesMaxWidth) as string[];
 
-      if (restOfLine.trim()) {
-        this.doc.text(restOfLine, currentX, this.currentY);
-      }
+      const requiredHeight = valueLines.length * this.LINE_HEIGHT_NORMAL;
+      this.checkPageBreak(requiredHeight + 4);
+
+      this.doc.setFont('times', 'bold');
+      this.doc.text(labelText, this.MARGIN, this.currentY);
+
+      this.doc.setFont('times', 'normal');
+      valueLines.forEach((line: string, index: number) => {
+        if (index > 0) {
+          this.checkPageBreak(this.LINE_HEIGHT_NORMAL);
+          this.currentY += this.LINE_HEIGHT_NORMAL;
+        }
+        this.doc.text(line, valuesX, this.currentY);
+      });
 
       this.currentY += this.LINE_HEIGHT_NORMAL;
-
-      if (lines.length > 1) {
-        const remaining: string[] = lines.slice(1);
-        remaining.forEach((line: string) => {
-          this.doc.text(line, this.MARGIN, this.currentY);
-          this.currentY += this.LINE_HEIGHT_NORMAL;
-        });
-      }
-
       this.currentY += 4;
     };
 
     if (skillGroup.skills?.length) {
-      printSkillCategory('Skills Técnicas', skillGroup.skills);
+      printSkillCategory(this.transloco.translate('view.tech'), skillGroup.skills);
     }
     if (skillGroup.languages?.length) {
-      printSkillCategory('Idiomas', skillGroup.languages);
+      printSkillCategory(this.transloco.translate('view.languages'), skillGroup.languages);
     }
     if (skillGroup.certifications?.length) {
       const certs: string[] = skillGroup.certifications.map(
         (cert) => `${cert.name}${cert.date ? ` (${cert.date})` : ''}`,
       );
-      printSkillCategory('Certificaciones', certs);
+      printSkillCategory(this.transloco.translate('view.certifications'), certs);
     }
     if (skillGroup.additional?.length) {
-      printSkillCategory('Habilidades Adicionales', skillGroup.additional);
+      printSkillCategory(this.transloco.translate('view.additional'), skillGroup.additional);
     }
   }
 }

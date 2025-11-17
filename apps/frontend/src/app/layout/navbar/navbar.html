@@ -1,104 +1,106 @@
-<header class="sticky top-0 left-0 z-50 w-full">
-  <tui-app-bar [tuiCell]="'m'" class="mx-auto max-w-7xl px-4 py-3">
-    @if (!darkMode()) {
-      <img
-        tuiSlot="left"
-        [ngSrc]="'/assets/logo-white-theme.png'"
-        alt="SmartCv-logo"
-        [routerLink]="['/']"
-        width="1024"
-        height="1024"
-        priority
-        class="h-10 w-auto cursor-pointer"
-      />
-    } @else {
-      <img
-        tuiSlot="left"
-        [ngSrc]="'/assets/logo-dark-theme.png'"
-        alt="SmartCv-logo"
-        [routerLink]="['/']"
-        width="1024"
-        height="1024"
-        priority
-        class="h-10 w-auto cursor-pointer"
-      />
-    }
+<ng-container *transloco="let t">
+  <header class="sticky top-0 left-0 z-50 w-full">
+    <tui-app-bar [tuiCell]="'m'" class="mx-auto max-w-7xl px-4 py-3">
+      @if (!darkMode()) {
+        <img
+          tuiSlot="left"
+          [ngSrc]="'/assets/logo-white-theme.png'"
+          alt="SmartCv-logo"
+          [routerLink]="['/']"
+          width="1024"
+          height="1024"
+          priority
+          class="h-10 w-auto cursor-pointer"
+        />
+      } @else {
+        <img
+          tuiSlot="left"
+          [ngSrc]="'/assets/logo-dark-theme.png'"
+          alt="SmartCv-logo"
+          [routerLink]="['/']"
+          width="1024"
+          height="1024"
+          priority
+          class="h-10 w-auto cursor-pointer"
+        />
+      }
 
-    <tui-tabs class="!hidden md:!flex mx-auto">
-      <a tuiTab [routerLink]="['/']" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive>
-        <span class="text-sm font-medium">Currículum</span>
-      </a>
-      <a
-        tuiTab
-        [routerLink]="['/configuracion']"
-        [routerLinkActiveOptions]="{ exact: true }"
-        routerLinkActive
-      >
-        <span class="text-sm font-medium">Configuración</span>
-      </a>
-    </tui-tabs>
+      <tui-tabs class="!hidden md:!flex mx-auto">
+        <a tuiTab [routerLink]="['/']" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive>
+          <span class="text-sm font-medium">{{ t('nav.resume') }}</span>
+        </a>
+        <a
+          tuiTab
+          [routerLink]="['/configuracion']"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLinkActive
+        >
+          <span class="text-sm font-medium">{{ t('nav.config') }}</span>
+        </a>
+      </tui-tabs>
 
-    <div tuiSlot="right" class="flex items-center gap-4">
-      <a
-        tuiIconButton
-        appearance="outline-grayscale"
-        href="https://github.com/MartinFLR/smartcv"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="rounded-lg md:hidden"
-        [iconStart]="'https://raw.githubusercontent.com/MarsiBarsi/readme-icons/main/github.svg'"
-      ></a>
-
-      <input
-        size="s"
-        tuiLike
-        type="checkbox"
-        [checked]="darkMode()"
-        (click)="darkMode.set(!darkMode())"
-      />
-
-      <div class="md:hidden">
-        <button
+      <div tuiSlot="right" class="flex items-center gap-4">
+        <a
           tuiIconButton
           appearance="outline-grayscale"
-          iconStart="@tui.menu"
-          (click)="menuOpen.set(true)"
-        ></button>
+          href="https://github.com/MartinFLR/smartcv"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-lg md:hidden"
+          [iconStart]="'https://raw.githubusercontent.com/MarsiBarsi/readme-icons/main/github.svg'"
+        ></a>
+
+        <input
+          size="s"
+          tuiLike
+          type="checkbox"
+          [checked]="darkMode()"
+          (click)="darkMode.set(!darkMode())"
+        />
+
+        <div class="md:hidden">
+          <button
+            tuiIconButton
+            appearance="outline-grayscale"
+            iconStart="@tui.menu"
+            (click)="menuOpen.set(true)"
+          ></button>
+        </div>
       </div>
+    </tui-app-bar>
+  </header>
+
+  <tui-drawer *tuiPopup="menuOpen()" [direction]="'left'" (close)="menuOpen.set(false)">
+    <div tuiHeader class="border-b border-solid border-tui-border-faded">
+      <span tuiTitle>Menú</span>
+      <button
+        tuiButtonClose
+        tuiIconButton
+        type="button"
+        tuiSlot="right"
+        (click)="menuOpen.set(false)"
+      ></button>
     </div>
-  </tui-app-bar>
-</header>
 
-<tui-drawer *tuiPopup="menuOpen()" [direction]="'left'" (close)="menuOpen.set(false)">
-  <div tuiHeader class="border-b border-solid border-tui-border-faded">
-    <span tuiTitle>Menú</span>
-    <button
-      tuiButtonClose
-      tuiIconButton
-      type="button"
-      tuiSlot="right"
-      (click)="menuOpen.set(false)"
-    ></button>
-  </div>
-
-  <nav class="flex flex-col gap-5 p-5">
-    <a
-      routerLink="/"
-      [routerLinkActive]="'text-blue-500 font-semibold'"
-      [routerLinkActiveOptions]="{ exact: true }"
-      class="text-lg font-medium no-underline transition-colors duration-200 hover:text-blue-600"
-      (click)="menuOpen.set(false)"
-    >
-      Currículum
-    </a>
-    <a
-      routerLink="/configuracion"
-      [routerLinkActive]="'text-blue-500 font-semibold'"
-      [routerLinkActiveOptions]="{ exact: true }"
-      class="text-lg font-medium no-underline transition-colors duration-200 hover:text-blue-600"
-      (click)="menuOpen.set(false)"
-    >
-      Configuración
-    </a>
-  </nav>
-</tui-drawer>
+    <nav class="flex flex-col gap-5 p-5">
+      <a
+        routerLink="/"
+        [routerLinkActive]="'text-blue-500 font-semibold'"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="text-lg font-medium no-underline transition-colors duration-200 hover:text-blue-600"
+        (click)="menuOpen.set(false)"
+      >
+        {{ t('nav.resume') }}
+      </a>
+      <a
+        routerLink="/configuracion"
+        [routerLinkActive]="'text-blue-500 font-semibold'"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="text-lg font-medium no-underline transition-colors duration-200 hover:text-blue-600"
+        (click)="menuOpen.set(false)"
+      >
+        {{ t('nav.config') }}
+      </a>
+    </nav>
+  </tui-drawer>
+</ng-container>

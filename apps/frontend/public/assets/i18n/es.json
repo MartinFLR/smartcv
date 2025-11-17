@@ -316,5 +316,17 @@
       "model": "Modelo de IA",
       "button": "Guardar Ajustes de IA"
     }
+  },
+  "view": {
+    "resume": "PERFIL PROFESIONAL",
+    "experience": "EXPERIENCIA LABORAL",
+    "projects": "PROYECTOS RELEVANTES",
+    "education": "EDUCACIÓN",
+    "skills": "HABILIDADES CLAVE",
+    "tech": "SKILLS TÉCNICAS:",
+    "languages": "IDIOMAS:",
+    "certifications": "CERTIFICACIONES:",
+    "additional": "HABILIDADES ADICIONALES:",
+    "complete": "Completá el formulario para ver la vista previa."
   }
 }
