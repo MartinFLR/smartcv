@@ -1,10 +1,5 @@
-<div class="max-w-8xl md:px-8 mx-auto justify-center grid grid-cols-1 md:grid-cols-12 gap-6 p-4">
+<ng-template #formContent>
   <div class="md:col-span-6 flex flex-col gap-6">
-    <!-- Para texto
-    <p>{{this.iaForm.getRawValue() | json}}</p>
-    <p>{{this.cvForm.getRawValue() | json}}</p>
-    -->
-
     <div tuiCardLarge class="p-6 border rounded-lg shadow-sm">
       <app-actions
         [isLoading]="state.isLoading()"
@@ -43,6 +38,7 @@
           </button>
         </tui-tabs-with-more>
       </ng-container>
+
       <form [formGroup]="state.cvForm" class="flex flex-col gap-6 pt-6">
         @switch (state.activeTab()) {
           @case (0) {
@@ -95,7 +91,9 @@
       </form>
     </div>
   </div>
+</ng-template>
 
+<ng-template #previewContent>
   <div class="md:col-span-6 md:sticky md:top-8 h-full">
     <app-dummy-view
       [cvPreview]="state.cvPreview()"
@@ -105,4 +103,32 @@
       [hasSkills]="state.hasSkills()"
     />
   </div>
+</ng-template>
+
+<div class="md:hidden">
+  <tui-tabs [(activeItemIndex)]="mobileView" class="sticky top-0 z-10 flex justify-center">
+    <button tuiTab>Formulario</button>
+    <button tuiTab>Previsualizar</button>
+  </tui-tabs>
+
+  <div class="overflow-hidden" (tuiSwipe)="onSwipe($event)">
+    <div
+      class="flex transition-transform duration-300 ease-in-out"
+      [class.translate-x-0]="mobileView() === 0"
+      [class.-translate-x-full]="mobileView() === 1"
+    >
+      <div class="w-full flex-shrink-0 p-4">
+        <ng-container *ngTemplateOutlet="formContent"></ng-container>
+      </div>
+
+      <div class="w-full flex-shrink-0 p-4">
+        <ng-container *ngTemplateOutlet="previewContent"></ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hidden max-w-8xl md:px-8 mx-auto justify-center md:grid md:grid-cols-12 gap-6 p-4">
+  <ng-container *ngTemplateOutlet="formContent"></ng-container>
+  <ng-container *ngTemplateOutlet="previewContent"></ng-container>
 </div>

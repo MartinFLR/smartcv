@@ -1,5 +1,5 @@
 import { TuiFade, TuiTabs } from '@taiga-ui/kit';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TUI_DARK_MODE } from '@taiga-ui/core';
 import { DummyView } from './components/dummy-view/dummy-view';
@@ -15,6 +15,8 @@ import { CoverLetterSection } from './components/cover-letter-section/cover-lett
 import { TuiCardLarge } from '@taiga-ui/layout';
 import { HomeStateService } from './services/home-state-service/home-state.service';
 import { TranslocoDirective } from '@jsverse/transloco';
+import { NgTemplateOutlet } from '@angular/common';
+import { TuiSwipe, TuiSwipeEvent } from '@taiga-ui/cdk';
 
 @Component({
   selector: 'app-home',
@@ -35,11 +37,21 @@ import { TranslocoDirective } from '@jsverse/transloco';
     CoverLetterSection,
     TuiCardLarge,
     TranslocoDirective,
+    NgTemplateOutlet,
+    TuiSwipe,
   ],
   templateUrl: './home.html',
 })
 export class Home {
   protected readonly state = inject(HomeStateService);
+  mobileView = signal(0);
 
+  onSwipe(event: TuiSwipeEvent): void {
+    if (event.direction === 'left' && this.mobileView() === 0) {
+      this.mobileView.set(1);
+    } else if (event.direction === 'right' && this.mobileView() === 1) {
+      this.mobileView.set(0);
+    }
+  }
   protected readonly darkMode = inject(TUI_DARK_MODE);
 }
