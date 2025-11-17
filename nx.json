@@ -24,7 +24,6 @@
       "inputs": ["production", "^production"]
     }
   },
-  "nxCloudId": "691396e57ee27f635d6a2560",
   "plugins": [
     {
       "plugin": "@nx/eslint/plugin",
