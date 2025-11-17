@@ -48,7 +48,8 @@
           rel="noopener noreferrer"
           class="rounded-lg md:hidden"
           [iconStart]="'https://raw.githubusercontent.com/MarsiBarsi/readme-icons/main/github.svg'"
-        ></a>
+          >Github</a
+        >
         <div>
           <button
             appearance="outline-grayscale"
@@ -105,7 +106,9 @@
             appearance="outline-grayscale"
             iconStart="@tui.menu"
             (click)="menuOpen.set(true)"
-          ></button>
+          >
+            <span class="sr-only"> Menu</span>
+          </button>
         </div>
       </div>
     </tui-app-bar>
@@ -120,7 +123,9 @@
         type="button"
         tuiSlot="right"
         (click)="menuOpen.set(false)"
-      ></button>
+      >
+        <span class="sr-only"> Menu</span>
+      </button>
     </div>
 
     <nav class="flex flex-col gap-5 p-5">
