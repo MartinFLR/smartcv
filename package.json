@@ -18,7 +18,7 @@
     "@angular/forms": "^20.1.0",
     "@angular/platform-browser": "^20.1.0",
     "@angular/router": "^20.1.0",
-    "@anthropic-ai/sdk": "^0.68.0",
+    "@anthropic-ai/sdk": "^0.69.0",
     "@babel/runtime": "^7.28.4",
     "@commitlint/types": "^20.0.0",
     "@google/generative-ai": "^0.24.1",
