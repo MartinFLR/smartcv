@@ -2,7 +2,6 @@ import { PromptLanguage } from '@smartcv/types';
 
 const atsTasks: Record<PromptLanguage, () => string> = {
   english: () => `
-Main Tasks:
 1. Perform a deep comparative analysis between the "BASE CV" and the "JOB DESCRIPTION".
 2. Calculate a "matchScore" (integer 0-100) based on the overall match (experience, skills, education, and keywords).
 3. Extract "matchedKeywords" (key requirements from the job description that ARE present in the CV) and "missingKeywords" (key requirements from the job description that are NOT present in the CV).
@@ -19,7 +18,6 @@ Main Tasks:
 10. Ensure the final output is *only* the strict JSON object requested, adhering to all rules.`,
 
   spanish: () => `
-**Tareas principales:**
 1. Realizar un análisis comparativo profundo entre el "CV BASE" y la "OFERTA LABORAL".
 2. Calcular un "matchScore" (entero 0-100) basado en la coincidencia general (experiencia, habilidades, educación y palabras clave).
 3. Extraer "matchedKeywords" (palabras clave de la oferta que SÍ están en el CV) y "missingKeywords" (palabras clave de la oferta que NO están en el CV).

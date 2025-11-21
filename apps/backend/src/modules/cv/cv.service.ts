@@ -10,26 +10,21 @@ export async function generateTailoredCv(
 ): Promise<CvResponse> {
   const { baseCv, jobDesc, promptOption } = body;
 
-  const finalAiSettings: AiSettings = {
-    modelProvider: headerSettings.modelProvider,
-    modelVersion: headerSettings.modelVersion,
-    systemPrompt: headerSettings.systemPrompt,
-  };
-
-  const prompt = buildPrompt(
+  const { systemPrompt, userPrompt } = buildPrompt(
     JSON.stringify(baseCv, null, 2),
     jobDesc,
-    finalAiSettings,
+    headerSettings,
     promptOption,
   );
 
   const ai: AIModel = AIFactory.create({
-    modelProvider: finalAiSettings.modelProvider!,
-    modelVersion: finalAiSettings.modelVersion,
-    systemPrompt: finalAiSettings.systemPrompt,
+    modelProvider: headerSettings.modelProvider!,
+    modelVersion: headerSettings.modelVersion,
+    systemPrompt,
   });
 
-  const text = await ai.generate(prompt);
+  const text = await ai.generate(userPrompt);
+
   const parsed = cleanJson<CvResponse>(text);
 
   return normalizeCv(parsed);

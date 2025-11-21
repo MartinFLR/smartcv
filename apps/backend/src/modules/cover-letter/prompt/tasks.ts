@@ -3,7 +3,6 @@ import { PromptLanguage } from '@smartcv/types';
 export function getCoverLetterMainTasks(lang: PromptLanguage) {
   if (lang === 'english') {
     return `
-Main tasks:
 1. Carefully analyze the base CV and the job description.
 2. Write a professional cover letter aligned with the target role.
 3. Use a clear structure: introduction, motivation, relevant experience, and closing.
@@ -16,7 +15,6 @@ Main tasks:
 `;
   } else {
     return `
-**Tareas principales:**
 1. Analiza cuidadosamente el CV base y la descripción del puesto.
 2. Redacta una carta de presentación profesional alineada con el puesto objetivo y el canal de comunicación.
 3. Destaca logros y habilidades más relevantes para el puesto.

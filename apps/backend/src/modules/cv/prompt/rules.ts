@@ -1,7 +1,7 @@
 import { PromptLanguage } from '@smartcv/types';
 
 const strictCVRulesTexts: Record<PromptLanguage, string> = {
-  english: `Strict rules:
+  english: `
 - Write in first person, professional IT tone.
 - Only include skills, achievements, and technologies present in the CV.
 - Each bullet must start with an action verb and express a measurable result.
@@ -10,7 +10,7 @@ const strictCVRulesTexts: Record<PromptLanguage, string> = {
 - Output must be strict valid JSON, no markdown, bold, emojis, or extra text.
 - Max 25 words per bullet.
 - Maintain semantic density and consistency in dates/titles.`,
-  spanish: `Reglas estrictas:
+  spanish: `
 - Escribe en primera persona, tono profesional IT.
 - Incluye solo skills, logros y tecnologías presentes en el CV (según el nivel de exageración).
 - Cada bullet debe iniciar con verbo de acción y expresar resultado medible.

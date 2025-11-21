@@ -1,17 +1,8 @@
 import { PromptLanguage } from '@smartcv/types';
 
-export function getCvInputOutputTemplate(baseCv: string, jobDesc: string, lang: PromptLanguage) {
+export function getCvInputOutputTemplate(lang: PromptLanguage) {
   if (lang === 'english') {
     return `
-Input:
----BASE CV---
-${baseCv}
----END BASE CV---
-
----JOB DESCRIPTION---
-${jobDesc}
----END JOB DESCRIPTION---
-
 Output (strict JSON):
 {
   "profileSummary": "Brief optimized professional summary tailored to the job.",
@@ -65,15 +56,6 @@ Output (strict JSON):
 }`;
   } else {
     return `
-**Entrada**
----CV BASE---
-${baseCv}
----FIN CV BASE---
-
----OFERTA LABORAL---
-${jobDesc}
----FIN OFERTA LABORAL---
-
 **Salida (solo JSON válido):**
 {
   "profileSummary": "Resumen breve y optimizado del perfil profesional enfocado al puesto.",

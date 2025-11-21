@@ -1,17 +1,8 @@
 import { PromptLanguage } from '@smartcv/types';
 
-export function getATSInputOutputTemplate(baseCv: string, jobDesc: string, lang: PromptLanguage) {
+export function getATSInputOutputTemplate(lang: PromptLanguage) {
   if (lang === 'english') {
     return `
-Input:
----BASE CV---
-${baseCv}
----END BASE CV---
-
----JOB DESCRIPTION---
-${jobDesc}
----END JOB DESCRIPTION---
-
 Output (strict JSON only):
 {
   "text": "A brief (2-3 sentences) AI analysis summary, highlighting the candidate's overall fit for the offer.",
@@ -31,7 +22,7 @@ Output (strict JSON only):
       "highlights": ["Positive point (e.g., 'Quantifies achievements')."],
       "issues": ["Weak point (e.g., 'Inconsistent dates')."]
     },
-    "education": { // This section is optional, omit if not found in the CV.
+    "education": {
       "content": "The 'education' text extracted verbatim from the CV.",
       "score": "Score (0-100) for this section.",
       "highlights": [],
@@ -67,18 +58,8 @@ Output (strict JSON only):
   }
 }`;
   } else {
-    // Versión en Español del Prompt
     return `
-**Entrada**
----CV BASE---
-${baseCv}
----FIN CV BASE---
-
----OFERTA LABORAL---
-${jobDesc}
----FIN OFERTA LABORAL---
-
-**Salida (solo JSON válido estricto):**
+Salida (solo JSON válido):
 {
   "text": "Un resumen breve (2-3 frases) del análisis, destacando el 'fit' general del candidato para la oferta.",
   "matchScore": "Un número entero entre 0 y 100 que represente el 'match' general.",
@@ -97,7 +78,7 @@ ${jobDesc}
       "highlights": ["Punto positivo (ej. 'Cuantifica logros')."],
       "issues": ["Punto débil (ej. 'Fechas inconsistentes')."]
     },
-    "education": { // Esta sección es opcional, omitir si no se encuentra en el CV.
+    "education": {
       "content": "El texto de 'educación' extraído textualmente del CV.",
       "score": "Puntuación (0-100) para esta sección.",
       "highlights": [],

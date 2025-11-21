@@ -8,29 +8,28 @@ export async function generateCoverLetterStream(
 ): Promise<AsyncIterable<string> | undefined> {
   const { baseCv, jobDesc, promptOption } = body;
 
-  const finalAiSettings: AiSettings = {
-    modelProvider: headerSettings.modelProvider,
-    modelVersion: headerSettings.modelVersion,
-    systemPrompt: headerSettings.systemPrompt,
-  };
-
-  const prompt = buildPrompt(
+  const { systemPrompt, userPrompt } = buildPrompt(
     JSON.stringify(baseCv, null, 2),
     jobDesc,
-    finalAiSettings,
+    headerSettings,
     promptOption,
   );
 
+  console.log('Cover letter Prompts');
+  console.log('SystemPrompts', systemPrompt);
+  console.log('userPrompts', userPrompt);
+
   const ai: AIModel = AIFactory.create({
-    modelProvider: finalAiSettings.modelProvider!,
-    modelVersion: finalAiSettings.modelVersion,
-    systemPrompt: finalAiSettings.systemPrompt,
+    modelProvider: headerSettings.modelProvider!,
+    modelVersion: headerSettings.modelVersion,
+    systemPrompt,
   });
 
   if (ai.generateStream) {
-    return ai.generateStream(prompt);
+    return ai.generateStream(userPrompt);
   }
-  const text = await ai.generate(prompt);
+
+  const text = await ai.generate(userPrompt);
   return (async function* () {
     yield text;
   })();

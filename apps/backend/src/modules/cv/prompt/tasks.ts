@@ -3,7 +3,6 @@ import { PromptLanguage } from '@smartcv/types';
 export function getCVMainTasks(lang: PromptLanguage) {
   if (lang === 'english') {
     return `
-Main tasks:
 1. Carefully analyze the base CV and the job description.
 2. Optimize the CV according to exaggeration instructions.
 3. Include measurable results whenever possible.
@@ -17,7 +16,6 @@ Main tasks:
 `;
   } else {
     return `
-**Tareas principales:**
 1. Analiza cuidadosamente el CV base y la descripción del puesto.
 2. Optimiza el CV según las instrucciones de exageración.
 3. Introduce métricas cuantificables siempre que sea posible.

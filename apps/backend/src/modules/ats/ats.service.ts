@@ -32,15 +32,15 @@ export async function analyzeCvAts(
     systemPrompt: headerSettings.systemPrompt,
   };
 
-  const prompt = buildPrompt(cvText, jobDesc, finalAiSettings, promptOption);
+  const { systemPrompt, userPrompt } = buildPrompt(cvText, jobDesc, headerSettings, promptOption);
 
   const ai: AIModel = AIFactory.create({
     modelProvider: finalAiSettings.modelProvider!,
     modelVersion: finalAiSettings.modelVersion,
-    systemPrompt: finalAiSettings.systemPrompt,
+    systemPrompt: systemPrompt,
   });
 
-  const text = await ai.generate(prompt);
+  const text = await ai.generate(userPrompt);
 
   const parsedJson = cleanJson<CvAtsResponse>(text);
 

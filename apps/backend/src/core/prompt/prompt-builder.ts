@@ -1,73 +1,80 @@
-import { getExaggeration } from '../../modules/cv/prompt/exaggeration';
-import { getCVStrictRules } from '../../modules/cv/prompt/rules';
-import { getCVMainTasks } from '../../modules/cv/prompt/tasks';
-import { getCvInputOutputTemplate } from '../../modules/cv/prompt/inputOutput';
-import { getCoverLetterDeliveryChannelText } from '../../modules/cover-letter/prompt/deliveryChannel';
-import { getCoverLetterToneText } from '../../modules/cover-letter/prompt/tone';
-import { buildCvHeader } from '../../modules/cv/prompt/header';
+import { buildContextBlock } from './context-block';
+import { buildInstructionsBlock } from './instruction-block';
+import { buildOutputBlock } from './output-block';
 import { buildCoverLetterHeader } from '../../modules/cover-letter/prompt/header';
-import { getCoverLetterMainTasks } from '../../modules/cover-letter/prompt/tasks';
-import { getCoverLetterStrictRules } from '../../modules/cover-letter/prompt/rules';
-import { getCoverLetterInputOutputTemplate } from '../../modules/cover-letter/prompt/inputOutput';
-import { getATStrictRules } from '../../modules/ats/prompt/rules';
-import { getATSInputOutputTemplate } from '../../modules/ats/prompt/inputOutput';
-import { getATSMainTasks } from '../../modules/ats/prompt/tasks';
+import { buildCvHeader } from '../../modules/cv/prompt/header';
 import { buildATSHeader } from '../../modules/ats/prompt/header';
 import {
   AiSettings,
   BuildPromptOptions,
-  DeliveryChannel,
   PromptLanguage,
   PromptType,
   TemperatureLevel,
 } from '@smartcv/types';
 
+/**
+ * Construye el system prompt: Header + Instructions + Output
+ */
+export function buildSystemPrompt(
+  type: PromptType,
+  lang: PromptLanguage,
+  temperature: TemperatureLevel,
+  options?: BuildPromptOptions,
+): string {
+  const userContext = options?.userContext;
+  const recruiterName = options?.recruiterName || '';
+  const companyName = options?.companyName || '';
+  const referralName = options?.referralName || '';
+
+  const blocks: string[] = [];
+
+  // Header
+  if (type === 'coverLetter') {
+    blocks.push(
+      buildCoverLetterHeader(lang, userContext, recruiterName, referralName, companyName),
+    );
+  } else if (type === 'tailoredCv') {
+    blocks.push(buildCvHeader(lang, userContext));
+  } else if (type === 'ats') {
+    blocks.push(buildATSHeader(lang));
+  }
+
+  // Instructions
+  blocks.push(buildInstructionsBlock(type, lang, temperature, options));
+
+  // Output
+  blocks.push(buildOutputBlock(type, lang));
+
+  return blocks.join('\n\n');
+}
+
+/**
+ * Construye el user prompt: datos concretos (CV + Job Description + User Context)
+ */
+export function buildUserPrompt(
+  baseCv: string,
+  jobDesc: string,
+  lang: PromptLanguage,
+  options?: BuildPromptOptions,
+): string {
+  return buildContextBlock(baseCv, jobDesc, lang, options);
+}
+
+/**
+ * Función principal para armar prompt completo
+ */
 export function buildPrompt(
   baseCv: string,
   jobDesc: string,
   aiSettings: AiSettings,
   options?: BuildPromptOptions,
-): string {
-  const lang: PromptLanguage = options?.lang || 'spanish';
-  const type: PromptType = options?.type || 'tailoredCv';
-  const temperature: TemperatureLevel = options?.temperature || 'low';
-  const deliveryChannel: DeliveryChannel = options?.deliveryChannel || 'linkedinMessage';
+): { systemPrompt: string; userPrompt: string } {
+  const lang: PromptLanguage = options?.lang ?? 'spanish';
+  const type: PromptType = options?.type ?? 'tailoredCv';
+  const temperature: TemperatureLevel = options?.temperature ?? 'low';
 
-  const tone = options?.tone || 'formal';
-  const recruiterName = options?.recruiterName || '';
-  const companyName = options?.companyName || '';
-  const referralName = options?.referralName || '';
+  const systemPrompt = buildSystemPrompt(type, lang, temperature, options);
+  const userPrompt = buildUserPrompt(baseCv, jobDesc, lang, options);
 
-  const userContext = options?.userContext;
-
-  if (type === 'tailoredCv') {
-    const exaggeration = getExaggeration(temperature, lang);
-    return [
-      buildCvHeader(lang, userContext),
-      `Exaggeration instructions: ${exaggeration}`,
-      getCVMainTasks(lang),
-      getCVStrictRules(lang),
-      getCvInputOutputTemplate(baseCv, jobDesc, lang),
-    ].join('\n\n');
-  }
-  if (type === 'coverLetter') {
-    return [
-      buildCoverLetterHeader(lang, userContext, recruiterName, referralName, companyName),
-      getCoverLetterToneText(lang, tone),
-      getCoverLetterDeliveryChannelText(lang, deliveryChannel),
-      getCoverLetterMainTasks(lang),
-      getCoverLetterStrictRules(lang),
-      getCoverLetterInputOutputTemplate(baseCv, jobDesc, lang),
-    ].join('\n\n');
-  }
-  if (type === 'ats') {
-    return [
-      buildATSHeader(lang),
-      getATSMainTasks(lang),
-      getATStrictRules(lang),
-      getATSInputOutputTemplate(baseCv, jobDesc, lang),
-    ].join('\n\n');
-  }
-
-  return `Error: prompt type "${type}" or language "${lang}" not implemented.`;
+  return { systemPrompt, userPrompt };
 }

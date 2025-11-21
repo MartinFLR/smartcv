@@ -1,11 +1,7 @@
 import { PromptLanguage } from '@smartcv/types';
 
-/**
- * Define las reglas estrictas que la IA debe seguir para generar un JSON
- * que coincida con la interfaz 'CvAtsResponse'.
- */
 const strictATSRulesTexts: Record<PromptLanguage, string> = {
-  english: `Strict rules:
+  english: `
 - The output MUST be only a strict, valid JSON object, without any introductory text, markdown formatting ("\`\`\`json"), notes, or trailing explanations.
 - The tone must be that of a professional recruiter/analyst (third person). The goal is to analyze the CV against the job, not rewrite the CV.
 - All analysis ("highlights", "issues", "recommendations") must be based *strictly* on the provided "BASE CV" and "JOB DESCRIPTION". Do not invent skills or experiences.
@@ -22,7 +18,7 @@ const strictATSRulesTexts: Record<PromptLanguage, string> = {
 - "warnings" must only list objective issues regarding ATS formatting (e.g., "Inconsistent date format in experience").
 - If a section (like "education" or "projects") is not found in the CV, omit it from the "sections" and "sectionScores" objects.`,
 
-  spanish: `Reglas estrictas:
+  spanish: `
 - La salida DEBE ser únicamente un objeto JSON válido y estricto, sin texto introductorio, formato markdown ("\`\`\`json"), notas o explicaciones finales.
 - El tono debe ser de un analista/reclutador profesional (tercera persona). El objetivo es analizar el CV contra la oferta, no reescribir el CV.
 - Todo el análisis ("highlights", "issues", "recommendations") debe basarse *estrictamente* en el "CV BASE" y la "OFERTA LABORAL" provistos. No inventes habilidades o experiencias.
@@ -40,11 +36,6 @@ const strictATSRulesTexts: Record<PromptLanguage, string> = {
 - Si una sección (como "education" o "projects") no se encuentra en el CV, omítela de los objetos "sections" y "sectionScores".`,
 };
 
-/**
- * Obtiene las reglas estrictas para el prompt de ATS en el idioma especificado.
- * @param lang Idioma ('es' o 'en')
- * @returns Un string con las reglas.
- */
 export function getATStrictRules(lang: PromptLanguage): string {
   return strictATSRulesTexts[lang];
 }

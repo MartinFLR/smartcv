@@ -1,7 +1,7 @@
 import { PromptLanguage } from '@smartcv/types';
 
 const strictCoverLetterRulesTexts: Record<PromptLanguage, string> = {
-  english: `Strict rules:
+  english: `
 - Write in first person with a professional IT tone.
 - Focus on achievements, skills, and technologies present in the CV.
 - Follow a clear structure: introduction, motivation, relevant experience, and closing.
@@ -12,7 +12,7 @@ const strictCoverLetterRulesTexts: Record<PromptLanguage, string> = {
 - Output must be strict valid JSON, no markdown, bold, emojis, or extra text.
 - Naturally integrate key terms from the job description without keyword stuffing.`,
 
-  spanish: `Reglas estrictas:
+  spanish: `
 - Escribe en primera persona, tono profesional IT.
 - Enfócate en logros, skills y tecnologías presentes en el CV.
 - Usa una estructura clara: introducción, motivación, experiencia relevante y cierre.
