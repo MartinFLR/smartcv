@@ -1,182 +1,139 @@
-import { buildPrompt } from './prompt-builder';
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
-import {
-  AiSettings,
-  BuildPromptOptions,
-  CvForm,
-  DeliveryChannel,
-  PromptType,
-  TemperatureLevel,
-} from '@smartcv/types';
-
-jest.mock('../../modules/cv/prompt/exaggeration', () => ({
-  getExaggeration: jest.fn((temp, lang) => `Exaggeration text for ${temp}/${lang}`),
-}));
-jest.mock('../../modules/cv/prompt/rules', () => ({
-  getCVStrictRules: jest.fn((lang) => `CV Rules for ${lang}`),
-}));
-jest.mock('../../modules/cv/prompt/tasks', () => ({
-  getCVMainTasks: jest.fn((lang) => `CV Tasks for ${lang}`),
-}));
-jest.mock('../../modules/cv/prompt/inputOutput', () => ({
-  getCvInputOutputTemplate: jest.fn((cv, jd, lang) => `CV Input/Output for ${lang}`),
-}));
-jest.mock('../../modules/cover-letter/prompt/deliveryChannel', () => ({
-  getCoverLetterDeliveryChannelText: jest.fn((lang, channel) => `CL Channel for ${channel}`),
-}));
-jest.mock('../../modules/cover-letter/prompt/tone', () => ({
-  getCoverLetterToneText: jest.fn((lang, tone) => `CL Tone for ${tone}`),
-}));
-jest.mock('../../modules/cv/prompt/header', () => ({
-  buildCvHeader: jest.fn((lang, context) => `CV Header for ${lang}`),
-}));
-jest.mock('../../modules/cover-letter/prompt/header', () => ({
-  buildCoverLetterHeader: jest.fn((lang, ctx, recruiter, referral, company) => `CL Header`),
-}));
-jest.mock('../../modules/cover-letter/prompt/tasks', () => ({
-  getCoverLetterMainTasks: jest.fn((lang) => `CL Tasks`),
-}));
-jest.mock('../../modules/cover-letter/prompt/rules', () => ({
-  getCoverLetterStrictRules: jest.fn((lang) => `CL Rules`),
-}));
-jest.mock('../../modules/cover-letter/prompt/inputOutput', () => ({
-  getCoverLetterInputOutputTemplate: jest.fn((cv, jd, lang) => `CL Input/Output`),
-}));
-jest.mock('../../modules/ats/prompt/rules', () => ({
-  getATStrictRules: jest.fn((lang) => `ATS Rules`),
-}));
-jest.mock('../../modules/ats/prompt/inputOutput', () => ({
-  getATSInputOutputTemplate: jest.fn((cv, jd, lang) => `ATS Input/Output`),
-}));
-jest.mock('../../modules/ats/prompt/tasks', () => ({
-  getATSMainTasks: jest.fn((lang) => `ATS Tasks`),
-}));
-jest.mock('../../modules/ats/prompt/header', () => ({
-  buildATSHeader: jest.fn((lang) => `ATS Header`),
-}));
-
-// Re-importamos las funciones mockeadas para acceder a los espías
-import { getExaggeration } from '../../modules/cv/prompt/exaggeration';
+import { buildSystemPrompt, buildUserPrompt, buildPrompt } from './prompt-builder'; // Ajustá el path según corresponda
+import { buildContextBlock } from './context-block';
+import { buildInstructionsBlock } from './instruction-block';
+import { buildOutputBlock } from './output-block';
 import { buildCoverLetterHeader } from '../../modules/cover-letter/prompt/header';
-import { getCoverLetterToneText } from '../../modules/cover-letter/prompt/tone';
-import { getCoverLetterDeliveryChannelText } from '../../modules/cover-letter/prompt/deliveryChannel';
+import { buildCvHeader } from '../../modules/cv/prompt/header';
+import { buildATSHeader } from '../../modules/ats/prompt/header';
+import { jest, expect, it, describe, beforeEach } from '@jest/globals';
+import { AiSettings, BuildPromptOptions, PromptLanguage, PromptType } from '@smartcv/types';
 
-describe('buildPrompt (Core Orchestration Logic)', () => {
-  const MOCK_CV_STRING = 'CV Data';
-  const MOCK_JOB_DESC = 'Job Desc';
-  const MOCK_AI_SETTINGS: AiSettings = {
-    modelProvider: 'openai',
-    modelVersion: 'gpt-4o',
-    systemPrompt: '',
-  };
-  const NEWLINE = '\n\n';
+// 1. Mockeamos las dependencias para aislar la lógica de este archivo
+jest.mock('./context-block');
+jest.mock('./instruction-block');
+jest.mock('./output-block');
+jest.mock('../../modules/cover-letter/prompt/header');
+jest.mock('../../modules/cv/prompt/header');
+jest.mock('../../modules/ats/prompt/header');
+
+describe('Prompt Builder', () => {
+  // Variables auxiliares para los mocks
+  const mockContextBlock = buildContextBlock as jest.Mock;
+  const mockInstructionsBlock = buildInstructionsBlock as jest.Mock;
+  const mockOutputBlock = buildOutputBlock as jest.Mock;
+  const mockCoverLetterHeader = buildCoverLetterHeader as jest.Mock;
+  const mockCvHeader = buildCvHeader as jest.Mock;
+  const mockATSHeader = buildATSHeader as jest.Mock;
 
   beforeEach(() => {
     jest.clearAllMocks();
+
+    mockContextBlock.mockReturnValue('[CONTEXT]');
+    mockInstructionsBlock.mockReturnValue('[INSTRUCTIONS]');
+    mockOutputBlock.mockReturnValue('[OUTPUT]');
+    mockCoverLetterHeader.mockReturnValue('[CL_HEADER]');
+    mockCvHeader.mockReturnValue('[CV_HEADER]');
+    mockATSHeader.mockReturnValue('[ATS_HEADER]');
   });
 
-  // ----------------------------------------------------------------------------------------------------
-  // TEST CASE 1: tailoredCv (Default)
-  // ----------------------------------------------------------------------------------------------------
-  it('should build tailoredCv prompt correctly with all sections and default args', () => {
+  describe('buildSystemPrompt', () => {
+    const lang: PromptLanguage = 'spanish';
+    const temp = 'low';
     const options: BuildPromptOptions = {
-      type: 'tailoredCv',
-      temperature: 'high',
-      userContext: 'focused on leadership',
+      userContext: 'Contexto del usuario',
+      recruiterName: 'Recruiter',
+      companyName: 'Company',
+      referralName: 'Referral',
     };
 
-    const prompt = buildPrompt(MOCK_CV_STRING, MOCK_JOB_DESC, MOCK_AI_SETTINGS, options);
+    it('debería construir el prompt de Cover Letter correctamente', () => {
+      const result = buildSystemPrompt('coverLetter', lang, temp, options);
 
-    // 1. Verificar la llamada a getExaggeration con los parámetros correctos
-    expect(getExaggeration).toHaveBeenCalledWith('high', 'spanish');
+      // Verifica que se llamó al builder específico
+      expect(mockCoverLetterHeader).toHaveBeenCalledWith(
+        lang,
+        options.userContext,
+        options.recruiterName,
+        options.referralName,
+        options.companyName,
+      );
 
-    // 2. Verificar el contenido final (orden y separadores)
-    const expectedSections = [
-      `CV Header for spanish`,
-      `Exaggeration instructions: Exaggeration text for high/spanish`,
-      `CV Tasks for spanish`,
-      `CV Rules for spanish`,
-      `CV Input/Output for spanish`,
-    ];
+      expect(mockCvHeader).not.toHaveBeenCalled();
+      expect(mockATSHeader).not.toHaveBeenCalled();
 
-    expect(prompt).toBe(expectedSections.join(NEWLINE));
-    expect(prompt).not.toContain('CL Header'); // Asegura que el prompt correcto fue seleccionado
+      expect(mockInstructionsBlock).toHaveBeenCalledWith('coverLetter', lang, temp, options);
+      expect(mockOutputBlock).toHaveBeenCalledWith('coverLetter', lang);
+
+      expect(result).toBe('[CL_HEADER]\n\n[INSTRUCTIONS]\n\n[OUTPUT]');
+    });
+
+    it('debería construir el prompt de Tailored CV correctamente', () => {
+      const result = buildSystemPrompt('tailoredCv', lang, temp, options);
+
+      expect(mockCvHeader).toHaveBeenCalledWith(lang, options.userContext);
+      expect(mockCoverLetterHeader).not.toHaveBeenCalled();
+      expect(result).toBe('[CV_HEADER]\n\n[INSTRUCTIONS]\n\n[OUTPUT]');
+    });
+
+    it('debería construir el prompt de ATS correctamente', () => {
+      const result = buildSystemPrompt('ats', lang, temp, options);
+
+      expect(mockATSHeader).toHaveBeenCalledWith(lang);
+      expect(result).toBe('[ATS_HEADER]\n\n[INSTRUCTIONS]\n\n[OUTPUT]');
+    });
+
+    it('debería manejar options undefined gracefully', () => {
+      const result = buildSystemPrompt('tailoredCv', lang, temp, undefined);
+
+      expect(mockCvHeader).toHaveBeenCalledWith(lang, undefined);
+      expect(result).toBe('[CV_HEADER]\n\n[INSTRUCTIONS]\n\n[OUTPUT]');
+    });
   });
 
-  // ----------------------------------------------------------------------------------------------------
-  // TEST CASE 2: coverLetter
-  // ----------------------------------------------------------------------------------------------------
-  it('should build coverLetter prompt with tone, channel, and specific names', () => {
-    const options: BuildPromptOptions = {
-      type: 'coverLetter',
-      lang: 'english',
-      tone: 'confident',
-      deliveryChannel: 'email',
-      recruiterName: 'Alice',
-      referralName: 'Bob',
-      companyName: 'Acme Corp',
-    };
+  describe('buildUserPrompt', () => {
+    it('debería delegar la construcción a buildContextBlock', () => {
+      const baseCv = 'CV Base';
+      const jobDesc = 'JD';
+      const lang = 'english';
+      const options: BuildPromptOptions = { type: 'tailoredCv' };
 
-    const prompt = buildPrompt(MOCK_CV_STRING, MOCK_JOB_DESC, MOCK_AI_SETTINGS, options);
+      const result = buildUserPrompt(baseCv, jobDesc, lang, options);
 
-    // 1. Verificar llamadas a helpers específicos
-    expect(buildCoverLetterHeader).toHaveBeenCalledWith(
-      'english',
-      undefined, // userContext no está en options
-      'Alice',
-      'Bob',
-      'Acme Corp',
-    );
-    expect(getCoverLetterToneText).toHaveBeenCalledWith('english', 'confident');
-    expect(getCoverLetterDeliveryChannelText).toHaveBeenCalledWith('english', 'email');
-
-    // 2. Verificar el contenido final (orden y separadores)
-    const expectedSections = [
-      `CL Header`,
-      `CL Tone for confident`,
-      `CL Channel for email`,
-      `CL Tasks`,
-      `CL Rules`,
-      `CL Input/Output`,
-    ];
-
-    expect(prompt).toBe(expectedSections.join(NEWLINE));
+      expect(mockContextBlock).toHaveBeenCalledWith(baseCv, jobDesc, lang, options);
+      expect(result).toBe('[CONTEXT]');
+    });
   });
 
-  // ----------------------------------------------------------------------------------------------------
-  // TEST CASE 3: ats
-  // ----------------------------------------------------------------------------------------------------
-  it('should build ATS prompt structure without exaggeration/tone', () => {
-    const options: BuildPromptOptions = {
-      type: 'ats',
-      lang: 'spanish',
-    };
+  describe('buildPrompt', () => {
+    const baseCv = 'Mi CV';
+    const jobDesc = 'Puesto IT';
+    const aiSettings: AiSettings = { modelVersion: 'gpt-4o' }; // Objeto dummy
 
-    const prompt = buildPrompt(MOCK_CV_STRING, MOCK_JOB_DESC, MOCK_AI_SETTINGS, options);
+    it('debería usar valores por defecto si no se pasan options', () => {
+      mockCvHeader.mockReturnValue('[CV_HEADER]');
 
-    // 1. Verificar que NO se llamaron helpers de tailoredCv
-    expect(getExaggeration).not.toHaveBeenCalled();
+      const result = buildPrompt(baseCv, jobDesc, aiSettings);
 
-    // 2. Verificar el contenido final
-    const expectedSections = [`ATS Header`, `ATS Tasks`, `ATS Rules`, `ATS Input/Output`];
+      expect(mockCvHeader).toHaveBeenCalledWith('spanish', undefined);
+      expect(mockInstructionsBlock).toHaveBeenCalledWith('tailoredCv', 'spanish', 'low', undefined);
 
-    expect(prompt).toBe(expectedSections.join(NEWLINE));
-  });
+      expect(result).toEqual({
+        systemPrompt: expect.stringContaining('[CV_HEADER]'),
+        userPrompt: '[CONTEXT]',
+      });
+    });
 
-  // ----------------------------------------------------------------------------------------------------
-  // TEST CASE 4: Error Handling
-  // ----------------------------------------------------------------------------------------------------
-  it('should return error message for unknown type', () => {
-    const options: BuildPromptOptions = {
-      type: 'unknownType' as PromptType,
-      lang: 'spanish',
-    };
+    it('debería usar los valores provistos en options', () => {
+      const options: BuildPromptOptions = {
+        lang: 'english',
+        type: 'coverLetter',
+        temperature: 'high',
+      };
 
-    const prompt = buildPrompt(MOCK_CV_STRING, MOCK_JOB_DESC, MOCK_AI_SETTINGS, options);
+      buildPrompt(baseCv, jobDesc, aiSettings, options);
 
-    // El test debe cubrir la última línea del componente
-    expect(prompt).toContain(
-      'Error: prompt type "unknownType" or language "spanish" not implemented.',
-    );
+      expect(mockCoverLetterHeader).toHaveBeenCalledWith('english', undefined, '', '', '');
+      expect(mockInstructionsBlock).toHaveBeenCalledWith('coverLetter', 'english', 'high', options);
+    });
   });
 });
