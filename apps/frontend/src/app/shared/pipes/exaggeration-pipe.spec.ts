@@ -1,8 +1,8 @@
-import { ExxagerationPipe } from './exaggeration-pipe';
+import { ExaggerationLevelPipe } from './exaggeration-pipe';
 
-describe('ExxagerationPipe', () => {
+describe('ExaggerationLevelPipe', () => {
   it('create an instance', () => {
-    const pipe = new ExxagerationPipe();
+    const pipe = new ExaggerationLevelPipe();
     expect(pipe).toBeTruthy();
   });
 });

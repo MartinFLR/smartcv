@@ -40,9 +40,8 @@ export function buildPrompt(
 
   const userContext = options?.userContext;
 
-  const exaggeration = getExaggeration(temperature, lang);
-
   if (type === 'tailoredCv') {
+    const exaggeration = getExaggeration(temperature, lang);
     return [
       buildCvHeader(lang, userContext),
       `Exaggeration instructions: ${exaggeration}`,

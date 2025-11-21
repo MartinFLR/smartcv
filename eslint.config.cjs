@@ -15,21 +15,15 @@ module.exports = defineConfig([
       '**/.cache/**',
       '**/.angular/**',
 
-      // Nx generated project configs (OK ignorarlos)
       'project.json',
 
-      // Build artifacts
+      '**/testing/**',
+      '**/*.spec.ts',
+      '**/test-setup.ts',
+
       'frontend/vite/**',
       'frontend/deps/**',
 
-      // No ignores peligrosos ↓↓↓
-      // ❌ '*.js' --> rompe porque eslint usa archivos JS de config internamente
-      // ❌ '*.json' --> eslint NECESITA leer tsconfig.json
-      // ❌ 'tsconfig*.json' --> rompe el parser de TS
-      // ❌ 'package.json' --> eslint usa config y scripts
-      // ❌ 'package-lock.json' --> warning innecesario
-
-      // Si querés ignorar package-lock específicamente:
       'package-lock.json',
     ],
   },

@@ -1,10 +1,21 @@
-/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
-/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./out-tsc/spec",
-    "types": ["jasmine"]
+    "outDir": "../../dist/out-tsc",
+    "module": "commonjs",
+    "target": "es2016",
+    "types": ["jest", "node"],
+    "isolatedModules": true
   },
-  "include": ["src/**/*.ts"]
+  "files": ["src/test-setup.ts"],
+
+  "include": [
+    "jest.config.ts",
+    "src/**/*.test.ts",
+    "**/*.spec.ts",
+    "**/*.d.ts",
+    "src/**/testing/**/*",
+    "src/**/*.spec.ts",
+    "src/**/*.d.ts"
+  ]
 }

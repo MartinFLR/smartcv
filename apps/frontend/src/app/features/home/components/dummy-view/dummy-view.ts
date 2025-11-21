@@ -26,11 +26,12 @@ export class DummyView {
     }
     return certs
       .map((c) => {
-        const name = c.name || '';
+        if (!c.name || c.name.trim().length === 0) return '';
+
         const datePart = c.date ? ` (${c.date})` : '';
-        return `${name}${datePart}`;
+        return `${c.name}${datePart}`;
       })
-      .filter((c) => c.trim().length > 0)
+      .filter((s) => s.length > 0)
       .join(' | ');
   }
 }
