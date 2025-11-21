@@ -15,8 +15,6 @@ export function buildInstructionsBlock(
   temperature: TemperatureLevel,
   options?: BuildPromptOptions,
 ): string {
-  const deliveryChannel = options?.deliveryChannel || 'linkedinMessage';
-
   let exaggeration = '';
   let tasks = '';
   let rules = '';
@@ -32,6 +30,8 @@ export function buildInstructionsBlock(
 
     case 'coverLetter': {
       const tone = options?.tone || 'formal';
+      const deliveryChannel = options?.deliveryChannel || 'linkedinMessage';
+
       tasks = getCoverLetterMainTasks(lang);
       rules = getCoverLetterStrictRules(lang);
       tones = getCoverLetterToneText(lang, tone);

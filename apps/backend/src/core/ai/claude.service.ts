@@ -6,6 +6,8 @@ import type {
 } from '@anthropic-ai/sdk/resources/messages';
 import { AIModel } from './ai.factory';
 
+//TODO: Refactor
+
 export class ClaudeService implements AIModel {
   private client: Anthropic;
   private model: string;

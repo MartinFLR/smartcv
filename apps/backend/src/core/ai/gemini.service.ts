@@ -1,7 +1,6 @@
 import { GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai';
 import { AIModel } from './ai.factory';
 
-// Definí tipos exactos según el SDK
 interface Part {
   text: string;
 }

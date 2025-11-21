@@ -12,9 +12,6 @@ import {
   TemperatureLevel,
 } from '@smartcv/types';
 
-/**
- * Construye el system prompt: Header + Instructions + Output
- */
 export function buildSystemPrompt(
   type: PromptType,
   lang: PromptLanguage,
@@ -28,7 +25,6 @@ export function buildSystemPrompt(
 
   const blocks: string[] = [];
 
-  // Header
   if (type === 'coverLetter') {
     blocks.push(
       buildCoverLetterHeader(lang, userContext, recruiterName, referralName, companyName),
@@ -38,19 +34,13 @@ export function buildSystemPrompt(
   } else if (type === 'ats') {
     blocks.push(buildATSHeader(lang));
   }
-
-  // Instructions
   blocks.push(buildInstructionsBlock(type, lang, temperature, options));
 
-  // Output
   blocks.push(buildOutputBlock(type, lang));
 
   return blocks.join('\n\n');
 }
 
-/**
- * Construye el user prompt: datos concretos (CV + Job Description + User Context)
- */
 export function buildUserPrompt(
   baseCv: string,
   jobDesc: string,
@@ -60,9 +50,6 @@ export function buildUserPrompt(
   return buildContextBlock(baseCv, jobDesc, lang, options);
 }
 
-/**
- * Función principal para armar prompt completo
- */
 export function buildPrompt(
   baseCv: string,
   jobDesc: string,

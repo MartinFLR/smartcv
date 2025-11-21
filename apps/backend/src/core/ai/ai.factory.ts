@@ -12,7 +12,6 @@ export interface AIModel {
   generateStream?(prompt: string): AsyncGenerator<string>;
 }
 
-// Ahora el constructor siempre recibe systemPrompt
 type AIServiceConstructor = new (apiKey: string, version: string, systemPrompt: string) => AIModel;
 
 type ProviderKey = keyof typeof AI_MODELS_DATA;
@@ -35,7 +34,7 @@ export class AIFactory {
   static create(options: AiSettings): AIModel {
     const provider = (options.modelProvider || 'google').toLowerCase() as ProviderKey;
     const version = options.modelVersion;
-    const systemPrompt = options.systemPrompt || ''; // siempre se pasa
+    const systemPrompt = options.systemPrompt || '';
 
     logger.info(`AIFactory create → provider=${provider}, version=${version}`);
 
@@ -57,7 +56,6 @@ export class AIFactory {
       throw new Error(`${apiKeyField.toUpperCase()} no configurada`);
     }
 
-    // PASAMOS SYSTEM PROMPT al constructor
     return new ServiceClass(String(apiKey), String(version), systemPrompt);
   }
 }
