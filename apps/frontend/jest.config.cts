@@ -15,7 +15,6 @@ export default {
       },
     ],
   },
-
   transformIgnorePatterns: [
     'node_modules/(?!.*\\.mjs$|@jsverse|@taiga-ui|@ng-web-apis|@angular|rxjs)'
   ],
