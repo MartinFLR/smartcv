@@ -1,17 +1,5 @@
 {
-  "packages": {
-    "apps/frontend": {
-      "release-type": "node",
-      "package-name": "smartcv-frontend"
-    },
-    "apps/backend": {
-      "release-type": "node",
-      "package-name": "smartcv-backend"
-    },
-    "libs/shared": {
-      "release-type": "node",
-      "package-name": "smartcv-shared"
-    }
-  },
-  "include-component-in-tag": true
+  "apps/frontend": "0.1.0",
+  "apps/backend": "0.1.0",
+  "libs/shared": "0.1.0"
 }

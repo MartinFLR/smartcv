@@ -1,0 +1,20 @@
+{
+  "bootstrap-sha": "c4c88505",
+  "release-type": "node",
+  "packages": {
+    "apps/frontend": {
+      "release-type": "node",
+      "package-name": "smartcv-frontend"
+    },
+    "apps/backend": {
+      "release-type": "node",
+      "package-name": "smartcv-backend"
+    },
+    "libs/shared": {
+      "release-type": "node",
+      "package-name": "smartcv-shared"
+    }
+  },
+  "include-component-in-tag": true,
+  "monorepo-tags": true
+}

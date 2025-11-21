@@ -5,11 +5,6 @@ on:
     branches:
       - master
 
-permissions:
-  contents: write
-  issues: write
-  pull-requests: write
-
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -17,4 +12,3 @@ jobs:
       - uses: googleapis/release-please-action@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          manifest-file: .release-please-manifest.json
