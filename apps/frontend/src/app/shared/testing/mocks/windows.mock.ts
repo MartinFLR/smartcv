@@ -8,6 +8,8 @@ export const windowMock = {
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
   }),
+  addEventListener: jest.fn(),
+  removeEventListener: jest.fn(),
   localStorage: {
     getItem: jest.fn(),
     setItem: jest.fn(),

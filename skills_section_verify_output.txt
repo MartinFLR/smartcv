@@ -1,0 +1,25 @@
+
+> nx run frontend:test --test-file apps/frontend/src/app/features/cv/components/skills-section/skills-section.spec.ts apps/frontend/src/app/features/cv/components/skills-section/skills-service/skills.service.spec.ts
+
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/skills-section/[22m[1mskills-section.spec.ts[22m
+  SkillsSection
+    [32m✓[39m [2mshould create (245 ms)[22m
+    Structure Rendering
+      [32m✓[39m [2mshould render main inputs (96 ms)[22m
+      [32m✓[39m [2mshould show "no certifications" message when empty (66 ms)[22m
+    Certifications Rendering
+      [32m✓[39m [2mshould render certification cards if service returns them (117 ms)[22m
+    Interactions
+      [32m✓[39m [2mshould call addCertification when add button is clicked (60 ms)[22m
+      [32m✓[39m [2mshould call removeCertification when delete button is clicked (96 ms)[22m
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 total
+[1mTests:       [22m[1m[32m6 passed[39m[22m, 6 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        4.061 s
+[2mRan all test suites[22m[2m matching [22mapps/frontend/src/app/features/cv/components/skills-section/skills-section.spec.ts[2m.[22m
+
+
+
+ NX   Successfully ran target test for project frontend
+
+

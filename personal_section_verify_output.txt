@@ -1,0 +1,50 @@
+
+> nx run frontend:test --test-file apps/frontend/src/app/features/cv/components/personal-section/personal-section.spec.ts
+
+[0m[7m[1m[31m FAIL [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/personal-section/[22m[1mpersonal-section.spec.ts[22m
+  PersonalSection Component
+    [32m✓[39m [2mshould create (242 ms)[22m
+    Form Binding
+      [31m✕[39m [2mshould render all inputs (111 ms)[22m
+      [32m✓[39m [2mshould bind input values to form control (101 ms)[22m
+      [32m✓[39m [2mshould update input value when form control changes programmatically (105 ms)[22m
+    Phone Input
+      [32m✓[39m [2mshould render phone input (96 ms)[22m
+[1m[31m  [1m● [22m[1mPersonalSection Component › Form Binding › should render all inputs[39m[22m
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBeTruthy[2m()[22m
+    [1mMatcher error[22m: this matcher must not have an expected argument
+    Expected has type:  string
+    Expected has value: [32m"Control name not found"[39m
+[2m[22m
+[2m    [0m [90m 75 |[39m       formControlNames[33m.[39mforEach(controlName [33m=>[39m {[22m
+[2m     [90m 76 |[39m         [36mconst[39m el [33m=[39m fixture[33m.[39mdebugElement[33m.[39mquery([33mBy[39m[33m.[39mcss([32m`[formControlName="${controlName}"]`[39m))[33m;[39m[22m
+[2m    [31m[1m>[22m[2m[39m[90m 77 |[39m         expect(el)[33m.[39mtoBeTruthy([32m`Control ${controlName} not found`[39m)[33m;[39m[22m
+[2m     [90m    |[39m                    [31m[1m^[22m[2m[39m[22m
+[2m     [90m 78 |[39m       })[33m;[39m[22m
+[2m     [90m 79 |[39m     })[33m;[39m[22m
+[2m     [90m 80 |[39m[0m[22m
+[2m[22m
+[2m      [2mat [22m[2m[0m[36msrc/app/features/cv/components/personal-section/personal-section.spec.ts[39m[0m[2m:77:20[22m[2m[22m
+[2m          at Array.forEach (<anonymous>)[22m
+[2m      [2mat [22m[2m[0m[36msrc/app/features/cv/components/personal-section/personal-section.spec.ts[39m[0m[2m:75:24[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat Object.wrappedFunc ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:449:38)[22m[2m[22m
+[1mTest Suites: [22m[1m[31m1 failed[39m[22m, 1 total
+[1mTests:       [22m[1m[31m1 failed[39m[22m, [1m[32m4 passed[39m[22m, 5 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3.693 s, estimated 17 s
+[2mRan all test suites[22m[2m matching [22mapps/frontend/src/app/features/cv/components/personal-section/personal-section.spec.ts[2m.[22m
+
+
+
+ NX   Running target test for project frontend failed
+
+Failed tasks:
+
+- frontend:test
+
+Hint: run the command with --verbose for more details.
+

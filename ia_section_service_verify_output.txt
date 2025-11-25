@@ -1,0 +1,25 @@
+
+> nx run frontend:test --test-file apps/frontend/src/app/features/cv/components/ia-section/ia-service/ia-section.service.spec.ts
+
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/ia-section/ia-service/[22m[1mia-section.service.spec.ts[22m
+  IaSectionService
+    [32m✓[39m [2mshould be created (29 ms)[22m
+    currentExaggeration
+      [32m✓[39m [2mshould update when form control changes (12 ms)[22m
+    setExaggeration
+      [32m✓[39m [2mshould update form control value (6 ms)[22m
+    optimizeCv
+      [32m✓[39m [2mshould show alert if form is invalid (missing job description) (8 ms)[22m
+      [32m✓[39m [2mshould call optimizeCv and handle success (5 ms)[22m
+      [32m✓[39m [2mshould handle API error (5 ms)[22m
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 total
+[1mTests:       [22m[1m[32m6 passed[39m[22m, 6 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2.32 s
+[2mRan all test suites[22m[2m matching [22mapps/frontend/src/app/features/cv/components/ia-section/ia-service/ia-section.service.spec.ts[2m.[22m
+
+
+
+ NX   Successfully ran target test for project frontend
+
+

@@ -1,0 +1,23 @@
+
+> nx run frontend:test --test-file apps/frontend/src/app/features/cv/components/personal-section/personal-section.spec.ts
+
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/personal-section/[22m[1mpersonal-section.spec.ts[22m
+  PersonalSection Component
+    [32m✓[39m [2mshould create (244 ms)[22m
+    Form Binding
+      [32m✓[39m [2mshould render all inputs (176 ms)[22m
+      [32m✓[39m [2mshould bind input values to form control (140 ms)[22m
+      [32m✓[39m [2mshould update input value when form control changes programmatically (114 ms)[22m
+    Phone Input
+      [32m✓[39m [2mshould render phone input (84 ms)[22m
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 total
+[1mTests:       [22m[1m[32m5 passed[39m[22m, 5 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        3.94 s
+[2mRan all test suites[22m[2m matching [22mapps/frontend/src/app/features/cv/components/personal-section/personal-section.spec.ts[2m.[22m
+
+
+
+ NX   Successfully ran target test for project frontend
+
+

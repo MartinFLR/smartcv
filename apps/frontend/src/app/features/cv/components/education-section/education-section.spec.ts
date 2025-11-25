@@ -1,28 +1,28 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EducationSection } from './education-section';
+import { EducationService } from './education-service/education.service';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { TranslocoTestingModule } from '@jsverse/transloco';
 import { By } from '@angular/platform-browser';
+import { signal } from '@angular/core';
 import { jest } from '@jest/globals';
-import { EducationControls } from '../../../../core/models/controls.model';
 
 describe('EducationSection', () => {
   let component: EducationSection;
   let fixture: ComponentFixture<EducationSection>;
-
-  // --- Helper para crear datos de prueba ---
-  const createEducationGroup = (data?: Partial<{ institution: string; title: string }>) => {
-    return new FormGroup<EducationControls>({
-      institution: new FormControl(data?.institution ?? ''),
-      title: new FormControl(data?.title ?? ''),
-      dateIn: new FormControl(''),
-      dateFin: new FormControl(''),
-      bullets: new FormControl(''),
-    });
-  };
+  let educationServiceMock: any;
+  let formArray: FormArray;
 
   beforeEach(async () => {
+    formArray = new FormArray<any>([]);
+
+    educationServiceMock = {
+      formArray: signal(formArray),
+      add: jest.fn(),
+      remove: jest.fn(),
+    };
+
     await TestBed.configureTestingModule({
       imports: [
         EducationSection,
@@ -33,16 +33,13 @@ describe('EducationSection', () => {
         }),
       ],
       providers: [
-        provideAnimations(), // Requerido por los componentes de Taiga UI
+        provideAnimations(),
+        { provide: EducationService, useValue: educationServiceMock },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EducationSection);
     component = fixture.componentInstance;
-
-    // 1. Inicializamos el Input Requerido con un array vacío por defecto
-    fixture.componentRef.setInput('educationForms', new FormArray([]));
-
     fixture.detectChanges();
   });
 
@@ -52,64 +49,71 @@ describe('EducationSection', () => {
 
   describe('Rendering', () => {
     it('should render 0 items when form array is empty', () => {
-      const controls = component.getEducationsControls();
-      expect(controls.length).toBe(0);
-
-      // Buscamos las tarjetas (TuiCard) o inputs. No debería haber ninguno.
-      const items = fixture.debugElement.queryAll(By.css('[tuiCard]')); // Asumiendo que usas TuiCard por item
+      const items = fixture.debugElement.queryAll(By.css('[tuiCardLarge]'));
       expect(items.length).toBe(0);
     });
 
     it('should render correct number of items when form array has data', () => {
       // Arrange
-      const educationArray = new FormArray([
-        createEducationGroup({ institution: 'Universidad A' }),
-        createEducationGroup({ institution: 'Universidad B' }),
-      ]);
+      formArray.push(
+        new FormGroup({
+          institution: new FormControl('UBA'),
+          title: new FormControl('Ingeniero'),
+          dateIn: new FormControl(''),
+          dateFin: new FormControl(''),
+          bullets: new FormControl(''),
+        }),
+      );
+      formArray.push(
+        new FormGroup({
+          institution: new FormControl('UTN'),
+          title: new FormControl('Tecnico'),
+          dateIn: new FormControl(''),
+          dateFin: new FormControl(''),
+          bullets: new FormControl(''),
+        }),
+      );
 
-      // Act
-      fixture.componentRef.setInput('educationForms', educationArray);
+      // Trigger change detection
       fixture.detectChanges();
 
       // Assert
-      const controls = component.getEducationsControls();
-      expect(controls.length).toBe(2);
-
-      const inputs = fixture.debugElement.queryAll(By.css('input'));
-      expect(inputs.length).toBeGreaterThan(0);
+      const items = fixture.debugElement.queryAll(By.css('[tuiCardLarge]'));
+      expect(items.length).toBe(2);
     });
   });
 
-  describe('Interactions (Outputs)', () => {
-    it('should emit "add" event when the Add button is clicked', () => {
-      // Arrange
-      const emitSpy = jest.spyOn(component.add, 'emit');
+  describe('Interactions', () => {
+    it('should call service.add() when Add button is clicked', () => {
+      const buttons = fixture.debugElement.queryAll(By.css('button[iconStart="@tui.plus"]'));
+      const addButton = buttons[0];
 
-      const buttons = fixture.debugElement.queryAll(By.css('button'));
-
-      // Asumimos que el botón de "Agregar Educación" es el último o único visible si está vacío
-      const addButton = buttons[buttons.length - 1];
-
-      // Act
       addButton.nativeElement.click();
 
-      // Assert
-      expect(emitSpy).toHaveBeenCalled();
+      expect(educationServiceMock.add).toHaveBeenCalled();
     });
 
-    it('should emit "remove" event with index when Remove button is clicked', () => {
+    it('should call service.remove(index) when Remove button is clicked', () => {
       // Arrange
-      const educationArray = new FormArray([
-        createEducationGroup({ institution: 'UBA' }), // Index 0
-        createEducationGroup({ institution: 'UTN' }), // Index 1
-      ]);
-      fixture.componentRef.setInput('educationForms', educationArray);
+      formArray.push(
+        new FormGroup({
+          institution: new FormControl('UBA'),
+          title: new FormControl('Ingeniero'),
+          dateIn: new FormControl(''),
+          dateFin: new FormControl(''),
+          bullets: new FormControl(''),
+        }),
+      );
       fixture.detectChanges();
 
-      const emitSpy = jest.spyOn(component.remove, 'emit');
+      const removeButtons = fixture.debugElement.queryAll(By.css('button[iconStart="@tui.trash"]'));
+      const removeButton = removeButtons[0];
 
-      component.remove.emit(1);
-      expect(emitSpy).toHaveBeenCalledWith(1);
+      // Act
+      removeButton.nativeElement.click();
+
+      // Assert
+      expect(educationServiceMock.remove).toHaveBeenCalledWith(0);
     });
   });
 });

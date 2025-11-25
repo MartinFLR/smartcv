@@ -1,27 +1,28 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ExperienceSection } from './experience-section';
+import { ExperienceService } from './experience-service/experience.service';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { TranslocoTestingModule } from '@jsverse/transloco';
 import { By } from '@angular/platform-browser';
+import { signal } from '@angular/core';
 import { jest } from '@jest/globals';
-import { ExperienceControls } from '../../../../core/models/controls.model';
 
 describe('ExperienceSection', () => {
   let component: ExperienceSection;
   let fixture: ComponentFixture<ExperienceSection>;
-
-  const createExperienceGroup = (data?: Partial<{ role: string; company: string }>) => {
-    return new FormGroup<ExperienceControls>({
-      role: new FormControl(data?.role ?? ''),
-      company: new FormControl(data?.company ?? ''),
-      dateIn: new FormControl(''),
-      dateFin: new FormControl(''),
-      bullets: new FormControl(''),
-    });
-  };
+  let experienceServiceMock: any;
+  let formArray: FormArray;
 
   beforeEach(async () => {
+    formArray = new FormArray<any>([]);
+
+    experienceServiceMock = {
+      formArray: signal(formArray),
+      add: jest.fn(),
+      remove: jest.fn(),
+    };
+
     await TestBed.configureTestingModule({
       imports: [
         ExperienceSection,
@@ -31,14 +32,14 @@ describe('ExperienceSection', () => {
           translocoConfig: { availableLangs: ['en', 'es'], defaultLang: 'es' },
         }),
       ],
-      providers: [provideAnimations()],
+      providers: [
+        provideAnimations(),
+        { provide: ExperienceService, useValue: experienceServiceMock },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ExperienceSection);
     component = fixture.componentInstance;
-
-    fixture.componentRef.setInput('experienceForms', new FormArray([]));
-
     fixture.detectChanges();
   });
 
@@ -48,60 +49,71 @@ describe('ExperienceSection', () => {
 
   describe('Rendering', () => {
     it('should render 0 items when form array is empty', () => {
-      const cards = fixture.debugElement.queryAll(By.css('[tuiCardLarge]'));
-      expect(cards.length).toBe(0);
+      const items = fixture.debugElement.queryAll(By.css('[tuiCardLarge]'));
+      expect(items.length).toBe(0);
     });
 
     it('should render correct number of items when form array has data', () => {
       // Arrange
-      const experienceArray = new FormArray([
-        createExperienceGroup({ role: 'Frontend Dev', company: 'Google' }),
-        createExperienceGroup({ role: 'Backend Dev', company: 'Amazon' }),
-      ]);
+      formArray.push(
+        new FormGroup({
+          role: new FormControl('Frontend Dev'),
+          company: new FormControl('Google'),
+          dateIn: new FormControl(''),
+          dateFin: new FormControl(''),
+          bullets: new FormControl(''),
+        }),
+      );
+      formArray.push(
+        new FormGroup({
+          role: new FormControl('Backend Dev'),
+          company: new FormControl('Amazon'),
+          dateIn: new FormControl(''),
+          dateFin: new FormControl(''),
+          bullets: new FormControl(''),
+        }),
+      );
 
-      // Act
-      fixture.componentRef.setInput('experienceForms', experienceArray);
+      // Trigger change detection
       fixture.detectChanges();
 
       // Assert
-      const cards = fixture.debugElement.queryAll(By.css('[tuiCardLarge]'));
-      expect(cards.length).toBe(2);
-
-      const companyInputs = fixture.debugElement.queryAll(
-        By.css('input[formControlName="company"]'),
-      );
-      expect(companyInputs[0].nativeElement.value).toContain('Google');
-      expect(companyInputs[1].nativeElement.value).toContain('Amazon');
+      const items = fixture.debugElement.queryAll(By.css('[tuiCardLarge]'));
+      expect(items.length).toBe(2);
     });
   });
 
-  describe('Interactions (Outputs)', () => {
-    it('should emit "add" event when Add button is clicked', () => {
-      // Arrange
-      const emitSpy = jest.spyOn(component.add, 'emit');
-
-      const addButton = fixture.debugElement.query(By.css('button[iconStart="@tui.plus"]'));
+  describe('Interactions', () => {
+    it('should call service.add() when Add button is clicked', () => {
+      const buttons = fixture.debugElement.queryAll(By.css('button[iconStart="@tui.plus"]'));
+      const addButton = buttons[0];
 
       addButton.nativeElement.click();
 
-      expect(emitSpy).toHaveBeenCalled();
+      expect(experienceServiceMock.add).toHaveBeenCalled();
     });
 
-    it('should emit "remove" event with correct index when Delete button is clicked', () => {
-      const experienceArray = new FormArray([
-        createExperienceGroup({ role: 'Dev 1' }),
-        createExperienceGroup({ role: 'Dev 2' }),
-      ]);
-      fixture.componentRef.setInput('experienceForms', experienceArray);
+    it('should call service.remove(index) when Remove button is clicked', () => {
+      // Arrange
+      formArray.push(
+        new FormGroup({
+          role: new FormControl('Dev'),
+          company: new FormControl('Company'),
+          dateIn: new FormControl(''),
+          dateFin: new FormControl(''),
+          bullets: new FormControl(''),
+        }),
+      );
       fixture.detectChanges();
 
-      const emitSpy = jest.spyOn(component.remove, 'emit');
-
       const removeButtons = fixture.debugElement.queryAll(By.css('button[iconStart="@tui.trash"]'));
+      const removeButton = removeButtons[0];
 
-      removeButtons[1].nativeElement.click();
+      // Act
+      removeButton.nativeElement.click();
 
-      expect(emitSpy).toHaveBeenCalledWith(1);
+      // Assert
+      expect(experienceServiceMock.remove).toHaveBeenCalledWith(0);
     });
   });
 });

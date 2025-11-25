@@ -4,18 +4,12 @@ import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular
 import { By } from '@angular/platform-browser';
 import { TranslocoTestingModule } from '@jsverse/transloco';
 import { SkillsSection } from './skills-section';
-
-// 1. Mock del Servicio
-const mockSkillsService = {
-  formArray: jest.fn(),
-  getCertificationsControls: jest.fn(),
-  addCertification: jest.fn(),
-  removeCertification: jest.fn(),
-};
+import { jest } from '@jest/globals';
 
 describe('SkillsSection', () => {
   let component: SkillsSection;
   let fixture: ComponentFixture<SkillsSection>;
+  let mockSkillsService: any;
 
   const createSkillGroup = () =>
     new FormGroup({
@@ -26,7 +20,12 @@ describe('SkillsSection', () => {
     });
 
   beforeEach(async () => {
-    jest.clearAllMocks();
+    mockSkillsService = {
+      formArray: jest.fn(),
+      getCertificationsControls: jest.fn(),
+      addCertification: jest.fn(),
+      removeCertification: jest.fn(),
+    };
 
     const defaultFormArray = new FormArray([createSkillGroup()]);
     mockSkillsService.formArray.mockReturnValue(defaultFormArray);
@@ -49,12 +48,12 @@ describe('SkillsSection', () => {
     fixture.detectChanges();
   });
 
-  it('debe crearse correctamente', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('Renderizado de Estructura', () => {
-    it('debe renderizar los inputs principales', () => {
+  describe('Structure Rendering', () => {
+    it('should render main inputs', () => {
       const skillsInput = fixture.debugElement.query(By.css('#skillsSkills'));
       const langInput = fixture.debugElement.query(By.css('#skillsLanguages'));
       const addInput = fixture.debugElement.query(By.css('#skillsAdditional'));
@@ -64,14 +63,14 @@ describe('SkillsSection', () => {
       expect(addInput).toBeTruthy();
     });
 
-    it('debe mostrar el mensaje de "sin certificaciones" cuando está vacío', () => {
+    it('should show "no certifications" message when empty', () => {
       const emptyMessage = fixture.debugElement.query(By.css('p.text-gray-500'));
       expect(emptyMessage).toBeTruthy();
     });
   });
 
-  describe('Renderizado de Certificaciones', () => {
-    it('debe renderizar las tarjetas de certificación si el servicio las devuelve', () => {
+  describe('Certifications Rendering', () => {
+    it('should render certification cards if service returns them', () => {
       const certGroup1 = new FormGroup({
         name: new FormControl('Java'),
         date: new FormControl('2023'),
@@ -93,10 +92,14 @@ describe('SkillsSection', () => {
     });
   });
 
-  describe('Interacciones', () => {
-    it('debe llamar a addCertification al hacer click en agregar', () => {
+  describe('Interactions', () => {
+    it('should call addCertification when add button is clicked', () => {
       const buttons = fixture.debugElement.queryAll(By.css('button'));
 
+      // Find the button that adds certification (usually has specific text or icon)
+      // Based on previous file content, it looked for text content.
+      // Let's look for the one that is NOT the delete button.
+      // Or better, look for the text binding.
       const addBtn = buttons.find((btn) =>
         btn.nativeElement.textContent.includes('cv.skills.certifications.button'),
       );
@@ -108,7 +111,7 @@ describe('SkillsSection', () => {
       expect(mockSkillsService.addCertification).toHaveBeenCalledWith(0);
     });
 
-    it('debe llamar a removeCertification al hacer click en eliminar', () => {
+    it('should call removeCertification when delete button is clicked', () => {
       const certGroup = new FormGroup({ name: new FormControl(''), date: new FormControl('') });
       mockSkillsService.getCertificationsControls.mockReturnValue([certGroup]);
       fixture.detectChanges();

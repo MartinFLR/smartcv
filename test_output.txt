@@ -1,0 +1,744 @@
+
+> nx run frontend:test --test-file apps/frontend/src/app/features/cv/pages/cv-page/cv-page.spec.ts
+
+[0m[7m[1m[31m FAIL [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/pages/cv-page/[22m[1mcv-page.spec.ts[22m
+  CvPage
+    [31m✕[39m [2mdebe crearse correctamente (367 ms)[22m
+    Navegación de Pestañas (Tabs Logic)
+      [31m✕[39m [2mdebe iniciar en la pestaña 0 (54 ms)[22m
+      [31m✕[39m [2mdebe avanzar pestaña con swipe LEFT (33 ms)[22m
+      [31m✕[39m [2mdebe retroceder pestaña con swipe RIGHT (29 ms)[22m
+    Vista Móvil
+      [31m✕[39m [2mdebe iniciar en vista Formulario (0) (30 ms)[22m
+      [31m✕[39m [2mdebe cambiar a Preview (1) con swipe LEFT (31 ms)[22m
+    Renderizado del Template
+      [31m✕[39m [2mdebe mostrar el dummy-view (30 ms)[22m
+      [31m✕[39m [2mdebe mostrar la sección correcta según activeTab (28 ms)[22m
+[1m[31m  [1m● [22m[1mCvPage › debe crearse correctamente[39m[22m
+    TypeError: Invalid event target
+[2m[22m
+[2m      [2mat fromEvent ([22m[2m../../node_modules/rxjs/dist/cjs/internal/observable/fromEvent.js[2m:51:15)[22m[2m[22m
+[2m      [2mat tuiTypedFromEvent ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-observables.mjs[2m:43:12)[22m[2m[22m
+[2m      [2mat Object.factory ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-tokens.mjs[2m:53:27)[22m[2m[22m
+[2m      [2mat R3Injector.hydrate ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2199:43)[22m[2m[22m
+[2m      [2mat R3Injector.get ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2040:33)[22m[2m[22m
+[2m      [2mat R3Injector.get ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2052:33)[22m[2m[22m
+[2m      [2mat ChainedInjector.get ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13422:36)[22m[2m[22m
+[2m      [2mat lookupTokenUsingModuleInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1718:39)[22m[2m[22m
+[2m      [2mat getOrCreateInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1766:12)[22m[2m[22m
+[2m      [2mat ɵɵdirectiveInject ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13473:19)[22m[2m[22m
+[2m      [2mat ɵɵinject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1061:42)[22m[2m[22m
+[2m      [2mat inject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1149:12)[22m[2m[22m
+[2m      [2mat new _TuiActiveZone ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-directives-active-zone.mjs[2m:14:24)[22m[2m[22m
+[2m      [2mat NodeInjectorFactory._TuiActiveZone_Factory [as factory] ([22m[2m../../ng:/_TuiActiveZone/ɵfac.js[2m:5:10)[22m[2m[22m
+[2m      [2mat getNodeInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1989:44)[22m[2m[22m
+[2m      [2mat searchTokensOnInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1900:16)[22m[2m[22m
+[2m      [2mat lookupTokenUsingNodeInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1849:34)[22m[2m[22m
+[2m      [2mat getOrCreateInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1760:23)[22m[2m[22m
+[2m      [2mat ɵɵdirectiveInject ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13473:19)[22m[2m[22m
+[2m      [2mat ɵɵinject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1061:42)[22m[2m[22m
+[2m      [2mat inject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1149:12)[22m[2m[22m
+[2m      [2mat new _TuiObscured ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-directives-obscured.mjs[2m:31:27)[22m[2m[22m
+[2m      [2mat NodeInjectorFactory._TuiObscured_Factory [as factory] ([22m[2m../../ng:/_TuiObscured/ɵfac.js[2m:5:10)[22m[2m[22m
+[2m      [2mat getNodeInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1989:44)[22m[2m[22m
+[2m      [2mat instantiateAllDirectives ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9297:27)[22m[2m[22m
+[2m      [2mat createDirectivesInstances ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9070:5)[22m[2m[22m
+[2m      [2mat ɵɵelementStart ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:23396:9)[22m[2m[22m
+[2m      [2mat _TuiTabsWithMore_ng_template_5_Template ([22m[2m../../ng:/_TuiTabsWithMore/ɵcmp.js[2m:91:5)[22m[2m[22m
+[2m      [2mat executeTemplate ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9056:9)[22m[2m[22m
+[2m      [2mat renderView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9678:13)[22m[2m[22m
+[2m      [2mat createAndRenderEmbeddedLView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9748:9)[22m[2m[22m
+[2m      [2mat TemplateRef.createEmbeddedViewImpl ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10986:31)[22m[2m[22m
+[2m      [2mat ViewContainerRef2.createEmbeddedView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:14928:37)[22m[2m[22m
+[2m      [2mat _NgIf._updateView ([22m[2m../../node_modules/@angular/common/fesm2022/common_module.mjs[2m:2913:61)[22m[2m[22m
+[2m      [2mat _NgIf.set ngIfElse [as ngIfElse] ([22m[2m../../node_modules/@angular/common/fesm2022/common_module.mjs[2m:2896:14)[22m[2m[22m
+[2m      [2mat applyValueToInputField ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:528:29)[22m[2m[22m
+[2m      [2mat writeToDirectiveInput ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7173:13)[22m[2m[22m
+[2m      [2mat setAllInputsForProperty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9555:13)[22m[2m[22m
+[2m      [2mat setPropertyAndInputs ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9183:25)[22m[2m[22m
+[2m      [2mat ɵɵproperty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:23356:9)[22m[2m[22m
+[2m      [2mat _TuiTabsWithMore_Template ([22m[2m../../ng:/_TuiTabsWithMore/ɵcmp.js[2m:247:49)[22m[2m[22m
+[2m      [2mat executeTemplate ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9056:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10092:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInComponent ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10260:5)[22m[2m[22m
+[2m      [2mat detectChangesInChildComponents ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10338:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10147:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInEmbeddedViews ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10229:13)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10121:9)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInEmbeddedViews ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10229:13)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10121:9)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInComponent ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10260:5)[22m[2m[22m
+[2m      [2mat detectChangesInChildComponents ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10338:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10147:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewWhileDirty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10001:9)[22m[2m[22m
+[2m      [2mat detectChangesInternal ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9989:9)[22m[2m[22m
+[2m      [2mat ViewRef.detectChanges ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10851:9)[22m[2m[22m
+[2m      [2mat [22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:313:44[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat Object.onInvoke ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7854:33)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat NgZone.run ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7700:28)[22m[2m[22m
+[2m      [2mat ComponentFixture.detectChanges ([22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:310:30)[22m[2m[22m
+[2m      [2mat [22m[2m[0m[36msrc/app/features/cv/pages/cv-page/cv-page.spec.ts[39m[0m[2m:70:13[22m[2m[22m
+[2m      [2mat fulfilled ([22m[2m../../node_modules/tslib/tslib.js[2m:167:62)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat [22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:2555:42[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invokeTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:443:37)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvokeTask ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2250:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invokeTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:442:42)[22m[2m[22m
+[2m      [2mat ZoneImpl.runTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:194:51)[22m[2m[22m
+[2m      [2mat drainMicroTaskQueue ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:627:39)[22m[2m[22m
+[1m[31m  [1m● [22m[1mCvPage › Navegación de Pestañas (Tabs Logic) › debe iniciar en la pestaña 0[39m[22m
+    TypeError: Invalid event target
+[2m[22m
+[2m      [2mat fromEvent ([22m[2m../../node_modules/rxjs/dist/cjs/internal/observable/fromEvent.js[2m:51:15)[22m[2m[22m
+[2m      [2mat tuiTypedFromEvent ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-observables.mjs[2m:43:12)[22m[2m[22m
+[2m      [2mat Object.factory ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-tokens.mjs[2m:53:27)[22m[2m[22m
+[2m      [2mat R3Injector.hydrate ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2199:43)[22m[2m[22m
+[2m      [2mat R3Injector.get ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2040:33)[22m[2m[22m
+[2m      [2mat R3Injector.get ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2052:33)[22m[2m[22m
+[2m      [2mat ChainedInjector.get ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13422:36)[22m[2m[22m
+[2m      [2mat lookupTokenUsingModuleInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1718:39)[22m[2m[22m
+[2m      [2mat getOrCreateInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1766:12)[22m[2m[22m
+[2m      [2mat ɵɵdirectiveInject ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13473:19)[22m[2m[22m
+[2m      [2mat ɵɵinject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1061:42)[22m[2m[22m
+[2m      [2mat inject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1149:12)[22m[2m[22m
+[2m      [2mat new _TuiActiveZone ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-directives-active-zone.mjs[2m:14:24)[22m[2m[22m
+[2m      [2mat NodeInjectorFactory._TuiActiveZone_Factory [as factory] ([22m[2m../../ng:/_TuiActiveZone/ɵfac.js[2m:5:10)[22m[2m[22m
+[2m      [2mat getNodeInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1989:44)[22m[2m[22m
+[2m      [2mat searchTokensOnInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1900:16)[22m[2m[22m
+[2m      [2mat lookupTokenUsingNodeInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1849:34)[22m[2m[22m
+[2m      [2mat getOrCreateInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1760:23)[22m[2m[22m
+[2m      [2mat ɵɵdirectiveInject ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13473:19)[22m[2m[22m
+[2m      [2mat ɵɵinject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1061:42)[22m[2m[22m
+[2m      [2mat inject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1149:12)[22m[2m[22m
+[2m      [2mat new _TuiObscured ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-directives-obscured.mjs[2m:31:27)[22m[2m[22m
+[2m      [2mat NodeInjectorFactory._TuiObscured_Factory [as factory] ([22m[2m../../ng:/_TuiObscured/ɵfac.js[2m:5:10)[22m[2m[22m
+[2m      [2mat getNodeInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1989:44)[22m[2m[22m
+[2m      [2mat instantiateAllDirectives ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9297:27)[22m[2m[22m
+[2m      [2mat createDirectivesInstances ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9070:5)[22m[2m[22m
+[2m      [2mat ɵɵelementStart ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:23396:9)[22m[2m[22m
+[2m      [2mat _TuiTabsWithMore_ng_template_5_Template ([22m[2m../../ng:/_TuiTabsWithMore/ɵcmp.js[2m:91:5)[22m[2m[22m
+[2m      [2mat executeTemplate ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9056:9)[22m[2m[22m
+[2m      [2mat renderView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9678:13)[22m[2m[22m
+[2m      [2mat createAndRenderEmbeddedLView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9748:9)[22m[2m[22m
+[2m      [2mat TemplateRef.createEmbeddedViewImpl ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10986:31)[22m[2m[22m
+[2m      [2mat ViewContainerRef2.createEmbeddedView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:14928:37)[22m[2m[22m
+[2m      [2mat _NgIf._updateView ([22m[2m../../node_modules/@angular/common/fesm2022/common_module.mjs[2m:2913:61)[22m[2m[22m
+[2m      [2mat _NgIf.set ngIfElse [as ngIfElse] ([22m[2m../../node_modules/@angular/common/fesm2022/common_module.mjs[2m:2896:14)[22m[2m[22m
+[2m      [2mat applyValueToInputField ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:528:29)[22m[2m[22m
+[2m      [2mat writeToDirectiveInput ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7173:13)[22m[2m[22m
+[2m      [2mat setAllInputsForProperty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9555:13)[22m[2m[22m
+[2m      [2mat setPropertyAndInputs ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9183:25)[22m[2m[22m
+[2m      [2mat ɵɵproperty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:23356:9)[22m[2m[22m
+[2m      [2mat _TuiTabsWithMore_Template ([22m[2m../../ng:/_TuiTabsWithMore/ɵcmp.js[2m:247:49)[22m[2m[22m
+[2m      [2mat executeTemplate ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9056:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10092:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInComponent ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10260:5)[22m[2m[22m
+[2m      [2mat detectChangesInChildComponents ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10338:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10147:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInEmbeddedViews ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10229:13)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10121:9)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInEmbeddedViews ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10229:13)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10121:9)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInComponent ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10260:5)[22m[2m[22m
+[2m      [2mat detectChangesInChildComponents ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10338:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10147:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewWhileDirty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10001:9)[22m[2m[22m
+[2m      [2mat detectChangesInternal ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9989:9)[22m[2m[22m
+[2m      [2mat ViewRef.detectChanges ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10851:9)[22m[2m[22m
+[2m      [2mat [22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:313:44[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat Object.onInvoke ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7854:33)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat NgZone.run ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7700:28)[22m[2m[22m
+[2m      [2mat ComponentFixture.detectChanges ([22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:310:30)[22m[2m[22m
+[2m      [2mat [22m[2m[0m[36msrc/app/features/cv/pages/cv-page/cv-page.spec.ts[39m[0m[2m:70:13[22m[2m[22m
+[2m      [2mat fulfilled ([22m[2m../../node_modules/tslib/tslib.js[2m:167:62)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat [22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:2555:42[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invokeTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:443:37)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvokeTask ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2250:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invokeTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:442:42)[22m[2m[22m
+[2m      [2mat ZoneImpl.runTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:194:51)[22m[2m[22m
+[2m      [2mat drainMicroTaskQueue ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:627:39)[22m[2m[22m
+[1m[31m  [1m● [22m[1mCvPage › Navegación de Pestañas (Tabs Logic) › debe avanzar pestaña con swipe LEFT[39m[22m
+    TypeError: Invalid event target
+[2m[22m
+[2m      [2mat fromEvent ([22m[2m../../node_modules/rxjs/dist/cjs/internal/observable/fromEvent.js[2m:51:15)[22m[2m[22m
+[2m      [2mat tuiTypedFromEvent ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-observables.mjs[2m:43:12)[22m[2m[22m
+[2m      [2mat Object.factory ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-tokens.mjs[2m:53:27)[22m[2m[22m
+[2m      [2mat R3Injector.hydrate ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2199:43)[22m[2m[22m
+[2m      [2mat R3Injector.get ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2040:33)[22m[2m[22m
+[2m      [2mat R3Injector.get ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2052:33)[22m[2m[22m
+[2m      [2mat ChainedInjector.get ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13422:36)[22m[2m[22m
+[2m      [2mat lookupTokenUsingModuleInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1718:39)[22m[2m[22m
+[2m      [2mat getOrCreateInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1766:12)[22m[2m[22m
+[2m      [2mat ɵɵdirectiveInject ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13473:19)[22m[2m[22m
+[2m      [2mat ɵɵinject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1061:42)[22m[2m[22m
+[2m      [2mat inject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1149:12)[22m[2m[22m
+[2m      [2mat new _TuiActiveZone ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-directives-active-zone.mjs[2m:14:24)[22m[2m[22m
+[2m      [2mat NodeInjectorFactory._TuiActiveZone_Factory [as factory] ([22m[2m../../ng:/_TuiActiveZone/ɵfac.js[2m:5:10)[22m[2m[22m
+[2m      [2mat getNodeInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1989:44)[22m[2m[22m
+[2m      [2mat searchTokensOnInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1900:16)[22m[2m[22m
+[2m      [2mat lookupTokenUsingNodeInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1849:34)[22m[2m[22m
+[2m      [2mat getOrCreateInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1760:23)[22m[2m[22m
+[2m      [2mat ɵɵdirectiveInject ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13473:19)[22m[2m[22m
+[2m      [2mat ɵɵinject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1061:42)[22m[2m[22m
+[2m      [2mat inject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1149:12)[22m[2m[22m
+[2m      [2mat new _TuiObscured ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-directives-obscured.mjs[2m:31:27)[22m[2m[22m
+[2m      [2mat NodeInjectorFactory._TuiObscured_Factory [as factory] ([22m[2m../../ng:/_TuiObscured/ɵfac.js[2m:5:10)[22m[2m[22m
+[2m      [2mat getNodeInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1989:44)[22m[2m[22m
+[2m      [2mat instantiateAllDirectives ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9297:27)[22m[2m[22m
+[2m      [2mat createDirectivesInstances ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9070:5)[22m[2m[22m
+[2m      [2mat ɵɵelementStart ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:23396:9)[22m[2m[22m
+[2m      [2mat _TuiTabsWithMore_ng_template_5_Template ([22m[2m../../ng:/_TuiTabsWithMore/ɵcmp.js[2m:91:5)[22m[2m[22m
+[2m      [2mat executeTemplate ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9056:9)[22m[2m[22m
+[2m      [2mat renderView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9678:13)[22m[2m[22m
+[2m      [2mat createAndRenderEmbeddedLView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9748:9)[22m[2m[22m
+[2m      [2mat TemplateRef.createEmbeddedViewImpl ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10986:31)[22m[2m[22m
+[2m      [2mat ViewContainerRef2.createEmbeddedView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:14928:37)[22m[2m[22m
+[2m      [2mat _NgIf._updateView ([22m[2m../../node_modules/@angular/common/fesm2022/common_module.mjs[2m:2913:61)[22m[2m[22m
+[2m      [2mat _NgIf.set ngIfElse [as ngIfElse] ([22m[2m../../node_modules/@angular/common/fesm2022/common_module.mjs[2m:2896:14)[22m[2m[22m
+[2m      [2mat applyValueToInputField ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:528:29)[22m[2m[22m
+[2m      [2mat writeToDirectiveInput ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7173:13)[22m[2m[22m
+[2m      [2mat setAllInputsForProperty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9555:13)[22m[2m[22m
+[2m      [2mat setPropertyAndInputs ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9183:25)[22m[2m[22m
+[2m      [2mat ɵɵproperty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:23356:9)[22m[2m[22m
+[2m      [2mat _TuiTabsWithMore_Template ([22m[2m../../ng:/_TuiTabsWithMore/ɵcmp.js[2m:247:49)[22m[2m[22m
+[2m      [2mat executeTemplate ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9056:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10092:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInComponent ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10260:5)[22m[2m[22m
+[2m      [2mat detectChangesInChildComponents ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10338:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10147:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInEmbeddedViews ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10229:13)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10121:9)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInEmbeddedViews ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10229:13)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10121:9)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInComponent ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10260:5)[22m[2m[22m
+[2m      [2mat detectChangesInChildComponents ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10338:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10147:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewWhileDirty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10001:9)[22m[2m[22m
+[2m      [2mat detectChangesInternal ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9989:9)[22m[2m[22m
+[2m      [2mat ViewRef.detectChanges ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10851:9)[22m[2m[22m
+[2m      [2mat [22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:313:44[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat Object.onInvoke ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7854:33)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat NgZone.run ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7700:28)[22m[2m[22m
+[2m      [2mat ComponentFixture.detectChanges ([22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:310:30)[22m[2m[22m
+[2m      [2mat [22m[2m[0m[36msrc/app/features/cv/pages/cv-page/cv-page.spec.ts[39m[0m[2m:70:13[22m[2m[22m
+[2m      [2mat fulfilled ([22m[2m../../node_modules/tslib/tslib.js[2m:167:62)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat [22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:2555:42[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invokeTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:443:37)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvokeTask ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2250:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invokeTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:442:42)[22m[2m[22m
+[2m      [2mat ZoneImpl.runTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:194:51)[22m[2m[22m
+[2m      [2mat drainMicroTaskQueue ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:627:39)[22m[2m[22m
+[1m[31m  [1m● [22m[1mCvPage › Navegación de Pestañas (Tabs Logic) › debe retroceder pestaña con swipe RIGHT[39m[22m
+    TypeError: Invalid event target
+[2m[22m
+[2m      [2mat fromEvent ([22m[2m../../node_modules/rxjs/dist/cjs/internal/observable/fromEvent.js[2m:51:15)[22m[2m[22m
+[2m      [2mat tuiTypedFromEvent ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-observables.mjs[2m:43:12)[22m[2m[22m
+[2m      [2mat Object.factory ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-tokens.mjs[2m:53:27)[22m[2m[22m
+[2m      [2mat R3Injector.hydrate ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2199:43)[22m[2m[22m
+[2m      [2mat R3Injector.get ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2040:33)[22m[2m[22m
+[2m      [2mat R3Injector.get ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2052:33)[22m[2m[22m
+[2m      [2mat ChainedInjector.get ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13422:36)[22m[2m[22m
+[2m      [2mat lookupTokenUsingModuleInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1718:39)[22m[2m[22m
+[2m      [2mat getOrCreateInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1766:12)[22m[2m[22m
+[2m      [2mat ɵɵdirectiveInject ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13473:19)[22m[2m[22m
+[2m      [2mat ɵɵinject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1061:42)[22m[2m[22m
+[2m      [2mat inject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1149:12)[22m[2m[22m
+[2m      [2mat new _TuiActiveZone ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-directives-active-zone.mjs[2m:14:24)[22m[2m[22m
+[2m      [2mat NodeInjectorFactory._TuiActiveZone_Factory [as factory] ([22m[2m../../ng:/_TuiActiveZone/ɵfac.js[2m:5:10)[22m[2m[22m
+[2m      [2mat getNodeInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1989:44)[22m[2m[22m
+[2m      [2mat searchTokensOnInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1900:16)[22m[2m[22m
+[2m      [2mat lookupTokenUsingNodeInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1849:34)[22m[2m[22m
+[2m      [2mat getOrCreateInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1760:23)[22m[2m[22m
+[2m      [2mat ɵɵdirectiveInject ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13473:19)[22m[2m[22m
+[2m      [2mat ɵɵinject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1061:42)[22m[2m[22m
+[2m      [2mat inject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1149:12)[22m[2m[22m
+[2m      [2mat new _TuiObscured ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-directives-obscured.mjs[2m:31:27)[22m[2m[22m
+[2m      [2mat NodeInjectorFactory._TuiObscured_Factory [as factory] ([22m[2m../../ng:/_TuiObscured/ɵfac.js[2m:5:10)[22m[2m[22m
+[2m      [2mat getNodeInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1989:44)[22m[2m[22m
+[2m      [2mat instantiateAllDirectives ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9297:27)[22m[2m[22m
+[2m      [2mat createDirectivesInstances ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9070:5)[22m[2m[22m
+[2m      [2mat ɵɵelementStart ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:23396:9)[22m[2m[22m
+[2m      [2mat _TuiTabsWithMore_ng_template_5_Template ([22m[2m../../ng:/_TuiTabsWithMore/ɵcmp.js[2m:91:5)[22m[2m[22m
+[2m      [2mat executeTemplate ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9056:9)[22m[2m[22m
+[2m      [2mat renderView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9678:13)[22m[2m[22m
+[2m      [2mat createAndRenderEmbeddedLView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9748:9)[22m[2m[22m
+[2m      [2mat TemplateRef.createEmbeddedViewImpl ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10986:31)[22m[2m[22m
+[2m      [2mat ViewContainerRef2.createEmbeddedView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:14928:37)[22m[2m[22m
+[2m      [2mat _NgIf._updateView ([22m[2m../../node_modules/@angular/common/fesm2022/common_module.mjs[2m:2913:61)[22m[2m[22m
+[2m      [2mat _NgIf.set ngIfElse [as ngIfElse] ([22m[2m../../node_modules/@angular/common/fesm2022/common_module.mjs[2m:2896:14)[22m[2m[22m
+[2m      [2mat applyValueToInputField ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:528:29)[22m[2m[22m
+[2m      [2mat writeToDirectiveInput ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7173:13)[22m[2m[22m
+[2m      [2mat setAllInputsForProperty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9555:13)[22m[2m[22m
+[2m      [2mat setPropertyAndInputs ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9183:25)[22m[2m[22m
+[2m      [2mat ɵɵproperty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:23356:9)[22m[2m[22m
+[2m      [2mat _TuiTabsWithMore_Template ([22m[2m../../ng:/_TuiTabsWithMore/ɵcmp.js[2m:247:49)[22m[2m[22m
+[2m      [2mat executeTemplate ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9056:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10092:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInComponent ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10260:5)[22m[2m[22m
+[2m      [2mat detectChangesInChildComponents ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10338:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10147:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInEmbeddedViews ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10229:13)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10121:9)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInEmbeddedViews ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10229:13)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10121:9)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInComponent ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10260:5)[22m[2m[22m
+[2m      [2mat detectChangesInChildComponents ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10338:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10147:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewWhileDirty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10001:9)[22m[2m[22m
+[2m      [2mat detectChangesInternal ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9989:9)[22m[2m[22m
+[2m      [2mat ViewRef.detectChanges ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10851:9)[22m[2m[22m
+[2m      [2mat [22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:313:44[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat Object.onInvoke ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7854:33)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat NgZone.run ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7700:28)[22m[2m[22m
+[2m      [2mat ComponentFixture.detectChanges ([22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:310:30)[22m[2m[22m
+[2m      [2mat [22m[2m[0m[36msrc/app/features/cv/pages/cv-page/cv-page.spec.ts[39m[0m[2m:70:13[22m[2m[22m
+[2m      [2mat fulfilled ([22m[2m../../node_modules/tslib/tslib.js[2m:167:62)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat [22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:2555:42[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invokeTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:443:37)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvokeTask ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2250:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invokeTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:442:42)[22m[2m[22m
+[2m      [2mat ZoneImpl.runTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:194:51)[22m[2m[22m
+[2m      [2mat drainMicroTaskQueue ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:627:39)[22m[2m[22m
+[1m[31m  [1m● [22m[1mCvPage › Vista Móvil › debe iniciar en vista Formulario (0)[39m[22m
+    TypeError: Invalid event target
+[2m[22m
+[2m      [2mat fromEvent ([22m[2m../../node_modules/rxjs/dist/cjs/internal/observable/fromEvent.js[2m:51:15)[22m[2m[22m
+[2m      [2mat tuiTypedFromEvent ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-observables.mjs[2m:43:12)[22m[2m[22m
+[2m      [2mat Object.factory ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-tokens.mjs[2m:53:27)[22m[2m[22m
+[2m      [2mat R3Injector.hydrate ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2199:43)[22m[2m[22m
+[2m      [2mat R3Injector.get ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2040:33)[22m[2m[22m
+[2m      [2mat R3Injector.get ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2052:33)[22m[2m[22m
+[2m      [2mat ChainedInjector.get ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13422:36)[22m[2m[22m
+[2m      [2mat lookupTokenUsingModuleInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1718:39)[22m[2m[22m
+[2m      [2mat getOrCreateInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1766:12)[22m[2m[22m
+[2m      [2mat ɵɵdirectiveInject ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13473:19)[22m[2m[22m
+[2m      [2mat ɵɵinject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1061:42)[22m[2m[22m
+[2m      [2mat inject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1149:12)[22m[2m[22m
+[2m      [2mat new _TuiActiveZone ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-directives-active-zone.mjs[2m:14:24)[22m[2m[22m
+[2m      [2mat NodeInjectorFactory._TuiActiveZone_Factory [as factory] ([22m[2m../../ng:/_TuiActiveZone/ɵfac.js[2m:5:10)[22m[2m[22m
+[2m      [2mat getNodeInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1989:44)[22m[2m[22m
+[2m      [2mat searchTokensOnInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1900:16)[22m[2m[22m
+[2m      [2mat lookupTokenUsingNodeInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1849:34)[22m[2m[22m
+[2m      [2mat getOrCreateInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1760:23)[22m[2m[22m
+[2m      [2mat ɵɵdirectiveInject ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13473:19)[22m[2m[22m
+[2m      [2mat ɵɵinject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1061:42)[22m[2m[22m
+[2m      [2mat inject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1149:12)[22m[2m[22m
+[2m      [2mat new _TuiObscured ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-directives-obscured.mjs[2m:31:27)[22m[2m[22m
+[2m      [2mat NodeInjectorFactory._TuiObscured_Factory [as factory] ([22m[2m../../ng:/_TuiObscured/ɵfac.js[2m:5:10)[22m[2m[22m
+[2m      [2mat getNodeInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1989:44)[22m[2m[22m
+[2m      [2mat instantiateAllDirectives ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9297:27)[22m[2m[22m
+[2m      [2mat createDirectivesInstances ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9070:5)[22m[2m[22m
+[2m      [2mat ɵɵelementStart ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:23396:9)[22m[2m[22m
+[2m      [2mat _TuiTabsWithMore_ng_template_5_Template ([22m[2m../../ng:/_TuiTabsWithMore/ɵcmp.js[2m:91:5)[22m[2m[22m
+[2m      [2mat executeTemplate ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9056:9)[22m[2m[22m
+[2m      [2mat renderView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9678:13)[22m[2m[22m
+[2m      [2mat createAndRenderEmbeddedLView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9748:9)[22m[2m[22m
+[2m      [2mat TemplateRef.createEmbeddedViewImpl ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10986:31)[22m[2m[22m
+[2m      [2mat ViewContainerRef2.createEmbeddedView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:14928:37)[22m[2m[22m
+[2m      [2mat _NgIf._updateView ([22m[2m../../node_modules/@angular/common/fesm2022/common_module.mjs[2m:2913:61)[22m[2m[22m
+[2m      [2mat _NgIf.set ngIfElse [as ngIfElse] ([22m[2m../../node_modules/@angular/common/fesm2022/common_module.mjs[2m:2896:14)[22m[2m[22m
+[2m      [2mat applyValueToInputField ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:528:29)[22m[2m[22m
+[2m      [2mat writeToDirectiveInput ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7173:13)[22m[2m[22m
+[2m      [2mat setAllInputsForProperty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9555:13)[22m[2m[22m
+[2m      [2mat setPropertyAndInputs ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9183:25)[22m[2m[22m
+[2m      [2mat ɵɵproperty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:23356:9)[22m[2m[22m
+[2m      [2mat _TuiTabsWithMore_Template ([22m[2m../../ng:/_TuiTabsWithMore/ɵcmp.js[2m:247:49)[22m[2m[22m
+[2m      [2mat executeTemplate ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9056:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10092:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInComponent ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10260:5)[22m[2m[22m
+[2m      [2mat detectChangesInChildComponents ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10338:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10147:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInEmbeddedViews ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10229:13)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10121:9)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInEmbeddedViews ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10229:13)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10121:9)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInComponent ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10260:5)[22m[2m[22m
+[2m      [2mat detectChangesInChildComponents ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10338:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10147:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewWhileDirty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10001:9)[22m[2m[22m
+[2m      [2mat detectChangesInternal ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9989:9)[22m[2m[22m
+[2m      [2mat ViewRef.detectChanges ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10851:9)[22m[2m[22m
+[2m      [2mat [22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:313:44[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat Object.onInvoke ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7854:33)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat NgZone.run ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7700:28)[22m[2m[22m
+[2m      [2mat ComponentFixture.detectChanges ([22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:310:30)[22m[2m[22m
+[2m      [2mat [22m[2m[0m[36msrc/app/features/cv/pages/cv-page/cv-page.spec.ts[39m[0m[2m:70:13[22m[2m[22m
+[2m      [2mat fulfilled ([22m[2m../../node_modules/tslib/tslib.js[2m:167:62)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat [22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:2555:42[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invokeTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:443:37)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvokeTask ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2250:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invokeTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:442:42)[22m[2m[22m
+[2m      [2mat ZoneImpl.runTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:194:51)[22m[2m[22m
+[2m      [2mat drainMicroTaskQueue ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:627:39)[22m[2m[22m
+[1m[31m  [1m● [22m[1mCvPage › Vista Móvil › debe cambiar a Preview (1) con swipe LEFT[39m[22m
+    TypeError: Invalid event target
+[2m[22m
+[2m      [2mat fromEvent ([22m[2m../../node_modules/rxjs/dist/cjs/internal/observable/fromEvent.js[2m:51:15)[22m[2m[22m
+[2m      [2mat tuiTypedFromEvent ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-observables.mjs[2m:43:12)[22m[2m[22m
+[2m      [2mat Object.factory ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-tokens.mjs[2m:53:27)[22m[2m[22m
+[2m      [2mat R3Injector.hydrate ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2199:43)[22m[2m[22m
+[2m      [2mat R3Injector.get ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2040:33)[22m[2m[22m
+[2m      [2mat R3Injector.get ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2052:33)[22m[2m[22m
+[2m      [2mat ChainedInjector.get ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13422:36)[22m[2m[22m
+[2m      [2mat lookupTokenUsingModuleInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1718:39)[22m[2m[22m
+[2m      [2mat getOrCreateInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1766:12)[22m[2m[22m
+[2m      [2mat ɵɵdirectiveInject ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13473:19)[22m[2m[22m
+[2m      [2mat ɵɵinject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1061:42)[22m[2m[22m
+[2m      [2mat inject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1149:12)[22m[2m[22m
+[2m      [2mat new _TuiActiveZone ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-directives-active-zone.mjs[2m:14:24)[22m[2m[22m
+[2m      [2mat NodeInjectorFactory._TuiActiveZone_Factory [as factory] ([22m[2m../../ng:/_TuiActiveZone/ɵfac.js[2m:5:10)[22m[2m[22m
+[2m      [2mat getNodeInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1989:44)[22m[2m[22m
+[2m      [2mat searchTokensOnInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1900:16)[22m[2m[22m
+[2m      [2mat lookupTokenUsingNodeInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1849:34)[22m[2m[22m
+[2m      [2mat getOrCreateInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1760:23)[22m[2m[22m
+[2m      [2mat ɵɵdirectiveInject ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13473:19)[22m[2m[22m
+[2m      [2mat ɵɵinject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1061:42)[22m[2m[22m
+[2m      [2mat inject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1149:12)[22m[2m[22m
+[2m      [2mat new _TuiObscured ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-directives-obscured.mjs[2m:31:27)[22m[2m[22m
+[2m      [2mat NodeInjectorFactory._TuiObscured_Factory [as factory] ([22m[2m../../ng:/_TuiObscured/ɵfac.js[2m:5:10)[22m[2m[22m
+[2m      [2mat getNodeInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1989:44)[22m[2m[22m
+[2m      [2mat instantiateAllDirectives ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9297:27)[22m[2m[22m
+[2m      [2mat createDirectivesInstances ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9070:5)[22m[2m[22m
+[2m      [2mat ɵɵelementStart ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:23396:9)[22m[2m[22m
+[2m      [2mat _TuiTabsWithMore_ng_template_5_Template ([22m[2m../../ng:/_TuiTabsWithMore/ɵcmp.js[2m:91:5)[22m[2m[22m
+[2m      [2mat executeTemplate ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9056:9)[22m[2m[22m
+[2m      [2mat renderView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9678:13)[22m[2m[22m
+[2m      [2mat createAndRenderEmbeddedLView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9748:9)[22m[2m[22m
+[2m      [2mat TemplateRef.createEmbeddedViewImpl ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10986:31)[22m[2m[22m
+[2m      [2mat ViewContainerRef2.createEmbeddedView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:14928:37)[22m[2m[22m
+[2m      [2mat _NgIf._updateView ([22m[2m../../node_modules/@angular/common/fesm2022/common_module.mjs[2m:2913:61)[22m[2m[22m
+[2m      [2mat _NgIf.set ngIfElse [as ngIfElse] ([22m[2m../../node_modules/@angular/common/fesm2022/common_module.mjs[2m:2896:14)[22m[2m[22m
+[2m      [2mat applyValueToInputField ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:528:29)[22m[2m[22m
+[2m      [2mat writeToDirectiveInput ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7173:13)[22m[2m[22m
+[2m      [2mat setAllInputsForProperty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9555:13)[22m[2m[22m
+[2m      [2mat setPropertyAndInputs ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9183:25)[22m[2m[22m
+[2m      [2mat ɵɵproperty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:23356:9)[22m[2m[22m
+[2m      [2mat _TuiTabsWithMore_Template ([22m[2m../../ng:/_TuiTabsWithMore/ɵcmp.js[2m:247:49)[22m[2m[22m
+[2m      [2mat executeTemplate ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9056:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10092:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInComponent ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10260:5)[22m[2m[22m
+[2m      [2mat detectChangesInChildComponents ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10338:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10147:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInEmbeddedViews ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10229:13)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10121:9)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInEmbeddedViews ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10229:13)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10121:9)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInComponent ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10260:5)[22m[2m[22m
+[2m      [2mat detectChangesInChildComponents ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10338:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10147:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewWhileDirty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10001:9)[22m[2m[22m
+[2m      [2mat detectChangesInternal ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9989:9)[22m[2m[22m
+[2m      [2mat ViewRef.detectChanges ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10851:9)[22m[2m[22m
+[2m      [2mat [22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:313:44[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat Object.onInvoke ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7854:33)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat NgZone.run ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7700:28)[22m[2m[22m
+[2m      [2mat ComponentFixture.detectChanges ([22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:310:30)[22m[2m[22m
+[2m      [2mat [22m[2m[0m[36msrc/app/features/cv/pages/cv-page/cv-page.spec.ts[39m[0m[2m:70:13[22m[2m[22m
+[2m      [2mat fulfilled ([22m[2m../../node_modules/tslib/tslib.js[2m:167:62)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat [22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:2555:42[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invokeTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:443:37)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvokeTask ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2250:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invokeTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:442:42)[22m[2m[22m
+[2m      [2mat ZoneImpl.runTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:194:51)[22m[2m[22m
+[2m      [2mat drainMicroTaskQueue ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:627:39)[22m[2m[22m
+[1m[31m  [1m● [22m[1mCvPage › Renderizado del Template › debe mostrar el dummy-view[39m[22m
+    TypeError: Invalid event target
+[2m[22m
+[2m      [2mat fromEvent ([22m[2m../../node_modules/rxjs/dist/cjs/internal/observable/fromEvent.js[2m:51:15)[22m[2m[22m
+[2m      [2mat tuiTypedFromEvent ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-observables.mjs[2m:43:12)[22m[2m[22m
+[2m      [2mat Object.factory ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-tokens.mjs[2m:53:27)[22m[2m[22m
+[2m      [2mat R3Injector.hydrate ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2199:43)[22m[2m[22m
+[2m      [2mat R3Injector.get ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2040:33)[22m[2m[22m
+[2m      [2mat R3Injector.get ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2052:33)[22m[2m[22m
+[2m      [2mat ChainedInjector.get ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13422:36)[22m[2m[22m
+[2m      [2mat lookupTokenUsingModuleInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1718:39)[22m[2m[22m
+[2m      [2mat getOrCreateInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1766:12)[22m[2m[22m
+[2m      [2mat ɵɵdirectiveInject ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13473:19)[22m[2m[22m
+[2m      [2mat ɵɵinject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1061:42)[22m[2m[22m
+[2m      [2mat inject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1149:12)[22m[2m[22m
+[2m      [2mat new _TuiActiveZone ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-directives-active-zone.mjs[2m:14:24)[22m[2m[22m
+[2m      [2mat NodeInjectorFactory._TuiActiveZone_Factory [as factory] ([22m[2m../../ng:/_TuiActiveZone/ɵfac.js[2m:5:10)[22m[2m[22m
+[2m      [2mat getNodeInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1989:44)[22m[2m[22m
+[2m      [2mat searchTokensOnInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1900:16)[22m[2m[22m
+[2m      [2mat lookupTokenUsingNodeInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1849:34)[22m[2m[22m
+[2m      [2mat getOrCreateInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1760:23)[22m[2m[22m
+[2m      [2mat ɵɵdirectiveInject ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13473:19)[22m[2m[22m
+[2m      [2mat ɵɵinject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1061:42)[22m[2m[22m
+[2m      [2mat inject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1149:12)[22m[2m[22m
+[2m      [2mat new _TuiObscured ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-directives-obscured.mjs[2m:31:27)[22m[2m[22m
+[2m      [2mat NodeInjectorFactory._TuiObscured_Factory [as factory] ([22m[2m../../ng:/_TuiObscured/ɵfac.js[2m:5:10)[22m[2m[22m
+[2m      [2mat getNodeInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1989:44)[22m[2m[22m
+[2m      [2mat instantiateAllDirectives ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9297:27)[22m[2m[22m
+[2m      [2mat createDirectivesInstances ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9070:5)[22m[2m[22m
+[2m      [2mat ɵɵelementStart ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:23396:9)[22m[2m[22m
+[2m      [2mat _TuiTabsWithMore_ng_template_5_Template ([22m[2m../../ng:/_TuiTabsWithMore/ɵcmp.js[2m:91:5)[22m[2m[22m
+[2m      [2mat executeTemplate ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9056:9)[22m[2m[22m
+[2m      [2mat renderView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9678:13)[22m[2m[22m
+[2m      [2mat createAndRenderEmbeddedLView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9748:9)[22m[2m[22m
+[2m      [2mat TemplateRef.createEmbeddedViewImpl ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10986:31)[22m[2m[22m
+[2m      [2mat ViewContainerRef2.createEmbeddedView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:14928:37)[22m[2m[22m
+[2m      [2mat _NgIf._updateView ([22m[2m../../node_modules/@angular/common/fesm2022/common_module.mjs[2m:2913:61)[22m[2m[22m
+[2m      [2mat _NgIf.set ngIfElse [as ngIfElse] ([22m[2m../../node_modules/@angular/common/fesm2022/common_module.mjs[2m:2896:14)[22m[2m[22m
+[2m      [2mat applyValueToInputField ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:528:29)[22m[2m[22m
+[2m      [2mat writeToDirectiveInput ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7173:13)[22m[2m[22m
+[2m      [2mat setAllInputsForProperty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9555:13)[22m[2m[22m
+[2m      [2mat setPropertyAndInputs ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9183:25)[22m[2m[22m
+[2m      [2mat ɵɵproperty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:23356:9)[22m[2m[22m
+[2m      [2mat _TuiTabsWithMore_Template ([22m[2m../../ng:/_TuiTabsWithMore/ɵcmp.js[2m:247:49)[22m[2m[22m
+[2m      [2mat executeTemplate ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9056:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10092:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInComponent ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10260:5)[22m[2m[22m
+[2m      [2mat detectChangesInChildComponents ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10338:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10147:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInEmbeddedViews ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10229:13)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10121:9)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInEmbeddedViews ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10229:13)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10121:9)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInComponent ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10260:5)[22m[2m[22m
+[2m      [2mat detectChangesInChildComponents ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10338:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10147:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewWhileDirty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10001:9)[22m[2m[22m
+[2m      [2mat detectChangesInternal ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9989:9)[22m[2m[22m
+[2m      [2mat ViewRef.detectChanges ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10851:9)[22m[2m[22m
+[2m      [2mat [22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:313:44[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat Object.onInvoke ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7854:33)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat NgZone.run ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7700:28)[22m[2m[22m
+[2m      [2mat ComponentFixture.detectChanges ([22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:310:30)[22m[2m[22m
+[2m      [2mat [22m[2m[0m[36msrc/app/features/cv/pages/cv-page/cv-page.spec.ts[39m[0m[2m:70:13[22m[2m[22m
+[2m      [2mat fulfilled ([22m[2m../../node_modules/tslib/tslib.js[2m:167:62)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat [22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:2555:42[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invokeTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:443:37)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvokeTask ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2250:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invokeTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:442:42)[22m[2m[22m
+[2m      [2mat ZoneImpl.runTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:194:51)[22m[2m[22m
+[2m      [2mat drainMicroTaskQueue ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:627:39)[22m[2m[22m
+[1m[31m  [1m● [22m[1mCvPage › Renderizado del Template › debe mostrar la sección correcta según activeTab[39m[22m
+    TypeError: Invalid event target
+[2m[22m
+[2m      [2mat fromEvent ([22m[2m../../node_modules/rxjs/dist/cjs/internal/observable/fromEvent.js[2m:51:15)[22m[2m[22m
+[2m      [2mat tuiTypedFromEvent ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-observables.mjs[2m:43:12)[22m[2m[22m
+[2m      [2mat Object.factory ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-tokens.mjs[2m:53:27)[22m[2m[22m
+[2m      [2mat R3Injector.hydrate ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2199:43)[22m[2m[22m
+[2m      [2mat R3Injector.get ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2040:33)[22m[2m[22m
+[2m      [2mat R3Injector.get ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2052:33)[22m[2m[22m
+[2m      [2mat ChainedInjector.get ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13422:36)[22m[2m[22m
+[2m      [2mat lookupTokenUsingModuleInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1718:39)[22m[2m[22m
+[2m      [2mat getOrCreateInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1766:12)[22m[2m[22m
+[2m      [2mat ɵɵdirectiveInject ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13473:19)[22m[2m[22m
+[2m      [2mat ɵɵinject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1061:42)[22m[2m[22m
+[2m      [2mat inject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1149:12)[22m[2m[22m
+[2m      [2mat new _TuiActiveZone ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-directives-active-zone.mjs[2m:14:24)[22m[2m[22m
+[2m      [2mat NodeInjectorFactory._TuiActiveZone_Factory [as factory] ([22m[2m../../ng:/_TuiActiveZone/ɵfac.js[2m:5:10)[22m[2m[22m
+[2m      [2mat getNodeInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1989:44)[22m[2m[22m
+[2m      [2mat searchTokensOnInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1900:16)[22m[2m[22m
+[2m      [2mat lookupTokenUsingNodeInjector ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1849:34)[22m[2m[22m
+[2m      [2mat getOrCreateInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1760:23)[22m[2m[22m
+[2m      [2mat ɵɵdirectiveInject ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:13473:19)[22m[2m[22m
+[2m      [2mat ɵɵinject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1061:42)[22m[2m[22m
+[2m      [2mat inject ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:1149:12)[22m[2m[22m
+[2m      [2mat new _TuiObscured ([22m[2m../../node_modules/@taiga-ui/cdk/fesm2022/taiga-ui-cdk-directives-obscured.mjs[2m:31:27)[22m[2m[22m
+[2m      [2mat NodeInjectorFactory._TuiObscured_Factory [as factory] ([22m[2m../../ng:/_TuiObscured/ɵfac.js[2m:5:10)[22m[2m[22m
+[2m      [2mat getNodeInjectable ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:1989:44)[22m[2m[22m
+[2m      [2mat instantiateAllDirectives ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9297:27)[22m[2m[22m
+[2m      [2mat createDirectivesInstances ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9070:5)[22m[2m[22m
+[2m      [2mat ɵɵelementStart ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:23396:9)[22m[2m[22m
+[2m      [2mat _TuiTabsWithMore_ng_template_5_Template ([22m[2m../../ng:/_TuiTabsWithMore/ɵcmp.js[2m:91:5)[22m[2m[22m
+[2m      [2mat executeTemplate ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9056:9)[22m[2m[22m
+[2m      [2mat renderView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9678:13)[22m[2m[22m
+[2m      [2mat createAndRenderEmbeddedLView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9748:9)[22m[2m[22m
+[2m      [2mat TemplateRef.createEmbeddedViewImpl ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10986:31)[22m[2m[22m
+[2m      [2mat ViewContainerRef2.createEmbeddedView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:14928:37)[22m[2m[22m
+[2m      [2mat _NgIf._updateView ([22m[2m../../node_modules/@angular/common/fesm2022/common_module.mjs[2m:2913:61)[22m[2m[22m
+[2m      [2mat _NgIf.set ngIfElse [as ngIfElse] ([22m[2m../../node_modules/@angular/common/fesm2022/common_module.mjs[2m:2896:14)[22m[2m[22m
+[2m      [2mat applyValueToInputField ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:528:29)[22m[2m[22m
+[2m      [2mat writeToDirectiveInput ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7173:13)[22m[2m[22m
+[2m      [2mat setAllInputsForProperty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9555:13)[22m[2m[22m
+[2m      [2mat setPropertyAndInputs ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9183:25)[22m[2m[22m
+[2m      [2mat ɵɵproperty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:23356:9)[22m[2m[22m
+[2m      [2mat _TuiTabsWithMore_Template ([22m[2m../../ng:/_TuiTabsWithMore/ɵcmp.js[2m:247:49)[22m[2m[22m
+[2m      [2mat executeTemplate ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9056:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10092:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInComponent ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10260:5)[22m[2m[22m
+[2m      [2mat detectChangesInChildComponents ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10338:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10147:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInEmbeddedViews ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10229:13)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10121:9)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInEmbeddedViews ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10229:13)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10121:9)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewIfAttached ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10272:5)[22m[2m[22m
+[2m      [2mat detectChangesInComponent ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10260:5)[22m[2m[22m
+[2m      [2mat detectChangesInChildComponents ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10338:9)[22m[2m[22m
+[2m      [2mat refreshView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10147:13)[22m[2m[22m
+[2m      [2mat detectChangesInView ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10312:9)[22m[2m[22m
+[2m      [2mat detectChangesInViewWhileDirty ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10001:9)[22m[2m[22m
+[2m      [2mat detectChangesInternal ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:9989:9)[22m[2m[22m
+[2m      [2mat ViewRef.detectChanges ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:10851:9)[22m[2m[22m
+[2m      [2mat [22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:313:44[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat Object.onInvoke ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7854:33)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat NgZone.run ([22m[2m../../node_modules/@angular/core/fesm2022/debug_node.mjs[2m:7700:28)[22m[2m[22m
+[2m      [2mat ComponentFixture.detectChanges ([22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:310:30)[22m[2m[22m
+[2m      [2mat [22m[2m[0m[36msrc/app/features/cv/pages/cv-page/cv-page.spec.ts[39m[0m[2m:70:13[22m[2m[22m
+[2m      [2mat fulfilled ([22m[2m../../node_modules/tslib/tslib.js[2m:167:62)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat [22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:2555:42[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invokeTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:443:37)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvokeTask ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2250:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invokeTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:442:42)[22m[2m[22m
+[2m      [2mat ZoneImpl.runTask ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:194:51)[22m[2m[22m
+[2m      [2mat drainMicroTaskQueue ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:627:39)[22m[2m[22m
+[1mTest Suites: [22m[1m[31m1 failed[39m[22m, 1 total
+[1mTests:       [22m[1m[31m8 failed[39m[22m, 8 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        4.169 s
+[2mRan all test suites[22m[2m matching [22mapps/frontend/src/app/features/cv/pages/cv-page/cv-page.spec.ts[2m.[22m
+
+
+
+ NX   Running target test for project frontend failed
+
+Failed tasks:
+
+- frontend:test
+
+Hint: run the command with --verbose for more details.
+

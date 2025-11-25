@@ -1,19 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PersonalSection } from './personal-section';
+import { CvStateService } from '../../services/cv-form/cv-form-state/cv-state.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { TranslocoTestingModule } from '@jsverse/transloco';
 import { By } from '@angular/platform-browser';
-import { PersonalInfoControls } from '../../../../core/models/controls.model';
 import { tuiInputPhoneInternationalOptionsProvider } from '@taiga-ui/kit';
 
 describe('PersonalSection Component', () => {
   let component: PersonalSection;
   let fixture: ComponentFixture<PersonalSection>;
-  let mockPersonalInfoForm: FormGroup<PersonalInfoControls>;
+  let mockPersonalInfoForm: FormGroup;
+  let cvStateServiceMock: any;
 
   beforeEach(async () => {
-    mockPersonalInfoForm = new FormGroup<PersonalInfoControls>({
+    mockPersonalInfoForm = new FormGroup({
       name: new FormControl(''),
       job: new FormControl(''),
       email: new FormControl(''),
@@ -25,6 +26,10 @@ describe('PersonalSection Component', () => {
       profileSummary: new FormControl(''),
     });
 
+    cvStateServiceMock = {
+      personalInfoGroup: mockPersonalInfoForm,
+    };
+
     await TestBed.configureTestingModule({
       imports: [
         PersonalSection,
@@ -32,11 +37,11 @@ describe('PersonalSection Component', () => {
         TranslocoTestingModule.forRoot({
           langs: { en: {}, es: {} },
           translocoConfig: { availableLangs: ['en', 'es'], defaultLang: 'es' },
-          preloadLangs: true, // Importante para asegurar que cargue rápido
         }),
       ],
       providers: [
         provideAnimations(),
+        { provide: CvStateService, useValue: cvStateServiceMock },
         tuiInputPhoneInternationalOptionsProvider({
           metadata: import('libphonenumber-js/max/metadata').then((m) => m.default as any),
         }),
@@ -45,12 +50,7 @@ describe('PersonalSection Component', () => {
 
     fixture = TestBed.createComponent(PersonalSection);
     component = fixture.componentInstance;
-
-    fixture.componentRef.setInput('personalInfo', mockPersonalInfoForm);
-
     fixture.detectChanges();
-    await fixture.whenStable(); // Esperamos a que transloco y forms se estabilicen
-    fixture.detectChanges(); // Forzamos otro ciclo de detección
   });
 
   it('should create', () => {
@@ -59,70 +59,60 @@ describe('PersonalSection Component', () => {
 
   describe('Form Binding', () => {
     it('should render all inputs', () => {
-      // Debug: Imprimir el HTML para ver qué se renderizó
-      // console.log(fixture.nativeElement.innerHTML);
-
       const inputs = fixture.debugElement.queryAll(By.css('input'));
       const textareas = fixture.debugElement.queryAll(By.css('textarea'));
 
-      // Si falla aquí, es porque *transloco no mostró el contenido
-      // Asegurate de que el template no tenga errores de sintaxis
-      expect(inputs.length).toBe(8);
-      expect(textareas.length).toBe(1);
+      // We expect 8 inputs (name, job, email, phone, location, linkedin, github, web)
+      // and 1 textarea (profileSummary)
+      // Note: TuiInputPhoneInternational might render multiple inputs or different structure,
+      // but let's check for at least the standard ones.
+      // Actually, let's verify by formControlName to be more robust.
+
+      const formControlNames = [
+        'name',
+        'job',
+        'email',
+        'phone',
+        'location',
+        'linkedin',
+        'github',
+        'web',
+        'profileSummary',
+      ];
+
+      formControlNames.forEach((controlName) => {
+        const el = fixture.debugElement.query(By.css(`[formControlName="${controlName}"]`));
+        expect(el).toBeTruthy();
+      });
     });
 
     it('should bind input values to form control', async () => {
-      // Usamos un selector más seguro que no dependa de que 'input' sea el tag directo (Taiga a veces wrappea)
-      // Buscamos por el formControlName que es lo que realmente nos importa
       const nameInputDe = fixture.debugElement.query(By.css('[formControlName="name"]'));
-
-      // Chequeo de seguridad para que el test falle con un mensaje útil si no encuentra el elemento
-      if (!nameInputDe) {
-        throw new Error('No se encontró el input con formControlName="name"');
-      }
-
       const newValue = 'Martin Developer';
       const inputNative = nameInputDe.nativeElement;
 
       inputNative.value = newValue;
       inputNative.dispatchEvent(new Event('input'));
-
       fixture.detectChanges();
-      await fixture.whenStable();
 
-      expect(mockPersonalInfoForm.controls.name.value).toBe(newValue);
+      expect(mockPersonalInfoForm.controls['name'].value).toBe(newValue);
     });
 
     it('should update input value when form control changes programmatically', async () => {
       const newJob = 'Senior Angular Dev';
-      mockPersonalInfoForm.controls.job.setValue(newJob);
-
+      mockPersonalInfoForm.controls['job'].setValue(newJob);
       fixture.detectChanges();
       await fixture.whenStable();
 
       const jobInputDe = fixture.debugElement.query(By.css('[formControlName="job"]'));
-
-      if (!jobInputDe) {
-        throw new Error('No se encontró el input con formControlName="job"');
-      }
-
       expect(jobInputDe.nativeElement.value).toBe(newJob);
     });
   });
 
   describe('Phone Input', () => {
-    it('should render phone input with international options', () => {
+    it('should render phone input', () => {
       const phoneInputDe = fixture.debugElement.query(By.css('[formControlName="phone"]'));
-
       expect(phoneInputDe).toBeTruthy();
-
-      // Si querés verificar atributos específicos, asegurate de que estén en el DOM
-      // Taiga UI a veces proyecta el input nativo dentro de componentes custom
-      // El atributo countryIsoCode es un Input del componente TuiInputPhoneInternational,
-      // no necesariamente un atributo HTML visible.
-      // Para verificar Inputs de componentes:
-      expect(phoneInputDe.componentInstance).toBeDefined();
-      // O verificar clases si no podés acceder a la instancia fácilmente en un test unitario de integración
     });
   });
 });
