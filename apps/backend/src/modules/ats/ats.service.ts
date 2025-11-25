@@ -23,7 +23,7 @@ export async function analyzeCvAts(
   const cvText = parsed.text.slice(0, 15000);
 
   if (!jobDesc) {
-    throw new Error('jobDesc no puede ser undefined en ats.service');
+    throw new Error('jobDesc no puede ser undefined en ats.analysis');
   }
 
   const finalAiSettings: AiSettings = {

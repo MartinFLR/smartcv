@@ -1,0 +1,102 @@
+<ng-container *transloco="let t">
+  <fieldset class="contents">
+    <div class="flex justify-between items-center mb-3">
+      <h2 class="text-xl font-semibold">{{ t('cv.experience.title') }}</h2>
+      <button
+        tuiButton
+        tuiRipple
+        iconStart="@tui.plus"
+        type="button"
+        size="s"
+        (click)="service.add()"
+      >
+        {{ t('cv.experience.add') }}
+      </button>
+    </div>
+
+    @for (group of service.formArray().controls; track group; let i = $index) {
+      <div
+        tuiCardLarge
+        [formGroup]="group"
+        class="p-4 border-gray-200 border rounded relative flex flex-col gap-4 mb-4"
+      >
+        <div class="flex flex-row-reverse">
+          <button
+            tuiButton
+            type="button"
+            appearance="action-destructive"
+            size="s"
+            tuiRipple
+            iconStart="@tui.trash"
+            (click)="service.remove(i)"
+          >
+            <span class="sr-only">Eliminar Experiencia</span>
+          </button>
+        </div>
+
+        <tui-textfield>
+          <label tuiLabel for="experienceRoleInput">{{ t('cv.experience.job.name') }}</label>
+          <input
+            tuiTextfield
+            id="experienceRoleInput"
+            [placeholder]="t('cv.experience.job.placeholder')"
+            formControlName="role"
+          />
+        </tui-textfield>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <tui-textfield>
+            <label tuiLabel for="experienceCompanyInput">{{
+              t('cv.experience.company.name')
+            }}</label>
+            <input
+              tuiTextfield
+              id="experienceCompanyInput"
+              formControlName="company"
+              [placeholder]="t('cv.experience.company.placeholder')"
+            />
+          </tui-textfield>
+
+          <div class="flex flex-row gap-4">
+            <tui-textfield class="w-full">
+              <label tuiLabel for="experienceDateInInput">{{
+                t('cv.experience.dateIn.name')
+              }}</label>
+              <input
+                tuiTextfield
+                id="experienceDateInInput"
+                formControlName="dateIn"
+                [placeholder]="t('cv.experience.dateIn.placeholder')"
+              />
+            </tui-textfield>
+            <tui-textfield class="w-full">
+              <label tuiLabel for="experienceDateFinInput">{{
+                t('cv.experience.dateFin.name')
+              }}</label>
+              <input
+                tuiTextfield
+                id="experienceDateFinInput"
+                formControlName="dateFin"
+                [placeholder]="t('cv.experience.dateFin.placeholder')"
+              />
+            </tui-textfield>
+          </div>
+        </div>
+
+        <tui-textfield>
+          <label tuiLabel for="experienceBulletsInput">
+            {{ t('cv.experience.achievements.name') }}
+          </label>
+          <textarea
+            tuiTextarea
+            [placeholder]="t('cv.experience.achievements.placeholder')"
+            formControlName="bullets"
+            id="experienceBulletsInput"
+            [min]="8"
+            [max]="10"
+          ></textarea>
+        </tui-textfield>
+      </div>
+    }
+  </fieldset>
+</ng-container>

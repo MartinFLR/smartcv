@@ -1,0 +1,152 @@
+<ng-container *transloco="let t">
+  <div class="flex flex-col gap-2">
+    <h2 class="text-xl font-semibold">Generá tu carta de presentación</h2>
+    <p class="text-sm">
+      La IA va a analizar lo que tenés ahora en el CV y va a generar una cover letter personalizada
+      para que le puedas enviar a los recruiters.
+    </p>
+  </div>
+
+  <fieldset [formGroup]="service.form" class="flex flex-col mt-4 gap-6">
+    <h3 class="text-sm font-semibold">Campos opcionales</h3>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      @if (service.isInternalReference()) {
+        <tui-textfield>
+          <label tuiLabel for="referralNameInput">Nombre de tu referente interno</label>
+          <input
+            tuiTextfield
+            formControlName="referralName"
+            placeholder="Ej: Ana Pérez"
+            id="referralNameInput"
+          />
+        </tui-textfield>
+      }
+
+      <tui-textfield>
+        <label tuiLabel for="recruiterNameInput">Nombre del Reclutador/a</label>
+        <input
+          tuiTextfield
+          [state]="service.isApplicationForm() ? 'active' : null"
+          formControlName="recruiterName"
+          placeholder="Ej: Ana Pérez"
+          id="recruiterNameInput"
+        />
+      </tui-textfield>
+
+      <tui-textfield>
+        <label tuiLabel for="companyNameInput">Nombre de la Empresa</label>
+        <input
+          tuiTextfield
+          formControlName="companyName"
+          placeholder="Ej: Mercado Libre"
+          id="companyNameInput"
+        />
+      </tui-textfield>
+    </div>
+
+    <fieldset class="flex flex-col gap-2 py-2">
+      <div tuiLabel class="text-sm font-medium">Tono de la carta</div>
+      <div tuiItemGroup class="flex flex-wrap gap-2">
+        @for (tone of tones; track tone.value; let i = $index) {
+          <label
+            tuiChip
+            [iconStart]="tone.icon"
+            [for]="'toneInput' + i"
+            class="cursor-pointer"
+            [appearance]="tone.value === service.form.controls.tone.value ? 'primary' : 'neutral'"
+          >
+            <input
+              type="radio"
+              formControlName="tone"
+              tuiChip
+              appearance=""
+              [value]="tone.value"
+              [id]="'toneInput' + i"
+              class="sr-only"
+            />
+            {{ tone.name }}
+          </label>
+        }
+      </div>
+    </fieldset>
+
+    <fieldset class="flex flex-col gap-2 py-2">
+      <div tuiLabel class="text-sm font-medium">Canal de comunicación</div>
+      <div tuiItemGroup class="flex flex-wrap gap-2">
+        @for (channel of channelDeliverys; track $index; let i = $index) {
+          <label
+            tuiChip
+            [iconStart]="channel.icon"
+            [for]="'channelInput' + i"
+            class="cursor-pointer"
+            [appearance]="
+              channel.value === service.form.controls.deliveryChannel.value ? 'primary' : 'neutral'
+            "
+          >
+            <input
+              type="radio"
+              formControlName="deliveryChannel"
+              tuiChip
+              appearance=""
+              [value]="channel.value"
+              class="sr-only"
+              [id]="'channelInput' + i"
+            />
+            {{ channel.name }}
+          </label>
+        }
+      </div>
+    </fieldset>
+  </fieldset>
+
+  <div [formGroup]="service.iaForm" class="flex flex-col gap-6 mt-6">
+    <div tuiCardLarge class="p-4 rounded relative flex flex-col gap-4">
+      <tui-textfield>
+        <label tuiLabel for="jobDescriptionInput">
+          Pegá acá la descripción del puesto (Job Description)
+        </label>
+        <textarea
+          tuiTextarea
+          formControlName="jobDescription"
+          [min]="8"
+          [max]="10"
+          id="jobDescriptionInput"
+        ></textarea>
+      </tui-textfield>
+
+      <div class="text-sm mt-2">
+        <p>
+          Pegá la descripción del puesto aquí para que la IA pueda generar tu carta de presentación
+          teniendo en cuenta las responsabilidades, habilidades y requisitos clave del trabajo.
+        </p>
+      </div>
+
+      <button
+        tuiButton
+        type="button"
+        class="w-full mt-6 sm:w-auto"
+        [loading]="service.isLoading()"
+        [disabled]="service.iaForm.invalid"
+        (click)="service.generate()"
+      >
+        Generar carta
+      </button>
+    </div>
+
+    <div class="mt-8 flex flex-col gap-4">
+      <h3 class="text-lg font-semibold">Tu carta de presentación generada</h3>
+
+      <tui-textfield>
+        <textarea
+          tuiTextarea
+          [min]="15"
+          [max]="25"
+          [value]="service.generatedLetter()"
+          readonly
+        ></textarea>
+        <tui-icon icon="@tui.copy" tuiCopy [tuiCopy]="service.generatedLetter()" />
+      </tui-textfield>
+    </div>
+  </div>
+</ng-container>

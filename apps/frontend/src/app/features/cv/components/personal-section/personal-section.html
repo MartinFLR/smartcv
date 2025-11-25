@@ -1,0 +1,93 @@
+<ng-container *transloco="let t">
+  <fieldset [formGroup]="personalInfo" class="flex flex-col gap-4">
+    <h2 class="text-xl font-semibold">{{ t('cv.personalInfo.title') }}</h2>
+    <tui-textfield>
+      <label tuiLabel [for]="'personalNameInput'"> {{ t('cv.personalInfo.name.name') }}</label>
+      <input tuiTextfield [id]="'personalNameInput'" formControlName="name" />
+    </tui-textfield>
+    <tui-textfield>
+      <label [for]="'personalJobInput'" tuiLabel>{{ t('cv.personalInfo.job.name') }}</label>
+      <input
+        tuiTextfield
+        [id]="'personalJobInput'"
+        [placeholder]="t('cv.personalInfo.job.placeholder')"
+        formControlName="job"
+      />
+    </tui-textfield>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <tui-textfield>
+        <label tuiLabel [for]="'personalEmail'">{{ t('cv.personalInfo.email.name') }}</label>
+        <input
+          tuiTextfield
+          [id]="'personalEmail'"
+          [placeholder]="t('cv.personalInfo.email.placeholder')"
+          type="email"
+          formControlName="email"
+        />
+      </tui-textfield>
+      <tui-textfield [tuiTextfieldCleaner]="true">
+        <label tuiLabel [for]="'personalTelephone'">{{ t('cv.personalInfo.phone.name') }}</label>
+        <input
+          tuiInputPhoneInternational
+          countryIsoCode="AR"
+          [id]="'personalTelephone'"
+          [countries]="countries"
+          [countrySearch]="true"
+          formControlName="phone"
+        />
+      </tui-textfield>
+
+      <tui-textfield>
+        <label tuiLabel [for]="'personalUbication'">{{
+          t('cv.personalInfo.ubication.name')
+        }}</label>
+        <input
+          tuiTextfield
+          [id]="'personalUbication'"
+          [placeholder]="t('cv.personalInfo.ubication.placeholder')"
+          formControlName="location"
+        />
+      </tui-textfield>
+
+      <tui-textfield>
+        <label tuiLabel [for]="'personalLinkedin'">{{ t('cv.personalInfo.linkedin.name') }}</label>
+        <input
+          tuiTextfield
+          [id]="'personalLinkedin'"
+          [placeholder]="t('cv.personalInfo.linkedin.placeholder')"
+          formControlName="linkedin"
+        />
+      </tui-textfield>
+
+      <tui-textfield>
+        <label tuiLabel [for]="'personalGithub'">{{ t('cv.personalInfo.github.name') }}</label>
+        <input
+          tuiTextfield
+          [id]="'personalGithub'"
+          [placeholder]="t('cv.personalInfo.github.placeholder')"
+          formControlName="github"
+        />
+      </tui-textfield>
+      <tui-textfield>
+        <label tuiLabel [for]="'personalWebsite'">{{ t('cv.personalInfo.web.name') }}</label>
+        <input
+          tuiTextfield
+          [id]="'personalWebsite'"
+          [placeholder]="t('cv.personalInfo.web.placeholder')"
+          formControlName="web"
+        />
+      </tui-textfield>
+    </div>
+
+    <h2 class="text-xl font-semibold mt-4">{{ t('cv.personalInfo.resume.title') }}</h2>
+    <tui-textfield iconStart="@tui.pencil">
+      <textarea
+        tuiTextarea
+        [placeholder]="t('cv.personalInfo.resume.placeholder')"
+        formControlName="profileSummary"
+        [min]="8"
+        [max]="10"
+      ></textarea>
+    </tui-textfield>
+  </fieldset>
+</ng-container>

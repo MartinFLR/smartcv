@@ -1,0 +1,116 @@
+<ng-container *transloco="let t">
+  <fieldset class="contents">
+    <div class="flex justify-between items-center mb-3">
+      <h2 class="text-xl font-semibold">{{ t('cv.skills.title') }}</h2>
+    </div>
+
+    @for (skillGroup of service.formArray().controls; track $index; let i = $index) {
+      <div [formGroup]="skillGroup" class="p-4 rounded relative flex flex-col gap-4">
+        <tui-textfield multi>
+          <label tuiLabel for="skillsSkills">{{ t('cv.skills.skill.name') }}</label>
+          <input
+            tuiInputChip
+            formControlName="skills"
+            [placeholder]="t('cv.skills.skill.placeholder')"
+            id="skillsSkills"
+          />
+          <tui-input-chip *tuiItem />
+        </tui-textfield>
+
+        <tui-textfield multi>
+          <label tuiLabel for="skillsLanguages">{{ t('cv.skills.language.name') }}</label>
+          <input
+            tuiInputChip
+            formControlName="languages"
+            [placeholder]="t('cv.skills.language.placeholder')"
+            id="skillsLanguages"
+          />
+          <tui-input-chip *tuiItem />
+        </tui-textfield>
+
+        <h3 class="text-lg font-medium mt-2">{{ t('cv.skills.certifications.title') }}</h3>
+
+        <fieldset formArrayName="certifications" class="flex flex-col gap-2">
+          @if (service.getCertificationsControls(skillGroup).length === 0) {
+            <p class="text-sm text-gray-500">{{ t('cv.skills.certifications.subtitle') }}</p>
+          }
+
+          @for (
+            certGroup of service.getCertificationsControls(skillGroup);
+            track $index;
+            let certIndex = $index
+          ) {
+            <div
+              tuiCardLarge
+              [formGroup]="certGroup"
+              class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-end p-3 border rounded"
+            >
+              <tui-textfield class="sm:col-span-6">
+                <label tuiLabel for="skillsCertificationName">
+                  {{ t('cv.skills.certifications.certification.name.name') }}
+                </label>
+                <input
+                  tuiTextfield
+                  formControlName="name"
+                  [placeholder]="t('cv.skills.certifications.certification.name.placeholder')"
+                  id="skillsCertificationName"
+                />
+              </tui-textfield>
+
+              <tui-textfield class="sm:col-span-4">
+                <label tuiLabel for="skillsCertificationDate">
+                  {{ t('cv.skills.certifications.certification.date.name') }}
+                </label>
+                <input
+                  tuiTextfield
+                  formControlName="date"
+                  [placeholder]="t('cv.skills.certifications.certification.date.placeholder')"
+                  id="skillsCertificationDate"
+                />
+              </tui-textfield>
+
+              <button
+                tuiButton
+                type="button"
+                appearance="action-destructive"
+                size="s"
+                tuiRipple
+                iconStart="@tui.trash"
+                (click)="service.removeCertification(i, certIndex)"
+                class="sm:col-span-2"
+              >
+                <span class="sr-only">Eliminar Certificado</span>
+              </button>
+            </div>
+          }
+
+          <button
+            tuiButton
+            tuiRipple
+            type="button"
+            appearance="outline"
+            size="s"
+            iconStart="@tui.plus"
+            (click)="service.addCertification(i)"
+            class="mt-2 self-start"
+          >
+            {{ t('cv.skills.certifications.button') }}
+          </button>
+        </fieldset>
+
+        <tui-textfield multi class="mt-2">
+          <label tuiLabel for="skillsAdditional">
+            {{ t('cv.skills.additional.name') }}
+          </label>
+          <input
+            tuiInputChip
+            formControlName="additional"
+            [placeholder]="t('cv.skills.additional.placeholder')"
+            id="skillsAdditional"
+          />
+          <tui-input-chip *tuiItem />
+        </tui-textfield>
+      </div>
+    }
+  </fieldset>
+</ng-container>

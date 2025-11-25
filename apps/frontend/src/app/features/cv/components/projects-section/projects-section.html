@@ -1,0 +1,94 @@
+<ng-container *transloco="let t">
+  <fieldset class="contents">
+    <div class="flex justify-between items-center mb-3">
+      <h2 class="text-xl font-semibold">{{ t('cv.project.title') }}</h2>
+      <button
+        tuiButton
+        tuiRipple
+        type="button"
+        size="s"
+        iconStart="@tui.plus"
+        (click)="service.add()"
+      >
+        {{ t('cv.project.add') }}
+      </button>
+    </div>
+
+    @for (group of service.formArray().controls; track $index; let i = $index) {
+      <div
+        tuiCardLarge
+        [formGroup]="group"
+        class="p-4 border border-gray-200 rounded relative flex flex-col gap-4 mb-4"
+      >
+        <div class="flex flex-row-reverse">
+          <button
+            tuiButton
+            type="button"
+            appearance="action-destructive"
+            size="s"
+            tuiRipple
+            iconStart="@tui.trash"
+            (click)="service.remove(i)"
+          >
+            <span class="sr-only">Eliminar proyecto</span>
+          </button>
+        </div>
+
+        <tui-textfield>
+          <label tuiLabel for="projectsName"> {{ t('cv.project.name.name') }}</label>
+          <input
+            tuiTextfield
+            id="projectsName"
+            [placeholder]="t('cv.project.name.name')"
+            formControlName="name"
+          />
+        </tui-textfield>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <tui-textfield>
+            <label tuiLabel for="projectsSubtitle">{{ t('cv.project.subtitle.name') }}</label>
+            <input
+              tuiTextfield
+              id="projectsSubtitle"
+              formControlName="subtitle"
+              [placeholder]="t('cv.project.subtitle.placeholder')"
+            />
+          </tui-textfield>
+
+          <div class="flex flex-row gap-4">
+            <tui-textfield class="w-full">
+              <label tuiLabel for="projectsDateIn">{{ t('cv.project.dateIn.name') }}</label>
+              <input
+                tuiTextfield
+                id="projectsDateIn"
+                formControlName="dateIn"
+                [placeholder]="t('cv.project.dateIn.placeholder')"
+              />
+            </tui-textfield>
+            <tui-textfield class="w-full">
+              <label tuiLabel for="projectsDateFin">{{ t('cv.project.dateFin.name') }}</label>
+              <input
+                tuiTextfield
+                id="projectsDateFin"
+                formControlName="dateFin"
+                [placeholder]="t('cv.project.dateFin.placeholder')"
+              />
+            </tui-textfield>
+          </div>
+        </div>
+
+        <tui-textfield>
+          <label tuiLabel for="projectsBullets">{{ t('cv.project.achievements.name') }}</label>
+          <textarea
+            tuiTextarea
+            id="projectsBullets"
+            [placeholder]="t('cv.project.achievements.placeholder')"
+            formControlName="bullets"
+            [min]="8"
+            [max]="10"
+          ></textarea>
+        </tui-textfield>
+      </div>
+    }
+  </fieldset>
+</ng-container>

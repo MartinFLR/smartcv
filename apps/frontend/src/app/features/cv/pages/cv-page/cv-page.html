@@ -1,0 +1,96 @@
+<ng-template #formContent>
+  <div class="md:col-span-6 flex flex-col gap-6">
+    <div tuiCardLarge class="p-6 border rounded-lg shadow-sm" (tuiSwipe)="onViewSwipe($event)">
+      <app-actions />
+
+      <ng-container *transloco="let t">
+        <tui-tabs-with-more [itemsLimit]="6" [(activeItemIndex)]="activeTab" tuiFade>
+          <button *tuiItem iconStart="@tui.user" tuiTab>{{ t('cv.tab.personal') }}</button>
+          <button *tuiItem iconStart="@tui.book-open" tuiTab>{{ t('cv.tab.education') }}</button>
+          <button *tuiItem iconStart="@tui.briefcase" tuiTab>{{ t('cv.tab.experience') }}</button>
+          <button *tuiItem iconStart="@tui.folder" tuiTab>{{ t('cv.tab.projects') }}</button>
+          <button *tuiItem iconStart="@tui.code" tuiTab>{{ t('cv.tab.skills') }}</button>
+          <button *tuiItem iconStart="@tui.sparkles" tuiTab>{{ t('cv.tab.ia') }}</button>
+          <button *tuiItem iconStart="@tui.filter" tuiTab>{{ t('cv.tab.ats') }}</button>
+          <button *tuiItem iconStart="@tui.notepad-text" tuiTab>
+            {{ t('cv.tab.coverLetter') }}
+          </button>
+        </tui-tabs-with-more>
+      </ng-container>
+
+      <form
+        [formGroup]="state.cvForm"
+        class="flex flex-col gap-6 pt-6"
+        (tuiSwipe)="onFormSwipe($event)"
+        (touchstart.stop)="(0)"
+        (mousedown.stop)="(0)"
+      >
+        @switch (activeTab()) {
+          @case (0) {
+            <app-personal-section />
+          }
+          @case (1) {
+            <app-education-section />
+          }
+          @case (2) {
+            <app-experience-section />
+          }
+          @case (3) {
+            <app-projects-section />
+          }
+          @case (4) {
+            <app-skills-section />
+          }
+          @case (5) {
+            <app-ia-section />
+          }
+          @case (6) {
+            <app-ats-section />
+          }
+          @case (7) {
+            <app-cover-letter-section />
+          }
+        }
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #previewContent>
+  <div class="md:col-span-6 md:sticky md:top-8 h-full" (tuiSwipe)="onViewSwipe($event)">
+    <app-dummy-view
+      [cvPreview]="state.cvPreview()"
+      [hasEducation]="state.hasEducation()"
+      [hasExperience]="state.hasExperience()"
+      [hasProjects]="state.hasProjects()"
+      [hasSkills]="state.hasSkills()"
+    />
+  </div>
+</ng-template>
+
+<div class="md:hidden">
+  <tui-tabs [(activeItemIndex)]="mobileView" class="sticky top-0 z-10 flex justify-center">
+    <button tuiTab>Formulario</button>
+    <button tuiTab>Previsualizar</button>
+  </tui-tabs>
+
+  <div class="overflow-hidden">
+    <div
+      class="flex transition-transform duration-300 ease-in-out"
+      [class.translate-x-0]="mobileView() === 0"
+      [class.-translate-x-full]="mobileView() === 1"
+    >
+      <div class="w-full flex-shrink-0 p-4">
+        <ng-container *ngTemplateOutlet="formContent"></ng-container>
+      </div>
+      <div class="w-full flex-shrink-0 p-4">
+        <ng-container *ngTemplateOutlet="previewContent"></ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hidden max-w-8xl md:px-8 mx-auto justify-center md:grid md:grid-cols-12 gap-6 p-4">
+  <ng-container *ngTemplateOutlet="formContent"></ng-container>
+  <ng-container *ngTemplateOutlet="previewContent"></ng-container>
+</div>

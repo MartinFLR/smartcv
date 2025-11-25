@@ -1,0 +1,102 @@
+<ng-container *transloco="let t">
+  <fieldset class="contents">
+    <div class="flex justify-between items-center mb-3">
+      <h2 class="text-xl font-semibold">{{ t('cv.education.title') }}</h2>
+      <button
+        tuiButton
+        tuiRipple
+        type="button"
+        iconStart="@tui.plus"
+        size="s"
+        (click)="service.add()"
+      >
+        {{ t('cv.education.add') }}
+      </button>
+    </div>
+
+    @for (eduGroup of service.formArray().controls; track $index; let i = $index) {
+      <div
+        tuiCardLarge
+        [formGroup]="eduGroup"
+        class="p-4 border rounded border-gray-200 relative flex flex-col gap-4 mb-4"
+      >
+        <div class="flex flex-row-reverse">
+          <button
+            tuiButton
+            type="button"
+            appearance="action-destructive"
+            size="s"
+            tuiRipple
+            iconStart="@tui.trash"
+            (click)="service.remove(i)"
+          >
+            <span class="sr-only">Eliminar registro de educación</span>
+          </button>
+        </div>
+
+        <tui-textfield>
+          <label tuiLabel [for]="'educationTitleInput' + i">{{
+            t('cv.education.name.name')
+          }}</label>
+          <input
+            tuiTextfield
+            [placeholder]="t('cv.education.name.placeholder')"
+            formControlName="title"
+            [id]="'educationTitleInput' + i"
+          />
+        </tui-textfield>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <tui-textfield>
+            <label tuiLabel [for]="'institutionInput' + i">{{
+              t('cv.education.institution.name')
+            }}</label>
+            <input
+              tuiTextfield
+              [id]="'institutionInput' + i"
+              formControlName="institution"
+              [placeholder]="t('cv.education.institution.placeholder')"
+            />
+          </tui-textfield>
+
+          <div class="flex flex-row gap-4">
+            <tui-textfield class="w-full">
+              <label tuiLabel [for]="'dateInInput' + i">{{ t('cv.education.dateIn.name') }}</label>
+              <input
+                tuiTextfield
+                formControlName="dateIn"
+                [placeholder]="t('cv.education.dateIn.placeholder')"
+                [id]="'dateInInput' + i"
+              />
+            </tui-textfield>
+            <tui-textfield class="w-full">
+              <label tuiLabel [for]="'dateFinInput' + i">{{
+                t('cv.education.dateFin.name')
+              }}</label>
+              <input
+                tuiTextfield
+                formControlName="dateFin"
+                [id]="'dateFinInput' + i"
+                [placeholder]="t('cv.education.dateFin.placeholder')"
+              />
+            </tui-textfield>
+          </div>
+        </div>
+
+        <tui-textfield>
+          <label tuiLabel [for]="'educationBulletsInput' + i">{{
+            t('cv.education.achievements.name')
+          }}</label>
+          <textarea
+            tuiTextarea
+            [placeholder]="t('cv.education.achievements.placeholder')"
+            formControlName="bullets"
+            [id]="'educationBulletsInput' + i"
+            [min]="8"
+            [max]="10"
+          ></textarea>
+        </tui-textfield>
+      </div>
+    }
+  </fieldset>
+</ng-container>

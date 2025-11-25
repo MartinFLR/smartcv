@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
 import { Config } from './features/config/config';
-import { Home } from './features/home/home';
+import { CvPage } from './features/cv/pages/cv-page/cv-page';
 
 export const routes: Routes = [
   {
     path: '',
-    component: Home,
+    component: CvPage,
     title: 'SmartCV - Resume Generator',
   },
   {

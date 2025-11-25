@@ -8,6 +8,7 @@ import { SaveDataService } from '../save-data/save-data.service';
 export class ProfileService {
   private readonly saveDataService = inject(SaveDataService);
   private readonly STORAGE_KEY = 'cv-profiles';
+  private readonly ACTIVE_PROFILE_KEY = 'cv-active-profile-id';
 
   private readonly document = inject(DOCUMENT);
   private readonly storage: Storage | null = this.document.defaultView?.localStorage ?? null;
@@ -185,5 +186,19 @@ export class ProfileService {
     } catch (e) {
       console.error('Error al persistir perfiles en localStorage:', e);
     }
+  }
+
+  public saveLastActiveProfileId(id: string | null): void {
+    if (!this.storage) return;
+    if (id) {
+      this.storage.setItem(this.ACTIVE_PROFILE_KEY, id);
+    } else {
+      this.storage.removeItem(this.ACTIVE_PROFILE_KEY);
+    }
+  }
+
+  public getLastActiveProfileId(): string | null {
+    if (!this.storage) return null;
+    return this.storage.getItem(this.ACTIVE_PROFILE_KEY);
   }
 }

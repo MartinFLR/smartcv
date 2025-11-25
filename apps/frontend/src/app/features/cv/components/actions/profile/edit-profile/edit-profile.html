@@ -1,0 +1,15 @@
+<ng-container *transloco="let t">
+  <form tuiForm>
+    <tui-textfield>
+      <label tuiLabel [for]="'profileNameInput'">{{ t('cv.actions.edit.title') }}</label>
+
+      <input name="name" tuiAutoFocus tuiTextfield [(ngModel)]="value" [id]="'profileNameInput'" />
+    </tui-textfield>
+    <footer>
+      <button appearance="secondary" tuiButton type="button" (click)="context.$implicit.complete()">
+        {{ t('cv.actions.edit.cancel') }}
+      </button>
+      <button tuiButton type="submit">{{ t('cv.actions.edit.save') }}</button>
+    </footer>
+  </form>
+</ng-container>
