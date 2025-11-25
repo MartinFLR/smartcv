@@ -1,35 +1,37 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SkillsSection } from './skills-section';
+import { SkillsService } from './skills-service/skills.service';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { TranslocoTestingModule } from '@jsverse/transloco';
 import { By } from '@angular/platform-browser';
-import { jest } from '@jest/globals';
-import { CertificationControls, SkillsControls } from '../../../../core/models/controls.model';
+import { TranslocoTestingModule } from '@jsverse/transloco';
+import { SkillsSection } from './skills-section';
+
+// 1. Mock del Servicio
+const mockSkillsService = {
+  formArray: jest.fn(),
+  getCertificationsControls: jest.fn(),
+  addCertification: jest.fn(),
+  removeCertification: jest.fn(),
+};
 
 describe('SkillsSection', () => {
   let component: SkillsSection;
   let fixture: ComponentFixture<SkillsSection>;
 
-  const createCertificationGroup = (name = 'Cert 1') => {
-    return new FormGroup<CertificationControls>({
-      name: new FormControl(name),
-      date: new FormControl('2024'),
+  const createSkillGroup = () =>
+    new FormGroup({
+      skills: new FormControl([]),
+      languages: new FormControl([]),
+      certifications: new FormArray([]),
+      additional: new FormControl([]),
     });
-  };
-
-  const createSkillGroup = (skills: string[] = ['Angular'], certs: string[] = []) => {
-    return new FormGroup<SkillsControls>({
-      skills: new FormControl(skills),
-      languages: new FormControl(['Spanish']),
-      additional: new FormControl(['Leadership']),
-      certifications: new FormArray<FormGroup<CertificationControls>>(
-        certs.map((c) => createCertificationGroup(c)),
-      ),
-    });
-  };
 
   beforeEach(async () => {
+    jest.clearAllMocks();
+
+    const defaultFormArray = new FormArray([createSkillGroup()]);
+    mockSkillsService.formArray.mockReturnValue(defaultFormArray);
+    mockSkillsService.getCertificationsControls.mockReturnValue([]);
+
     await TestBed.configureTestingModule({
       imports: [
         SkillsSection,
@@ -39,85 +41,87 @@ describe('SkillsSection', () => {
           translocoConfig: { availableLangs: ['en', 'es'], defaultLang: 'es' },
         }),
       ],
-      providers: [provideAnimations()],
+      providers: [{ provide: SkillsService, useValue: mockSkillsService }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SkillsSection);
     component = fixture.componentInstance;
-
-    fixture.componentRef.setInput('skillsForms', new FormArray([]));
-
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('debe crearse correctamente', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('Rendering', () => {
-    it('should render skill groups correctly', async () => {
-      const skillsArray = new FormArray([
-        createSkillGroup(['Angular', 'React']),
-        createSkillGroup(['NodeJS']),
-      ]);
+  describe('Renderizado de Estructura', () => {
+    it('debe renderizar los inputs principales', () => {
+      const skillsInput = fixture.debugElement.query(By.css('#skillsSkills'));
+      const langInput = fixture.debugElement.query(By.css('#skillsLanguages'));
+      const addInput = fixture.debugElement.query(By.css('#skillsAdditional'));
 
-      fixture.componentRef.setInput('skillsForms', skillsArray);
-      fixture.detectChanges();
-      await fixture.whenStable();
-
-      const chipInputs = fixture.debugElement.queryAll(By.css('input[tuiInputChip]'));
-      expect(chipInputs.length).toBe(6);
+      expect(skillsInput).toBeTruthy();
+      expect(langInput).toBeTruthy();
+      expect(addInput).toBeTruthy();
     });
 
-    it('should render certifications within a skill group', () => {
-      const skillsArray = new FormArray([createSkillGroup([], ['AWS Certified', 'Google Cloud'])]);
-
-      fixture.componentRef.setInput('skillsForms', skillsArray);
-      fixture.detectChanges();
-
-      const certNameInputs = fixture.debugElement.queryAll(By.css('input[formControlName="name"]'));
-      expect(certNameInputs.length).toBe(2);
-      expect(certNameInputs[0].nativeElement.value).toContain('AWS Certified');
+    it('debe mostrar el mensaje de "sin certificaciones" cuando está vacío', () => {
+      const emptyMessage = fixture.debugElement.query(By.css('p.text-gray-500'));
+      expect(emptyMessage).toBeTruthy();
     });
   });
 
-  describe('Interactions (Outputs)', () => {
-    it('should emit "addCert" with skill group index when Add Cert button is clicked', () => {
-      const skillsArray = new FormArray([createSkillGroup()]); // Index 0
-      fixture.componentRef.setInput('skillsForms', skillsArray);
+  describe('Renderizado de Certificaciones', () => {
+    it('debe renderizar las tarjetas de certificación si el servicio las devuelve', () => {
+      const certGroup1 = new FormGroup({
+        name: new FormControl('Java'),
+        date: new FormControl('2023'),
+      });
+      const certGroup2 = new FormGroup({
+        name: new FormControl('Angular'),
+        date: new FormControl('2024'),
+      });
+
+      mockSkillsService.getCertificationsControls.mockReturnValue([certGroup1, certGroup2]);
+
       fixture.detectChanges();
 
-      const emitSpy = jest.spyOn(component.addCert, 'emit');
+      const emptyMessage = fixture.debugElement.query(By.css('p.text-gray-500'));
+      expect(emptyMessage).toBeNull();
 
-      const addCertBtn = fixture.debugElement.query(By.css('button[iconStart="@tui.plus"]'));
-
-      addCertBtn.nativeElement.click();
-
-      expect(emitSpy).toHaveBeenCalledWith(0);
-    });
-
-    it('should emit "removeCert" with correct indices when Delete Cert button is clicked', () => {
-      const skillsArray = new FormArray([createSkillGroup([], ['Cert A', 'Cert B'])]);
-      fixture.componentRef.setInput('skillsForms', skillsArray);
-      fixture.detectChanges();
-
-      const emitSpy = jest.spyOn(component.removeCert, 'emit');
-
-      const removeButtons = fixture.debugElement.queryAll(By.css('button[iconStart="@tui.trash"]'));
-
-      removeButtons[1].nativeElement.click();
-
-      expect(emitSpy).toHaveBeenCalledWith({ skillGroupIndex: 0, certIndex: 1 });
+      const cards = fixture.debugElement.queryAll(By.css('[tuiCardLarge]'));
+      expect(cards.length).toBe(2);
     });
   });
 
-  describe('Helper Methods', () => {
-    it('should return correct controls array from getCertificationControls', () => {
-      const skillGroup = createSkillGroup([], ['Cert 1']);
-      const controls = component.getCertificationControls(skillGroup);
+  describe('Interacciones', () => {
+    it('debe llamar a addCertification al hacer click en agregar', () => {
+      const buttons = fixture.debugElement.queryAll(By.css('button'));
 
-      expect(controls.length).toBe(1);
-      expect(controls[0].value.name).toBe('Cert 1');
+      const addBtn = buttons.find((btn) =>
+        btn.nativeElement.textContent.includes('cv.skills.certifications.button'),
+      );
+
+      expect(addBtn).toBeTruthy();
+
+      addBtn?.nativeElement.click();
+
+      expect(mockSkillsService.addCertification).toHaveBeenCalledWith(0);
+    });
+
+    it('debe llamar a removeCertification al hacer click en eliminar', () => {
+      const certGroup = new FormGroup({ name: new FormControl(''), date: new FormControl('') });
+      mockSkillsService.getCertificationsControls.mockReturnValue([certGroup]);
+      fixture.detectChanges();
+
+      const deleteBtn = fixture.debugElement.query(
+        By.css('button[appearance="action-destructive"]'),
+      );
+
+      expect(deleteBtn).toBeTruthy();
+
+      deleteBtn.nativeElement.click();
+
+      expect(mockSkillsService.removeCertification).toHaveBeenCalledWith(0, 0);
     });
   });
 });

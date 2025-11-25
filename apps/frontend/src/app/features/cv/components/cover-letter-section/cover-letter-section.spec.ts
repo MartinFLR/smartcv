@@ -1,156 +1,142 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { signal, WritableSignal } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { TranslocoTestingModule } from '@jsverse/transloco';
 import { CoverLetterSection } from './cover-letter-section';
-import { CoverApiService } from './api/cover-api.service';
-import { CvFormBuilderService } from '../../services/cv-form/cv-form-builder/cv-form-builder.service';
-import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { of, Subject, throwError } from 'rxjs';
-import { jest } from '@jest/globals';
-import { CoverLetterControls } from '../../../../core/models/controls.model';
-import { CoverLetterPayload } from '@smartcv/types';
+import { CoverAnalysisService } from './analysis/cover-analysis.service';
 
-const mockInputForm = new FormGroup({});
-
-const mockCoverLetterForm = new FormGroup<CoverLetterControls>({
-  recruiterName: new FormControl(''),
-  companyName: new FormControl(''),
-  referralName: new FormControl(''),
-  tone: new FormControl(0),
-  deliveryChannel: new FormControl(0),
-});
-
-const cvFormBuilderMock = {
-  buildCoverLetterForm: jest.fn().mockReturnValue(mockCoverLetterForm),
-};
-
-const coverLetterServiceMock = {
-  generateCoverLetterStream: jest.fn(),
-};
+interface MockCoverAnalysisServiceType {
+  form: FormGroup;
+  iaForm: FormGroup;
+  isInternalReference: WritableSignal<boolean>;
+  isApplicationForm: WritableSignal<boolean>;
+  isLoading: WritableSignal<boolean>;
+  generatedLetter: WritableSignal<string>;
+  generate: jest.Mock;
+}
 
 describe('CoverLetterSection', () => {
   let component: CoverLetterSection;
   let fixture: ComponentFixture<CoverLetterSection>;
+  let mockService: MockCoverAnalysisServiceType;
 
   beforeEach(async () => {
-    jest.clearAllMocks();
-    mockCoverLetterForm.reset({ tone: 0, deliveryChannel: 0 });
-    mockCoverLetterForm.enable();
+    mockService = {
+      form: new FormGroup({
+        recruiterName: new FormControl(''),
+        companyName: new FormControl(''),
+        referralName: new FormControl(''),
+        tone: new FormControl(0),
+        deliveryChannel: new FormControl(0),
+      }),
+      iaForm: new FormGroup({
+        jobDescription: new FormControl(''),
+      }),
+      isInternalReference: signal(false),
+      isApplicationForm: signal(false),
+      isLoading: signal(false),
+      generatedLetter: signal(''),
+      generate: jest.fn(),
+    };
 
     await TestBed.configureTestingModule({
-      imports: [CoverLetterSection, ReactiveFormsModule],
-      providers: [
-        provideAnimations(),
-        { provide: CvFormBuilderService, useValue: cvFormBuilderMock },
-        { provide: CoverApiService, useValue: coverLetterServiceMock },
+      imports: [
+        CoverLetterSection,
+        ReactiveFormsModule,
+        TranslocoTestingModule.forRoot({
+          langs: { en: {}, es: {} },
+          translocoConfig: { availableLangs: ['en', 'es'], defaultLang: 'es' },
+        }),
       ],
+      providers: [{ provide: CoverAnalysisService, useValue: mockService }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CoverLetterSection);
     component = fixture.componentInstance;
-
-    fixture.componentRef.setInput('cvForm', new FormGroup({}) as any);
-    fixture.componentRef.setInput(
-      'iaForm',
-      new FormGroup({ jobDescription: new FormControl('Job Desc') }) as any,
-    );
-
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('debe crearse correctamente', () => {
     expect(component).toBeTruthy();
-    expect(cvFormBuilderMock.buildCoverLetterForm).toHaveBeenCalled();
   });
 
-  describe('Form Reactivity (Effects)', () => {
-    it('should disable recruiterName when delivery channel is ApplicationForm (value 2)', fakeAsync(() => {
-      const recruiterControl = component['coverLetterForm'].controls.recruiterName;
-      recruiterControl.setValue('Recruiter Name');
+  describe('Renderizado de UI y Lógica de Negocio', () => {
+    it('debe renderizar los campos base del formulario (Reclutador y Empresa)', () => {
+      const recruiterInput = fixture.debugElement.query(By.css('#recruiterNameInput'));
+      const companyInput = fixture.debugElement.query(By.css('#companyNameInput'));
 
-      component['coverLetterForm'].controls.deliveryChannel.setValue(2);
+      expect(recruiterInput).toBeTruthy();
+      expect(companyInput).toBeTruthy();
+    });
 
+    it('debe mostrar el input de "Referente Interno" SOLO cuando la signal isInternalReference es true', () => {
+      let referralInput = fixture.debugElement.query(By.css('#referralNameInput'));
+      expect(referralInput).toBeNull();
+
+      mockService.isInternalReference.set(true);
       fixture.detectChanges();
-      tick();
 
-      // Assert
-      expect(recruiterControl.disabled).toBe(true);
-      expect(recruiterControl.value).toBe('');
-    }));
+      referralInput = fixture.debugElement.query(By.css('#referralNameInput'));
+      expect(referralInput).toBeTruthy();
+    });
 
-    it('should enable recruiterName when delivery channel is NOT ApplicationForm', fakeAsync(() => {
-      const recruiterControl = component['coverLetterForm'].controls.recruiterName;
-      component['coverLetterForm'].controls.deliveryChannel.setValue(2); // Application Form
-      fixture.detectChanges();
-      tick();
-      expect(recruiterControl.disabled).toBe(true);
+    it('debe renderizar correctamente las opciones de Tono', () => {
+      const toneLabels = fixture.debugElement.queryAll(
+        By.css('label:has(input[formControlName="tone"])'),
+      );
 
-      component['coverLetterForm'].controls.deliveryChannel.setValue(1);
-      fixture.detectChanges();
-      tick();
+      const allChipLabels = fixture.debugElement.queryAll(By.css('label[tuiChip]'));
 
-      expect(recruiterControl.disabled).toBe(false);
-    }));
-
-    it('should enable referralName ONLY when delivery channel is InternalReferral (value 3)', fakeAsync(() => {
-      const referralControl = component['coverLetterForm'].controls.referralName;
-
-      fixture.detectChanges();
-      tick();
-      expect(referralControl.disabled).toBe(true);
-
-      component['coverLetterForm'].controls.deliveryChannel.setValue(3);
-      fixture.detectChanges();
-      tick();
-
-      // Assert
-      expect(referralControl.enabled).toBe(true);
-    }));
+      const formalLabel = allChipLabels.find((el) =>
+        el.nativeElement.textContent.includes('Formal'),
+      );
+      expect(formalLabel).toBeTruthy();
+    });
   });
 
-  describe('Generate Cover Letter', () => {
-    it('should process stream successfully', () => {
-      // Arrange
-      const stream$ = of('Ho', 'la ', 'Mun', 'do');
-      coverLetterServiceMock.generateCoverLetterStream.mockReturnValue(stream$);
+  describe('Interacciones del Usuario', () => {
+    it('debe llamar a service.generate() al hacer click en el botón "Generar carta"', () => {
+      const generateBtn = fixture.debugElement.query(By.css('button[tuiButton]'));
 
-      // Act
-      component.generateCoverLetter();
+      generateBtn.nativeElement.click();
 
-      // Assert
-      expect(coverLetterServiceMock.generateCoverLetterStream).toHaveBeenCalled();
-      expect(component.generatedLetter()).toBe('Hola Mundo');
-      expect(component.isLoading()).toBe(false);
+      expect(mockService.generate).toHaveBeenCalledTimes(1);
     });
 
-    it('should handle errors in stream', () => {
-      const errorStream$ = throwError(() => new Error('Stream Error'));
-      coverLetterServiceMock.generateCoverLetterStream.mockReturnValue(errorStream$);
+    it('el botón de generar debe estar deshabilitado si iaForm es inválido', () => {
+      mockService.iaForm.setErrors({ required: true });
+      fixture.detectChanges();
 
-      const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-
-      component.generateCoverLetter();
-
-      expect(component.generatedLetter()).toBe('Error al generar la carta.');
-      expect(component.isLoading()).toBe(false);
-
-      consoleSpy.mockRestore();
+      const generateBtn = fixture.debugElement.query(By.css('button[tuiButton]'));
+      expect(generateBtn.nativeElement.disabled).toBe(true);
     });
 
-    it('should map Tone and DeliveryChannel correctly in payload', () => {
-      coverLetterServiceMock.generateCoverLetterStream.mockReturnValue(of(''));
+    it('debe pasar el estado de loading al botón cuando el servicio está cargando', () => {
+      mockService.isLoading.set(true);
+      fixture.detectChanges();
 
-      mockCoverLetterForm.patchValue({
-        tone: 1, // Entusiasta
-        deliveryChannel: 3, // Referente Interno
-      });
+      const btnDebug = fixture.debugElement.query(By.css('button[tuiButton]'));
 
-      component.generateCoverLetter();
+      expect(btnDebug.componentInstance.loading).toBe(true);
+    });
+  });
 
-      const calledPayload = coverLetterServiceMock.generateCoverLetterStream.mock
-        .calls[0][0] as CoverLetterPayload;
+  describe('Visualización de Resultados', () => {
+    it('debe mostrar la carta generada en el textarea de solo lectura', () => {
+      const mockLetter = 'Texto de prueba generado...';
 
-      expect(calledPayload.promptOption?.tone).toBe('enthusiast');
-      expect(calledPayload.promptOption?.deliveryChannel).toBe('internalReferral');
+      mockService.generatedLetter.set(mockLetter);
+
+      fixture.detectChanges();
+
+      const allTextareas = fixture.debugElement.queryAll(By.css('textarea'));
+
+      expect(allTextareas.length).toBeGreaterThanOrEqual(2);
+
+      const resultTextarea = allTextareas[allTextareas.length - 1];
+
+      expect(resultTextarea.nativeElement.value).toBe(mockLetter);
     });
   });
 });

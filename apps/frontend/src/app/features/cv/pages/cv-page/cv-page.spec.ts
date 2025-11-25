@@ -1,12 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CvPage } from './cv-page';
-import { HomeStateService } from './services/cv-state-analysis/cv-state.analysis';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { TranslocoTestingModule } from '@jsverse/transloco';
 import { homeStateServiceMock } from '../../../../shared/testing/mocks/home-state-service.mock';
 import { tuiInputPhoneInternationalOptionsProvider } from '@taiga-ui/kit';
 import { defer } from 'rxjs';
-// Importaciones necesarias para solucionar el error de "Unknown country"
+import { CvStateService } from '../../services/cv-form/cv-form-state/cv-state.service';
 
 describe('CvPage', () => {
   let component: CvPage;
@@ -23,7 +22,7 @@ describe('CvPage', () => {
       ],
       providers: [
         provideAnimations(),
-        { provide: HomeStateService, useValue: homeStateServiceMock },
+        { provide: CvStateService, useValue: homeStateServiceMock },
 
         tuiInputPhoneInternationalOptionsProvider({
           metadata: import('libphonenumber-js/max/metadata').then((m) => m.default as any),
