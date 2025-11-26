@@ -1,21 +1,25 @@
 {
   "extends": "../../tsconfig.base.json",
+  "files": [],
+  "include": [],
+
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ],
   "compilerOptions": {
+    "types": ["node", "multer", "cors", "express"],
+    "esModuleInterop": true,
     "outDir": "../../dist/apps/backend",
     "module": "commonjs",
     "moduleResolution": "node",
-    "types": ["node", "multer", "cors", "express"],
     "emitDecoratorMetadata": true,
     "target": "ES2022",
     "composite": true,
     "declaration": true
-  },
-  "include": ["src/**/*.ts"],
-  "exclude": ["../../node_modules", "../tmp", "jest.config.ts"],
-  "references": [
-    {
-      "path": "../../libs/types"
-    },
-    { "path": "../../libs/shared" }
-  ]
+  }
 }

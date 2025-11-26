@@ -4,7 +4,7 @@
   "private": true,
   "description": "Your free self-hosted intelligent assistant for analyzing, optimizing, and comparing resumes with job descriptions using AI.",
   "scripts": {
-    "start": "concurrently \"nx serve apps/frontend\" \"nx serve apps/nest\"",
+    "start": "concurrently \"nx serve apps/frontend\" \"nx serve apps/backend\"",
     "serve:frontend": "nx serve apps/frontend",
     "serve:backend": "nx serve apps/backend",
     "format": "prettier --write .",

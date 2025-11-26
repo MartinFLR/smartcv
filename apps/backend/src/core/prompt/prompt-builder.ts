@@ -38,7 +38,7 @@ export function buildSystemPrompt(
 
   blocks.push(buildOutputBlock(type, lang));
 
-  return blocks.join('\n\n');
+  return blocks.join('\\n\\n');
 }
 
 export function buildUserPrompt(

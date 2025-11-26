@@ -4,10 +4,12 @@ import { AIModel } from './ai.factory';
 interface Part {
   text: string;
 }
+
 interface Message {
   role: 'user';
   parts: Part[];
 }
+
 interface SystemInstruction {
   role: 'system';
   parts: Part[];
@@ -51,7 +53,6 @@ export class GeminiService implements AIModel {
     };
 
     const result = await this.model.generateContentStream(request);
-
     for await (const chunk of result.stream) {
       const text = chunk.text();
       if (text) yield text;

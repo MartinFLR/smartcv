@@ -1,13 +1,13 @@
 {
+  "name": "nest",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "name": "backend",
-  "projectType": "application",
-  "root": "apps/backend",
   "sourceRoot": "apps/backend/src",
+  "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["types", "shared"],
   "targets": {
     "build": {
-      "executor": "@nx/esbuild:esbuild",
-      "outputs": ["{options.outputPath}"],
+      "executor": "nx:run-commands",
       "dependsOn": [
         {
           "target": "build",
@@ -15,27 +15,57 @@
         }
       ],
       "options": {
-        "outputPath": "dist/apps/backend",
-        "main": "apps/backend/src/main.ts",
-        "tsConfig": "apps/backend/tsconfig.json",
-        "assets": [".env"],
-        "platform": "node",
-        "bundle": true,
-        "thirdParty": false,
-        "format": ["cjs"]
+        "command": "webpack-cli build",
+        "args": ["--node-env=production"],
+        "cwd": "apps/backend"
+      },
+      "configurations": {
+        "development": {
+          "args": ["--node-env=development"]
+        }
       }
+    },
+    "prune-lockfile": {
+      "dependsOn": ["build"],
+      "cache": true,
+      "executor": "@nx/js:prune-lockfile",
+      "outputs": [
+        "{workspaceRoot}/dist/apps/backend/package.json",
+        "{workspaceRoot}/dist/apps/backend/package-lock.json"
+      ],
+      "options": {
+        "buildTarget": "build"
+      }
+    },
+    "copy-workspace-modules": {
+      "dependsOn": ["build"],
+      "cache": true,
+      "outputs": ["{workspaceRoot}/dist/apps/backend/workspace_modules"],
+      "executor": "@nx/js:copy-workspace-modules",
+      "options": {
+        "buildTarget": "build"
+      }
+    },
+    "prune": {
+      "dependsOn": ["prune-lockfile", "copy-workspace-modules"],
+      "executor": "nx:noop"
     },
     "serve": {
+      "continuous": true,
       "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
       "options": {
-        "buildTarget": "backend:build",
-        "watch": true
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": ["apps/backend/**/*.ts"]
+        "buildTarget": "nest:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "nest:build:development"
+        },
+        "production": {
+          "buildTarget": "nest:build:production"
+        }
       }
     },
     "test": {
@@ -46,6 +76,5 @@
         "passWithNoTests": true
       }
     }
-  },
-  "implicitDependencies": ["types", "shared"]
+  }
 }

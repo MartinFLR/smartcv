@@ -1,7 +1,7 @@
 import { PromptLanguage } from '@smartcv/types';
 
 export function buildATSHeader(lang: PromptLanguage, userContext?: string, jobTitle?: string) {
-  const context = userContext ? `\n\nUser context:\n${userContext}` : '';
+  const context = userContext ? `\\n\\nUser context:\\n${userContext}` : '';
 
   if (lang === 'english') {
     const jobTitlePart = jobTitle ? ` for the position of "${jobTitle}"` : '';

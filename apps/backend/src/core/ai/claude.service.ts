@@ -1,12 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk';
-import type {
-  MessageCreateParams,
-  Message,
-  ContentBlock,
-} from '@anthropic-ai/sdk/resources/messages';
 import { AIModel } from './ai.factory';
-
-//TODO: Refactor
+import type { MessageCreateParams, Message, TextBlock } from '@anthropic-ai/sdk/resources/messages';
 
 export class ClaudeService implements AIModel {
   private client: Anthropic;
@@ -17,9 +11,6 @@ export class ClaudeService implements AIModel {
     this.model = model;
   }
 
-  /**
-   * 🔹 Genera una respuesta completa (modo estándar)
-   */
   async generate(prompt: string): Promise<string> {
     try {
       const params: MessageCreateParams = {
@@ -30,29 +21,27 @@ export class ClaudeService implements AIModel {
 
       const response: Message = await this.client.messages.create(params);
 
+      // Manejo estricto del contenido
       if (Array.isArray(response.content)) {
         const textBlocks = response.content.filter(
-          (block): block is ContentBlock & { text: string } => block.type === 'text',
+          (block): block is TextBlock => block.type === 'text',
         );
-
         return textBlocks.map((block) => block.text).join('');
       }
 
+      // Fallback por si en el futuro cambia la API, aunque hoy siempre devuelve array
       if (typeof response.content === 'string') {
         return response.content;
       }
 
       return JSON.stringify(response.content);
     } catch (err: unknown) {
-      console.error('❌ Error en ClaudeService.generate:', err);
+      console.error('❌ Error in ClaudeService.generate:', err);
       const message = err instanceof Error ? err.message : 'Unknown error';
-      throw new Error(`Error al generar texto con Claude: ${message}`);
+      throw new Error(`Error generating text with Claude: ${message}`);
     }
   }
 
-  /**
-   * 🔹 Genera respuesta progresiva (modo streaming)
-   */
   async *generateStream(prompt: string): AsyncGenerator<string> {
     try {
       const stream = await this.client.messages.stream({
@@ -61,21 +50,19 @@ export class ClaudeService implements AIModel {
         messages: [{ role: 'user', content: prompt }],
       });
 
+      // Iteramos sobre los eventos tipados del stream
       for await (const event of stream) {
-        // Tipado correcto según SDK (MessageStreamEvent)
-        if (
-          event.type === 'content_block_delta' &&
-          'delta' in event &&
-          event.delta?.type === 'text_delta' &&
-          event.delta.text
-        ) {
+        // TypeScript sabe que 'event' es un MessageStreamEvent
+        // Usamos el discriminador 'type' para filtrar
+        if (event.type === 'content_block_delta' && event.delta.type === 'text_delta') {
+          // Acá TS ya sabe con 100% de certeza que .text existe
           yield event.delta.text;
         }
       }
     } catch (err: unknown) {
-      console.error('❌ Error en ClaudeService.generateStream:', err);
+      console.error('❌ Error in ClaudeService.generateStream:', err);
       const message = err instanceof Error ? err.message : 'Unknown error';
-      throw new Error(`Error al generar texto en streaming con Claude: ${message}`);
+      throw new Error(`Error generating streaming text with Claude: ${message}`);
     }
   }
 }

@@ -1,7 +1,5 @@
-import * as dotenv from 'dotenv';
-import * as path from 'path';
-
-dotenv.config({ path: path.resolve(__dirname, '.env') });
+// Note: dotenv is loaded in main.ts before this file is imported
+// This ensures .env variables are available and have priority
 
 export const config = {
   port: process.env['PORT'] || 3000,

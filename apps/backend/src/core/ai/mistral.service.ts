@@ -47,7 +47,6 @@ export class MistralService implements AIModel {
           },
         },
       );
-
       return res.data.choices?.[0]?.message?.content ?? '';
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -80,14 +79,11 @@ export class MistralService implements AIModel {
     );
 
     const stream = response.data;
-
     for await (const chunk of stream) {
       const text = chunk.toString();
-      const lines = text.split('\n').filter((line: string) => line.trim().startsWith('data: '));
-
+      const lines = text.split('\\n').filter((line: string) => line.trim().startsWith('data: '));
       for (const line of lines) {
         if (line.includes('[DONE]')) return;
-
         try {
           const json: MistralStreamDelta = JSON.parse(line.replace('data: ', ''));
           const delta = json.choices?.[0]?.delta?.content;

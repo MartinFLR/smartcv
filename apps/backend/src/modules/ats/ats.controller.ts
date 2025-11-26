@@ -1,58 +1,71 @@
-import { Request, Response } from 'express';
-import { analyzeCvAts } from './ats.service';
+import {
+  Controller,
+  Post,
+  Headers,
+  Body,
+  UploadedFile,
+  UseInterceptors,
+  BadRequestException,
+  InternalServerErrorException,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { AtsService } from './ats.service';
 import { AiSettings, CvAtsPayload, BuildPromptOptions } from '@smartcv/types';
 
-interface MulterRequest extends Request {
-  file?: Express.Multer.File;
-}
+@Controller('api')
+export class AtsController {
+  constructor(private readonly atsService: AtsService) {}
 
-export async function analyzeCvAtsController(req: MulterRequest, res: Response): Promise<void> {
-  try {
-    const provider = req.headers['x-ai-provider'] as string;
-    const model = req.headers['x-ai-model'] as string;
-
-    const headerSettings: AiSettings = {
-      modelProvider: provider,
-      modelVersion: model,
-      systemPrompt: '',
-    };
-
-    const { jobDesc, aiSettings } = req.body;
-    const file = req.file;
-
-    if (!file || !file.buffer) {
-      res.status(400).json({ error: 'No se envió ningún archivo (file) o el buffer está vacío.' });
-      return;
-    }
-    if (!jobDesc) {
-      res
-        .status(400)
-        .json({ error: 'Falta la descripción del puesto (jobDesc) en el formulario.' });
-      return;
-    }
-    let promptOption: BuildPromptOptions | undefined;
+  @Post('ats')
+  @UseInterceptors(FileInterceptor('file'))
+  async analyzeCvAts(
+    @Headers('x-ai-provider') provider: string,
+    @Headers('x-ai-model') model: string,
+    @UploadedFile() file: Express.Multer.File,
+    @Body('jobDesc') jobDesc: string,
+    @Body('aiSettings') aiSettings: AiSettings | undefined,
+    @Body('promptOption') promptOptionRaw: unknown,
+  ) {
     try {
-      promptOption =
-        typeof req.body.promptOption === 'string'
-          ? (JSON.parse(req.body.promptOption) as BuildPromptOptions)
-          : (req.body.promptOption as BuildPromptOptions);
-    } catch (err) {
-      console.warn('No se pudo parsear promptOption:', err);
-      promptOption = undefined;
+      const headerSettings: AiSettings = {
+        modelProvider: provider,
+        modelVersion: model,
+        systemPrompt: '',
+      };
+
+      if (!file || !file.buffer) {
+        throw new BadRequestException('No se envió ningún archivo (file) o el buffer está vacío.');
+      }
+      if (!jobDesc) {
+        throw new BadRequestException(
+          'Falta la descripción del puesto (jobDesc) en el formulario.',
+        );
+      }
+
+      let promptOption: BuildPromptOptions | undefined;
+      try {
+        promptOption =
+          typeof promptOptionRaw === 'string'
+            ? (JSON.parse(promptOptionRaw) as BuildPromptOptions)
+            : (promptOptionRaw as BuildPromptOptions);
+      } catch (err) {
+        console.warn('No se pudo parsear promptOption:', err);
+        promptOption = undefined;
+      }
+
+      const payload: CvAtsPayload = {
+        file: file.buffer,
+        jobDesc,
+        aiSettings,
+        promptOption,
+      };
+
+      const result = await this.atsService.analyzeCvAts(payload, headerSettings);
+      return result;
+    } catch (err: unknown) {
+      console.error('❌ Error en analyzeCvAtsController:', err);
+      const message = err instanceof Error ? err.message : 'Error desconocido';
+      throw new InternalServerErrorException(message);
     }
-
-    const payload: CvAtsPayload = {
-      file: file.buffer,
-      jobDesc,
-      aiSettings,
-      promptOption,
-    };
-
-    const result = await analyzeCvAts(payload, headerSettings);
-    res.status(200).json(result);
-  } catch (err: unknown) {
-    console.error('❌ Error en analyzeCvAtsController:', err);
-    const message = err instanceof Error ? err.message : 'Error desconocido';
-    res.status(500).json({ error: message });
   }
 }
