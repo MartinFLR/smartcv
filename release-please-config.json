@@ -58,5 +58,6 @@
     }
   },
   "include-component-in-tag": false,
-  "monorepo-tags": false
+  "pull-request-header": "Release smartcv",
+  "pull-request-title-pattern": "smartcv ${version}"
 }
