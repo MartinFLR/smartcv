@@ -1,5 +1,4 @@
 {
-  "bootstrap-sha": "c4c88505",
   "release-type": "node",
   "include-component-in-tag": false,
   "monorepo-tags": false
