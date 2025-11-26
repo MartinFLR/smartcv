@@ -2,7 +2,7 @@
   "name": "nest-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "implicitDependencies": ["nest"],
+  "implicitDependencies": ["backend"],
   "targets": {
     "e2e": {
       "executor": "@nx/jest:jest",
@@ -11,7 +11,7 @@
         "jestConfig": "apps/nest-e2e/jest.config.ts",
         "passWithNoTests": true
       },
-      "dependsOn": ["nest:build", "nest:serve"]
+      "dependsOn": ["backend:build", "backend:serve"]
     }
   }
 }

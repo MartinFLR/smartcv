@@ -1,5 +1,5 @@
 {
-  "name": "nest",
+  "name": "backend",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/backend/src",
   "projectType": "application",
@@ -56,15 +56,15 @@
       "defaultConfiguration": "development",
       "dependsOn": ["build"],
       "options": {
-        "buildTarget": "nest:build",
+        "buildTarget": "backend:build",
         "runBuildTargetDependencies": false
       },
       "configurations": {
         "development": {
-          "buildTarget": "nest:build:development"
+          "buildTarget": "backend:build:development"
         },
         "production": {
-          "buildTarget": "nest:build:production"
+          "buildTarget": "backend:build:production"
         }
       }
     },
