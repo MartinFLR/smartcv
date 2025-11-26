@@ -1,0 +1,25 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "files": [],
+  "include": [],
+
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ],
+  "compilerOptions": {
+    "types": ["node", "multer", "cors", "express"],
+    "esModuleInterop": true,
+    "outDir": "../../dist/apps/backend",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "target": "ES2022",
+    "composite": true,
+    "declaration": true
+  }
+}
