@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.2.0](https://github.com/MartinFLR/smartcv/compare/v1.1.0...v1.2.0) (2025-11-29)
+
+
+### ✨ Features
+
+* add full multi-language support ([2f91083](https://github.com/MartinFLR/smartcv/commit/2f9108345c2a38d0e3174c8b01a6438da0d1c2aa))
+* add full multi-language support ([849b97d](https://github.com/MartinFLR/smartcv/commit/849b97d47e07055a18a2e7c917500fe20d9373f9))
+* add full multi-language support ([a500b7c](https://github.com/MartinFLR/smartcv/commit/a500b7c4e58b3a0c59083ddfd1b63365c29b09f9))
+* add full multi-language support ([e2eea00](https://github.com/MartinFLR/smartcv/commit/e2eea00357190095bfc368a3576161a105dc97bc))
+
 ## [1.1.0](https://github.com/MartinFLR/smartcv/compare/v1.0.0...v1.1.0) (2025-11-26)
 
 
