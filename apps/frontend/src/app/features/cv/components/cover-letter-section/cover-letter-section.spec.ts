@@ -82,14 +82,13 @@ describe('CoverLetterSection', () => {
     });
 
     it('debe renderizar correctamente las opciones de Tono', () => {
-      const toneLabels = fixture.debugElement.queryAll(
-        By.css('label:has(input[formControlName="tone"])'),
-      );
+      const toneInputs = fixture.debugElement.queryAll(By.css('input[formControlName="tone"]'));
+      expect(toneInputs.length).toBeGreaterThan(0);
 
       const allChipLabels = fixture.debugElement.queryAll(By.css('label[tuiChip]'));
 
       const formalLabel = allChipLabels.find((el) =>
-        el.nativeElement.textContent.includes('Formal'),
+        el.nativeElement.textContent.includes('cv.coverLetter.tone.formal.name'),
       );
       expect(formalLabel).toBeTruthy();
     });

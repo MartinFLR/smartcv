@@ -55,38 +55,35 @@ describe('ExperienceSection', () => {
 
     it('should render correct number of items when form array has data', () => {
       // Arrange
-      formArray.push(
-        new FormGroup({
-          role: new FormControl('Frontend Dev'),
-          company: new FormControl('Google'),
-          dateIn: new FormControl(''),
-          dateFin: new FormControl(''),
-          bullets: new FormControl(''),
-        }),
+      experienceServiceMock.formArray.set(
+        new FormArray([
+          new FormGroup({
+            role: new FormControl('Dev'),
+            company: new FormControl('Google'),
+            dateIn: new FormControl(''),
+            dateFin: new FormControl(''),
+            bullets: new FormControl(''),
+          }),
+          new FormGroup({
+            role: new FormControl('Manager'),
+            company: new FormControl('Amazon'),
+            dateIn: new FormControl(''),
+            dateFin: new FormControl(''),
+            bullets: new FormControl(''),
+          }),
+        ]),
       );
-      formArray.push(
-        new FormGroup({
-          role: new FormControl('Backend Dev'),
-          company: new FormControl('Amazon'),
-          dateIn: new FormControl(''),
-          dateFin: new FormControl(''),
-          bullets: new FormControl(''),
-        }),
-      );
-
-      // Trigger change detection
       fixture.detectChanges();
 
       // Assert
-      const items = fixture.debugElement.queryAll(By.css('[tuiCardLarge]'));
+      const items = fixture.debugElement.queryAll(By.css('button[tuiAccordion]'));
       expect(items.length).toBe(2);
     });
   });
 
   describe('Interactions', () => {
     it('should call service.add() when Add button is clicked', () => {
-      const buttons = fixture.debugElement.queryAll(By.css('button[iconStart="@tui.plus"]'));
-      const addButton = buttons[0];
+      const addButton = fixture.debugElement.query(By.css('button[appearance="secondary"]'));
 
       addButton.nativeElement.click();
 

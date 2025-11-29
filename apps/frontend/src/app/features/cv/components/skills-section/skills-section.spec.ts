@@ -64,61 +64,46 @@ describe('SkillsSection', () => {
     });
 
     it('should show "no certifications" message when empty', () => {
-      const emptyMessage = fixture.debugElement.query(By.css('p.text-gray-500'));
+      const emptyMessage = fixture.debugElement.query(By.css('p.text-sm.opacity-60'));
       expect(emptyMessage).toBeTruthy();
     });
   });
 
   describe('Certifications Rendering', () => {
     it('should render certification cards if service returns them', () => {
-      const certGroup1 = new FormGroup({
-        name: new FormControl('Java'),
-        date: new FormControl('2023'),
-      });
-      const certGroup2 = new FormGroup({
-        name: new FormControl('Angular'),
-        date: new FormControl('2024'),
-      });
-
-      mockSkillsService.getCertificationsControls.mockReturnValue([certGroup1, certGroup2]);
-
+      // Mock getCertificationsControls to return 2 controls
+      const certs = [
+        new FormGroup({ name: new FormControl('A'), date: new FormControl('2023') }),
+        new FormGroup({ name: new FormControl('B'), date: new FormControl('2024') }),
+      ];
+      mockSkillsService.getCertificationsControls.mockReturnValue(certs);
       fixture.detectChanges();
 
-      const emptyMessage = fixture.debugElement.query(By.css('p.text-gray-500'));
+      const emptyMessage = fixture.debugElement.query(By.css('p.text-sm.opacity-60'));
       expect(emptyMessage).toBeNull();
 
-      const cards = fixture.debugElement.queryAll(By.css('[tuiCardLarge]'));
-      expect(cards.length).toBe(2);
+      const items = fixture.debugElement.queryAll(By.css('button[tuiAccordion]'));
+      expect(items.length).toBe(2);
     });
   });
 
   describe('Interactions', () => {
     it('should call addCertification when add button is clicked', () => {
-      const buttons = fixture.debugElement.queryAll(By.css('button'));
-
-      // Find the button that adds certification (usually has specific text or icon)
-      // Based on previous file content, it looked for text content.
-      // Let's look for the one that is NOT the delete button.
-      // Or better, look for the text binding.
-      const addBtn = buttons.find((btn) =>
-        btn.nativeElement.textContent.includes('cv.skills.certifications.button'),
-      );
-
+      const addBtn = fixture.debugElement.query(By.css('button[appearance="secondary"]'));
       expect(addBtn).toBeTruthy();
-
       addBtn?.nativeElement.click();
-
       expect(mockSkillsService.addCertification).toHaveBeenCalledWith(0);
     });
 
     it('should call removeCertification when delete button is clicked', () => {
-      const certGroup = new FormGroup({ name: new FormControl(''), date: new FormControl('') });
+      const certGroup = new FormGroup({
+        name: new FormControl('A'),
+        date: new FormControl('2023'),
+      });
       mockSkillsService.getCertificationsControls.mockReturnValue([certGroup]);
       fixture.detectChanges();
 
-      const deleteBtn = fixture.debugElement.query(
-        By.css('button[appearance="action-destructive"]'),
-      );
+      const deleteBtn = fixture.debugElement.query(By.css('button[appearance="flat-destructive"]'));
 
       expect(deleteBtn).toBeTruthy();
 

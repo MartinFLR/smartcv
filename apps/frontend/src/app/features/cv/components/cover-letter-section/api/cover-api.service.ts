@@ -8,7 +8,7 @@ import {
   HttpEvent,
 } from '@angular/common/http';
 import { CoverLetterPayload } from '@smartcv/types';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { filter, map } from 'rxjs';
 
 @Injectable({
@@ -46,6 +46,10 @@ export class CoverApiService {
       }),
 
       filter((chunk) => chunk.length > 0),
+      catchError((error) => {
+        console.error('Cover Letter API Error:', error);
+        return throwError(() => new Error('Error al generar la carta.'));
+      }),
     );
   }
 }

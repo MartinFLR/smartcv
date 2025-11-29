@@ -1,7 +1,7 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AtsAnalyzerService } from './ats-analyzer.service';
 import { AtsApiService } from '../api/ats-api.service';
-import { TuiAlertService } from '@taiga-ui/core';
+import { TaigaAlertsService } from '../../../../../core/services/alerts/taiga-alerts.service';
 import { CvStateService } from '../../../services/cv-form/cv-form-state/cv-state.service';
 import { TuiLanguageSwitcherService } from '@taiga-ui/i18n/utils';
 import { signal } from '@angular/core';
@@ -14,7 +14,7 @@ describe('AtsAnalyzerService', () => {
   let service: AtsAnalyzerService;
 
   let atsApiServiceMock: any;
-  let alertServiceMock: any;
+  let taigaAlertsServiceMock: any;
   let cvStateServiceMock: any;
   let languageSwitcherMock: any;
   let mockIaForm: FormGroup;
@@ -26,8 +26,10 @@ describe('AtsAnalyzerService', () => {
       getAtsScore: jest.fn(),
     };
 
-    alertServiceMock = {
-      open: jest.fn().mockReturnValue(of(true)),
+    taigaAlertsServiceMock = {
+      showSuccess: jest.fn().mockReturnValue(of(null)),
+      showWarning: jest.fn().mockReturnValue(of(null)),
+      showError: jest.fn().mockReturnValue(of(null)),
     };
 
     mockIaForm = new FormGroup({
@@ -46,7 +48,7 @@ describe('AtsAnalyzerService', () => {
       providers: [
         AtsAnalyzerService,
         { provide: AtsApiService, useValue: atsApiServiceMock },
-        { provide: TuiAlertService, useValue: alertServiceMock },
+        { provide: TaigaAlertsService, useValue: taigaAlertsServiceMock },
         { provide: CvStateService, useValue: cvStateServiceMock },
         { provide: TuiLanguageSwitcherService, useValue: languageSwitcherMock },
       ],
@@ -115,9 +117,8 @@ describe('AtsAnalyzerService', () => {
       service.calculateAtsScore();
 
       expect(atsApiServiceMock.getAtsScore).not.toHaveBeenCalled();
-      expect(alertServiceMock.open).toHaveBeenCalledWith(
-        expect.stringContaining('subí tu CV'),
-        expect.objectContaining({ appearance: 'warning' }),
+      expect(taigaAlertsServiceMock.showWarning).toHaveBeenCalledWith(
+        'alerts.ats.errors.pdf_format',
       );
     });
 
@@ -128,10 +129,7 @@ describe('AtsAnalyzerService', () => {
 
       service.calculateAtsScore();
 
-      expect(alertServiceMock.open).toHaveBeenCalledWith(
-        expect.stringContaining('error al analizar'),
-        expect.objectContaining({ appearance: 'error' }),
-      );
+      expect(taigaAlertsServiceMock.showError).toHaveBeenCalled();
     });
   });
 

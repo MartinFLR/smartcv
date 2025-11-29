@@ -54,8 +54,8 @@ describe('ProjectsSection', () => {
 
   describe('Rendering', () => {
     it('should render items from service formArray', () => {
-      const cards = fixture.debugElement.queryAll(By.css('[tuiCardLarge]'));
-      expect(cards.length).toBe(1);
+      const items = fixture.debugElement.queryAll(By.css('button[tuiAccordion]'));
+      expect(items.length).toBe(1);
 
       const nameInput = fixture.debugElement.query(By.css('input[formControlName="name"]'));
       expect(nameInput.nativeElement.value).toBe('SmartCV');
@@ -78,20 +78,22 @@ describe('ProjectsSection', () => {
 
       fixture.detectChanges();
 
-      const cards = fixture.debugElement.queryAll(By.css('[tuiCardLarge]'));
-      expect(cards.length).toBe(2);
+      const items = fixture.debugElement.queryAll(By.css('button[tuiAccordion]'));
+      expect(items.length).toBe(2);
     });
   });
 
   describe('Interactions', () => {
     it('should call service.add() when Add button is clicked', () => {
-      const addButton = fixture.debugElement.query(By.css('button[iconStart="@tui.plus"]'));
+      const addButton = fixture.debugElement.query(By.css('button[appearance="secondary"]'));
       addButton.nativeElement.click();
       expect(projectsServiceMock.add).toHaveBeenCalled();
     });
 
     it('should call service.remove(index) when Remove button is clicked', () => {
-      const removeButton = fixture.debugElement.query(By.css('button[iconStart="@tui.trash"]'));
+      const removeButton = fixture.debugElement.query(
+        By.css('button[appearance="flat-destructive"]'),
+      );
       removeButton.nativeElement.click();
       expect(projectsServiceMock.remove).toHaveBeenCalledWith(0);
     });

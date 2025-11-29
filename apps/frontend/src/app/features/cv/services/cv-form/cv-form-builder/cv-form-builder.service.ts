@@ -43,6 +43,7 @@ export class CvFormBuilderService {
     return this.fb.group<IaFormControls>({
       jobDescription: this.fb.control<string | null>(''),
       exaggeration: this.fb.control<number | null>(0),
+      makeEnglish: this.fb.control<boolean | null>(false),
     });
   }
 

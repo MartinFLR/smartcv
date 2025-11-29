@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { jest } from '@jest/globals';
 import { AiSettings } from '@smartcv/types';
+import { TranslocoTestingModule } from '@jsverse/transloco';
 
 describe('Config Component', () => {
   let component: Config;
@@ -39,7 +40,14 @@ describe('Config Component', () => {
     jest.clearAllMocks();
 
     await TestBed.configureTestingModule({
-      imports: [Config, ReactiveFormsModule],
+      imports: [
+        Config,
+        ReactiveFormsModule,
+        TranslocoTestingModule.forRoot({
+          langs: { en: {}, es: {} },
+          translocoConfig: { availableLangs: ['en', 'es'], defaultLang: 'es' },
+        }),
+      ],
       providers: [
         provideAnimations(),
         provideRouter([]),

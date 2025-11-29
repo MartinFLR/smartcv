@@ -4,7 +4,8 @@ import { ProfileService } from '../../../../../core/services/profile/profile.ser
 import { CvStateService } from '../../../services/cv-form/cv-form-state/cv-state.service';
 import { CvFormDataService } from '../../../services/cv-form/cv-form-data/cv-form-data.service';
 import { TuiDialogService } from '@taiga-ui/experimental';
-import { TuiAlertService } from '@taiga-ui/core';
+import { TaigaAlertsService } from '../../../../../core/services/alerts/taiga-alerts.service';
+import { TranslocoService } from '@jsverse/transloco';
 import { signal } from '@angular/core';
 import { of } from 'rxjs';
 import { MOCK_CV_PROFILE } from '../../../../../shared/testing/mocks/cv.form.mock';
@@ -57,8 +58,15 @@ describe('ActionsService', () => {
     open: jest.fn().mockReturnValue(of('Input Usuario')),
   };
 
-  const alertServiceMock = {
-    open: jest.fn().mockReturnValue(of(true)),
+  const taigaAlertsServiceMock = {
+    showSuccess: jest.fn().mockReturnValue(of(null)),
+    showWarning: jest.fn().mockReturnValue(of(null)),
+    showError: jest.fn().mockReturnValue(of(null)),
+    showInfo: jest.fn().mockReturnValue(of(null)),
+  };
+
+  const translocoServiceMock = {
+    translate: jest.fn().mockReturnValue('Translated Text'),
   };
 
   beforeEach(() => {
@@ -71,7 +79,8 @@ describe('ActionsService', () => {
         { provide: CvStateService, useValue: cvStateServiceMock },
         { provide: CvFormDataService, useValue: cvFormDataServiceMock },
         { provide: TuiDialogService, useValue: dialogServiceMock },
-        { provide: TuiAlertService, useValue: alertServiceMock },
+        { provide: TaigaAlertsService, useValue: taigaAlertsServiceMock },
+        { provide: TranslocoService, useValue: translocoServiceMock },
       ],
     });
     service = TestBed.inject(ActionsService);
@@ -87,7 +96,7 @@ describe('ActionsService', () => {
 
       expect(service.selectedProfile()).toBe(MOCK_CV_PROFILE);
       expect(profileServiceMock.loadProfileToActive).toHaveBeenCalledWith(MOCK_CV_PROFILE.id);
-      expect(alertServiceMock.open).toHaveBeenCalled();
+      expect(taigaAlertsServiceMock.showInfo).toHaveBeenCalled();
     });
 
     it('should save previous profile if CV was valid before switching', () => {
@@ -101,7 +110,7 @@ describe('ActionsService', () => {
 
       expect(cvFormDataServiceMock.saveCv).toHaveBeenCalled();
       expect(profileServiceMock.updateActiveProfileData).toHaveBeenCalledWith(MOCK_CV_PROFILE.id);
-      expect(alertServiceMock.open).toHaveBeenCalled();
+      expect(taigaAlertsServiceMock.showInfo).toHaveBeenCalled();
     });
 
     it('should clear form if null is selected', () => {

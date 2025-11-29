@@ -1,0 +1,906 @@
+
+> nx run frontend:test
+
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/actions/[22m[1mactions.spec.ts[22m ([0m[1m[41m7.109 s[49m[22m[0m)
+  Actions Component
+    [32m✓[39m [2mshould create (455 ms)[22m
+  [2mconsole.log[22m
+    [ 'OpenAI', 'Anthropic', 'Local' ]
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:46:13)[22m[2m[22m
+  [2mconsole.log[22m
+    null
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:48:13)[22m[2m[22m
+  [2mconsole.log[22m
+    OpenAI
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:55:13)[22m[2m[22m
+  [2mconsole.log[22m
+    [ 'OpenAI', 'Anthropic', 'Local' ]
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:46:13)[22m[2m[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/education-section/[22m[1meducation-section.spec.ts[22m ([0m[1m[41m7.613 s[49m[22m[0m)
+  EducationSection
+    [32m✓[39m [2mshould create (250 ms)[22m
+    Rendering
+      [32m✓[39m [2mshould render 0 items when form array is empty (78 ms)[22m
+      [32m✓[39m [2mshould render correct number of items when form array has data (432 ms)[22m
+    Interactions
+      [32m✓[39m [2mshould call service.add() when Add button is clicked (48 ms)[22m
+      [32m✓[39m [2mshould call service.remove(index) when Remove button is clicked (270 ms)[22m
+  [2mconsole.log[22m
+    {
+      modelProvider: 'Anthropic',
+      modelVersion: 'claude-3-sonnet',
+      systemPrompt: 'Act as a pro recruiter'
+    }
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:48:13)[22m[2m[22m
+  [2mconsole.log[22m
+    Anthropic
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:55:13)[22m[2m[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/skills-section/[22m[1mskills-section.spec.ts[22m ([0m[1m[41m7.888 s[49m[22m[0m)
+  SkillsSection
+    [32m✓[39m [2mshould create (514 ms)[22m
+    Structure Rendering
+      [32m✓[39m [2mshould render main inputs (231 ms)[22m
+      [32m✓[39m [2mshould show "no certifications" message when empty (159 ms)[22m
+    Certifications Rendering
+      [32m✓[39m [2mshould render certification cards if service returns them (425 ms)[22m
+    Interactions
+      [32m✓[39m [2mshould call addCertification when add button is clicked (137 ms)[22m
+      [32m✓[39m [2mshould call removeCertification when delete button is clicked (231 ms)[22m
+[0m[7m[1m[31m FAIL [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/cover-letter-section/[22m[1mcover-letter-section.spec.ts[22m ([0m[1m[41m7.948 s[49m[22m[0m)
+  CoverLetterSection
+    [32m✓[39m [2mdebe crearse correctamente (577 ms)[22m
+    Renderizado de UI y Lógica de Negocio
+      [32m✓[39m [2mdebe renderizar los campos base del formulario (Reclutador y Empresa) (280 ms)[22m
+      [32m✓[39m [2mdebe mostrar el input de "Referente Interno" SOLO cuando la signal isInternalReference es true (230 ms)[22m
+      [31m✕[39m [2mdebe renderizar correctamente las opciones de Tono (183 ms)[22m
+    Interacciones del Usuario
+      [32m✓[39m [2mdebe llamar a service.generate() al hacer click en el botón "Generar carta" (253 ms)[22m
+      [32m✓[39m [2mel botón de generar debe estar deshabilitado si iaForm es inválido (202 ms)[22m
+      [32m✓[39m [2mdebe pasar el estado de loading al botón cuando el servicio está cargando (186 ms)[22m
+    Visualización de Resultados
+      [32m✓[39m [2mdebe mostrar la carta generada en el textarea de solo lectura (221 ms)[22m
+[1m[31m  [1m● [22m[1mCoverLetterSection › Renderizado de UI y Lógica de Negocio › debe renderizar correctamente las opciones de Tono[39m[22m
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBeTruthy[2m()[22m
+    Received: [31mundefined[39m
+[2m[22m
+[2m    [0m [90m 93 |[39m         el[33m.[39mnativeElement[33m.[39mtextContent[33m.[39mincludes([32m'Formal'[39m)[33m,[39m[22m
+[2m     [90m 94 |[39m       )[33m;[39m[22m
+[2m    [31m[1m>[22m[2m[39m[90m 95 |[39m       expect(formalLabel)[33m.[39mtoBeTruthy()[33m;[39m[22m
+[2m     [90m    |[39m                           [31m[1m^[22m[2m[39m[22m
+[2m     [90m 96 |[39m     })[33m;[39m[22m
+[2m     [90m 97 |[39m   })[33m;[39m[22m
+[2m     [90m 98 |[39m[0m[22m
+[2m[22m
+[2m      [2mat [22m[2m[0m[36msrc/app/features/cv/components/cover-letter-section/cover-letter-section.spec.ts[39m[0m[2m:95:27[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat Object.wrappedFunc ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:449:38)[22m[2m[22m
+  [2mconsole.log[22m
+    [ 'OpenAI', 'Anthropic', 'Local' ]
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:46:13)[22m[2m[22m
+  [2mconsole.log[22m
+    { modelProvider: 'DeepSeek-Legacy', modelVersion: 'v1' }
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:48:13)[22m[2m[22m
+  [2mconsole.log[22m
+    OpenAI
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:55:13)[22m[2m[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/ia-section/[22m[1mia-section.component.spec.ts[22m ([0m[1m[41m7.912 s[49m[22m[0m)
+  IaSection Component
+    [32m✓[39m [2mshould create (736 ms)[22m
+    Initialization
+      [32m✓[39m [2mshould initialize currentExaggeration signal from service (237 ms)[22m
+    Interactions
+      [32m✓[39m [2mshould have a slider for exaggeration level (257 ms)[22m
+      [32m✓[39m [2mshould call service.optimizeCv when optimize button is clicked (102 ms)[22m
+      [32m✓[39m [2mshould show loading state on button when service.isLoading is true (120 ms)[22m
+  [2mconsole.log[22m
+    [ 'OpenAI', 'Anthropic', 'Local' ]
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:46:13)[22m[2m[22m
+  [2mconsole.log[22m
+    { modelProvider: 'OpenAI', modelVersion: 'gpt-4-legacy-deprecated' }
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:48:13)[22m[2m[22m
+  [2mconsole.log[22m
+    OpenAI
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:55:13)[22m[2m[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/ats-section/[22m[1mats-section.spec.ts[22m ([0m[1m[41m8.284 s[49m[22m[0m)
+  ATSSection
+    [32m✓[39m [2mshould create (886 ms)[22m
+    [32m✓[39m [2mshould expose service properties (206 ms)[22m
+    Integration with Service
+      [32m✓[39m [2mshould call calculateAtsScore on button click (123 ms)[22m
+  [2mconsole.log[22m
+    [ 'OpenAI', 'Anthropic', 'Local' ]
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:46:13)[22m[2m[22m
+  [2mconsole.log[22m
+    null
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:48:13)[22m[2m[22m
+  [2mconsole.log[22m
+    OpenAI
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:55:13)[22m[2m[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/experience-section/[22m[1mexperience-section.spec.ts[22m ([0m[1m[41m8.324 s[49m[22m[0m)
+  ExperienceSection
+    [32m✓[39m [2mshould create (410 ms)[22m
+    Rendering
+      [32m✓[39m [2mshould render 0 items when form array is empty (141 ms)[22m
+      [32m✓[39m [2mshould render correct number of items when form array has data (523 ms)[22m
+    Interactions
+      [32m✓[39m [2mshould call service.add() when Add button is clicked (46 ms)[22m
+      [32m✓[39m [2mshould call service.remove(index) when Remove button is clicked (321 ms)[22m
+  [2mconsole.log[22m
+    [ 'OpenAI', 'Anthropic', 'Local' ]
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:46:13)[22m[2m[22m
+  [2mconsole.log[22m
+    null
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:48:13)[22m[2m[22m
+  [2mconsole.log[22m
+    OpenAI
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:55:13)[22m[2m[22m
+  [2mconsole.log[22m
+    [ 'OpenAI', 'Anthropic', 'Local' ]
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:46:13)[22m[2m[22m
+  [2mconsole.log[22m
+    null
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:48:13)[22m[2m[22m
+  [2mconsole.log[22m
+    OpenAI
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:55:13)[22m[2m[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/personal-section/[22m[1mpersonal-section.spec.ts[22m ([0m[1m[41m8.734 s[49m[22m[0m)
+  PersonalSection Component
+    [32m✓[39m [2mshould create (954 ms)[22m
+    Form Binding
+      [32m✓[39m [2mshould render all inputs (426 ms)[22m
+      [32m✓[39m [2mshould bind input values to form control (251 ms)[22m
+      [32m✓[39m [2mshould update input value when form control changes programmatically (305 ms)[22m
+    Phone Input
+      [32m✓[39m [2mshould render phone input (262 ms)[22m
+  [2mconsole.log[22m
+    [ 'OpenAI', 'Anthropic', 'Local' ]
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:46:13)[22m[2m[22m
+  [2mconsole.log[22m
+    null
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:48:13)[22m[2m[22m
+  [2mconsole.log[22m
+    OpenAI
+[2m[22m
+[2m      [2mat new Config ([22m[2msrc/app/features/config/config.ts[2m:55:13)[22m[2m[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/config/[22m[1mconfig.spec.ts[22m ([0m[1m[41m8.666 s[49m[22m[0m)
+  Config Component
+    Initialization (Constructor Logic)
+      [32m✓[39m [2mshould initialize form with default values when NO settings are saved (910 ms)[22m
+      [32m✓[39m [2mshould initialize form with SAVED settings if valid (186 ms)[22m
+      [32m✓[39m [2mshould fallback to defaults if saved provider is invalid (179 ms)[22m
+      [32m✓[39m [2mshould reset model to null/default if saved model does not exist for provider (177 ms)[22m
+    Reactivity (Form Changes)
+      [32m✓[39m [2mshould update available models when provider changes (137 ms)[22m
+      [32m✓[39m [2mshould auto-select first model when provider changes (141 ms)[22m
+      [32m✓[39m [2mshould set modelVersion to null if provider has no models (114 ms)[22m
+    Actions
+      [32m✓[39m [2mshould save settings and show alert (120 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/projects-section/[22m[1mprojects-section.spec.ts[22m ([0m[1m[41m9.326 s[49m[22m[0m)
+  ProjectsSection
+    [32m✓[39m [2mshould create (689 ms)[22m
+    Rendering
+      [32m✓[39m [2mshould render items from service formArray (359 ms)[22m
+      [32m✓[39m [2mshould update view when signal changes (479 ms)[22m
+    Interactions
+      [32m✓[39m [2mshould call service.add() when Add button is clicked (335 ms)[22m
+      [32m✓[39m [2mshould call service.remove(index) when Remove button is clicked (235 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/cover-letter-section/analysis/[22m[1mcover-analysis.service.spec.ts[22m
+  CoverAnalysisService
+    [32m✓[39m [2mshould be created (25 ms)[22m
+    Initialization
+      [32m✓[39m [2mshould build cover letter form (11 ms)[22m
+      [32m✓[39m [2mshould initialize signals (13 ms)[22m
+    Computed Signals
+      [32m✓[39m [2mshould correctly identify application form channel (20 ms)[22m
+      [32m✓[39m [2mshould correctly identify internal referral channel (11 ms)[22m
+    Effects
+      [32m✓[39m [2mshould disable recruiterName when application form is selected (10 ms)[22m
+      [32m✓[39m [2mshould enable and restore recruiterName when switching back from application form (8 ms)[22m
+      [32m✓[39m [2mshould enable referralName when internal referral is selected (31 ms)[22m
+      [32m✓[39m [2mshould disable and clear referralName when switching away from internal referral (25 ms)[22m
+    generate
+      [32m✓[39m [2mshould call apiService and update generatedLetter on success (11 ms)[22m
+      [32m✓[39m [2mshould handle error during generation (12 ms)[22m
+  [2mconsole.log[22m
+    ATS Score calculado {
+      text: 'Texto extraído del PDF...',
+      matchScore: 85,
+      fitLevel: 'High',
+      matchedKeywords: [ 'Angular', 'TypeScript', 'Micro-frontends', 'Performance' ],
+      missingKeywords: [ 'GraphQL', 'CI/CD Pipelines', 'Kubernetes' ],
+      sections: {
+        summary: {
+          content: 'El resumen es fuerte pero podría enfatizar más resultados de negocio.',
+          score: 90,
+          highlights: [Array],
+          issues: [Array]
+        },
+        experience: {
+          content: 'La experiencia es relevante pero los bullets son muy largos.',
+          score: 80,
+          highlights: [Array],
+          issues: [Array]
+        },
+        skills: {
+          content: 'Buena lista de habilidades técnicas.',
+          score: 95,
+          highlights: [Array],
+          issues: []
+        },
+        education: {
+          content: 'Educación universitaria presente.',
+          score: 100,
+          highlights: [],
+          issues: []
+        }
+      },
+      sectionScores: {
+        summary: 90,
+        experience: 80,
+        education: 100,
+        skills: 95,
+        projects: 0,
+        certifications: 70,
+        additional: 60
+      },
+      recommendations: [
+        'Agregar palabras clave como Kubernetes para mejorar el match.',
+        'Cuantificar el impacto en el proyecto SmartCV.',
+        'Asegurar que el formato de fecha sea MM/YYYY consistentemente.'
+      ],
+      warnings: [
+        'El documento contiene tablas que pueden confundir a algunos ATS antiguos.'
+      ],
+      skillAnalysis: {
+        hardSkills: [ 'Angular', 'TypeScript', 'NestJS', 'Docker' ],
+        softSkills: [ 'Liderazgo', 'Comunicación', 'Mentoring' ],
+        languageSkills: [ 'Inglés', 'Español' ]
+      }
+    }
+[2m[22m
+[2m      [2mat Object.next ([22m[2msrc/app/features/cv/components/ats-section/analysis/ats-analyzer.service.ts[2m:155:35)[22m[2m[22m
+  [2m[31mconsole.error[39m[22m
+[31m    Error: API Error[39m
+[31m        at /home/martin/WebstormProjects/smartcv/apps/frontend/src/app/features/cv/components/ats-section/analysis/ats-analyzer.service.spec.ts:128:70[39m
+[31m        at Observable.init [as _subscribe] (/home/martin/WebstormProjects/smartcv/node_modules/rxjs/dist/cjs/internal/observable/throwError.js:8:64)[39m
+[31m        at Observable._trySubscribe (/home/martin/WebstormProjects/smartcv/node_modules/rxjs/dist/cjs/internal/Observable.js:41:25)[39m
+[31m        at /home/martin/WebstormProjects/smartcv/node_modules/rxjs/dist/cjs/internal/Observable.js:35:31[39m
+[31m        at Object.errorContext (/home/martin/WebstormProjects/smartcv/node_modules/rxjs/dist/cjs/internal/util/errorContext.js:22:9)[39m
+[31m        at Observable.subscribe (/home/martin/WebstormProjects/smartcv/node_modules/rxjs/dist/cjs/internal/Observable.js:26:24)[39m
+[31m        at AtsAnalyzerService.calculateAtsScore (/home/martin/WebstormProjects/smartcv/apps/frontend/src/app/features/cv/components/ats-section/analysis/ats-analyzer.service.ts:154:43)[39m
+[31m        at /home/martin/WebstormProjects/smartcv/apps/frontend/src/app/features/cv/components/ats-section/analysis/ats-analyzer.service.spec.ts:130:15[39m
+[31m        at _ZoneDelegate.invoke (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone.umd.js:410:32)[39m
+[31m        at ProxyZoneSpec.onInvoke (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone-testing.umd.js:2219:43)[39m
+[31m        at _ZoneDelegate.invoke (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone.umd.js:409:38)[39m
+[31m        at ZoneImpl.run (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone.umd.js:145:47)[39m
+[31m        at Object.wrappedFunc (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone-testing.umd.js:449:38)[39m
+[31m        at Promise.finally.completed (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:1557:28)[39m
+[31m        at new Promise (<anonymous>)[39m
+[31m        at callAsyncCircusFn (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:1497:10)[39m
+[31m        at _callCircusTest (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:1007:40)[39m
+[31m        at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+[31m        at _runTest (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:947:3)[39m
+[31m        at /home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:849:7[39m
+[2m[22m
+[2m    [0m [90m 155 |[39m       next[33m:[39m (response) [33m=>[39m console[33m.[39mlog([32m'ATS Score calculado'[39m[33m,[39m response)[33m,[39m[22m
+[2m     [90m 156 |[39m       error[33m:[39m (err) [33m=>[39m {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 157 |[39m         console[33m.[39merror(err)[33m;[39m[22m
+[2m     [90m     |[39m                 [31m[1m^[22m[2m[39m[22m
+[2m     [90m 158 |[39m         [36mthis[39m[33m.[39mtaigaAlerts[33m.[39mshowError([32m'alerts.ats.errors.analysis_failed'[39m)[33m.[39msubscribe()[33m;[39m[22m
+[2m     [90m 159 |[39m       }[33m,[39m[22m
+[2m     [90m 160 |[39m     })[33m;[39m[0m[22m
+[2m[22m
+[2m      [2mat Object.error ([22m[2msrc/app/features/cv/components/ats-section/analysis/ats-analyzer.service.ts[2m:157:17)[22m[2m[22m
+[2m      [2mat ConsumerObserver.error ([22m[2m../../node_modules/rxjs/dist/cjs/internal/Subscriber.js[2m:124:33)[22m[2m[22m
+[2m      [2mat SafeSubscriber.Subscriber._error ([22m[2m../../node_modules/rxjs/dist/cjs/internal/Subscriber.js[2m:84:30)[22m[2m[22m
+[2m      [2mat SafeSubscriber.Subscriber.error ([22m[2m../../node_modules/rxjs/dist/cjs/internal/Subscriber.js[2m:60:18)[22m[2m[22m
+[2m      [2mat Observable.init [as _subscribe] ([22m[2m../../node_modules/rxjs/dist/cjs/internal/observable/throwError.js[2m:8:58)[22m[2m[22m
+[2m      [2mat Observable._trySubscribe ([22m[2m../../node_modules/rxjs/dist/cjs/internal/Observable.js[2m:41:25)[22m[2m[22m
+[2m      [2mat [22m[2m../../node_modules/rxjs/dist/cjs/internal/Observable.js[2m:35:31[22m[2m[22m
+[2m      [2mat Object.errorContext ([22m[2m../../node_modules/rxjs/dist/cjs/internal/util/errorContext.js[2m:22:9)[22m[2m[22m
+[2m      [2mat Observable.subscribe ([22m[2m../../node_modules/rxjs/dist/cjs/internal/Observable.js[2m:26:24)[22m[2m[22m
+[2m      [2mat AtsAnalyzerService.calculateAtsScore ([22m[2msrc/app/features/cv/components/ats-section/analysis/ats-analyzer.service.ts[2m:154:43)[22m[2m[22m
+[2m      [2mat [22m[2m[0m[36msrc/app/features/cv/components/ats-section/analysis/ats-analyzer.service.spec.ts[39m[0m[2m:130:15[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat Object.wrappedFunc ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:449:38)[22m[2m[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/ats-section/analysis/[22m[1mats-analyzer.service.spec.ts[22m
+  AtsAnalyzerService
+    [32m✓[39m [2mshould be created (15 ms)[22m
+    File Processing (processFile)
+      [32m✓[39m [2mshould accept valid PDF files (9 ms)[22m
+      [32m✓[39m [2mshould reject non-PDF files (18 ms)[22m
+      [32m✓[39m [2mshould clear file when removeFile is called (5 ms)[22m
+    Score Calculation (calculateAtsScore)
+      [32m✓[39m [2mshould call API with correct data when file is present (115 ms)[22m
+      [32m✓[39m [2mshould show alert warning if no file is selected (13 ms)[22m
+      [32m✓[39m [2mshould handle API errors gracefully (59 ms)[22m
+    Computed Signals
+      [32m✓[39m [2mshould calculate score color correctly (6 ms)[22m
+      [32m✓[39m [2mshould map analyzed sections correctly (13 ms)[22m
+      [32m✓[39m [2mshould return empty array if no response (11 ms)[22m
+      [32m✓[39m [2mshould return correct fit level color (26 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/core/interceptors/[22m[1merror-interceptor.spec.ts[22m
+  errorInterceptor
+    [32m✓[39m [2mshould be created (2 ms)[22m
+  [2m[31mconsole.error[39m[22m
+[31m    Error al cargar datos (datos corruptos?): SyntaxError: Expected ',' or '}' after property value in JSON at position 18 (line 1 column 19)[39m
+[31m        at JSON.parse (<anonymous>)[39m
+[31m        at AiSettingsService.loadDataInternal (/home/martin/WebstormProjects/smartcv/apps/frontend/src/app/core/services/ai-settings/ai-settings.service.ts:65:19)[39m
+[31m        at new AiSettingsService (/home/martin/WebstormProjects/smartcv/apps/frontend/src/app/core/services/ai-settings/ai-settings.service.ts:23:58)[39m
+[31m        at Object.AiSettingsService_Factory [as factory] (ng:///AiSettingsService/ɵfac.js:5:10)[39m
+[31m        at R3Injector.hydrate (/home/martin/WebstormProjects/smartcv/node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs:2199:43)[39m
+[31m        at R3Injector.get (/home/martin/WebstormProjects/smartcv/node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs:2040:33)[39m
+[31m        at _TestBedImpl.inject (/home/martin/WebstormProjects/smartcv/node_modules/@angular/core/fesm2022/testing.mjs:2004:52)[39m
+[31m        at Function.inject (/home/martin/WebstormProjects/smartcv/node_modules/@angular/core/fesm2022/testing.mjs:1843:37)[39m
+[31m        at injectServiceWithPlatform (/home/martin/WebstormProjects/smartcv/apps/frontend/src/app/core/services/ai-settings/ai-settings.service.spec.ts:43:18)[39m
+[31m        at /home/martin/WebstormProjects/smartcv/apps/frontend/src/app/core/services/ai-settings/ai-settings.service.spec.ts:94:32[39m
+[31m        at _ZoneDelegate.invoke (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone.umd.js:410:32)[39m
+[31m        at ProxyZoneSpec.onInvoke (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone-testing.umd.js:2219:43)[39m
+[31m        at _ZoneDelegate.invoke (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone.umd.js:409:38)[39m
+[31m        at ZoneImpl.run (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone.umd.js:145:47)[39m
+[31m        at Object.wrappedFunc (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone-testing.umd.js:449:38)[39m
+[31m        at Promise.finally.completed (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:1557:28)[39m
+[31m        at new Promise (<anonymous>)[39m
+[31m        at callAsyncCircusFn (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:1497:10)[39m
+[31m        at _callCircusTest (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:1007:40)[39m
+[31m        at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+[31m        at _runTest (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:947:3)[39m
+[31m        at /home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:849:7[39m
+[2m[22m
+[2m    [0m [90m 65 |[39m       [36mreturn[39m [33mJSON[39m[33m.[39mparse(serializedData) [36mas[39m [33mAiSettings[39m[33m;[39m[22m
+[2m     [90m 66 |[39m     } [36mcatch[39m (e) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 67 |[39m       console[33m.[39merror([32m'Error al cargar datos (datos corruptos?):'[39m[33m,[39m e)[33m;[39m[22m
+[2m     [90m    |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 68 |[39m       [36mthis[39m[33m.[39mstorage[33m?[39m[33m.[39mremoveItem([36mthis[39m[33m.[39m[33mSTORAGE_KEY[39m)[33m;[39m[22m
+[2m     [90m 69 |[39m       [36mreturn[39m [36mnull[39m[33m;[39m[22m
+[2m     [90m 70 |[39m     }[0m[22m
+[2m[22m
+[2m      [2mat AiSettingsService.loadDataInternal ([22m[2msrc/app/core/services/ai-settings/ai-settings.service.ts[2m:67:15)[22m[2m[22m
+[2m      [2mat new AiSettingsService ([22m[2msrc/app/core/services/ai-settings/ai-settings.service.ts[2m:23:58)[22m[2m[22m
+[2m      [2mat Object.AiSettingsService_Factory [as factory] ([22m[2m../../ng:/AiSettingsService/ɵfac.js[2m:5:10)[22m[2m[22m
+[2m      [2mat R3Injector.hydrate ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2199:43)[22m[2m[22m
+[2m      [2mat R3Injector.get ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2040:33)[22m[2m[22m
+[2m      [2mat _TestBedImpl.inject ([22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:2004:52)[22m[2m[22m
+[2m      [2mat Function.inject ([22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:1843:37)[22m[2m[22m
+[2m      [2mat injectServiceWithPlatform ([22m[2m[0m[36msrc/app/core/services/ai-settings/ai-settings.service.spec.ts[39m[0m[2m:43:18)[22m[2m[22m
+[2m      [2mat [22m[2m[0m[36msrc/app/core/services/ai-settings/ai-settings.service.spec.ts[39m[0m[2m:94:32[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat Object.wrappedFunc ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:449:38)[22m[2m[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/core/services/ai-settings/[22m[1mai-settings.service.spec.ts[22m
+  AiSettingsService
+    [32m✓[39m [2mshould be created (9 ms)[22m
+    Platform Initialization
+      [32m✓[39m [2mshould set storage to null on SERVER environment (13 ms)[22m
+      [32m✓[39m [2mshould initialize storage property on BROWSER environment (4 ms)[22m
+    Data Loading (loadSettings)
+      [32m✓[39m [2mshould return null if localStorage is empty (6 ms)[22m
+      [32m✓[39m [2mshould return null and clear storage if data is corrupted (136 ms)[22m
+      [32m✓[39m [2mshould load saved settings on initialization (14 ms)[22m
+    Data Saving (saveSettings)
+      [32m✓[39m [2mshould save data to storage and update signal (10 ms)[22m
+      [32m✓[39m [2mshould silently fail and log error if localStorage setItem fails (11 ms)[22m
+      [32m✓[39m [2mshould do nothing on SAVE if running on SERVER (10 ms)[22m
+    Clear Data (clearData)
+      [32m✓[39m [2mshould remove item and reset signal (7 ms)[22m
+      [32m✓[39m [2mshould throw error if localStorage fails during clear (27 ms)[22m
+  [2m[31mconsole.error[39m[22m
+[31m    Error al cargar datos (datos corruptos?): SyntaxError: Expected ',' or '}' after property value in JSON at position 14 (line 1 column 15)[39m
+[31m        at JSON.parse (<anonymous>)[39m
+[31m        at SaveDataService.loadDataInternal (/home/martin/WebstormProjects/smartcv/apps/frontend/src/app/core/services/save-data/save-data.service.ts:42:19)[39m
+[31m        at new SaveDataService (/home/martin/WebstormProjects/smartcv/apps/frontend/src/app/core/services/save-data/save-data.service.ts:12:62)[39m
+[31m        at Object.SaveDataService_Factory [as factory] (ng:///SaveDataService/ɵfac.js:5:10)[39m
+[31m        at R3Injector.hydrate (/home/martin/WebstormProjects/smartcv/node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs:2199:43)[39m
+[31m        at R3Injector.get (/home/martin/WebstormProjects/smartcv/node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs:2040:33)[39m
+[31m        at _TestBedImpl.inject (/home/martin/WebstormProjects/smartcv/node_modules/@angular/core/fesm2022/testing.mjs:2004:52)[39m
+[31m        at Function.inject (/home/martin/WebstormProjects/smartcv/node_modules/@angular/core/fesm2022/testing.mjs:1843:37)[39m
+[31m        at injectServiceWithStorage (/home/martin/WebstormProjects/smartcv/apps/frontend/src/app/core/services/save-data/save-data.service.spec.ts:35:20)[39m
+[31m        at /home/martin/WebstormProjects/smartcv/apps/frontend/src/app/core/services/save-data/save-data.service.spec.ts:76:26[39m
+[31m        at _ZoneDelegate.invoke (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone.umd.js:410:32)[39m
+[31m        at ProxyZoneSpec.onInvoke (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone-testing.umd.js:2219:43)[39m
+[31m        at _ZoneDelegate.invoke (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone.umd.js:409:38)[39m
+[31m        at ZoneImpl.run (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone.umd.js:145:47)[39m
+[31m        at Object.wrappedFunc (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone-testing.umd.js:449:38)[39m
+[31m        at Promise.finally.completed (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:1557:28)[39m
+[31m        at new Promise (<anonymous>)[39m
+[31m        at callAsyncCircusFn (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:1497:10)[39m
+[31m        at _callCircusTest (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:1007:40)[39m
+[31m        at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+[31m        at _runTest (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:947:3)[39m
+[31m        at /home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:849:7[39m
+[2m[22m
+[2m    [0m [90m 42 |[39m       [36mreturn[39m [33mJSON[39m[33m.[39mparse(serializedData) [36mas[39m [33mCvForm[39m[33m;[39m[22m
+[2m     [90m 43 |[39m     } [36mcatch[39m (e) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 44 |[39m       console[33m.[39merror([32m'Error al cargar datos (datos corruptos?):'[39m[33m,[39m e)[33m;[39m[22m
+[2m     [90m    |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 45 |[39m       [36mthis[39m[33m.[39mstorage[33m?[39m[33m.[39mremoveItem([36mthis[39m[33m.[39m[33mSTORAGE_KEY[39m)[33m;[39m[22m
+[2m     [90m 46 |[39m       [36mreturn[39m [36mnull[39m[33m;[39m[22m
+[2m     [90m 47 |[39m     }[0m[22m
+[2m[22m
+[2m      [2mat SaveDataService.loadDataInternal ([22m[2msrc/app/core/services/save-data/save-data.service.ts[2m:44:15)[22m[2m[22m
+[2m      [2mat new SaveDataService ([22m[2msrc/app/core/services/save-data/save-data.service.ts[2m:12:62)[22m[2m[22m
+[2m      [2mat Object.SaveDataService_Factory [as factory] ([22m[2m../../ng:/SaveDataService/ɵfac.js[2m:5:10)[22m[2m[22m
+[2m      [2mat R3Injector.hydrate ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2199:43)[22m[2m[22m
+[2m      [2mat R3Injector.get ([22m[2m../../node_modules/@angular/core/fesm2022/root_effect_scheduler.mjs[2m:2040:33)[22m[2m[22m
+[2m      [2mat _TestBedImpl.inject ([22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:2004:52)[22m[2m[22m
+[2m      [2mat Function.inject ([22m[2m../../node_modules/@angular/core/fesm2022/testing.mjs[2m:1843:37)[22m[2m[22m
+[2m      [2mat injectServiceWithStorage ([22m[2m[0m[36msrc/app/core/services/save-data/save-data.service.spec.ts[39m[0m[2m:35:20)[22m[2m[22m
+[2m      [2mat [22m[2m[0m[36msrc/app/core/services/save-data/save-data.service.spec.ts[39m[0m[2m:76:26[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat Object.wrappedFunc ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:449:38)[22m[2m[22m
+  [2m[31mconsole.error[39m[22m
+[31m    Error al guardar datos en localStorage: Error: Storage capacity exceeded[39m
+[31m        at Object.<anonymous> (/home/martin/WebstormProjects/smartcv/apps/frontend/src/app/core/services/save-data/save-data.service.spec.ts:105:15)[39m
+[31m        at /home/martin/WebstormProjects/smartcv/node_modules/jest-mock/build/index.js:305:39[39m
+[31m        at Object.<anonymous> (/home/martin/WebstormProjects/smartcv/node_modules/jest-mock/build/index.js:312:13)[39m
+[31m        at Object.mockConstructor [as setItem] (/home/martin/WebstormProjects/smartcv/node_modules/jest-mock/build/index.js:102:19)[39m
+[31m        at SaveDataService.saveData (/home/martin/WebstormProjects/smartcv/apps/frontend/src/app/core/services/save-data/save-data.service.ts:18:20)[39m
+[31m        at /home/martin/WebstormProjects/smartcv/apps/frontend/src/app/core/services/save-data/save-data.service.spec.ts:109:28[39m
+[31m        at Object.<anonymous> (/home/martin/WebstormProjects/smartcv/node_modules/expect/build/index.js:1824:9)[39m
+[31m        at Object.throwingMatcher [as toThrow] (/home/martin/WebstormProjects/smartcv/node_modules/expect/build/index.js:2235:93)[39m
+[31m        at /home/martin/WebstormProjects/smartcv/apps/frontend/src/app/core/services/save-data/save-data.service.spec.ts:109:59[39m
+[31m        at _ZoneDelegate.invoke (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone.umd.js:410:32)[39m
+[31m        at ProxyZoneSpec.onInvoke (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone-testing.umd.js:2219:43)[39m
+[31m        at _ZoneDelegate.invoke (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone.umd.js:409:38)[39m
+[31m        at ZoneImpl.run (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone.umd.js:145:47)[39m
+[31m        at Object.wrappedFunc (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone-testing.umd.js:449:38)[39m
+[31m        at Promise.finally.completed (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:1557:28)[39m
+[31m        at new Promise (<anonymous>)[39m
+[31m        at callAsyncCircusFn (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:1497:10)[39m
+[31m        at _callCircusTest (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:1007:40)[39m
+[31m        at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+[31m        at _runTest (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:947:3)[39m
+[31m        at /home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:849:7[39m
+[2m[22m
+[2m    [0m [90m 19 |[39m       [36mthis[39m[33m.[39mcvDataSignal[33m.[39m[36mset[39m(cvData)[33m;[39m[22m
+[2m     [90m 20 |[39m     } [36mcatch[39m (e) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 21 |[39m       console[33m.[39merror([32m'Error al guardar datos en localStorage:'[39m[33m,[39m e)[33m;[39m[22m
+[2m     [90m    |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 22 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'No se pudo guardar el CV'[39m)[33m;[39m[22m
+[2m     [90m 23 |[39m     }[22m
+[2m     [90m 24 |[39m   }[0m[22m
+[2m[22m
+[2m      [2mat SaveDataService.saveData ([22m[2msrc/app/core/services/save-data/save-data.service.ts[2m:21:15)[22m[2m[22m
+[2m      [2mat [22m[2m[0m[36msrc/app/core/services/save-data/save-data.service.spec.ts[39m[0m[2m:109:28[22m[2m[22m
+[2m      [2mat Object.<anonymous> ([22m[2m../../node_modules/expect/build/index.js[2m:1824:9)[22m[2m[22m
+[2m      [2mat Object.throwingMatcher [as toThrow] ([22m[2m../../node_modules/expect/build/index.js[2m:2235:93)[22m[2m[22m
+[2m      [2mat [22m[2m[0m[36msrc/app/core/services/save-data/save-data.service.spec.ts[39m[0m[2m:109:59[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat Object.wrappedFunc ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:449:38)[22m[2m[22m
+  [2m[31mconsole.error[39m[22m
+[31m    Error al limpiar datos de localStorage: Error: Remove failed[39m
+[31m        at Object.<anonymous> (/home/martin/WebstormProjects/smartcv/apps/frontend/src/app/core/services/save-data/save-data.service.spec.ts:128:15)[39m
+[31m        at /home/martin/WebstormProjects/smartcv/node_modules/jest-mock/build/index.js:305:39[39m
+[31m        at Object.<anonymous> (/home/martin/WebstormProjects/smartcv/node_modules/jest-mock/build/index.js:312:13)[39m
+[31m        at Object.mockConstructor [as removeItem] (/home/martin/WebstormProjects/smartcv/node_modules/jest-mock/build/index.js:102:19)[39m
+[31m        at SaveDataService.clearData (/home/martin/WebstormProjects/smartcv/apps/frontend/src/app/core/services/save-data/save-data.service.ts:28:20)[39m
+[31m        at /home/martin/WebstormProjects/smartcv/apps/frontend/src/app/core/services/save-data/save-data.service.spec.ts:132:28[39m
+[31m        at Object.<anonymous> (/home/martin/WebstormProjects/smartcv/node_modules/expect/build/index.js:1824:9)[39m
+[31m        at Object.throwingMatcher [as toThrow] (/home/martin/WebstormProjects/smartcv/node_modules/expect/build/index.js:2235:93)[39m
+[31m        at /home/martin/WebstormProjects/smartcv/apps/frontend/src/app/core/services/save-data/save-data.service.spec.ts:132:41[39m
+[31m        at _ZoneDelegate.invoke (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone.umd.js:410:32)[39m
+[31m        at ProxyZoneSpec.onInvoke (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone-testing.umd.js:2219:43)[39m
+[31m        at _ZoneDelegate.invoke (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone.umd.js:409:38)[39m
+[31m        at ZoneImpl.run (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone.umd.js:145:47)[39m
+[31m        at Object.wrappedFunc (/home/martin/WebstormProjects/smartcv/node_modules/zone.js/bundles/zone-testing.umd.js:449:38)[39m
+[31m        at Promise.finally.completed (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:1557:28)[39m
+[31m        at new Promise (<anonymous>)[39m
+[31m        at callAsyncCircusFn (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:1497:10)[39m
+[31m        at _callCircusTest (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:1007:40)[39m
+[31m        at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+[31m        at _runTest (/home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:947:3)[39m
+[31m        at /home/martin/WebstormProjects/smartcv/node_modules/jest-circus/build/jestAdapterInit.js:849:7[39m
+[2m[22m
+[2m    [0m [90m 29 |[39m       [36mthis[39m[33m.[39mcvDataSignal[33m.[39m[36mset[39m([36mnull[39m)[33m;[39m[22m
+[2m     [90m 30 |[39m     } [36mcatch[39m (e) {[22m
+[2m    [31m[1m>[22m[2m[39m[90m 31 |[39m       console[33m.[39merror([32m'Error al limpiar datos de localStorage:'[39m[33m,[39m e)[33m;[39m[22m
+[2m     [90m    |[39m               [31m[1m^[22m[2m[39m[22m
+[2m     [90m 32 |[39m       [36mthrow[39m [36mnew[39m [33mError[39m([32m'No se pudo limpiar los datos'[39m)[33m;[39m[22m
+[2m     [90m 33 |[39m     }[22m
+[2m     [90m 34 |[39m   }[0m[22m
+[2m[22m
+[2m      [2mat SaveDataService.clearData ([22m[2msrc/app/core/services/save-data/save-data.service.ts[2m:31:15)[22m[2m[22m
+[2m      [2mat [22m[2m[0m[36msrc/app/core/services/save-data/save-data.service.spec.ts[39m[0m[2m:132:28[22m[2m[22m
+[2m      [2mat Object.<anonymous> ([22m[2m../../node_modules/expect/build/index.js[2m:1824:9)[22m[2m[22m
+[2m      [2mat Object.throwingMatcher [as toThrow] ([22m[2m../../node_modules/expect/build/index.js[2m:2235:93)[22m[2m[22m
+[2m      [2mat [22m[2m[0m[36msrc/app/core/services/save-data/save-data.service.spec.ts[39m[0m[2m:132:41[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:410:32)[22m[2m[22m
+[2m      [2mat ProxyZoneSpec.onInvoke ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:2219:43)[22m[2m[22m
+[2m      [2mat _ZoneDelegate.invoke ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:409:38)[22m[2m[22m
+[2m      [2mat ZoneImpl.run ([22m[2m../../node_modules/zone.js/bundles/zone.umd.js[2m:145:47)[22m[2m[22m
+[2m      [2mat Object.wrappedFunc ([22m[2m../../node_modules/zone.js/bundles/zone-testing.umd.js[2m:449:38)[22m[2m[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/core/services/save-data/[22m[1msave-data.service.spec.ts[22m
+  SaveDataService
+    [32m✓[39m [2mshould be created and initialize with null CV data (16 ms)[22m
+    Data Loading (loadDataInternal)
+      [32m✓[39m [2mshould load saved data on initialization and set activeCv signal (15 ms)[22m
+      [32m✓[39m [2mshould return null and clear storage if data is corrupted (SyntaxError path) (292 ms)[22m
+    saveData
+      [32m✓[39m [2mshould save data to storage and update activeCv signal (8 ms)[22m
+      [32m✓[39m [2mshould throw an error if localStorage fails during save (21 ms)[22m
+    clearData
+      [32m✓[39m [2mshould remove item from storage and reset activeCv signal to null (9 ms)[22m
+      [32m✓[39m [2mshould throw an error if localStorage fails during clear (26 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/actions/actions-service/[22m[1mactions.service.spec.ts[22m
+  ActionsService
+    [32m✓[39m [2mshould be created (9 ms)[22m
+    Profile Switching (selectProfile)
+      [32m✓[39m [2mshould load profile and emit alert when selecting a profile (7 ms)[22m
+      [32m✓[39m [2mshould save previous profile if CV was valid before switching (10 ms)[22m
+      [32m✓[39m [2mshould clear form if null is selected (9 ms)[22m
+    Create New Profile (createNewProfile)
+      [32m✓[39m [2mshould create valid profile (Save + Create) if CV is valid (9 ms)[22m
+      [32m✓[39m [2mshould create empty profile if CV is invalid (7 ms)[22m
+    Edit Profile Name
+      [32m✓[39m [2mshould update profile name if changed (6 ms)[22m
+    Delete Profile
+      [32m✓[39m [2mshould delete and clear selection if current profile deleted (6 ms)[22m
+    Form Actions
+      [32m✓[39m [2mshould save CV (6 ms)[22m
+      [32m✓[39m [2mshould clear form (4 ms)[22m
+      [32m✓[39m [2mshould download PDF if CV is valid (9 ms)[22m
+      [32m✓[39m [2mshould NOT download PDF if CV is invalid (7 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/ia-section/ia-service/[22m[1mia-section.service.spec.ts[22m
+  IaSectionService
+    [32m✓[39m [2mshould be created (11 ms)[22m
+    currentExaggeration
+      [32m✓[39m [2mshould update when form control changes (8 ms)[22m
+    setExaggeration
+      [32m✓[39m [2mshould update form control value (6 ms)[22m
+    optimizeCv
+      [32m✓[39m [2mshould show alert if form is invalid (missing job description) (8 ms)[22m
+      [32m✓[39m [2mshould call optimizeCv and handle success (9 ms)[22m
+      [32m✓[39m [2mshould handle API error (7 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/core/services/alerts/[22m[1mtaiga-alerts.service.spec.ts[22m
+  TaigaAlertsService
+    [32m✓[39m [2mshould be created (12 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/pages/cv-page/[22m[1mcv-page.spec.ts[22m ([0m[1m[41m10.681 s[49m[22m[0m)
+  CvPage
+    [32m✓[39m [2mdebe crearse correctamente (1211 ms)[22m
+    Navegación de Pestañas (Tabs Logic)
+      [32m✓[39m [2mdebe iniciar en la pestaña 0 (420 ms)[22m
+      [32m✓[39m [2mdebe avanzar pestaña con swipe LEFT (348 ms)[22m
+      [32m✓[39m [2mdebe retroceder pestaña con swipe RIGHT (455 ms)[22m
+    Vista Móvil
+      [32m✓[39m [2mdebe iniciar en vista Formulario (0) (351 ms)[22m
+      [32m✓[39m [2mdebe cambiar a Preview (1) con swipe LEFT (397 ms)[22m
+    Renderizado del Template
+      [32m✓[39m [2mdebe mostrar el dummy-view (531 ms)[22m
+      [32m✓[39m [2mdebe mostrar la sección correcta según activeTab (337 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/services/cv-form/cv-form-builder/[22m[1mcv-form-builder.service.spec.ts[22m
+  CvFormBuilderService
+    [32m✓[39m [2mshould be created (32 ms)[22m
+    buildCvForm
+      [32m✓[39m [2mshould create a form with all required sections (22 ms)[22m
+    buildCoverLetterForm
+      [32m✓[39m [2mshould create a cover letter form with required controls (12 ms)[22m
+    buildIaForm
+      [32m✓[39m [2mshould create an IA form with required controls (5 ms)[22m
+    createPersonalInfoGroup
+      [32m✓[39m [2mshould create personal info group with validators (9 ms)[22m
+    createExperienceGroup
+      [32m✓[39m [2mshould create experience group with default values (6 ms)[22m
+      [32m✓[39m [2mshould create experience group with provided values (4 ms)[22m
+    createProjectGroup
+      [32m✓[39m [2mshould create project group with default values (9 ms)[22m
+      [32m✓[39m [2mshould create project group with provided values (8 ms)[22m
+    createEducationGroup
+      [32m✓[39m [2mshould create education group with default values (5 ms)[22m
+      [32m✓[39m [2mshould create education group with provided values (5 ms)[22m
+    createCertificationGroup
+      [32m✓[39m [2mshould create certification group (8 ms)[22m
+    createSkillGroup
+      [32m✓[39m [2mshould create skill group with empty arrays by default (16 ms)[22m
+      [32m✓[39m [2mshould create skill group with provided values including certifications (17 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/services/cv-form/cv-form-manager/[22m[1mcv-form-manager.service.spec.ts[22m
+  CvFormManagerService
+    [32m✓[39m [2mshould be created (16 ms)[22m
+    buildCvForm
+      [32m✓[39m [2mshould call builder.buildCvForm (7 ms)[22m
+    buildIaForm
+      [32m✓[39m [2mshould call builder.buildIaForm (10 ms)[22m
+    patchFormArrays
+      [32m✓[39m [2mshould update form arrays with response data (8 ms)[22m
+    patchCvData
+      [32m✓[39m [2mshould update form arrays and personal info with saved data (8 ms)[22m
+    resetCvForm
+      [32m✓[39m [2mshould clear arrays and reset form (7 ms)[22m
+    ensureMinimumFormArrays
+      [32m✓[39m [2mshould add one item if array is empty (7 ms)[22m
+      [32m✓[39m [2mshould not add item if array is not empty (9 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/dummy-view/[22m[1mdummy-view.spec.ts[22m
+  DummyView Component
+    [32m✓[39m [2mshould create (263 ms)[22m
+    Helper Method Logic
+      [32m✓[39m [2mshould format certifications correctly and filter null names (36 ms)[22m
+    Template Rendering and Data Integrity
+      [32m✓[39m [2mshould render basic personal info (Name and Job) (31 ms)[22m
+      [32m✓[39m [2mshould correctly display multi-line achievement bullets (53 ms)[22m
+      [32m✓[39m [2mshould display experience section title in uppercase and translated (40 ms)[22m
+      [32m✓[39m [2mshould correctly format and link URLs (e.g., LinkedIn) (88 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/services/cv-form/cv-form-data/[22m[1mcv-form-data.service.spec.ts[22m
+  CvFormDataService
+    [32m✓[39m [2mshould be created (25 ms)[22m
+    optimizeCv
+      [32m✓[39m [2mshould call iaService.generateCvWithIA with correct payload (low temp) (5 ms)[22m
+      [32m✓[39m [2mshould call iaService.generateCvWithIA with correct payload (medium temp) (6 ms)[22m
+      [32m✓[39m [2mshould call iaService.generateCvWithIA with correct payload (high temp) (10 ms)[22m
+    downloadPdf
+      [32m✓[39m [2mshould call pdfService.downloadPdf (9 ms)[22m
+    saveCv
+      [32m✓[39m [2mshould call saveDataService.saveData (3 ms)[22m
+    clearCv
+      [32m✓[39m [2mshould call saveDataService.clearData (3 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/skills-section/skills-service/[22m[1mskills.service.spec.ts[22m
+  SkillsService
+    [32m✓[39m [2mshould be created (21 ms)[22m
+    [32m✓[39m [2mshould return formArray from state (7 ms)[22m
+    Skill Groups
+      [32m✓[39m [2mshould add a new skill group (7 ms)[22m
+      [32m✓[39m [2mshould remove skill group at index (5 ms)[22m
+    Certifications
+      [32m✓[39m [2mshould add certification to a specific skill group (5 ms)[22m
+      [32m✓[39m [2mshould remove certification from a specific skill group (5 ms)[22m
+      [32m✓[39m [2mshould do nothing if skill group does not exist when adding cert (6 ms)[22m
+      [32m✓[39m [2mshould do nothing if skill group does not exist when removing cert (4 ms)[22m
+    getCertificationsControls
+      [32m✓[39m [2mshould return controls of certifications form array (5 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/ats-section/api/[22m[1mats-api.service.spec.ts[22m
+  AtsApiService
+    API Call and State Management
+      [32m✓[39m [2mshould set isLoading=true and response=null on call start (14 ms)[22m
+      [32m✓[39m [2mshould set response signal and isLoading=false on SUCCESS (5 ms)[22m
+    Error Handling
+      [32m✓[39m [2mshould reset response, set isLoading=false, and rethrow custom error on SERVER error (HttpError) (37 ms)[22m
+      [32m✓[39m [2mshould rethrow custom error on CLIENT-SIDE error (Network/ErrorEvent) (8 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/projects-section/projects-service/[22m[1mprojects.service.spec.ts[22m
+  ProjectsService
+    [32m✓[39m [2mshould be created (20 ms)[22m
+    [32m✓[39m [2mshould return formArray from state (6 ms)[22m
+    add
+      [32m✓[39m [2mshould add a new project group to the form array (5 ms)[22m
+    remove
+      [32m✓[39m [2mshould remove project group at index (142 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/services/cv-form/cv-form-state/[22m[1mcv-state.service.spec.ts[22m
+  CvStateService
+    [32m✓[39m [2mshould be created (10 ms)[22m
+    Initialization
+      [32m✓[39m [2mshould build forms and ensure minimum arrays (7 ms)[22m
+      [32m✓[39m [2mshould initialize signals with default values (6 ms)[22m
+    Effects
+      [32m✓[39m [2mshould patch CV data when activeCv emits a value (9 ms)[22m
+      [32m✓[39m [2mshould reset internal state when activeCv emits null (9 ms)[22m
+    Methods
+      [32m✓[39m [2mshould reset form and clear data (9 ms)[22m
+      [32m✓[39m [2mshould set lock state (8 ms)[22m
+    Computed Signals
+      [32m✓[39m [2mshould update isValid when form validity changes (10 ms)[22m
+      [32m✓[39m [2mshould update hasExperience based on form array (11 ms)[22m
+      [32m✓[39m [2mshould update hasEducation based on form array (10 ms)[22m
+      [32m✓[39m [2mshould update hasProjects based on form array (8 ms)[22m
+      [32m✓[39m [2mshould update hasSkills based on form array (12 ms)[22m
+    Getters
+      [32m✓[39m [2mshould return correct form controls (21 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/ia-section/api/[22m[1mia-api.service.spec.ts[22m
+  IaApiService
+    generateCvWithIA (HTTP & Transformation)
+      [32m✓[39m [2mshould send POST request with payload (15 ms)[22m
+      [32m✓[39m [2mshould transform API response (string[] to string) for form compatibility (6 ms)[22m
+      [32m✓[39m [2mshould handle null/missing arrays safely (8 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/experience-section/experience-service/[22m[1mexperience.service.spec.ts[22m
+  ExperienceService
+    [32m✓[39m [2mshould be created (11 ms)[22m
+    [32m✓[39m [2mshould return formArray from state (6 ms)[22m
+    add
+      [32m✓[39m [2mshould add a new experience group to the form array (6 ms)[22m
+    remove
+      [32m✓[39m [2mshould remove experience group at index (5 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/layout/navbar/[22m[1mnavbar.spec.ts[22m
+  Navbar
+    [32m✓[39m [2mshould create (219 ms)[22m
+    [32m✓[39m [2mshould set language correctly to english (67 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/core/services/pdf/[22m[1mpdf.service.spec.ts[22m
+  PdfService
+    [32m✓[39m [2mshould be created (8 ms)[22m
+    downloadPdf
+      [32m✓[39m [2mshould initialize jsPDF and save the file (8 ms)[22m
+      [32m✓[39m [2mshould translate section titles (7 ms)[22m
+      [32m✓[39m [2mshould draw personal info correctly (9 ms)[22m
+      [32m✓[39m [2mshould handle empty data gracefully (4 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/education-section/education-service/[22m[1meducation.service.spec.ts[22m
+  EducationService
+    [32m✓[39m [2mshould be created (23 ms)[22m
+    [32m✓[39m [2mshould return formArray from state (4 ms)[22m
+    add
+      [32m✓[39m [2mshould add a new education group to the form array (5 ms)[22m
+    remove
+      [32m✓[39m [2mshould remove education group at index (4 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/core/services/profile/[22m[1mprofile.service.spec.ts[22m
+  ProfileService
+    [32m✓[39m [2mshould be created (13 ms)[22m
+    Initialization
+      [32m✓[39m [2mshould initialize with empty array if storage is null (6 ms)[22m
+      [32m✓[39m [2mshould load profiles from storage if they exist (7 ms)[22m
+    Profile Management
+      [32m✓[39m [2mshould create an empty profile, add it to state and persist it (5 ms)[22m
+      [32m✓[39m [2mshould delete profile and update storage (6 ms)[22m
+      [32m✓[39m [2mshould update profile name (4 ms)[22m
+      [32m✓[39m [2mshould throw error when updating non-existent profile name (18 ms)[22m
+    Interaction with Active CV
+      [32m✓[39m [2mshould load profile to active (SaveDataService) (7 ms)[22m
+      [32m✓[39m [2mshould return false if trying to load non-existent profile (5 ms)[22m
+      [32m✓[39m [2mshould save current CV as new profile (3 ms)[22m
+      [32m✓[39m [2mshould throw error if trying to save profile without active CV (2 ms)[22m
+      [32m✓[39m [2mshould update active profile data (4 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/shared/pipes/[22m[1mexaggeration-pipe.spec.ts[22m
+  ExaggerationLevelPipe
+    [32m✓[39m [2mcreate an instance (1 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/features/cv/components/cover-letter-section/api/[22m[1mcover-api.service.spec.ts[22m
+  CoverApiService
+    [32m✓[39m [2mshould construct the correct POST request with streaming headers (12 ms)[22m
+    [32m✓[39m [2mshould process sequential chunks correctly and maintain internal state (6 ms)[22m
+    [32m✓[39m [2mshould filter out empty chunks from the stream (8 ms)[22m
+    [32m✓[39m [2mshould catch HttpClient error and rethrow custom error message (22 ms)[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m frontend [39m[27m[0m [2mapps/frontend/src/app/[22m[1mapp.spec.ts[22m
+  App
+    [32m✓[39m [2mshould create the app (126 ms)[22m
+    [32m✓[39m [2mshould verify structural integrity (Navbar and RouterOutlet) (40 ms)[22m
+    [32m✓[39m [2mshould correctly bind tuiTheme attribute based on dark mode signal (47 ms)[22m
+[1mSummary of all failing tests[22m
+[0m[7m[1m[31m FAIL [39m[22m[2
+7m[0m [2msrc/app/
+features/cv/co
+mponents/cover-l
+etter-section/[2
+2m[1mcover-letter
+-section.spec.ts[2
+2m ([0m[1m[41m7.948 
+s[49m[22m[0m)
+[1m[3
+1m  [1m● [22m[1mCoverLett
+erSection › Renderi
+zado de UI y Lógica de Negocio › debe 
+renderizar correctamente 
+las opciones de Tono
+[39m[22m
+    [2m
+expect([22m[31mreceive
+d[39m[2m).[22mtoBeTru
+thy[2m()[22m
+    Receiv
+ed: [31mundefined[39m
+[2
+m[22m
+[2m    [0m [9
+0m 93 |[39m        
+ el[33m.[39mnat
+iveElement[33m.[39m
+textContent[33m.[3
+9mincludes([32m'Form
+al'[39m)[33m,[39m[22
+m
+[2m     [90m 94 |[39m 
+      )[33m;[39m[22m
+[
+2m    [31m[1m>[22m
+[2m[39m[90m 95
+ |[39m       
+expect(formalLab
+el)[33m.[39mt
+oBeTruthy()
+[33m;[39m[22m
+[2
+m     [90m    |[39m       
+               
+     [31m[1m
+^[22m[2m[39
+m[22m
+[2m     [9
+0m 96 |[39m     })[3
+3m;[39m[22m
+[2m  
+   [90m 97 |[39m 
+  })[33m;[39m
+[22m
+[2m     
+[90m 98 |[39m[0m[
+22m
+[2m[22m
+[
+2m      [2mat [22m[2m[0m
+[36msrc/app/featu
+res/cv/components/c
+over-letter-secti
+on/cover-letter-sec
+tion.spec.ts[39m
+[0m[2m:95:27[22m[
+2m[22m
+[2m      [
+2mat _ZoneDel
+egate.invoke ([22m
+[2m../../node_mod
+ules/zone.js/bund
+les/zone.umd.js[2
+m:410:32)[22m[2
+m[22m
+[2m      
+[2mat ProxyZoneSpec.onI
+nvoke ([22m[2m../.
+./node_
+modules/zone.js/bun
+dles/zone-testing.um
+d.js[2m:2219:43)
+[22m[2m[22m
+[
+2m      [2mat _ZoneDel
+egate.invoke ([22m
+[2m../../node_mod
+ules/zone.js/bundles
+/zone.umd.js[2m:4
+09:38)[22m[2m[22m
+[
+2m      [2mat ZoneImpl.run (
+[22m[2m../../node_m
+odules/zone.js/bundl
+es/zone.umd.js[2m:
+145:47)[22m[2m[22m
+[2m      [2mat O
+bject.wrappedFunc ([
+22m[2m../../node_mo
+dules/zone.js/bundle
+s/zone-testing.umd.js
+[2m:449:38)[22m[2m
+[22m
+[1mTest Suites: [22m[1m[31m1 failed[39m[22m, [1m[32m35 passed[39m[22m, 36 total
+[1mTests:       [22m[1m[31m1 failed[39m[22m, [1m[32m221 passed[39m[22m, 222 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m14.68 s[39m[22m
+[2mRan all test suites[22m[2m.[22m
+
+
+
+ NX   Running target test for project frontend failed
+
+Failed tasks:
+
+- frontend:test
+
+Hint: run the command with --verbose for more details.
+

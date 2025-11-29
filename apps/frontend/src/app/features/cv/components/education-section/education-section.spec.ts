@@ -55,38 +55,35 @@ describe('EducationSection', () => {
 
     it('should render correct number of items when form array has data', () => {
       // Arrange
-      formArray.push(
-        new FormGroup({
-          institution: new FormControl('UBA'),
-          title: new FormControl('Ingeniero'),
-          dateIn: new FormControl(''),
-          dateFin: new FormControl(''),
-          bullets: new FormControl(''),
-        }),
+      educationServiceMock.formArray.set(
+        new FormArray([
+          new FormGroup({
+            title: new FormControl('Engineer'),
+            institution: new FormControl('University'),
+            dateIn: new FormControl(''),
+            dateFin: new FormControl(''),
+            bullets: new FormControl(''),
+          }),
+          new FormGroup({
+            title: new FormControl('Master'),
+            institution: new FormControl('College'),
+            dateIn: new FormControl(''),
+            dateFin: new FormControl(''),
+            bullets: new FormControl(''),
+          }),
+        ]),
       );
-      formArray.push(
-        new FormGroup({
-          institution: new FormControl('UTN'),
-          title: new FormControl('Tecnico'),
-          dateIn: new FormControl(''),
-          dateFin: new FormControl(''),
-          bullets: new FormControl(''),
-        }),
-      );
-
-      // Trigger change detection
       fixture.detectChanges();
 
       // Assert
-      const items = fixture.debugElement.queryAll(By.css('[tuiCardLarge]'));
+      const items = fixture.debugElement.queryAll(By.css('button[tuiAccordion]'));
       expect(items.length).toBe(2);
     });
   });
 
   describe('Interactions', () => {
     it('should call service.add() when Add button is clicked', () => {
-      const buttons = fixture.debugElement.queryAll(By.css('button[iconStart="@tui.plus"]'));
-      const addButton = buttons[0];
+      const addButton = fixture.debugElement.query(By.css('button[appearance="secondary"]'));
 
       addButton.nativeElement.click();
 

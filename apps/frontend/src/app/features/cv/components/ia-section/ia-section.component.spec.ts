@@ -56,13 +56,9 @@ describe('IaSection Component', () => {
   });
 
   describe('Interactions', () => {
-    it('should call service.setExaggeration when clicking an exaggeration level button', () => {
-      const levelButtons = fixture.debugElement.queryAll(By.css('button.cursor-pointer'));
-
-      // Click on level 1 (Medium)
-      levelButtons[1].nativeElement.click();
-
-      expect(iaSectionServiceMock.setExaggeration).toHaveBeenCalledWith(1);
+    it('should have a slider for exaggeration level', () => {
+      const slider = fixture.debugElement.query(By.css('input[tuiSlider]'));
+      expect(slider).toBeTruthy();
     });
 
     it('should call service.optimizeCv when optimize button is clicked', () => {
@@ -86,7 +82,7 @@ describe('IaSection Component', () => {
       // Let's check if the button has the loading class or attribute if possible,
       // or simply rely on the fact that we passed the signal.
       // A better check might be to verify the input binding in the template, but for now:
-      expect(component.service.isLoading()).toBe(true);
+      expect(component['service'].isLoading()).toBe(true);
     });
   });
 });

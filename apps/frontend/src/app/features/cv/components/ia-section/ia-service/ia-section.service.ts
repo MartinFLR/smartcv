@@ -75,6 +75,10 @@ export class IaSectionService {
           this.dataService.saveCv(this.state.cvForm.getRawValue() as CvForm);
           this.taigaAlerts.showSuccess('alerts.ia.success.cv_optimized').subscribe();
         },
+        error: (err) => {
+          console.error(err);
+          this.taigaAlerts.showError('API Error').subscribe();
+        },
       });
   }
 }

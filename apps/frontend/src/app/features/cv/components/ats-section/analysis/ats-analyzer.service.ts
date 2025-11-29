@@ -68,11 +68,15 @@ export class AtsAnalyzerService {
 
   public readonly fitLevelColor = computed(() => {
     const level = this.fitLevel();
-    const s = this.score() ?? 0;
+    const s = this.score();
 
-    if (level === 'Low' || s < 50) return 'var(--tui-status-negative)';
-    if (level === 'Medium' || s < 80) return 'var(--tui-status-warning)';
-    if (level === 'High' || s >= 80) return 'var(--tui-status-positive)';
+    if (!level && s === null) return 'var(--tui-support-08)';
+
+    const scoreVal = s ?? 0;
+
+    if (level === 'Low' || scoreVal < 50) return 'var(--tui-status-negative)';
+    if (level === 'Medium' || scoreVal < 80) return 'var(--tui-status-warning)';
+    if (level === 'High' || scoreVal >= 80) return 'var(--tui-status-positive)';
 
     return 'var(--tui-support-08)';
   });
@@ -149,6 +153,10 @@ export class AtsAnalyzerService {
 
     this.apiService.getAtsScore(formData).subscribe({
       next: (response) => console.log('ATS Score calculado', response),
+      error: (err) => {
+        console.error(err);
+        this.taigaAlerts.showError('alerts.ats.errors.analysis_failed').subscribe();
+      },
     });
   }
 

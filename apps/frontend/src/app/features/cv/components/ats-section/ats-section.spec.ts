@@ -10,6 +10,7 @@ import { jest } from '@jest/globals';
 import { TuiLanguageSwitcherService } from '@taiga-ui/i18n/utils';
 import { CvAtsResponse } from '@smartcv/types';
 import { MOCK_CV_ATS_RESPONSE } from '../../../../shared/testing/mocks/ats.mock';
+import { TranslocoTestingModule } from '@jsverse/transloco';
 
 describe('ATSSection', () => {
   let component: ATSSection;
@@ -74,7 +75,14 @@ describe('ATSSection', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [ATSSection, ReactiveFormsModule],
+      imports: [
+        ATSSection,
+        ReactiveFormsModule,
+        TranslocoTestingModule.forRoot({
+          langs: { en: {}, es: {} },
+          translocoConfig: { availableLangs: ['en', 'es'], defaultLang: 'es' },
+        }),
+      ],
       providers: [
         provideAnimations(),
         { provide: AtsAnalyzerService, useValue: atsAnalyzerServiceMock },

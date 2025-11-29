@@ -48,18 +48,22 @@ describe('CvFormDataService', () => {
 
       service.optimizeCv(baseCv, jobDesc, exaggeration);
 
-      expect(iaApiServiceMock.generateCvWithIA).toHaveBeenCalledWith({
-        baseCv,
-        jobDesc,
-        promptOption: { temperature: 'low' },
-      });
+      expect(iaApiServiceMock.generateCvWithIA).toHaveBeenCalledWith(
+        expect.objectContaining({
+          baseCv,
+          jobDesc,
+          promptOption: expect.objectContaining({ temperature: 'low' }),
+        }),
+      );
     });
 
     it('should call iaService.generateCvWithIA with correct payload (medium temp)', () => {
       const baseCv = {} as CvForm;
       service.optimizeCv(baseCv, '', 1);
       expect(iaApiServiceMock.generateCvWithIA).toHaveBeenCalledWith(
-        expect.objectContaining({ promptOption: { temperature: 'medium' } }),
+        expect.objectContaining({
+          promptOption: expect.objectContaining({ temperature: 'medium' }),
+        }),
       );
     });
 
@@ -67,7 +71,9 @@ describe('CvFormDataService', () => {
       const baseCv = {} as CvForm;
       service.optimizeCv(baseCv, '', 2);
       expect(iaApiServiceMock.generateCvWithIA).toHaveBeenCalledWith(
-        expect.objectContaining({ promptOption: { temperature: 'high' } }),
+        expect.objectContaining({
+          promptOption: expect.objectContaining({ temperature: 'high' }),
+        }),
       );
     });
   });
