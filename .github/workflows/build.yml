@@ -13,7 +13,7 @@ jobs:
       NX_SKIP_NX_CACHE: true
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: actions/setup-node@v6
         with:
