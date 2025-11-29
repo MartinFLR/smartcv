@@ -10,6 +10,9 @@ export const AI_MODELS_DATA: AiProviderModels = {
     'gemini-2.5-flash-lite',
     'gemini-2.5-flash',
     'gemini-2.5-pro',
+
+    //3.0
+    'gemini-3-pro-preview',
   ],
   openai: [
     'gpt-4o',

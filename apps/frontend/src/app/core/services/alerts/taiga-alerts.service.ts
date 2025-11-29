@@ -15,7 +15,12 @@ export class TaigaAlertsService {
     params?: Record<string, string>,
     customLabel?: string,
   ): Observable<void> {
-    const content = this.resolveContent(key, 'notifications.success.title', params, customLabel);
+    const content = this.resolveContent(
+      key,
+      'alerts.notifications.success.title',
+      params,
+      customLabel,
+    );
 
     return this.alerts.open(content.message, {
       label: content.label,
@@ -26,7 +31,12 @@ export class TaigaAlertsService {
   }
 
   showError(key: string, params?: Record<string, string>, customLabel?: string): Observable<void> {
-    const content = this.resolveContent(key, 'notifications.error.title', params, customLabel);
+    const content = this.resolveContent(
+      key,
+      'alerts.notifications.error.title',
+      params,
+      customLabel,
+    );
     console.error(`[TaigaAlerts]: ${content.label} - ${content.message}`);
 
     return this.alerts.open(content.message, {
@@ -42,7 +52,12 @@ export class TaigaAlertsService {
     params?: Record<string, string>,
     customLabel?: string,
   ): Observable<void> {
-    const content = this.resolveContent(key, 'notifications.warning.title', params, customLabel);
+    const content = this.resolveContent(
+      key,
+      'alerts.notifications.warning.title',
+      params,
+      customLabel,
+    );
 
     return this.alerts.open(content.message, {
       label: content.label,
@@ -53,7 +68,12 @@ export class TaigaAlertsService {
   }
 
   showInfo(key: string, params?: Record<string, string>, customLabel?: string): Observable<void> {
-    const content = this.resolveContent(key, 'notifications.info.title', params, customLabel);
+    const content = this.resolveContent(
+      key,
+      'alerts.notifications.info.title',
+      params,
+      customLabel,
+    );
 
     return this.alerts.open(content.message, {
       label: content.label,

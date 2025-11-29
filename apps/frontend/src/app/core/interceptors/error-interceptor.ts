@@ -10,12 +10,12 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 0) {
-        notify.showError('errors.network', undefined, 'errors.titles.connectivity');
+        notify.showError('api.errors.network', undefined, 'api.errors.titles.connectivity');
       } else {
         const serverCode = error.error?.code;
         const params = error.error?.params;
 
-        const messageKey = serverCode ? `api_errors.${serverCode}` : 'api_errors.fallback';
+        const messageKey = serverCode ? `api.errors.${serverCode}` : 'api.errors.fallback';
 
         notify.showError(messageKey, params);
       }

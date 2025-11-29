@@ -4,7 +4,7 @@
   "private": true,
   "description": "Your free self-hosted intelligent assistant for analyzing, optimizing, and comparing resumes with job descriptions using AI.",
   "scripts": {
-    "start": "concurrently \"nx serve apps/frontend\" \"nx serve apps/backend\"",
+    "start": "npx nx run-many -t serve -p backend frontend",
     "serve:frontend": "nx serve apps/frontend",
     "serve:backend": "nx serve apps/backend",
     "format": "prettier --write .",
@@ -90,7 +90,6 @@
     "@types/node": "^24.10.0",
     "@types/supertest": "^6.0.3",
     "angular-eslint": "20.6.0",
-    "concurrently": "^9.2.1",
     "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",

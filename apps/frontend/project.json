@@ -2,6 +2,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "frontend",
   "projectType": "application",
+  "implicitDependencies": ["types", "shared"],
   "schematics": {},
   "root": "apps/frontend",
   "sourceRoot": "apps/frontend/src",
@@ -72,6 +73,12 @@
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
+      "dependsOn": [
+        {
+          "target": "build",
+          "projects": "dependencies"
+        }
+      ],
       "configurations": {
         "production": {
           "buildTarget": "frontend:build:production"
@@ -108,6 +115,5 @@
   },
   "cli": {
     "schematicCollections": ["angular-eslint"]
-  },
-  "implicitDependencies": ["types", "shared"]
+  }
 }

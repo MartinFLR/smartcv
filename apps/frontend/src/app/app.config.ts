@@ -19,6 +19,7 @@ import { aiSettingsInterceptor } from './core/interceptors/ai-settings.intercept
 import { CustomRouteReuseStrategy } from './core/strategy/custom-route-reuse.strategy';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { provideTransloco, TranslocoService } from '@jsverse/transloco';
+import { errorInterceptor } from './core/interceptors/error-interceptor';
 
 const APP_LANGUAGES = new Map<string, TuiLanguage>([
   ['es', TUI_SPANISH_LANGUAGE],
@@ -47,7 +48,7 @@ export const appConfig: ApplicationConfig = {
     provideEventPlugins(),
     provideRouter(routes),
 
-    provideHttpClient(withInterceptors([aiSettingsInterceptor])),
+    provideHttpClient(withInterceptors([aiSettingsInterceptor, errorInterceptor])),
 
     { provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy },
 
