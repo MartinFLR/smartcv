@@ -42,7 +42,6 @@ export class CvFormBuilderService {
   public buildIaForm(): FormGroup<IaFormControls> {
     return this.fb.group<IaFormControls>({
       jobDescription: this.fb.control<string | null>(''),
-      makeEnglish: this.fb.control<boolean | null>(false),
       exaggeration: this.fb.control<number | null>(0),
     });
   }

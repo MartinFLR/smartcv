@@ -74,12 +74,10 @@ export class Navbar {
 
   protected readonly darkMode = inject(TUI_DARK_MODE);
 
-  // --- Servicios ---
   protected readonly switcher = inject(TuiLanguageSwitcherService);
   private readonly transloco = inject(TranslocoService);
   protected readonly icons = inject(TUI_DOC_ICONS);
 
-  // --- Mapas de Idiomas ---
   public readonly flags = new Map<TuiLanguageName, TuiCountryIsoCode>([
     ['spanish', 'AR'],
     ['english', 'GB'],
@@ -99,25 +97,19 @@ export class Navbar {
   protected readonly languageControl: FormControl<TuiLanguageName>;
 
   constructor() {
-    // Sincronizar al iniciar
     const activeLang = this.transloco.getActiveLang();
     const taigaLang = this.translocoToTaigaMap.get(activeLang) || 'spanish';
 
-    // 1. SINCRONIZAR TAIGA UI AL INICIAR (¡Esto faltaba!)
     this.switcher.setLanguage(taigaLang);
 
-    // Inicializar el control de Taiga con el idioma de Transloco
     this.languageControl = new FormControl(taigaLang, { nonNullable: true });
   }
 
   public setLang(lang: TuiLanguageName): void {
-    // Actualizar el control visual
     this.languageControl.setValue(lang, { emitEvent: false });
 
-    // 2. ACTUALIZAR TAIGA UI AL CAMBIAR (¡Esto faltaba!)
     this.switcher.setLanguage(lang);
 
-    // Actualizar Transloco
     const translocoLang = this.taigaToTranslocoMap.get(lang);
     if (translocoLang) {
       this.transloco.setActiveLang(translocoLang);

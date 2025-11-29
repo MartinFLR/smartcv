@@ -1,94 +1,150 @@
 <ng-container *transloco="let t">
   <fieldset class="contents">
-    <div class="flex justify-between items-center mb-3">
-      <h2 class="text-xl font-semibold">{{ t('cv.project.title') }}</h2>
+    <header class="flex flex-col gap-1 border-b border-[var(--tui-border-normal)] pb-4 -mt-4">
+      <h2
+        class="text-xl md:text-2xl font-bold text-[var(--tui-text-primary)] flex items-center gap-2"
+      >
+        <tui-icon icon="@tui.folder" class="text-[var(--tui-text-action)] size-6"></tui-icon>
+        {{ t('cv.project.title') }}
+      </h2>
+      <p class="text-[var(--tui-text-secondary)] text-base leading-snug">
+        {{ t('cv.project.sub') }}
+      </p>
+    </header>
+
+    <tui-accordion [closeOthers]="true" class="flex flex-col mt-4">
+      @for (group of service.formArray().controls; track $index; let i = $index) {
+        <ng-container>
+          <button
+            tuiAccordion
+            type="button"
+            class="w-full flex items-center justify-between p-6 text-left shadow-sm relative z-10 group rounded-2xl bg-[var(--tui-background-base)]"
+          >
+            <div class="flex items-center overflow-hidden flex-grow">
+              <div
+                class="size-10 rounded-full flex items-center justify-center shrink-0 bg-[var(--tui-background-neutral-1)] text-[var(--tui-text-primary)]"
+              >
+                <tui-icon icon="@tui.folder-git" class="text-xl"></tui-icon>
+              </div>
+
+              <div class="flex flex-col truncate ml-4">
+                <span class="font-bold text-lg truncate">
+                  {{ group.get('name')?.value || t('cv.project.name.placeholder') }}
+                </span>
+                <div class="text-sm flex items-center gap-2 truncate opacity-70">
+                  <span class="truncate">
+                    {{ group.get('subtitle')?.value || t('cv.project.subtitle.placeholder') }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex-shrink-0 ml-4 relative z-20 flex items-center gap-2">
+              <button
+                tuiButton
+                type="button"
+                tuiRipple
+                appearance="flat-destructive"
+                size="s"
+                iconStart="@tui.trash"
+                (click)="$event.stopPropagation(); service.remove(i)"
+                class="opacity-70 hover:opacity-100 transition-opacity"
+              >
+                <span class="sr-only">Eliminar proyecto</span>
+              </button>
+            </div>
+          </button>
+
+          <tui-expand class="w-full">
+            <div class="p-6 pt-2 rounded-b-2xl relative top-[-1px]">
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-5" [formGroup]="group">
+                <div class="md:col-span-12">
+                  <tui-textfield iconStart="@tui.folder">
+                    <label tuiLabel [for]="'projectsName' + i">
+                      {{ t('cv.project.name.name') }}
+                    </label>
+                    <input
+                      tuiTextfield
+                      [id]="'projectsName' + i"
+                      formControlName="name"
+                      [placeholder]="t('cv.project.name.placeholder')"
+                    />
+                  </tui-textfield>
+                </div>
+
+                <div class="md:col-span-7">
+                  <tui-textfield iconStart="@tui.tag">
+                    <label tuiLabel [for]="'projectsSubtitle' + i">
+                      {{ t('cv.project.subtitle.name') }}
+                    </label>
+                    <input
+                      tuiTextfield
+                      [id]="'projectsSubtitle' + i"
+                      formControlName="subtitle"
+                      [placeholder]="t('cv.project.subtitle.placeholder')"
+                    />
+                  </tui-textfield>
+                </div>
+
+                <div class="md:col-span-5 grid grid-cols-2 gap-2">
+                  <tui-textfield>
+                    <label tuiLabel [for]="'projectsDateIn' + i">
+                      {{ t('cv.project.dateIn.name') }}
+                    </label>
+                    <input
+                      tuiTextfield
+                      [id]="'projectsDateIn' + i"
+                      formControlName="dateIn"
+                      [placeholder]="t('cv.project.dateIn.placeholder')"
+                    />
+                  </tui-textfield>
+
+                  <tui-textfield>
+                    <label tuiLabel [for]="'projectsDateFin' + i">
+                      {{ t('cv.project.dateFin.name') }}
+                    </label>
+                    <input
+                      tuiTextfield
+                      [id]="'projectsDateFin' + i"
+                      formControlName="dateFin"
+                      [placeholder]="t('cv.project.dateFin.placeholder')"
+                    />
+                  </tui-textfield>
+                </div>
+
+                <div class="md:col-span-12">
+                  <tui-textfield>
+                    <label tuiLabel [for]="'projectsBullets' + i">
+                      {{ t('cv.project.achievements.name') }}
+                    </label>
+                    <textarea
+                      tuiTextarea
+                      [id]="'projectsBullets' + i"
+                      formControlName="bullets"
+                      [placeholder]="t('cv.project.achievements.placeholder')"
+                      class="min-h-[5rem]"
+                      [min]="8"
+                      [max]="10"
+                    ></textarea>
+                  </tui-textfield>
+                </div>
+              </div>
+            </div>
+          </tui-expand>
+        </ng-container>
+      }
+
       <button
         tuiButton
-        tuiRipple
         type="button"
-        size="s"
-        iconStart="@tui.plus"
+        tuiRipple
+        appearance="secondary"
+        class="w-full border-2 mt-6 transition-all flex justify-center items-center gap-2 py-4 rounded-xl opacity-80 hover:opacity-100"
         (click)="service.add()"
       >
-        {{ t('cv.project.add') }}
+        <tui-icon icon="@tui.plus" class="text-xl"></tui-icon>
+        <span class="font-medium">{{ t('cv.project.add') }}</span>
       </button>
-    </div>
-
-    @for (group of service.formArray().controls; track $index; let i = $index) {
-      <div
-        tuiCardLarge
-        [formGroup]="group"
-        class="p-4 border border-gray-200 rounded relative flex flex-col gap-4 mb-4"
-      >
-        <div class="flex flex-row-reverse">
-          <button
-            tuiButton
-            type="button"
-            appearance="action-destructive"
-            size="s"
-            tuiRipple
-            iconStart="@tui.trash"
-            (click)="service.remove(i)"
-          >
-            <span class="sr-only">Eliminar proyecto</span>
-          </button>
-        </div>
-
-        <tui-textfield>
-          <label tuiLabel for="projectsName"> {{ t('cv.project.name.name') }}</label>
-          <input
-            tuiTextfield
-            id="projectsName"
-            [placeholder]="t('cv.project.name.name')"
-            formControlName="name"
-          />
-        </tui-textfield>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <tui-textfield>
-            <label tuiLabel for="projectsSubtitle">{{ t('cv.project.subtitle.name') }}</label>
-            <input
-              tuiTextfield
-              id="projectsSubtitle"
-              formControlName="subtitle"
-              [placeholder]="t('cv.project.subtitle.placeholder')"
-            />
-          </tui-textfield>
-
-          <div class="flex flex-row gap-4">
-            <tui-textfield class="w-full">
-              <label tuiLabel for="projectsDateIn">{{ t('cv.project.dateIn.name') }}</label>
-              <input
-                tuiTextfield
-                id="projectsDateIn"
-                formControlName="dateIn"
-                [placeholder]="t('cv.project.dateIn.placeholder')"
-              />
-            </tui-textfield>
-            <tui-textfield class="w-full">
-              <label tuiLabel for="projectsDateFin">{{ t('cv.project.dateFin.name') }}</label>
-              <input
-                tuiTextfield
-                id="projectsDateFin"
-                formControlName="dateFin"
-                [placeholder]="t('cv.project.dateFin.placeholder')"
-              />
-            </tui-textfield>
-          </div>
-        </div>
-
-        <tui-textfield>
-          <label tuiLabel for="projectsBullets">{{ t('cv.project.achievements.name') }}</label>
-          <textarea
-            tuiTextarea
-            id="projectsBullets"
-            [placeholder]="t('cv.project.achievements.placeholder')"
-            formControlName="bullets"
-            [min]="8"
-            [max]="10"
-          ></textarea>
-        </tui-textfield>
-      </div>
-    }
+    </tui-accordion>
   </fieldset>
 </ng-container>

@@ -10,6 +10,7 @@ import { map, skip, startWith } from 'rxjs';
 import { AI_MODELS_CONFIG } from '../../core/config/ai.models.config';
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-config',
@@ -23,6 +24,7 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
     TuiSelect,
     TuiChevron,
     TuiCardLarge,
+    TranslocoDirective,
   ],
   templateUrl: './config.html',
   styleUrl: './config.css',

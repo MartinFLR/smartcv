@@ -1,87 +1,103 @@
 <ng-container *transloco="let t">
   <form [formGroup]="service.form" class="flex flex-col gap-6">
-    <h2 class="text-xl font-semibold">{{ t('cv.ia.title') }}</h2>
+    <header class="flex flex-col gap-1 border-b border-[var(--tui-border-normal)] pb-4 -mt-4">
+      <h2
+        class="text-xl md:text-2xl font-bold text-[var(--tui-text-primary)] flex items-center gap-2"
+      >
+        <tui-icon icon="@tui.sparkles" class="text-[var(--tui-text-action)] size-6"></tui-icon>
+        {{ t('cv.ia.title') }}
+      </h2>
+      <p class="text-[var(--tui-text-secondary)] text-base leading-snug">
+        {{ t('cv.ia.subtitle') }}
+      </p>
+    </header>
 
-    <div tuiCardLarge class="p-4 border border-gray-200 rounded relative flex flex-col gap-4">
-      <tui-textfield>
+    <div class="w-full">
+      <tui-textfield tuiTextfieldSize="l" class="w-full" [tuiTextfieldCleaner]="true">
         <label tuiLabel for="iaJobDescriptionInput">
           {{ t('cv.ia.job.name') }}
         </label>
         <textarea
           tuiTextarea
           formControlName="jobDescription"
-          [placeholder]="t('cv.ia.job.placeholder')"
-          id="iaJobDescriptionInput"
           [min]="8"
           [max]="10"
+          [placeholder]="t('cv.ia.job.placeholder')"
+          id="iaJobDescriptionInput"
+          class="text-base leading-relaxed"
         ></textarea>
       </tui-textfield>
-      <div class="text-sm">
-        <p>{{ t('cv.ia.job.description') }}</p>
-        <p class="mt-1 font-medium">{{ t('cv.ia.job.highlight') }}</p>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <div class="flex items-baseline justify-between mb-2">
+        <label tuiLabel class="font-bold text-lg text-[var(--tui-text-primary)]">
+          {{ t('cv.ia.exaggeration.title') }}
+        </label>
+        <tui-badge
+          [appearance]="service.currentExaggeration() === 2 ? 'accent' : 'neutral'"
+          class="animate-fade-in"
+        >
+          {{ (exaggerationLevel | keyvalue)[service.currentExaggeration()]?.value | transloco }}
+        </tui-badge>
+      </div>
+
+      <div class="px-1 relative">
+        <input
+          tuiSlider
+          id="iaExaggeration"
+          type="range"
+          class="w-full"
+          [segments]="segments()"
+          [step]="step"
+          [min]="min"
+          [max]="max"
+          formControlName="exaggeration"
+        />
+
+        <div class="flex justify-between mt-2 px-1 pointer-events-none">
+          @for (level of exaggerationLevel | keyvalue; track level.key) {
+            <div class="flex flex-col items-center w-8">
+              <div
+                class="w-0.5 h-1.5 bg-[var(--tui-border-normal)] mb-1"
+                [class.bg-[var(--tui-text-primary)]]="service.currentExaggeration() === +level.key"
+              ></div>
+              <span
+                class="text-[10px] uppercase tracking-wider font-semibold text-[var(--tui-text-tertiary)] text-center leading-none"
+                [class.text-[var(--tui-text-primary)]]="
+                  service.currentExaggeration() === +level.key
+                "
+              >
+                {{ level.value | transloco }}
+              </span>
+            </div>
+          }
+        </div>
+
+        <p
+          class="text-sm text-[var(--tui-text-secondary)] mt-4 leading-relaxed min-h-[2.5rem] animate-fade-in"
+        >
+          {{
+            service.currentExaggeration() | exaggerationLevel: exaggerationDescriptions | transloco
+          }}
+        </p>
       </div>
     </div>
 
-    <div
-      tuiCardLarge
-      class="w-full border-gray-200 p-4 border rounded bg-gray-50 flex flex-col gap-2"
-    >
-      <label tuiLabel for="iaExaggeration" class="block text-sm font-medium">
-        {{ t('cv.ia.exaggeration.title') }}
-      </label>
-
-      <input
-        tuiSlider
-        id="iaExaggeration"
-        type="range"
-        class="w-full"
-        [readOnly]="false"
-        [segments]="segments()"
-        [step]="step"
-        [min]="min"
-        [max]="max"
-        formControlName="exaggeration"
-      />
-
-      <div class="flex justify-between mt-1">
-        @for (level of exaggerationLevel | keyvalue; track level.key) {
-          <button
-            type="button"
-            (click)="service.setExaggeration(+level.key)"
-            class="text-sm cursor-pointer focus:outline-none transition-colors px-1 rounded"
-            [class.text-gray-500]="service.currentExaggeration() !== +level.key"
-            [class.text-blue-600]="service.currentExaggeration() === +level.key"
-            [class.font-bold]="service.currentExaggeration() === +level.key"
-            [class.hover:text-blue-700]="service.currentExaggeration() !== +level.key"
-          >
-            {{ level.value | transloco }}
-          </button>
-        }
-      </div>
-
-      <div class="text-center text-s mt-2 text-balance min-h-[2.5rem]">
-        {{
-          service.currentExaggeration() | exaggerationLevel: exaggerationDescriptions | transloco
-        }}
-      </div>
+    <div class="pt-2 mt-auto">
+      <button
+        tuiButton
+        type="button"
+        size="xl"
+        appearance="primary"
+        (click)="service.optimizeCv()"
+        [loading]="service.isLoading()"
+        [disabled]="service.form.invalid"
+        class="w-full shadow-lg transition-transform active:scale-[0.99]"
+      >
+        {{ t('cv.ia.exaggeration.button') }}
+        <tui-icon icon="@tui.wand-2" class="ml-2"></tui-icon>
+      </button>
     </div>
-
-    <label tuiLabel class="flex items-center gap-2 mt-4">
-      <input tuiCheckbox type="checkbox" formControlName="makeEnglish" />
-      Traducir CV a Inglés (Experimental)
-    </label>
-
-    <button
-      tuiButton
-      type="button"
-      size="l"
-      appearance="primary"
-      (click)="service.optimizeCv()"
-      [loading]="service.isLoading()"
-      [disabled]="service.form.invalid"
-      class="w-full sm:w-auto self-start"
-    >
-      {{ t('cv.ia.exaggeration.button') }}
-    </button>
   </form>
 </ng-container>

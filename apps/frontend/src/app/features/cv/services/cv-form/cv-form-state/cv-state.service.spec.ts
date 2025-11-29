@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { CvStateService } from './cv-state.service';
-import { CvFormManagerService } from '../cv-form-manager/cv-form-manager-service';
+import { CvFormManagerService } from '../cv-form-manager/cv-form-manager.service';
 import { SaveDataService } from '../../../../../core/services/save-data/save-data.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { signal, WritableSignal } from '@angular/core';

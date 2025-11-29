@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import {
-  TuiAppearance,
   TuiButton,
-  TuiHint,
+  TuiIcon,
   TuiLabel,
   TuiNotification,
+  TuiSurface,
   TuiTextfieldComponent,
 } from '@taiga-ui/core';
 import {
@@ -20,13 +20,13 @@ import {
 } from '@taiga-ui/kit';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TuiCardLarge, TuiItemGroup } from '@taiga-ui/layout';
-import { AsyncPipe, TitleCasePipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { AtsAnalyzerService } from './analysis/ats-analyzer.service';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-ats-section',
   imports: [
-    TuiHint,
     TuiProgress,
     TuiNotification,
     TuiChip,
@@ -35,7 +35,6 @@ import { AtsAnalyzerService } from './analysis/ats-analyzer.service';
     TuiButtonLoading,
     TuiLabel,
     ReactiveFormsModule,
-    TitleCasePipe,
     AsyncPipe,
     TuiFileRejectedPipe,
     TuiInputFilesDirective,
@@ -45,7 +44,9 @@ import { AtsAnalyzerService } from './analysis/ats-analyzer.service';
     TuiTextarea,
     TuiTextfieldComponent,
     TuiCardLarge,
-    TuiAppearance,
+    TuiIcon,
+    TranslocoDirective,
+    TuiSurface,
   ],
   templateUrl: './ats-section.html',
   styleUrl: './ats-section.css',

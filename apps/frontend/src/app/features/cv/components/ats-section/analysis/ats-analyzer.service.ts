@@ -1,16 +1,18 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { TuiAlertService } from '@taiga-ui/core';
 import { TuiLanguageSwitcherService } from '@taiga-ui/i18n/utils';
 import { TuiFileLike } from '@taiga-ui/kit';
 import { Observable, Subject, of, switchMap } from 'rxjs';
 import { BuildPromptOptions, CvAtsResponse, SectionAnalysis } from '@smartcv/types';
 import { CvStateService } from '../../../services/cv-form/cv-form-state/cv-state.service';
 import { AtsApiService } from '../api/ats-api.service';
+import { TaigaAlertsService } from '../../../../../core/services/alerts/taiga-alerts.service';
 
 type SectionKey = keyof CvAtsResponse['sectionScores'];
+
 export interface DisplayableSection {
   name: SectionKey;
+  translationKey: string;
   score: number;
   analysis: SectionAnalysis;
 }
@@ -20,9 +22,9 @@ export interface DisplayableSection {
 })
 export class AtsAnalyzerService {
   private readonly apiService = inject(AtsApiService);
-  private readonly alerts = inject(TuiAlertService);
   private readonly state = inject(CvStateService);
   private readonly switcher = inject(TuiLanguageSwitcherService);
+  private readonly taigaAlerts = inject(TaigaAlertsService);
 
   public readonly fileControl = new FormControl<TuiFileLike | null>(null, Validators.required);
 
@@ -38,14 +40,6 @@ export class AtsAnalyzerService {
 
   public readonly score = computed(() => this.response()?.matchScore ?? null);
 
-  public readonly scoreColor = computed(() => {
-    const s = this.score();
-    if (s === null) return 'var(--tui-support-08)';
-    if (s < 50) return 'var(--tui-status-negative)';
-    if (s < 80) return 'var(--tui-status-warning)';
-    return 'var(--tui-status-positive)';
-  });
-
   public readonly scoreText = computed(() => {
     const s = this.score();
     return s === null ? '--' : s.toFixed(0);
@@ -53,18 +47,46 @@ export class AtsAnalyzerService {
 
   public readonly fitLevel = computed(() => this.response()?.fitLevel);
 
-  public readonly fitLevelColor = computed(() => {
-    switch (this.fitLevel()) {
+  public readonly fitLevelTranslationKey = computed<string>(() => {
+    const level = this.fitLevel();
+    const s = this.score();
+    if (!level && s === null) return 'cv.ats.points.level.placeholder';
+
+    switch (level) {
       case 'Low':
-        return 'var(--tui-status-negative)';
+        return 'cv.ats.points.level.low.name';
       case 'Medium':
-        return 'var(--tui-status-warning)';
+        return 'cv.ats.points.level.medium.name';
       case 'High':
-        return 'var(--tui-status-positive)';
+        return 'cv.ats.points.level.high.name';
       default:
-        return 'var(--tui-support-08)';
+        if ((s ?? 0) < 50) return 'cv.ats.points.level.low.name';
+        if ((s ?? 0) < 80) return 'cv.ats.points.level.medium.name';
+        return 'cv.ats.points.level.high.name';
     }
   });
+
+  public readonly fitLevelColor = computed(() => {
+    const level = this.fitLevel();
+    const s = this.score() ?? 0;
+
+    if (level === 'Low' || s < 50) return 'var(--tui-status-negative)';
+    if (level === 'Medium' || s < 80) return 'var(--tui-status-warning)';
+    if (level === 'High' || s >= 80) return 'var(--tui-status-positive)';
+
+    return 'var(--tui-support-08)';
+  });
+
+  public readonly fitLevelTextColor = computed(() => {
+    const level = this.fitLevel();
+    const s = this.score() ?? 0;
+    if (level === 'Medium' || (s >= 50 && s < 80)) {
+      return 'var(--tui-text-primary)';
+    }
+    return 'var(--tui-text-primary-on-accent)';
+  });
+
+  public readonly scoreColor = this.fitLevelColor;
 
   public readonly matchedKeywords = computed(() => this.response()?.matchedKeywords ?? []);
   public readonly missingKeywords = computed(() => this.response()?.missingKeywords ?? []);
@@ -86,7 +108,14 @@ export class AtsAnalyzerService {
 
         if (score == null || analysis == null) return null;
 
-        return { name: sectionName, score, analysis };
+        const translationKey = `cv.ats.sections.${sectionName}.name`;
+
+        return {
+          name: sectionName,
+          translationKey,
+          score,
+          analysis,
+        };
       })
       .filter((val): val is DisplayableSection => val != null);
   });
@@ -100,12 +129,11 @@ export class AtsAnalyzerService {
     const jobDesc = this.iaForm.getRawValue().jobDescription ?? '';
 
     if (!file) {
-      this.alerts
-        .open('Por favor, subí tu CV en formato PDF para continuar.', {
-          label: 'Archivo Faltante',
-          appearance: 'warning',
-        })
-        .subscribe();
+      this.taigaAlerts.showWarning('alerts.ats.errors.pdf_format').subscribe();
+      return;
+    }
+    if (!jobDesc) {
+      this.taigaAlerts.showWarning('alerts.ats.errors.no_jobDescription').subscribe();
       return;
     }
 
@@ -121,15 +149,6 @@ export class AtsAnalyzerService {
 
     this.apiService.getAtsScore(formData).subscribe({
       next: (response) => console.log('ATS Score calculado', response),
-      error: (err) => {
-        console.error('Error ATS:', err);
-        this.alerts
-          .open('Hubo un error al analizar tu CV. Intenta de nuevo.', {
-            label: 'Error de API',
-            appearance: 'error',
-          })
-          .subscribe();
-      },
     });
   }
 
@@ -150,7 +169,7 @@ export class AtsAnalyzerService {
     this.loadingFiles$.next(file);
 
     if (file.type !== 'application/pdf') {
-      console.error('El archivo no es PDF:', file.type);
+      this.taigaAlerts.showWarning('alerts.ats.errors.pdf_format').subscribe();
       this.failedFiles$.next(file);
       this.loadingFiles$.next(null);
       return of(null);

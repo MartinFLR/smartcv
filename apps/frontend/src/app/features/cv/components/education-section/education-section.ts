@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TuiButton, TuiTextfield } from '@taiga-ui/core';
+import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { TuiTextarea } from '@taiga-ui/kit';
 import { TuiRipple } from '@taiga-ui/addon-mobile';
-import { TuiCard } from '@taiga-ui/layout';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { EducationService } from './education-service/education.service';
+import { TuiAccordion } from '@taiga-ui/experimental';
 
 @Component({
   selector: 'app-education-section',
@@ -15,8 +15,9 @@ import { EducationService } from './education-service/education.service';
     ReactiveFormsModule,
     TuiButton,
     TuiRipple,
-    TuiCard,
     TranslocoDirective,
+    TuiIcon,
+    TuiAccordion,
   ],
   templateUrl: './education-section.html',
 })

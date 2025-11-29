@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { TuiCountryIsoCode } from '@taiga-ui/i18n';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TuiTextfield } from '@taiga-ui/core';
+import { TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { TuiInputPhoneInternational } from '@taiga-ui/experimental';
 import { TuiTextarea } from '@taiga-ui/kit';
 import { TranslocoDirective } from '@jsverse/transloco';
@@ -15,6 +15,7 @@ import { CvStateService } from '../../services/cv-form/cv-form-state/cv-state.se
     TuiTextarea,
     TuiInputPhoneInternational,
     TranslocoDirective,
+    TuiIcon,
   ],
   providers: [],
   templateUrl: './personal-section.html',

@@ -1,10 +1,9 @@
 import { Component, computed, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TuiButton, TuiTextfield } from '@taiga-ui/core';
-import { TuiButtonLoading, TuiCheckbox, TuiSlider, TuiTextarea } from '@taiga-ui/kit';
+import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
+import { TuiBadge, TuiButtonLoading, TuiSlider, TuiTextarea } from '@taiga-ui/kit';
 import { KeyValuePipe } from '@angular/common';
 import { ExaggerationLevelPipe } from '../../../../shared/pipes/exaggeration-pipe';
-import { TuiCardLarge } from '@taiga-ui/layout';
 import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
 import { IaSectionService } from './ia-service/ia-section.service';
 
@@ -17,12 +16,12 @@ import { IaSectionService } from './ia-service/ia-section.service';
     TuiSlider,
     KeyValuePipe,
     ExaggerationLevelPipe,
-    TuiCheckbox,
     TuiButton,
     TuiButtonLoading,
-    TuiCardLarge,
     TranslocoDirective,
     TranslocoPipe,
+    TuiIcon,
+    TuiBadge,
   ],
   templateUrl: './ia-section.component.html',
 })

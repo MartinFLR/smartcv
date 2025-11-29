@@ -1,224 +1,224 @@
-<div [formGroup]="service.iaForm" class="flex flex-col gap-6">
-  <h2 class="text-xl font-semibold">ATS Checker</h2>
+<ng-container *transloco="let t">
+  <div [formGroup]="service.iaForm" class="flex flex-col gap-6">
+    <header class="flex flex-col gap-1 border-b border-[var(--tui-border-normal)] pb-4 -mt-4">
+      <h2
+        class="text-xl md:text-2xl font-bold text-[var(--tui-text-primary)] flex items-center gap-2"
+      >
+        <tui-icon icon="@tui.code" class="text-[var(--tui-text-action)] size-6"></tui-icon>
+        {{ t('cv.ats.title') }}
+      </h2>
+      <p class="text-[var(--tui-text-secondary)] text-base leading-snug">
+        {{ t('cv.ats.subtitle') }}
+      </p>
+    </header>
 
-  <div tuiLabel class="text-sm font-medium">Subí tu CV (formato PDF)</div>
-
-  @if (!service.fileControl.value) {
-    <label for="inputFiles" tuiInputFiles class="block">
-      <input
-        tuiInputFiles
-        accept="application/pdf"
-        id="inputFiles"
-        [formControl]="service.fileControl"
-      />
-    </label>
-  }
-
-  <tui-files class="tui-space_top-1">
-    @if (
-      service.fileControl.value | tuiFileRejected: { accept: 'application/pdf' } | async;
-      as file
-    ) {
-      <tui-file state="error" [file]="file" (remove)="service.removeFile()" />
-    }
-    @if (service.loadedFiles$ | async; as file) {
-      <tui-file [file]="file" (remove)="service.removeFile()" />
-    }
-    @if (service.failedFiles$ | async; as file) {
-      <tui-file state="error" [file]="file" (remove)="service.removeFile()" />
-    }
-  </tui-files>
-
-  <div tuiCardLarge class="p-4 border border-gray-200 rounded relative flex flex-col gap-4">
-    <tui-textfield>
-      <label tuiLabel for="jobDescriptionInput">
-        Pegá acá la descripción del puesto (Job Description)
+    @if (!service.fileControl.value) {
+      <label for="inputFiles" tuiInputFiles class="block">
+        <input
+          tuiInputFiles
+          accept="application/pdf"
+          id="inputFiles"
+          [formControl]="service.fileControl"
+        />
       </label>
-      <textarea
-        tuiTextarea
-        formControlName="jobDescription"
-        [min]="8"
-        [max]="10"
-        id="jobDescriptionInput"
-      ></textarea>
-    </tui-textfield>
+    }
 
-    <div class="text-sm mt-2">
-      <p>
-        Pegá la descripción del puesto acá para que la IA pueda comparar tu CV con los requisitos y
-        habilidades clave de la oferta.
-      </p>
-      <p class="mt-1 font-medium">
-        Esto permite calcular tu puntaje de compatibilidad ATS y detectar palabras clave faltantes o
-        coincidencias importantes.
-      </p>
-    </div>
-
-    <button
-      tuiButton
-      type="button"
-      class="w-full sm:w-auto"
-      [loading]="service.isLoading()"
-      [disabled]="service.iaForm.invalid || service.isLoading()"
-      (click)="service.calculateAtsScore()"
-    >
-      Calcular Puntaje ATS
-    </button>
-  </div>
-</div>
-
-@if (!service.isLoading() && service.response(); as res) {
-  <div class="mt-8 flex flex-col gap-6">
-    <div
-      tuiCardLarge
-      class="relative p-6 border mt-6 border-gray-200 rounded-lg flex flex-col !items-center !justify-center gap-4"
-      tuiHint="Este es tu puntaje de compatibilidad (ATS) estimado con la descripción del puesto."
-    >
-      <h3 class="text-lg font-medium">Puntaje ATS</h3>
-
-      <div class="relative w-32 h-32 flex items-center justify-center">
-        <tui-progress-circle
-          [color]="service.scoreColor()"
-          [value]="service.score() ?? 0"
-          [max]="100"
-          size="xl"
-        >
-        </tui-progress-circle>
-
-        <div class="absolute flex flex-col items-center justify-center">
-          <span class="text-3xl font-bold" [style.color]="service.scoreColor()">
-            {{ service.scoreText() }}
-            @if (service.score() !== null) {
-              <span class="text-xl">%</span>
-            }
-          </span>
-        </div>
-      </div>
-
-      @if (!service.isLoading()) {
-        <p class="text-sm text-center h-5">
-          @if (service.score() === null) {
-            Subí tu CV y la descripción para ver tu puntaje.
-          } @else if (service.score()! < 50) {
-            Necesita mejoras.
-          } @else if (service.score()! < 80) {
-            Buen puntaje.
-          } @else {
-            ¡Excelente compatibilidad!
-          }
-        </p>
+    <tui-files class="tui-space_top-1">
+      @if (
+        service.fileControl.value | tuiFileRejected: { accept: 'application/pdf' } | async;
+        as file
+      ) {
+        <tui-file state="error" [file]="file" (remove)="service.removeFile()" />
       }
+      @if (service.loadedFiles$ | async; as file) {
+        <tui-file [file]="file" (remove)="service.removeFile()" />
+      }
+      @if (service.failedFiles$ | async; as file) {
+        <tui-file state="error" [file]="file" (remove)="service.removeFile()" />
+      }
+    </tui-files>
+
+    <div class="relative flex flex-col gap-4">
+      <tui-textfield>
+        <label tuiLabel for="jobDescriptionInput">
+          {{ t('cv.ia.job.name') }}
+        </label>
+        <textarea
+          tuiTextarea
+          [min]="8"
+          [max]="10"
+          formControlName="jobDescription"
+          id="jobDescriptionInput"
+        ></textarea>
+      </tui-textfield>
+
+      <button
+        tuiButton
+        type="button"
+        class="w-full pt-2 sm:w-auto"
+        [loading]="service.isLoading()"
+        [disabled]="service.iaForm.invalid || service.isLoading()"
+        (click)="service.calculateAtsScore()"
+      >
+        {{ t('cv.ats.button') }}
+        <tui-icon icon="@tui.wand-2" class="ml-2"></tui-icon>
+      </button>
     </div>
+  </div>
 
-    <div class="flex flex-wrap items-start gap-4">
-      <div class="flex flex-col gap-2">
-        <h4 class="text-base font-semibold">Nivel de Coincidencia</h4>
-        <tui-chip
-          [style.background-color]="service.fitLevelColor()"
-          [style.color]="
-            service.fitLevel() === 'Medium'
-              ? 'var(--tui-text-primary)'
-              : 'var(--tui-text-primary-on-accent)'
-          "
-          size="m"
-          class="font-medium"
-        >
-          {{ service.fitLevel() }}
-        </tui-chip>
-      </div>
+  @if (!service.isLoading() && service.response(); as res) {
+    <div class="mt-8 flex flex-col gap-6">
+      <div
+        tuiCardLarge
+        class="relative p-6 border mt-6 border-gray-200 rounded-lg flex flex-col !items-center !justify-center gap-4"
+      >
+        <h3 class="text-lg font-medium">{{ t('cv.ats.points.title') }}</h3>
 
-      @if (service.warnings().length > 0) {
-        <div class="flex-1 min-w-[250px]">
-          <tui-notification appearance="warning" icon="@tui.alert-triangle" size="m" class="w-full">
-            <h5 class="font-semibold mb-1">Advertencias</h5>
-            <ul class="list-disc list-inside text-sm">
-              @for (warning of service.warnings(); track $index) {
-                <li>{{ warning }}</li>
+        <div class="relative w-32 h-32 flex items-center justify-center">
+          <tui-progress-circle
+            [color]="service.fitLevelColor()"
+            [value]="service.score() ?? 0"
+            [max]="100"
+            size="xl"
+          >
+          </tui-progress-circle>
+
+          <div class="absolute flex flex-col items-center justify-center">
+            <span class="text-3xl font-bold" [style.color]="service.fitLevelColor()">
+              {{ service.scoreText() }}
+              @if (service.score() !== null) {
+                <span class="text-xl">%</span>
               }
-            </ul>
-          </tui-notification>
+            </span>
+          </div>
         </div>
-      }
-    </div>
 
-    <div>
-      <h2 class="text-base font-semibold">Visión General</h2>
-      <p>{{ service.generalText() }}</p>
-    </div>
-
-    <div class="flex flex-col gap-2">
-      <h4 class="text-base font-semibold">Análisis de Palabras Clave</h4>
-      <div tuiItemGroup class="flex flex-wrap gap-2">
-        @for (keyword of service.matchedKeywords(); track keyword) {
-          <tui-chip appearance="positive" iconStart="@tui.check">{{ keyword }}</tui-chip>
-        }
-        @for (keyword of service.missingKeywords(); track keyword) {
-          <tui-chip appearance="neutral" iconStart="@tui.x">{{ keyword }}</tui-chip>
+        @if (!service.isLoading()) {
+          <p class="text-sm text-center h-5">
+            @if (service.score() === null) {
+              {{ t('cv.ats.points.level.placeholder') }}
+            } @else if (service.score()! < 50) {
+              {{ t('cv.ats.points.level.low.description') }}
+            } @else if (service.score()! < 80) {
+              {{ t('cv.ats.points.level.medium.description') }}
+            } @else {
+              {{ t('cv.ats.points.level.high.description') }}
+            }
+          </p>
         }
       </div>
-      @if (service.matchedKeywords().length === 0 && service.missingKeywords().length === 0) {
-        <p class="text-sm">No se extrajeron palabras clave.</p>
-      }
-    </div>
 
-    <h4 class="text-base font-semibold">Puntaje por Sección</h4>
-    <div tuiCardLarge class="flex flex-col gap-3">
-      @for (section of service.analyzedSections(); track section.name) {
-        <div class="flex flex-col">
-          <div class="text-sm font-medium capitalize mb-1">
-            {{ section.name | titlecase }}
-            <span class="font-bold ml-2">{{ section.score }}%</span>
-          </div>
+      <div class="flex flex-wrap items-start gap-4">
+        <div class="flex flex-col gap-2">
+          <h4 class="text-base font-semibold">{{ t('cv.ats.points.level.title') }}</h4>
 
-          <progress tuiProgressBar [value]="section.score" [max]="100" class="w-full"></progress>
-
-          <div class="mt-2 text-xs space-y-1">
-            @for (highlight of section.analysis.highlights; track $index) {
-              <div class="flex items-start">
-                <svg
-                  class="w-4 h-4 mr-1.5 flex-shrink-0 text-green-500"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                <span tuiAppearance="positive">{{ highlight }}</span>
-              </div>
-            }
-            @for (issue of section.analysis.issues; track $index) {
-              <div class="flex items-start">
-                <svg
-                  class="w-4 h-4 mr-1.5 flex-shrink-0 text-yellow-500"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                <span tuiAppearance="accent">{{ issue }}</span>
-              </div>
-            }
-          </div>
+          <tui-chip
+            [style.background-color]="service.fitLevelColor()"
+            [style.color]="service.fitLevelTextColor()"
+            size="m"
+            class="font-medium"
+          >
+            {{ t(service.fitLevelTranslationKey()) }}
+          </tui-chip>
         </div>
-      }
-    </div>
 
-    <div class="flex flex-col gap-2">
-      <h4 class="text-base font-semibold">Recomendaciones</h4>
-      <tui-notification appearance="info" icon="@tui.info">
-        <ul class="list-disc list-inside text-sm flex flex-col gap-1">
-          @for (rec of service.recommendations(); track $index) {
-            <li>{{ rec }}</li>
+        @if (service.warnings().length > 0) {
+          <div class="flex-1 min-w-[250px]">
+            <tui-notification
+              appearance="warning"
+              icon="@tui.alert-triangle"
+              size="m"
+              class="w-full"
+            >
+              <h5 class="font-semibold mb-1">{{ t('cv.ats.points.level.warning') }}</h5>
+              <ul class="list-disc list-inside text-sm">
+                @for (warning of service.warnings(); track $index) {
+                  <li>{{ warning }}</li>
+                }
+              </ul>
+            </tui-notification>
+          </div>
+        }
+      </div>
+
+      <div>
+        <h2 class="text-base font-semibold">{{ t('cv.ats.general') }}</h2>
+        <p>{{ service.generalText() }}</p>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <h4 class="text-base font-semibold">{{ t('cv.ats.analysis') }}</h4>
+        <div tuiItemGroup class="flex flex-wrap gap-2">
+          @for (keyword of service.matchedKeywords(); track keyword) {
+            <tui-chip appearance="positive" iconStart="@tui.check">{{ keyword }}</tui-chip>
           }
-        </ul>
-      </tui-notification>
+          @for (keyword of service.missingKeywords(); track keyword) {
+            <tui-chip appearance="neutral" iconStart="@tui.x">{{ keyword }}</tui-chip>
+          }
+        </div>
+        @if (service.matchedKeywords().length === 0 && service.missingKeywords().length === 0) {
+          <p class="text-sm">No se extrajeron palabras clave.</p>
+        }
+      </div>
+
+      <h4 class="text-base font-semibold">{{ t('cv.ats.sections.title') }}</h4>
+      <div class="flex flex-col gap-3">
+        @for (section of service.analyzedSections(); track section.name) {
+          <div
+            class="flex flex-col"
+            tuiCardLarge
+            tuiSurface="floating"
+            [style.background-color]="'var(--tui-background-base-alt)'"
+          >
+            <div class="text-2xs font-medium capitalize mb-1">
+              {{ t(section.translationKey) }}
+              <span class="font-bold ml-2">{{ section.score }}%</span>
+            </div>
+
+            <progress tuiProgressBar [value]="section.score" [max]="100" class="w-full"></progress>
+
+            <div class="mt-2 text-xs space-y-1">
+              @for (highlight of section.analysis.highlights; track $index) {
+                <div class="flex items-start">
+                  <tui-icon
+                    icon="@tui.check"
+                    [style.font-size.rem]="1"
+                    [style.color]="'var(--tui-status-positive)'"
+                    class="mr-1"
+                  ></tui-icon>
+                  <span [style.color]="'var(--tui-status-positive)'" class="text-sm">{{
+                    highlight
+                  }}</span>
+                </div>
+              }
+              @for (issue of section.analysis.issues; track $index) {
+                <div class="flex items-start">
+                  <tui-icon
+                    icon="@tui.alert-circle"
+                    [style.font-size.rem]="1"
+                    [style.color]="'var(--tui-status-warning)'"
+                    class="mr-1"
+                  ></tui-icon>
+                  <span [style.color]="'var(--tui-status-warning)'" class="text-sm">{{
+                    issue
+                  }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <h4 class="text-base font-semibold">{{ t('cv.ats.recommendations') }}</h4>
+        <tui-notification appearance="info" icon="@tui.info">
+          <ul class="list-disc list-inside text-sm flex flex-col gap-1">
+            @for (rec of service.recommendations(); track $index) {
+              <li>{{ rec }}</li>
+            }
+          </ul>
+        </tui-notification>
+      </div>
     </div>
-  </div>
-}
+  }
+</ng-container>

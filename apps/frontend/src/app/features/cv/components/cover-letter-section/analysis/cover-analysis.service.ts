@@ -1,5 +1,11 @@
 import { computed, effect, inject, Injectable, Signal, signal, untracked } from '@angular/core';
-import { CoverLetterPayload, CvForm, DeliveryChannel, ToneLevel } from '@smartcv/types';
+import {
+  BuildPromptOptions,
+  CoverLetterPayload,
+  CvForm,
+  DeliveryChannel,
+  ToneLevel,
+} from '@smartcv/types';
 import { startWith } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -7,6 +13,7 @@ import { CoverLetterControls } from '../../../../../core/models/controls.model';
 import { CvStateService } from '../../../services/cv-form/cv-form-state/cv-state.service';
 import { CvFormBuilderService } from '../../../services/cv-form/cv-form-builder/cv-form-builder.service';
 import { CoverApiService } from '../api/cover-api.service';
+import { TuiLanguageSwitcherService } from '@taiga-ui/i18n/utils';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +22,7 @@ export class CoverAnalysisService {
   private readonly fb = inject(CvFormBuilderService);
   private readonly apiService = inject(CoverApiService);
   private readonly state = inject(CvStateService);
+  private readonly switcher = inject(TuiLanguageSwitcherService);
 
   public readonly form: FormGroup<CoverLetterControls>;
   public readonly generatedLetter = signal('');
@@ -99,17 +107,20 @@ export class CoverAnalysisService {
     const jobDesc = this.state.iaForm.getRawValue().jobDescription ?? '';
     const formData = this.form.getRawValue();
 
+    const promptOption = {
+      lang: this.switcher.language,
+      type: 'coverLetter',
+      recruiterName: formData.recruiterName ?? '',
+      companyName: formData.companyName ?? '',
+      referralName: formData.referralName ?? '',
+      tone: this.detectTone(formData.tone ?? 0),
+      deliveryChannel: this.detectDeliveryChannel(formData.deliveryChannel ?? 0),
+    } as BuildPromptOptions;
+
     const payload: CoverLetterPayload = {
       baseCv: rawCv,
       jobDesc: jobDesc,
-      promptOption: {
-        type: 'coverLetter',
-        recruiterName: formData.recruiterName ?? '',
-        companyName: formData.companyName ?? '',
-        referralName: formData.referralName ?? '',
-        tone: this.detectTone(formData.tone ?? 0),
-        deliveryChannel: this.detectDeliveryChannel(formData.deliveryChannel ?? 0),
-      },
+      promptOption: promptOption,
     };
 
     this.apiService.generateCoverLetterStream(payload).subscribe({

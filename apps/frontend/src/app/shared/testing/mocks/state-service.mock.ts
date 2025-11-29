@@ -64,7 +64,6 @@ export const mockCvForm = new FormGroup<CvFormControls>({
 export const mockIaForm = new FormGroup<IaFormControls>({
   jobDescription: new FormControl(''),
   exaggeration: new FormControl(0),
-  makeEnglish: new FormControl(false),
 });
 
 const initialCvPreview: CvForm = {

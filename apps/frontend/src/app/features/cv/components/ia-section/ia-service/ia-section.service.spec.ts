@@ -2,7 +2,7 @@ import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { IaSectionService } from './ia-section.service';
 import { CvStateService } from '../../../services/cv-form/cv-form-state/cv-state.service';
 import { CvFormDataService } from '../../../services/cv-form/cv-form-data/cv-form-data.service';
-import { CvFormManagerService } from '../../../services/cv-form/cv-form-manager/cv-form-manager-service';
+import { CvFormManagerService } from '../../../services/cv-form/cv-form-manager/cv-form-manager.service';
 import { TuiAlertService } from '@taiga-ui/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { signal } from '@angular/core';

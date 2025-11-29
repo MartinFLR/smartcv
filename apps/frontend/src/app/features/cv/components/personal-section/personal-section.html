@@ -1,6 +1,17 @@
 <ng-container *transloco="let t">
   <fieldset [formGroup]="personalInfo" class="flex flex-col gap-4">
-    <h2 class="text-xl font-semibold">{{ t('cv.personalInfo.title') }}</h2>
+    <header class="flex flex-col gap-1 border-b border-[var(--tui-border-normal)] pb-4 -mt-4">
+      <h2
+        class="text-xl md:text-2xl font-bold text-[var(--tui-text-primary)] flex items-center gap-2"
+      >
+        <tui-icon icon="@tui.user" class="text-[var(--tui-text-action)] size-6"></tui-icon>
+        {{ t('cv.personalInfo.title') }}
+      </h2>
+      <p class="text-[var(--tui-text-secondary)] text-base leading-snug">
+        {{ t('cv.personalInfo.subtitle') }}
+      </p>
+    </header>
+
     <tui-textfield>
       <label tuiLabel [for]="'personalNameInput'"> {{ t('cv.personalInfo.name.name') }}</label>
       <input tuiTextfield [id]="'personalNameInput'" formControlName="name" />

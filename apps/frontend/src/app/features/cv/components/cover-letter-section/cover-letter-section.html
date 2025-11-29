@@ -1,52 +1,62 @@
 <ng-container *transloco="let t">
-  <div class="flex flex-col gap-2">
-    <h2 class="text-xl font-semibold">Generá tu carta de presentación</h2>
-    <p class="text-sm">
-      La IA va a analizar lo que tenés ahora en el CV y va a generar una cover letter personalizada
-      para que le puedas enviar a los recruiters.
-    </p>
-  </div>
+  <fieldset [formGroup]="service.form" class="flex flex-col gap-6">
+    <header class="flex flex-col gap-1 border-b border-[var(--tui-border-normal)] pb-4 -mt-4">
+      <h2
+        class="text-xl md:text-2xl font-bold text-[var(--tui-text-primary)] flex items-center gap-2"
+      >
+        <tui-icon icon="@tui.notepad-text" class="text-[var(--tui-text-action)] size-6"></tui-icon>
+        {{ t('cv.coverLetter.title') }}
+      </h2>
+      <p class="text-[var(--tui-text-secondary)] text-base leading-snug">
+        {{ t('cv.coverLetter.subtitle') }}
+      </p>
+    </header>
 
-  <fieldset [formGroup]="service.form" class="flex flex-col mt-4 gap-6">
-    <h3 class="text-sm font-semibold">Campos opcionales</h3>
+    <h3 class="text-sm font-semibold">{{ t('cv.coverLetter.optional.title') }}</h3>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       @if (service.isInternalReference()) {
         <tui-textfield>
-          <label tuiLabel for="referralNameInput">Nombre de tu referente interno</label>
+          <label tuiLabel for="referralNameInput">{{
+            t('cv.coverLetter.optional.referral.name')
+          }}</label>
           <input
             tuiTextfield
             formControlName="referralName"
-            placeholder="Ej: Ana Pérez"
+            [placeholder]="t('cv.coverLetter.optional.referral.placeholder')"
             id="referralNameInput"
           />
         </tui-textfield>
       }
 
       <tui-textfield>
-        <label tuiLabel for="recruiterNameInput">Nombre del Reclutador/a</label>
+        <label tuiLabel for="recruiterNameInput">{{
+          t('cv.coverLetter.optional.recruiter.name')
+        }}</label>
         <input
           tuiTextfield
           [state]="service.isApplicationForm() ? 'active' : null"
           formControlName="recruiterName"
-          placeholder="Ej: Ana Pérez"
+          [placeholder]="t('cv.coverLetter.optional.recruiter.placeholder')"
           id="recruiterNameInput"
         />
       </tui-textfield>
 
       <tui-textfield>
-        <label tuiLabel for="companyNameInput">Nombre de la Empresa</label>
+        <label tuiLabel for="companyNameInput">{{
+          t('cv.coverLetter.optional.company.name')
+        }}</label>
         <input
           tuiTextfield
           formControlName="companyName"
-          placeholder="Ej: Mercado Libre"
+          [placeholder]="t('cv.coverLetter.optional.company.placeholder')"
           id="companyNameInput"
         />
       </tui-textfield>
     </div>
 
     <fieldset class="flex flex-col gap-2 py-2">
-      <div tuiLabel class="text-sm font-medium">Tono de la carta</div>
+      <div tuiLabel class="text-sm font-medium">{{ t('cv.coverLetter.tone.title') }}</div>
       <div tuiItemGroup class="flex flex-wrap gap-2">
         @for (tone of tones; track tone.value; let i = $index) {
           <label
@@ -65,14 +75,16 @@
               [id]="'toneInput' + i"
               class="sr-only"
             />
-            {{ tone.name }}
+            {{ tone.name | transloco }}
           </label>
         }
       </div>
     </fieldset>
 
     <fieldset class="flex flex-col gap-2 py-2">
-      <div tuiLabel class="text-sm font-medium">Canal de comunicación</div>
+      <div tuiLabel class="text-sm font-medium">
+        {{ t('cv.coverLetter.deliveryChannel.title') }}
+      </div>
       <div tuiItemGroup class="flex flex-wrap gap-2">
         @for (channel of channelDeliverys; track $index; let i = $index) {
           <label
@@ -93,7 +105,7 @@
               class="sr-only"
               [id]="'channelInput' + i"
             />
-            {{ channel.name }}
+            {{ channel.name | transloco }}
           </label>
         }
       </div>
@@ -101,26 +113,21 @@
   </fieldset>
 
   <div [formGroup]="service.iaForm" class="flex flex-col gap-6 mt-6">
-    <div tuiCardLarge class="p-4 rounded relative flex flex-col gap-4">
-      <tui-textfield>
-        <label tuiLabel for="jobDescriptionInput">
-          Pegá acá la descripción del puesto (Job Description)
+    <div class="w-full">
+      <tui-textfield tuiTextfieldSize="l" class="w-full" [tuiTextfieldCleaner]="true">
+        <label tuiLabel for="iaJobDescriptionInput">
+          {{ t('cv.ia.job.name') }}
         </label>
         <textarea
           tuiTextarea
           formControlName="jobDescription"
           [min]="8"
           [max]="10"
-          id="jobDescriptionInput"
+          [placeholder]="t('cv.ia.job.placeholder')"
+          id="iaJobDescriptionInput"
+          class="text-base leading-relaxed"
         ></textarea>
       </tui-textfield>
-
-      <div class="text-sm mt-2">
-        <p>
-          Pegá la descripción del puesto aquí para que la IA pueda generar tu carta de presentación
-          teniendo en cuenta las responsabilidades, habilidades y requisitos clave del trabajo.
-        </p>
-      </div>
 
       <button
         tuiButton
@@ -130,12 +137,13 @@
         [disabled]="service.iaForm.invalid"
         (click)="service.generate()"
       >
-        Generar carta
+        {{ t('cv.coverLetter.button') }}
+        <tui-icon icon="@tui.wand-2" class="ml-2"></tui-icon>
       </button>
     </div>
 
     <div class="mt-8 flex flex-col gap-4">
-      <h3 class="text-lg font-semibold">Tu carta de presentación generada</h3>
+      <h3 class="text-lg font-semibold">{{ t('cv.coverLetter.generated') }}</h3>
 
       <tui-textfield>
         <textarea

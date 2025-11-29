@@ -3,7 +3,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormArray, FormGroup } from '@angular/forms';
 import { map, startWith, distinctUntilChanged, merge } from 'rxjs';
 import { CvForm } from '@smartcv/types';
-import { CvFormManagerService } from '../cv-form-manager/cv-form-manager-service';
+import { CvFormManagerService } from '../cv-form-manager/cv-form-manager.service';
 import { SaveDataService } from '../../../../../core/services/save-data/save-data.service';
 import {
   CvFormControls,

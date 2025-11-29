@@ -8,8 +8,8 @@ import {
   HttpEvent,
 } from '@angular/common/http';
 import { CoverLetterPayload } from '@smartcv/types';
-import { Observable, throwError } from 'rxjs';
-import { catchError, filter, map } from 'rxjs';
+import { Observable } from 'rxjs';
+import { filter, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -46,11 +46,6 @@ export class CoverApiService {
       }),
 
       filter((chunk) => chunk.length > 0),
-
-      catchError((err) => {
-        console.error('Error en el stream de HttpClient:', err);
-        return throwError(() => new Error('Error al generar la carta.'));
-      }),
     );
   }
 }

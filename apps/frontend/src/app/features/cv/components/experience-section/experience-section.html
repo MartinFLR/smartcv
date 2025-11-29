@@ -1,102 +1,150 @@
 <ng-container *transloco="let t">
   <fieldset class="contents">
-    <div class="flex justify-between items-center mb-3">
-      <h2 class="text-xl font-semibold">{{ t('cv.experience.title') }}</h2>
+    <header class="flex flex-col gap-1 border-b border-[var(--tui-border-normal)] pb-4 -mt-4">
+      <h2
+        class="text-xl md:text-2xl font-bold text-[var(--tui-text-primary)] flex items-center gap-2"
+      >
+        <tui-icon icon="@tui.briefcase" class="text-[var(--tui-text-action)] size-6"></tui-icon>
+        {{ t('cv.experience.title') }}
+      </h2>
+      <p class="text-[var(--tui-text-secondary)] text-base leading-snug">
+        {{ t('cv.experience.subtitle') }}
+      </p>
+    </header>
+
+    <tui-accordion [closeOthers]="true" class="flex flex-col mt-4">
+      @for (expGroup of service.formArray().controls; track $index; let i = $index) {
+        <ng-container>
+          <button
+            tuiAccordion
+            type="button"
+            class="w-full flex items-center justify-between p-6 text-left shadow-sm relative z-10 group rounded-2xl bg-[var(--tui-background-base)]"
+          >
+            <div class="flex items-center overflow-hidden flex-grow">
+              <div
+                class="size-10 rounded-full flex items-center justify-center shrink-0 bg-[var(--tui-background-neutral-1)] text-[var(--tui-text-primary)]"
+              >
+                <tui-icon icon="@tui.briefcase" class="text-xl"></tui-icon>
+              </div>
+
+              <div class="flex flex-col truncate ml-4">
+                <span class="font-bold text-lg truncate">
+                  {{ expGroup.get('role')?.value || t('cv.experience.job.placeholder') }}
+                </span>
+                <div class="text-sm flex items-center gap-2 truncate opacity-70">
+                  <span class="truncate">
+                    {{ expGroup.get('company')?.value || t('cv.experience.company.placeholder') }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex-shrink-0 ml-4 relative z-20 flex items-center gap-2">
+              <button
+                tuiButton
+                type="button"
+                tuiRipple
+                appearance="flat-destructive"
+                size="s"
+                iconStart="@tui.trash"
+                (click)="$event.stopPropagation(); service.remove(i)"
+                class="opacity-70 hover:opacity-100 transition-opacity"
+              >
+                <span class="sr-only">Eliminar experiencia</span>
+              </button>
+            </div>
+          </button>
+
+          <tui-expand class="w-full">
+            <div class="p-6 pt-2 rounded-b-2xl relative top-[-1px]">
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-5" [formGroup]="expGroup">
+                <div class="md:col-span-12">
+                  <tui-textfield iconStart="@tui.briefcase">
+                    <label tuiLabel [for]="'experienceRoleInput' + i">
+                      {{ t('cv.experience.job.name') }}
+                    </label>
+                    <input
+                      tuiTextfield
+                      [id]="'experienceRoleInput' + i"
+                      formControlName="role"
+                      [placeholder]="t('cv.experience.job.placeholder')"
+                    />
+                  </tui-textfield>
+                </div>
+
+                <div class="md:col-span-7">
+                  <tui-textfield iconStart="@tui.building">
+                    <label tuiLabel [for]="'experienceCompanyInput' + i">
+                      {{ t('cv.experience.company.name') }}
+                    </label>
+                    <input
+                      tuiTextfield
+                      [id]="'experienceCompanyInput' + i"
+                      formControlName="company"
+                      [placeholder]="t('cv.experience.company.placeholder')"
+                    />
+                  </tui-textfield>
+                </div>
+
+                <div class="md:col-span-5 grid grid-cols-2 gap-2">
+                  <tui-textfield>
+                    <label tuiLabel [for]="'experienceDateInInput' + i">
+                      {{ t('cv.experience.dateIn.name') }}
+                    </label>
+                    <input
+                      tuiTextfield
+                      [id]="'experienceDateInInput' + i"
+                      formControlName="dateIn"
+                      [placeholder]="t('cv.experience.dateIn.placeholder')"
+                    />
+                  </tui-textfield>
+
+                  <tui-textfield>
+                    <label tuiLabel [for]="'experienceDateFinInput' + i">
+                      {{ t('cv.experience.dateFin.name') }}
+                    </label>
+                    <input
+                      tuiTextfield
+                      [id]="'experienceDateFinInput' + i"
+                      formControlName="dateFin"
+                      [placeholder]="t('cv.experience.dateFin.placeholder')"
+                    />
+                  </tui-textfield>
+                </div>
+
+                <div class="md:col-span-12">
+                  <tui-textfield>
+                    <label tuiLabel [for]="'experienceBulletsInput' + i">
+                      {{ t('cv.experience.achievements.name') }}
+                    </label>
+                    <textarea
+                      tuiTextarea
+                      [id]="'experienceBulletsInput' + i"
+                      formControlName="bullets"
+                      [placeholder]="t('cv.experience.achievements.placeholder')"
+                      class="min-h-[5rem]"
+                      [min]="8"
+                      [max]="10"
+                    ></textarea>
+                  </tui-textfield>
+                </div>
+              </div>
+            </div>
+          </tui-expand>
+        </ng-container>
+      }
+
       <button
         tuiButton
-        tuiRipple
-        iconStart="@tui.plus"
         type="button"
-        size="s"
+        tuiRipple
+        appearance="secondary"
+        class="w-full border-2 mt-6 transition-all flex justify-center items-center gap-2 py-4 rounded-xl opacity-80 hover:opacity-100"
         (click)="service.add()"
       >
-        {{ t('cv.experience.add') }}
+        <tui-icon icon="@tui.plus" class="text-xl"></tui-icon>
+        <span class="font-medium">{{ t('cv.experience.add') }}</span>
       </button>
-    </div>
-
-    @for (group of service.formArray().controls; track group; let i = $index) {
-      <div
-        tuiCardLarge
-        [formGroup]="group"
-        class="p-4 border-gray-200 border rounded relative flex flex-col gap-4 mb-4"
-      >
-        <div class="flex flex-row-reverse">
-          <button
-            tuiButton
-            type="button"
-            appearance="action-destructive"
-            size="s"
-            tuiRipple
-            iconStart="@tui.trash"
-            (click)="service.remove(i)"
-          >
-            <span class="sr-only">Eliminar Experiencia</span>
-          </button>
-        </div>
-
-        <tui-textfield>
-          <label tuiLabel for="experienceRoleInput">{{ t('cv.experience.job.name') }}</label>
-          <input
-            tuiTextfield
-            id="experienceRoleInput"
-            [placeholder]="t('cv.experience.job.placeholder')"
-            formControlName="role"
-          />
-        </tui-textfield>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <tui-textfield>
-            <label tuiLabel for="experienceCompanyInput">{{
-              t('cv.experience.company.name')
-            }}</label>
-            <input
-              tuiTextfield
-              id="experienceCompanyInput"
-              formControlName="company"
-              [placeholder]="t('cv.experience.company.placeholder')"
-            />
-          </tui-textfield>
-
-          <div class="flex flex-row gap-4">
-            <tui-textfield class="w-full">
-              <label tuiLabel for="experienceDateInInput">{{
-                t('cv.experience.dateIn.name')
-              }}</label>
-              <input
-                tuiTextfield
-                id="experienceDateInInput"
-                formControlName="dateIn"
-                [placeholder]="t('cv.experience.dateIn.placeholder')"
-              />
-            </tui-textfield>
-            <tui-textfield class="w-full">
-              <label tuiLabel for="experienceDateFinInput">{{
-                t('cv.experience.dateFin.name')
-              }}</label>
-              <input
-                tuiTextfield
-                id="experienceDateFinInput"
-                formControlName="dateFin"
-                [placeholder]="t('cv.experience.dateFin.placeholder')"
-              />
-            </tui-textfield>
-          </div>
-        </div>
-
-        <tui-textfield>
-          <label tuiLabel for="experienceBulletsInput">
-            {{ t('cv.experience.achievements.name') }}
-          </label>
-          <textarea
-            tuiTextarea
-            [placeholder]="t('cv.experience.achievements.placeholder')"
-            formControlName="bullets"
-            id="experienceBulletsInput"
-            [min]="8"
-            [max]="10"
-          ></textarea>
-        </tui-textfield>
-      </div>
-    }
+    </tui-accordion>
   </fieldset>
 </ng-container>

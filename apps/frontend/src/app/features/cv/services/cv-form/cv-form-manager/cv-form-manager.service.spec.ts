@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { CvFormManagerService } from './cv-form-manager-service';
+import { CvFormManagerService } from './cv-form-manager.service';
 import { CvFormBuilderService } from '../cv-form-builder/cv-form-builder.service';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CvForm, TransformedCvResponse } from '@smartcv/types';

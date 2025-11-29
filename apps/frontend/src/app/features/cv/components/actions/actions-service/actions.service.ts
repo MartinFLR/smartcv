@@ -1,13 +1,14 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
-import { CreateProfile } from '../profile/create-profile/create-profile';
-import { CvForm, CvProfile } from '@smartcv/types';
-import { TuiAlertService } from '@taiga-ui/core';
 import { TuiDialogService } from '@taiga-ui/experimental';
+import { CvForm, CvProfile } from '@smartcv/types';
 import { CvFormDataService } from '../../../services/cv-form/cv-form-data/cv-form-data.service';
 import { ProfileService } from '../../../../../core/services/profile/profile.service';
 import { CvStateService } from '../../../services/cv-form/cv-form-state/cv-state.service';
+import { TaigaAlertsService } from '../../../../../core/services/alerts/taiga-alerts.service';
+import { CreateProfile } from '../profile/create-profile/create-profile';
 import { EditProfile } from '../profile/edit-profile/edit-profile';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,8 @@ export class ActionsService {
   private readonly cvState = inject(CvStateService);
   private readonly dataService = inject(CvFormDataService);
   private readonly dialogs = inject(TuiDialogService);
-  private readonly alerts = inject(TuiAlertService);
+  private readonly transloco = inject(TranslocoService);
+  private readonly taigaAlerts = inject(TaigaAlertsService);
 
   public readonly selectedProfile = signal<CvProfile | null>(null);
   public readonly profiles = this.profileService.profiles;
@@ -50,12 +52,11 @@ export class ActionsService {
     }
 
     this.selectedProfile.set(newProfile);
-
     this.profileService.saveLastActiveProfileId(newProfile?.id ?? null);
 
     if (newProfile) {
       this.profileService.loadProfileToActive(newProfile.id);
-      this.showAlert(`Perfil "${newProfile.name}" cargado.`, 'info');
+      this.taigaAlerts.showInfo('alerts.profiles.loaded', { name: newProfile.name }).subscribe();
     } else {
       this.clearForm();
     }
@@ -68,28 +69,31 @@ export class ActionsService {
       this.profileService.saveLastActiveProfileId(null);
       this.clearForm();
     }
-    this.showAlert('Perfil eliminado.', 'info');
+    this.taigaAlerts.showInfo('alerts.profiles.deleted').subscribe();
   }
 
   public saveCv(asProfileUpdate = false): void {
     try {
       const rawData = this.cvState.cvForm.getRawValue() as CvForm;
-
       this.dataService.saveCv(rawData);
 
       const currentProfile = this.selectedProfile();
+
       if (currentProfile) {
         this.profileService.updateActiveProfileData(currentProfile.id);
+
         if (!asProfileUpdate) {
-          this.showAlert('CV Guardado y perfil actualizado.');
+          this.taigaAlerts.showSuccess('alerts.cv.saved_updated').subscribe();
         } else {
-          this.showAlert(`Cambios guardados en "${currentProfile.name}".`);
+          this.taigaAlerts
+            .showSuccess('alerts.cv.saved_in_profile', { name: currentProfile.name })
+            .subscribe();
         }
       } else if (!asProfileUpdate) {
-        this.showAlert('CV guardado localmente.', 'success');
+        this.taigaAlerts.showSuccess('alerts.cv.saved_local').subscribe();
       }
     } catch (e) {
-      this.showError((e as Error).message);
+      this.handleError(e);
     }
   }
 
@@ -102,7 +106,7 @@ export class ActionsService {
   public clearForm(): void {
     this.selectedProfile.set(null);
     this.cvState.resetForm();
-    this.showAlert('Formulario limpiado.', 'info');
+    this.taigaAlerts.showInfo('alerts.forms.cleared').subscribe();
   }
 
   public toggleLock(locked: boolean): void {
@@ -118,7 +122,7 @@ export class ActionsService {
 
     this.dialogs
       .open<string>(new PolymorpheusComponent(CreateProfile), {
-        label: 'Crear Nuevo Perfil',
+        label: this.transloco.translate('cv.actions.create.label'),
         size: 's',
       })
       .subscribe({
@@ -131,15 +135,15 @@ export class ActionsService {
             if (cvEsValido) {
               this.saveCv(true);
               newProfile = this.profileService.saveCurrentCvAsProfile(name);
-              this.showAlert('Perfil creado con los datos actuales.');
+              this.taigaAlerts.showSuccess('alerts.profiles.created_from_data').subscribe();
             } else {
               newProfile = this.profileService.createEmptyProfile(name);
-              this.showAlert('Nuevo perfil vacío creado.');
+              this.taigaAlerts.showSuccess('alerts.profiles.created_empty').subscribe();
             }
 
             this.selectedProfile.set(newProfile);
           } catch (e) {
-            this.showError((e as Error).message);
+            this.handleError(e);
           }
         },
       });
@@ -148,7 +152,7 @@ export class ActionsService {
   public editProfileName(profile: CvProfile): void {
     this.dialogs
       .open<string>(new PolymorpheusComponent(EditProfile), {
-        label: 'Editar Perfil',
+        label: this.transloco.translate('cv.actions.edit.label'),
         size: 's',
         data: profile.name,
       })
@@ -160,9 +164,9 @@ export class ActionsService {
             if (this.selectedProfile()?.id === updated.id) {
               this.selectedProfile.set(updated);
             }
-            this.showAlert(`Nombre actualizado.`);
+            this.taigaAlerts.showSuccess('alerts.profiles.renamed').subscribe();
           } catch (e) {
-            this.showError((e as Error).message);
+            this.handleError(e);
           }
         }
       });
@@ -173,22 +177,16 @@ export class ActionsService {
     if (profile) {
       try {
         this.profileService.loadProfileToActive(profile.id);
-        this.showAlert('Cambios descartados. Perfil recargado.');
+        this.taigaAlerts.showSuccess('alerts.profiles.reloaded').subscribe();
       } catch (e) {
-        this.showError((e as Error).message);
+        this.handleError(e);
       }
     }
   }
 
-  // --- Utils ---
-  private showAlert(
-    message: string,
-    appearance: 'success' | 'warning' | 'error' | 'info' = 'success',
-  ): void {
-    this.alerts.open(message, { appearance, autoClose: 3000 }).subscribe();
-  }
+  private handleError(e: unknown): void {
+    const message = e instanceof Error ? e.message : 'Error desconocido';
 
-  private showError(message: string): void {
-    this.alerts.open(message, { appearance: 'error', autoClose: 5000 }).subscribe();
+    this.taigaAlerts.showError('alerts.generic_error', { details: message }).subscribe();
   }
 }

@@ -1,8 +1,7 @@
 import { PromptLanguage } from '@smartcv/types';
 
-export function getATSInputOutputTemplate(lang: PromptLanguage) {
-  if (lang === 'english') {
-    return `
+const atsInputOutputTemplateTexts: Record<PromptLanguage, string> = {
+  english: `
 Output (strict JSON only):
 {
   "text": "A brief (2-3 sentences) AI analysis summary, highlighting the candidate's overall fit for the offer.",
@@ -56,9 +55,10 @@ Output (strict JSON only):
     "softSkills": ["List of relevant soft skills detected."],
     "languageSkills": ["List of languages detected (if applicable)."]
   }
-}`;
-  } else {
-    return `
+}
+`,
+
+  spanish: `
 Salida (solo JSON válido):
 {
   "text": "Un resumen breve (2-3 frases) del análisis, destacando el 'fit' general del candidato para la oferta.",
@@ -112,6 +112,10 @@ Salida (solo JSON válido):
     "softSkills": ["Lista de soft skills relevantes detectadas."],
     "languageSkills": ["Lista de idiomas detectados (si aplica)."]
   }
-}`;
-  }
+}
+`,
+};
+
+export function getATSInputOutputTemplate(lang: PromptLanguage) {
+  return atsInputOutputTemplateTexts[lang].trim();
 }

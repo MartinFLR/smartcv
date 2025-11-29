@@ -1,8 +1,7 @@
 import { PromptLanguage } from '@smartcv/types';
 
-export function getCvInputOutputTemplate(lang: PromptLanguage) {
-  if (lang === 'english') {
-    return `
+const CV_INPUT_OUTPUT_TEMPLATES: Record<PromptLanguage, string> = {
+  english: `
 Output (strict JSON):
 {
   "profileSummary": "Brief optimized professional summary tailored to the job.",
@@ -53,9 +52,8 @@ Output (strict JSON):
       "additional": ["Methodologies, tools, or others"]
     }
   ]
-}`;
-  } else {
-    return `
+}`,
+  spanish: `
 **Salida (solo JSON válido):**
 {
   "profileSummary": "Resumen breve y optimizado del perfil profesional enfocado al puesto.",
@@ -106,6 +104,9 @@ Output (strict JSON):
       "additional": ["Metodologías, herramientas u otros"]
     }
   ]
-}`;
-  }
+}`,
+};
+
+export function getCvInputOutputTemplate(lang: PromptLanguage) {
+  return CV_INPUT_OUTPUT_TEMPLATES[lang];
 }

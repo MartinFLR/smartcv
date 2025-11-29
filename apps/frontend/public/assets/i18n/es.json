@@ -1,6 +1,6 @@
 {
   "languages": {
-    "title": "Lenguaje de los Componentes",
+    "title": "Idioma de la Aplicación",
     "spanish": "Español",
     "english": "Inglés"
   },
@@ -8,6 +8,97 @@
   "nav": {
     "resume": "Currículum",
     "config": "Configuración"
+  },
+
+  "alerts": {
+    "notifications": {
+      "success": { "title": "¡Todo OK!" },
+      "error": { "title": "Algo salió mal" },
+      "warning": { "title": "Atención" },
+      "info": { "title": "Información" }
+    },
+    "api": {
+      "errors": {
+        "network": {
+          "message": "Parece que no tenés conexión a Internet.",
+          "label": "Sin conexión"
+        },
+        "server_error": {
+          "message": "El servidor no está respondiendo. Probá más tarde.",
+          "label": "Error del servidor"
+        },
+        "fallback": {
+          "message": "Pasó algo inesperado.",
+          "label": "Error"
+        }
+      }
+    },
+    "ats": {
+      "errors": {
+        "pdf_format": {
+          "label": "Archivo faltante",
+          "message": "Subí tu CV en formato PDF para continuar."
+        },
+        "no_jobDescription": {
+          "label": "Falta descripción",
+          "message": "Pegá la descripción del puesto para seguir."
+        }
+      }
+    },
+    "ia": {
+      "success": {
+        "cv_optimized": {
+          "label": "¡Optimización lista!",
+          "message": "Tu CV fue optimizado con IA. ¡Miralo antes de usarlo!"
+        }
+      }
+    },
+    "profiles": {
+      "loaded": {
+        "label": "Perfil cargado",
+        "message": "El perfil \"{{name}}\" se cargó correctamente."
+      },
+      "deleted": {
+        "label": "Perfil eliminado",
+        "message": "El perfil se eliminó correctamente."
+      },
+      "created_from_data": {
+        "label": "Perfil creado",
+        "message": "Creamos un perfil con los datos actuales."
+      },
+      "created_empty": {
+        "label": "Perfil nuevo",
+        "message": "Se creó un perfil vacío."
+      },
+      "renamed": {
+        "label": "Actualizado",
+        "message": "El nombre del perfil se actualizó."
+      },
+      "reloaded": {
+        "label": "Recargado",
+        "message": "Se descartaron los cambios y se recargó el perfil."
+      }
+    },
+    "cv": {
+      "saved_updated": {
+        "label": "Guardado",
+        "message": "CV guardado y perfil actualizado."
+      },
+      "saved_in_profile": {
+        "label": "Guardado",
+        "message": "Cambios guardados en \"{{name}}\"."
+      },
+      "saved_local": {
+        "label": "Guardado",
+        "message": "CV guardado en tu dispositivo."
+      }
+    },
+    "forms": {
+      "cleared": {
+        "label": "Limpio",
+        "message": "El formulario se vació correctamente."
+      }
+    }
   },
 
   "cv": {
@@ -24,16 +115,23 @@
 
     "actions": {
       "profile": "Cargar Perfil...",
+      "delete": {
+        "name": "Eliminar",
+        "hint": ""
+      },
+
       "block": {
         "name": "Bloquear",
-        "hint": "Bloqueá el CV para que todas las optimizaciones se basen siempre en esta versión."
+        "hint": "Bloqueá el CV para que todas las optimizaciones partan siempre de esta versión."
       },
       "create": {
+        "label": "Crear Perfil",
         "title": "¿Qué nombre querés ponerle?",
         "cancel": "Cancelar",
         "save": "Guardar"
       },
       "edit": {
+        "label": "Editar Perfil",
         "title": "¿Qué nombre querés ponerle?",
         "cancel": "Cancelar",
         "save": "Guardar"
@@ -42,8 +140,9 @@
 
     "personalInfo": {
       "title": "Información Personal",
+      "subtitle": "Cargá tus datos personales.",
       "name": {
-        "name": "Nombre Completo",
+        "name": "Nombre completo",
         "placeholder": "Ej: Juan Pérez"
       },
       "job": {
@@ -76,12 +175,13 @@
       },
       "resume": {
         "title": "Perfil Profesional",
-        "placeholder": "Escribí acá tu perfil profesional..."
+        "placeholder": "Escribí tu perfil profesional..."
       }
     },
 
     "education": {
       "title": "Educación",
+      "subtitle": "Mostrá tu formación y tus logros académicos.",
       "add": "Agregar",
       "name": {
         "name": "Título",
@@ -92,21 +192,22 @@
         "placeholder": "Ej: Universidad Nacional..."
       },
       "dateIn": {
-        "name": "Fecha de Inicio",
+        "name": "Fecha de inicio",
         "placeholder": "Ej: 2020"
       },
       "dateFin": {
-        "name": "Fecha de Finalización",
+        "name": "Fecha de finalización",
         "placeholder": "Ej: 2024"
       },
       "achievements": {
-        "name": "Logros (un bullet por línea)",
+        "name": "Logros (uno por línea)",
         "placeholder": "Ej: Proyecto final destacado..."
       }
     },
 
     "experience": {
       "title": "Experiencia Laboral",
+      "subtitle": "Mostrá tu experiencia y logros más importantes.",
       "add": "Agregar",
       "job": {
         "name": "Puesto",
@@ -117,48 +218,50 @@
         "placeholder": "Ej: Globant"
       },
       "dateIn": {
-        "name": "Fecha de Inicio",
+        "name": "Fecha de inicio",
         "placeholder": "Ej: Enero 2023"
       },
       "dateFin": {
-        "name": "Fecha de Finalización",
+        "name": "Fecha de finalización",
         "placeholder": "Ej: Actualidad"
       },
       "achievements": {
-        "name": "Logros y Tareas (un bullet por línea)",
+        "name": "Logros y tareas (una por línea)",
         "placeholder": "- Implementé nuevas funcionalidades..."
       }
     },
 
     "project": {
       "title": "Proyectos",
+      "sub": "Mostrá tus proyectos y qué aprendiste.",
       "add": "Agregar",
       "name": {
         "name": "Nombre",
-        "placeholder": "Nombre del Proyecto"
+        "placeholder": "Nombre del proyecto"
       },
       "subtitle": {
         "name": "Subtítulo",
         "placeholder": "Ej: App móvil de gestión..."
       },
       "dateIn": {
-        "name": "Fecha de Inicio",
+        "name": "Fecha de inicio",
         "placeholder": "Ej: 2023"
       },
       "dateFin": {
-        "name": "Fecha de Finalización",
+        "name": "Fecha de finalización",
         "placeholder": "Ej: 2024"
       },
       "achievements": {
-        "name": "Logros y Tareas (un bullet por línea)",
+        "name": "Logros y tareas (una por línea)",
         "placeholder": "- Diseñé la arquitectura..."
       }
     },
 
     "skills": {
-      "title": "Habilidades & Certificaciones",
+      "title": "Habilidades y Certificaciones",
+      "subtitle": "Mostrá tus habilidades y certificaciones.",
       "skill": {
-        "name": "Habilidades Técnicas / Hard Skills (separadas por coma)",
+        "name": "Habilidades técnicas / Hard Skills (separadas por coma)",
         "placeholder": "Angular, React, Node.js"
       },
       "language": {
@@ -167,47 +270,48 @@
       },
       "certifications": {
         "title": "Certificaciones",
-        "subtitle": "Agregá tus certificaciones acá.",
-        "button": "Agregar Certificación",
+        "subtitle": "Agregá acá tus certificaciones.",
+        "button": "Agregar certificación",
         "certification": {
           "name": {
-            "name": "Nombre del Certificado",
+            "name": "Nombre del certificado",
             "placeholder": "Ej: AWS Solutions Architect"
           },
           "date": {
-            "name": "Fecha de Obtención",
+            "name": "Fecha de obtención",
             "placeholder": "Ej: 2023"
           }
         }
       },
       "additional": {
-        "name": "Habilidades Adicionales / Otros (Ej: Herramientas, Metodologías)",
+        "name": "Habilidades adicionales / Otros",
         "placeholder": "Scrum, Kanban, Docker, AWS..."
       }
     },
 
     "ia": {
       "title": "Optimización con IA",
+      "subtitle": "Acá podés optimizar tu CV usando IA.",
       "job": {
-        "name": "Pegá acá la descripción del puesto",
+        "name": "Pegá la descripción del puesto",
         "placeholder": "Ej: Buscamos desarrollador con experiencia en...",
-        "description": "Cuando hagas clic en 'Optimizar CV', la IA va a adaptar tu Perfil Profesional, Puesto y Logros para que coincidan mejor con lo que pide la oferta.",
-        "highlight": "¡Revisá siempre lo que genera la IA antes de descargar!"
+        "description": "Cuando hagas clic en “Optimizar CV”, la IA va a adaptar tu perfil, puesto y logros según lo que pide la oferta.",
+        "highlight": "Siempre revisá lo que genera la IA antes de descargar."
       },
       "exaggeration": {
         "title": "Nivel de exageración",
         "level": {
           "low": {
             "name": "Bajo",
-            "description": "Fiel al CV original, profesional y realista."
+            "description": "Fiel al CV original: profesional y realista."
           },
           "medium": {
             "name": "Medio",
-            "description": "Resalta tus logros y los hace un poco más impactantes sin inventar nada raro."
+            "description": "Resalta tus logros sin inventar nada raro."
           },
           "high": {
             "name": "Alto",
-            "description": "Exagera tus logros para maximizar impacto. Recomendado revisar antes."
+            "description": "Exagera logros al máximo. Recomendable revisar."
           }
         },
         "button": "Optimizar CV con IA"
@@ -216,88 +320,97 @@
 
     "coverLetter": {
       "title": "Generá tu carta de presentación",
-      "subtitle": "La IA va a analizar tu CV actual y generar una carta personalizada lista para mandar.",
+      "subtitle": "La IA analiza tu CV y crea una carta personalizada lista para enviar.",
       "optional": {
-        "name": {
-          "name": "Nombre del/la Reclutador/a",
+        "title": "Campos opcionales",
+        "recruiter": {
+          "name": "Nombre del/la reclutador/a",
           "placeholder": "Ej: Laura Gómez"
         },
         "company": {
-          "name": "Nombre de la Empresa",
+          "name": "Empresa",
           "placeholder": "Ej: Mercado Libre"
+        },
+        "referral": {
+          "name": "Referente interno",
+          "placeholder": "Ej: Aldo Titos Félix"
         }
       },
       "tone": {
+        "title": "Tono de la carta",
         "formal": {
           "name": "Formal",
-          "description": "Tono serio, respetuoso y profesional."
+          "description": "Serio, claro y profesional."
         },
         "enthusiast": {
           "name": "Entusiasta",
-          "description": "Transmite ganas y energía, sin llegar a lo informal."
+          "description": "Con energía y buena onda."
         },
         "casual": {
           "name": "Casual",
-          "description": "Relajado y cercano, ideal para startups."
+          "description": "Relajado, ideal para startups."
         },
         "neutral": {
           "name": "Neutral",
-          "description": "Equilibrado y directo al punto."
+          "description": "Directo y equilibrado."
         },
         "confident": {
           "name": "Confiado",
-          "description": "Seguro, claro y enfocado en resultados."
+          "description": "Seguro, claro y orientado a resultados."
         }
       },
       "deliveryChannel": {
+        "title": "Dónde querés enviarla",
         "linkedin": {
           "name": "Mensaje de LinkedIn",
-          "description": "Ideal para un contacto rápido y directo."
+          "description": "Rápido y directo."
         },
         "email": {
-          "name": "Correo Electrónico",
-          "description": "Formato tradicional para postular."
+          "name": "Correo electrónico",
+          "description": "La forma tradicional de postular."
         },
         "form": {
-          "name": "Formulario de Postulación",
-          "description": "Versión corta y directa para plataformas ATS."
+          "name": "Formulario de postulación",
+          "description": "Versión corta para ATS."
         },
-        "reference": {
-          "name": "Referente Interno",
-          "description": "Pensada para ser enviada a alguien que te pueda recomendar."
+        "referral": {
+          "name": "Referente interno",
+          "description": "Para mandar a alguien que pueda recomendarte."
         }
       },
       "job": {
-        "name": "Pegá acá la descripción del puesto",
-        "placeholder": "Ej: Responsabilidades, requisitos, tecnologías...",
-        "description": "Pegá la descripción del trabajo para que la IA pueda adaptar tu carta a lo que pide la empresa.",
-        "highlight": "Cuanta más info pegues, mejor se va a ajustar la carta."
+        "name": "Pegá la descripción del puesto",
+        "placeholder": "Responsabilidades, requisitos, tecnologías...",
+        "description": "La IA usa esta info para adaptar tu carta.",
+        "highlight": "Cuanta más info pegues, mejor va a quedar la carta."
       },
-      "generated": "Tu carta de presentación generada:"
+      "button": "Generar carta",
+      "generated": "Tu carta de presentación:"
     },
 
     "ats": {
       "title": "ATS Checker",
       "subtitle": "Subí tu CV (PDF)",
       "job": {
-        "name": "Pegá acá la descripción del puesto",
+        "name": "Pegá la descripción del puesto",
         "placeholder": "Ej: Buscamos perfil con experiencia en...",
-        "description": "Pegá la descripción de la oferta para comparar tu CV con los requisitos clave.",
-        "highlight": "Esto ayuda a calcular tu puntaje y detectar qué te falta."
+        "description": "Compará tu CV con lo que pide la oferta.",
+        "highlight": "Esto nos permite calcular tu puntaje y ver qué podés mejorar."
       },
-      "button": "Calcular Puntaje ATS",
+      "button": "Calcular puntaje ATS",
 
       "points": {
         "title": "Puntaje ATS",
         "level": {
-          "title": "Nivel de Coincidencia",
+          "title": "Nivel de coincidencia",
+          "placeholder": "Subí tu CV y la descripción para ver tu puntaje.",
           "low": {
             "name": "Bajo",
             "description": "Conviene mejorar el CV para esta oferta."
           },
           "medium": {
             "name": "Medio",
-            "description": "Buen puntaje, pero puede mejorar."
+            "description": "Buen puntaje, aunque se puede mejorar."
           },
           "high": {
             "name": "Alto",
@@ -307,26 +420,16 @@
         }
       },
 
-      "general": "Visión General",
-      "analisis": "Análisis de Palabras Clave",
+      "general": "Visión general",
+      "analysis": "Análisis de palabras clave",
 
       "sections": {
-        "title": "Puntaje por Sección",
-        "summary": {
-          "name": "Perfil Profesional"
-        },
-        "experience": {
-          "name": "Experiencia"
-        },
-        "education": {
-          "name": "Educación"
-        },
-        "skills": {
-          "name": "Habilidades"
-        },
-        "projects": {
-          "name": "Proyectos"
-        }
+        "title": "Puntaje por sección",
+        "summary": { "name": "Perfil profesional" },
+        "experience": { "name": "Experiencia" },
+        "education": { "name": "Educación" },
+        "skills": { "name": "Habilidades" },
+        "projects": { "name": "Proyectos" }
       },
 
       "recommendations": "Recomendaciones"
@@ -337,10 +440,10 @@
     "title": "Configuración",
     "back": "Volver",
     "ia": {
-      "title": "Configuración de IA",
+      "title": "Ajustes de IA",
       "provider": "Proveedor de IA",
       "model": "Modelo de IA",
-      "button": "Guardar Ajustes de IA"
+      "button": "Guardar ajustes"
     }
   },
 

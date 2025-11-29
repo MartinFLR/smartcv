@@ -1,12 +1,20 @@
 <ng-container *transloco="let t">
   <fieldset class="contents">
-    <div class="flex justify-between items-center mb-3">
-      <h2 class="text-xl font-semibold">{{ t('cv.skills.title') }}</h2>
-    </div>
+    <header class="flex flex-col gap-1 border-b border-[var(--tui-border-normal)] pb-4 -mt-4">
+      <h2
+        class="text-xl md:text-2xl font-bold text-[var(--tui-text-primary)] flex items-center gap-2"
+      >
+        <tui-icon icon="@tui.code" class="text-[var(--tui-text-action)] size-6"></tui-icon>
+        {{ t('cv.skills.title') }}
+      </h2>
+      <p class="text-[var(--tui-text-secondary)] text-base leading-snug">
+        {{ t('cv.skills.subtitle') }}
+      </p>
+    </header>
 
     @for (skillGroup of service.formArray().controls; track $index; let i = $index) {
-      <div [formGroup]="skillGroup" class="p-4 rounded relative flex flex-col gap-4">
-        <tui-textfield multi>
+      <div [formGroup]="skillGroup" class="rounded-2xl flex flex-col gap-6 mt-4 mb-6">
+        <tui-textfield multi iconStart="@tui.code">
           <label tuiLabel for="skillsSkills">{{ t('cv.skills.skill.name') }}</label>
           <input
             tuiInputChip
@@ -14,10 +22,10 @@
             [placeholder]="t('cv.skills.skill.placeholder')"
             id="skillsSkills"
           />
-          <tui-input-chip *tuiItem />
+          <tui-input-chip *tuiItem></tui-input-chip>
         </tui-textfield>
 
-        <tui-textfield multi>
+        <tui-textfield multi iconStart="@tui.languages">
           <label tuiLabel for="skillsLanguages">{{ t('cv.skills.language.name') }}</label>
           <input
             tuiInputChip
@@ -25,80 +33,130 @@
             [placeholder]="t('cv.skills.language.placeholder')"
             id="skillsLanguages"
           />
-          <tui-input-chip *tuiItem />
+          <tui-input-chip *tuiItem></tui-input-chip>
         </tui-textfield>
 
-        <h3 class="text-lg font-medium mt-2">{{ t('cv.skills.certifications.title') }}</h3>
+        <div class="flex flex-col gap-3">
+          <h3 class="text-lg font-semibold flex items-center gap-2">
+            <tui-icon icon="@tui.award" class="text-[var(--tui-text-secondary)]"></tui-icon>
+            {{ t('cv.skills.certifications.title') }}
+          </h3>
 
-        <fieldset formArrayName="certifications" class="flex flex-col gap-2">
           @if (service.getCertificationsControls(skillGroup).length === 0) {
-            <p class="text-sm text-gray-500">{{ t('cv.skills.certifications.subtitle') }}</p>
+            <p class="text-sm opacity-60 italic pl-1">
+              {{ t('cv.skills.certifications.subtitle') }}
+            </p>
           }
 
-          @for (
-            certGroup of service.getCertificationsControls(skillGroup);
-            track $index;
-            let certIndex = $index
-          ) {
-            <div
-              tuiCardLarge
-              [formGroup]="certGroup"
-              class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-end p-3 border rounded"
+          <tui-accordion [closeOthers]="true" class="flex flex-col">
+            @for (
+              certGroup of service.getCertificationsControls(skillGroup);
+              track $index;
+              let certIndex = $index
+            ) {
+              <ng-container>
+                <button
+                  tuiAccordion
+                  type="button"
+                  class="w-full flex items-center justify-between p-4 text-left shadow-sm relative z-10 group rounded-xl bg-[var(--tui-background-base)] border border-[var(--tui-border-normal)] hover:border-[var(--tui-border-hover)] transition-colors"
+                >
+                  <div class="flex items-center overflow-hidden flex-grow">
+                    <div
+                      class="size-10 rounded-full flex items-center justify-center shrink-0 bg-[var(--tui-background-neutral-1)] text-[var(--tui-text-primary)]"
+                    >
+                      <tui-icon icon="@tui.stamp" class="text-lg"></tui-icon>
+                    </div>
+
+                    <div class="flex flex-col truncate ml-4">
+                      <span class="font-bold text-base truncate text-[var(--tui-text-primary)]">
+                        {{
+                          certGroup.get('name')?.value ||
+                            t('cv.skills.certifications.certification.name.placeholder')
+                        }}
+                      </span>
+                      <div class="text-sm flex items-center gap-2 truncate opacity-70">
+                        <span class="truncate">
+                          {{
+                            certGroup.get('date')?.value ||
+                              t('cv.skills.certifications.certification.date.placeholder')
+                          }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex-shrink-0 ml-4 relative z-20 flex items-center gap-2">
+                    <button
+                      tuiButton
+                      type="button"
+                      tuiRipple
+                      appearance="flat-destructive"
+                      size="s"
+                      iconStart="@tui.trash"
+                      (click)="$event.stopPropagation(); service.removeCertification(i, certIndex)"
+                      class="opacity-70 hover:opacity-100 transition-opacity"
+                    >
+                      <span class="sr-only">Eliminar Certificado</span>
+                    </button>
+                  </div>
+                </button>
+
+                <tui-expand class="w-full">
+                  <div class="p-4 pt-2 rounded-b-xl relative top-[-5px]">
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4" [formGroup]="certGroup">
+                      <div class="md:col-span-8">
+                        <tui-textfield class="!min-h-0">
+                          <label tuiLabel for="skillsCertificationName">
+                            {{ t('cv.skills.certifications.certification.name.name') }}
+                          </label>
+                          <input
+                            tuiTextfield
+                            formControlName="name"
+                            [placeholder]="
+                              t('cv.skills.certifications.certification.name.placeholder')
+                            "
+                            id="skillsCertificationName"
+                          />
+                        </tui-textfield>
+                      </div>
+
+                      <div class="md:col-span-4">
+                        <tui-textfield class="!min-h-0" iconStart="@tui.calendar">
+                          <label tuiLabel for="skillsCertificationDate">
+                            {{ t('cv.skills.certifications.certification.date.name') }}
+                          </label>
+                          <input
+                            tuiTextfield
+                            formControlName="date"
+                            [placeholder]="
+                              t('cv.skills.certifications.certification.date.placeholder')
+                            "
+                            id="skillsCertificationDate"
+                          />
+                        </tui-textfield>
+                      </div>
+                    </div>
+                  </div>
+                </tui-expand>
+              </ng-container>
+            }
+
+            <button
+              tuiButton
+              type="button"
+              size="m"
+              tuiRipple
+              appearance="secondary"
+              class="w-full border-2 border-dashed mt-2 transition-all flex justify-center items-center gap-2 py-3 rounded-xl opacity-70 hover:opacity-100 hover:border-[var(--tui-border-active)]"
+              (click)="service.addCertification(i)"
             >
-              <tui-textfield class="sm:col-span-6">
-                <label tuiLabel for="skillsCertificationName">
-                  {{ t('cv.skills.certifications.certification.name.name') }}
-                </label>
-                <input
-                  tuiTextfield
-                  formControlName="name"
-                  [placeholder]="t('cv.skills.certifications.certification.name.placeholder')"
-                  id="skillsCertificationName"
-                />
-              </tui-textfield>
+              <tui-icon icon="@tui.plus" class="text-lg"></tui-icon>
+              <span class="font-medium">{{ t('cv.skills.certifications.button') }}</span>
+            </button>
+          </tui-accordion>
+        </div>
 
-              <tui-textfield class="sm:col-span-4">
-                <label tuiLabel for="skillsCertificationDate">
-                  {{ t('cv.skills.certifications.certification.date.name') }}
-                </label>
-                <input
-                  tuiTextfield
-                  formControlName="date"
-                  [placeholder]="t('cv.skills.certifications.certification.date.placeholder')"
-                  id="skillsCertificationDate"
-                />
-              </tui-textfield>
-
-              <button
-                tuiButton
-                type="button"
-                appearance="action-destructive"
-                size="s"
-                tuiRipple
-                iconStart="@tui.trash"
-                (click)="service.removeCertification(i, certIndex)"
-                class="sm:col-span-2"
-              >
-                <span class="sr-only">Eliminar Certificado</span>
-              </button>
-            </div>
-          }
-
-          <button
-            tuiButton
-            tuiRipple
-            type="button"
-            appearance="outline"
-            size="s"
-            iconStart="@tui.plus"
-            (click)="service.addCertification(i)"
-            class="mt-2 self-start"
-          >
-            {{ t('cv.skills.certifications.button') }}
-          </button>
-        </fieldset>
-
-        <tui-textfield multi class="mt-2">
+        <tui-textfield multi class="mt-2" iconStart="@tui.list-plus">
           <label tuiLabel for="skillsAdditional">
             {{ t('cv.skills.additional.name') }}
           </label>
@@ -108,7 +166,7 @@
             [placeholder]="t('cv.skills.additional.placeholder')"
             id="skillsAdditional"
           />
-          <tui-input-chip *tuiItem />
+          <tui-input-chip *tuiItem></tui-input-chip>
         </tui-textfield>
       </div>
     }

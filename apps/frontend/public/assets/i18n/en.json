@@ -1,6 +1,6 @@
 {
   "languages": {
-    "title": "Language of components",
+    "title": "Application Language",
     "spanish": "Spanish",
     "english": "English"
   },
@@ -8,6 +8,97 @@
   "nav": {
     "resume": "Resume",
     "config": "Settings"
+  },
+
+  "alerts": {
+    "notifications": {
+      "success": { "title": "All Good!" },
+      "error": { "title": "Something went wrong" },
+      "warning": { "title": "Warning" },
+      "info": { "title": "Information" }
+    },
+    "api": {
+      "errors": {
+        "network": {
+          "message": "It looks like you’re not connected to the Internet.",
+          "label": "No connection"
+        },
+        "server_error": {
+          "message": "The server is not responding. Try again later.",
+          "label": "Server error"
+        },
+        "fallback": {
+          "message": "Something unexpected happened.",
+          "label": "Error"
+        }
+      }
+    },
+    "ats": {
+      "errors": {
+        "pdf_format": {
+          "label": "Missing file",
+          "message": "Upload your resume in PDF format to continue."
+        },
+        "no_jobDescription": {
+          "label": "Missing description",
+          "message": "Paste the job description to continue."
+        }
+      }
+    },
+    "ia": {
+      "success": {
+        "cv_optimized": {
+          "label": "Optimization ready!",
+          "message": "Your resume was optimized with AI. Review it before using it!"
+        }
+      }
+    },
+    "profiles": {
+      "loaded": {
+        "label": "Profile loaded",
+        "message": "The profile \"{{name}}\" was loaded successfully."
+      },
+      "deleted": {
+        "label": "Profile deleted",
+        "message": "The profile was deleted successfully."
+      },
+      "created_from_data": {
+        "label": "Profile created",
+        "message": "We created a profile using the current data."
+      },
+      "created_empty": {
+        "label": "New profile",
+        "message": "A new empty profile was created."
+      },
+      "renamed": {
+        "label": "Updated",
+        "message": "The profile name was updated."
+      },
+      "reloaded": {
+        "label": "Reloaded",
+        "message": "Changes were discarded and the profile was reloaded."
+      }
+    },
+    "cv": {
+      "saved_updated": {
+        "label": "Saved",
+        "message": "Resume saved and profile updated."
+      },
+      "saved_in_profile": {
+        "label": "Saved",
+        "message": "Changes saved in \"{{name}}\"."
+      },
+      "saved_local": {
+        "label": "Saved",
+        "message": "Resume saved to your device."
+      }
+    },
+    "forms": {
+      "cleared": {
+        "label": "Cleared",
+        "message": "The form was cleared successfully."
+      }
+    }
   },
 
   "cv": {
@@ -24,17 +115,24 @@
 
     "actions": {
       "profile": "Load Profile...",
+      "delete": {
+        "name": "Delete",
+        "hint": ""
+      },
+
       "block": {
         "name": "Lock",
-        "hint": "Lock the resume so all optimizations are always based on this version."
+        "hint": "Lock the resume so all optimizations always start from this version."
       },
       "create": {
-        "title": "What name would you like to use?",
+        "label": "Create Profile",
+        "title": "What name do you want to give it?",
         "cancel": "Cancel",
         "save": "Save"
       },
       "edit": {
-        "title": "What name would you like to use?",
+        "label": "Edit Profile",
+        "title": "What name do you want to give it?",
         "cancel": "Cancel",
         "save": "Save"
       }
@@ -42,121 +140,126 @@
 
     "personalInfo": {
       "title": "Personal Information",
+      "subtitle": "Enter your personal details.",
       "name": {
-        "name": "Full Name",
-        "placeholder": "e.g., John Doe"
+        "name": "Full name",
+        "placeholder": "E.g.: John Doe"
       },
       "job": {
-        "name": "Job Title",
-        "placeholder": "e.g., Full Stack Developer"
+        "name": "Job title",
+        "placeholder": "E.g.: Full Stack Developer"
       },
       "email": {
         "name": "Email",
         "placeholder": "email@gmail.com"
       },
       "phone": {
-        "name": "Phone Number",
-        "placeholder": "e.g., +1 555 123 4567"
+        "name": "Phone",
+        "placeholder": "E.g.: +1 555 123 4567"
       },
       "ubication": {
         "name": "Location",
-        "placeholder": "e.g., New York, USA"
+        "placeholder": "E.g.: New York, USA"
       },
       "linkedin": {
         "name": "LinkedIn (URL)",
-        "placeholder": "linkedin.com/in/user"
+        "placeholder": "linkedin.com/in/username"
       },
       "github": {
         "name": "GitHub (URL)",
-        "placeholder": "github.com/user"
+        "placeholder": "github.com/username"
       },
       "web": {
         "name": "Website (URL)",
-        "placeholder": "e.g., www.myportfolio.com"
+        "placeholder": "E.g.: www.mysite.com"
       },
       "resume": {
         "title": "Professional Summary",
-        "placeholder": "Write your professional summary here..."
+        "placeholder": "Write your professional summary..."
       }
     },
 
     "education": {
       "title": "Education",
+      "subtitle": "Show your academic background and achievements.",
       "add": "Add",
       "name": {
         "name": "Degree",
-        "placeholder": "e.g., B.Sc. in Computer Science"
+        "placeholder": "E.g.: BSc in Computer Science"
       },
       "institution": {
         "name": "Institution",
-        "placeholder": "e.g., National University..."
+        "placeholder": "E.g.: National University..."
       },
       "dateIn": {
-        "name": "Start Date",
-        "placeholder": "e.g., 2020"
+        "name": "Start date",
+        "placeholder": "E.g.: 2020"
       },
       "dateFin": {
-        "name": "Graduation Date",
-        "placeholder": "e.g., 2024"
+        "name": "Graduation date",
+        "placeholder": "E.g.: 2024"
       },
       "achievements": {
-        "name": "Achievements (one bullet per line)",
-        "placeholder": "e.g., Outstanding capstone project..."
+        "name": "Achievements (one per line)",
+        "placeholder": "E.g.: Graduated with honors..."
       }
     },
 
     "experience": {
       "title": "Work Experience",
+      "subtitle": "Show your most relevant experience and achievements.",
       "add": "Add",
       "job": {
-        "name": "Job Title",
-        "placeholder": "e.g., Frontend Developer"
+        "name": "Job title",
+        "placeholder": "E.g.: Frontend Developer"
       },
       "company": {
         "name": "Company",
-        "placeholder": "e.g., Globant"
+        "placeholder": "E.g.: Globant"
       },
       "dateIn": {
-        "name": "Start Date",
-        "placeholder": "e.g., January 2023"
+        "name": "Start date",
+        "placeholder": "E.g.: January 2023"
       },
       "dateFin": {
-        "name": "End Date",
-        "placeholder": "e.g., Present"
+        "name": "End date",
+        "placeholder": "E.g.: Present"
       },
       "achievements": {
-        "name": "Achievements & Responsibilities (one bullet per line)",
+        "name": "Achievements and tasks (one per line)",
         "placeholder": "- Implemented new features..."
       }
     },
 
     "project": {
       "title": "Projects",
+      "sub": "Show your projects and what you learned.",
       "add": "Add",
       "name": {
         "name": "Name",
-        "placeholder": "Project Name"
+        "placeholder": "Project name"
       },
       "subtitle": {
         "name": "Subtitle",
-        "placeholder": "e.g., Mobile management app..."
+        "placeholder": "E.g.: Mobile management app..."
       },
       "dateIn": {
-        "name": "Start Date",
-        "placeholder": "e.g., 2023"
+        "name": "Start date",
+        "placeholder": "E.g.: 2023"
       },
       "dateFin": {
-        "name": "End Date",
-        "placeholder": "e.g., 2024"
+        "name": "End date",
+        "placeholder": "E.g.: 2024"
       },
       "achievements": {
-        "name": "Achievements & Tasks (one bullet per line)",
+        "name": "Achievements and tasks (one per line)",
         "placeholder": "- Designed the architecture..."
       }
     },
 
     "skills": {
       "title": "Skills & Certifications",
+      "subtitle": "Show your skills and certifications.",
       "skill": {
         "name": "Technical Skills / Hard Skills (comma-separated)",
         "placeholder": "Angular, React, Node.js"
@@ -168,46 +271,47 @@
       "certifications": {
         "title": "Certifications",
         "subtitle": "Add your certifications here.",
-        "button": "Add Certification",
+        "button": "Add certification",
         "certification": {
           "name": {
-            "name": "Certification Name",
-            "placeholder": "e.g., AWS Solutions Architect"
+            "name": "Certification name",
+            "placeholder": "E.g.: AWS Solutions Architect"
           },
           "date": {
-            "name": "Date Obtained",
-            "placeholder": "e.g., 2023"
+            "name": "Date obtained",
+            "placeholder": "E.g.: 2023"
           }
         }
       },
       "additional": {
-        "name": "Additional Skills / Other (e.g., Tools, Methodologies)",
+        "name": "Additional skills / Others",
         "placeholder": "Scrum, Kanban, Docker, AWS..."
       }
     },
 
     "ia": {
       "title": "AI Optimization",
+      "subtitle": "Optimize your resume using AI.",
       "job": {
-        "name": "Paste the job description here",
-        "placeholder": "e.g., We are seeking a developer with experience in...",
-        "description": "When you click 'Optimize Resume', the AI will adapt your Summary, Job Title, and Achievements to better match the job posting.",
-        "highlight": "Always review what the AI generates before downloading!"
+        "name": "Paste the job description",
+        "placeholder": "E.g.: We’re looking for a developer with experience in...",
+        "description": "When you click “Optimize Resume”, the AI will adapt your summary, job title, and achievements based on the job posting.",
+        "highlight": "Always review what the AI generates before downloading."
       },
       "exaggeration": {
-        "title": "Exaggeration Level",
+        "title": "Exaggeration level",
         "level": {
           "low": {
             "name": "Low",
-            "description": "Faithful to the original resume, professional and realistic."
+            "description": "Faithful to the original resume: professional and realistic."
           },
           "medium": {
             "name": "Medium",
-            "description": "Highlights achievements and makes them more impactful without inventing anything."
+            "description": "Highlights your achievements without inventing anything strange."
           },
           "high": {
             "name": "High",
-            "description": "Heavily boosts achievements for maximum impact. Recommended to review afterward."
+            "description": "Maximum exaggeration. Review recommended."
           }
         },
         "button": "Optimize Resume with AI"
@@ -215,34 +319,40 @@
     },
 
     "coverLetter": {
-      "title": "Generate Your Cover Letter",
-      "subtitle": "The AI will analyze your resume and generate a personalized, ready-to-send letter.",
+      "title": "Generate your cover letter",
+      "subtitle": "The AI analyzes your resume and creates a personalized, ready-to-send letter.",
       "optional": {
-        "name": {
-          "name": "Recruiter's Name",
-          "placeholder": "e.g., Laura Gomez"
+        "title": "Optional fields",
+        "recruiter": {
+          "name": "Recruiter name",
+          "placeholder": "E.g.: Laura Gómez"
         },
         "company": {
-          "name": "Company Name",
-          "placeholder": "e.g., Mercado Libre"
+          "name": "Company",
+          "placeholder": "E.g.: Mercado Libre"
+        },
+        "referral": {
+          "name": "Internal referral",
+          "placeholder": "E.g.: Aldo Titos Félix"
         }
       },
       "tone": {
+        "title": "Letter tone",
         "formal": {
           "name": "Formal",
-          "description": "Serious, respectful, and professional tone."
+          "description": "Serious, clear, and professional."
         },
         "enthusiast": {
           "name": "Enthusiastic",
-          "description": "Energetic and motivated, without being informal."
+          "description": "Energetic and friendly."
         },
         "casual": {
           "name": "Casual",
-          "description": "Relaxed and friendly, ideal for startups."
+          "description": "Relaxed, ideal for startups."
         },
         "neutral": {
           "name": "Neutral",
-          "description": "Balanced and straight to the point."
+          "description": "Direct and balanced."
         },
         "confident": {
           "name": "Confident",
@@ -250,83 +360,76 @@
         }
       },
       "deliveryChannel": {
+        "title": "Where do you want to send it",
         "linkedin": {
-          "name": "LinkedIn Message",
-          "description": "Ideal for quick, direct contact."
+          "name": "LinkedIn message",
+          "description": "Fast and direct."
         },
         "email": {
           "name": "Email",
-          "description": "Traditional format for applying."
+          "description": "The traditional way to apply."
         },
         "form": {
-          "name": "Application Form",
-          "description": "Short and direct version for ATS platforms."
+          "name": "Application form",
+          "description": "Short version for ATS."
         },
-        "reference": {
-          "name": "Internal Referral",
-          "description": "Designed to be sent to someone who can recommend you."
+        "referral": {
+          "name": "Internal referral",
+          "description": "To send to someone who can recommend you."
         }
       },
       "job": {
-        "name": "Paste the job description here",
-        "placeholder": "e.g., Responsibilities, requirements, technologies...",
-        "description": "Paste the job description so the AI can tailor your letter.",
-        "highlight": "The more information you provide, the better the letter will match."
+        "name": "Paste the job description",
+        "placeholder": "Responsibilities, requirements, technologies...",
+        "description": "The AI uses this info to adapt your letter.",
+        "highlight": "The more info you paste, the better the letter will be."
       },
-      "generated": "Your generated cover letter:"
+      "button": "Generate letter",
+      "generated": "Your cover letter:"
     },
 
     "ats": {
       "title": "ATS Checker",
       "subtitle": "Upload your resume (PDF)",
       "job": {
-        "name": "Paste the job description here",
-        "placeholder": "e.g., We’re looking for a profile with experience in...",
-        "description": "Paste the job posting to compare your resume with key requirements.",
-        "highlight": "This helps calculate your score and detect what's missing."
+        "name": "Paste the job description",
+        "placeholder": "E.g.: We’re looking for a profile with experience in...",
+        "description": "Compare your resume with what the job posting requires.",
+        "highlight": "This allows us to calculate your score and see what can be improved."
       },
-      "button": "Calculate ATS Score",
+      "button": "Calculate ATS score",
 
       "points": {
         "title": "ATS Score",
         "level": {
-          "title": "Match Level",
+          "title": "Match level",
+          "placeholder": "Upload your resume and the job description to see your score.",
           "low": {
             "name": "Low",
-            "description": "You should improve your resume for this job."
+            "description": "It’s recommended to improve your resume for this job."
           },
           "medium": {
             "name": "Medium",
-            "description": "Good match, but could be improved."
+            "description": "Good match, but there’s room for improvement."
           },
           "high": {
             "name": "High",
-            "description": "Excellent match."
+            "description": "Excellent level of match."
           },
           "warning": "Warnings"
         }
       },
 
       "general": "Overview",
-      "analisis": "Keyword Analysis",
+      "analysis": "Keyword analysis",
 
       "sections": {
-        "title": "Score by Section",
-        "summary": {
-          "name": "Professional Summary"
-        },
-        "experience": {
-          "name": "Experience"
-        },
-        "education": {
-          "name": "Education"
-        },
-        "skills": {
-          "name": "Skills"
-        },
-        "projects": {
-          "name": "Projects"
-        }
+        "title": "Score by section",
+        "summary": { "name": "Professional summary" },
+        "experience": { "name": "Experience" },
+        "education": { "name": "Education" },
+        "skills": { "name": "Skills" },
+        "projects": { "name": "Projects" }
       },
 
       "recommendations": "Recommendations"
@@ -340,7 +443,7 @@
       "title": "AI Settings",
       "provider": "AI Provider",
       "model": "AI Model",
-      "button": "Save AI Settings"
+      "button": "Save settings"
     }
   },
 
@@ -354,6 +457,6 @@
     "languages": "LANGUAGES:",
     "certifications": "CERTIFICATIONS:",
     "additional": "ADDITIONAL SKILLS:",
-    "complete": "Fill out the form to preview your resume."
+    "complete": "Complete the form to preview your resume."
   }
 }

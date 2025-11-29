@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TuiButton, TuiTextfield } from '@taiga-ui/core';
+import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { TuiInputChip } from '@taiga-ui/kit';
 import { TuiRipple } from '@taiga-ui/addon-mobile';
-import { TuiCard } from '@taiga-ui/layout';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { SkillsService } from './skills-service/skills.service';
+import { TuiAccordion } from '@taiga-ui/experimental';
 
 @Component({
   selector: 'app-skills-section',
@@ -15,8 +15,9 @@ import { SkillsService } from './skills-service/skills.service';
     TuiInputChip,
     TuiButton,
     TuiRipple,
-    TuiCard,
     TranslocoDirective,
+    TuiIcon,
+    TuiAccordion,
   ],
   templateUrl: './skills-section.html',
 })

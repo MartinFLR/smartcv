@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TuiButton, TuiTextfield } from '@taiga-ui/core';
+import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { TuiRipple } from '@taiga-ui/addon-mobile';
 import { TuiTextarea } from '@taiga-ui/kit';
-import { TuiCardLarge } from '@taiga-ui/layout';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { ExperienceService } from './experience-service/experience.service';
+import { TuiAccordion } from '@taiga-ui/experimental';
 
 @Component({
   selector: 'app-experience-section',
@@ -15,8 +15,9 @@ import { ExperienceService } from './experience-service/experience.service';
     TuiRipple,
     TuiTextfield,
     TuiTextarea,
-    TuiCardLarge,
     TranslocoDirective,
+    TuiAccordion,
+    TuiIcon,
   ],
   templateUrl: './experience-section.html',
 })

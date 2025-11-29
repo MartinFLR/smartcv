@@ -2,10 +2,10 @@ import { inject, Injectable } from '@angular/core';
 import { CvForm } from '@smartcv/types';
 import { finalize, map, startWith } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { TuiAlertService } from '@taiga-ui/core';
-import { CvFormManagerService } from '../../../services/cv-form/cv-form-manager/cv-form-manager-service';
+import { CvFormManagerService } from '../../../services/cv-form/cv-form-manager/cv-form-manager.service';
 import { CvFormDataService } from '../../../services/cv-form/cv-form-data/cv-form-data.service';
 import { CvStateService } from '../../../services/cv-form/cv-form-state/cv-state.service';
+import { TaigaAlertsService } from '../../../../../core/services/alerts/taiga-alerts.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,7 @@ export class IaSectionService {
   private readonly state = inject(CvStateService);
   private readonly dataService = inject(CvFormDataService);
   private readonly formManager = inject(CvFormManagerService);
-  private readonly alerts = inject(TuiAlertService);
+  private readonly taigaAlerts = inject(TaigaAlertsService);
 
   public get form() {
     return this.state.iaForm;
@@ -39,7 +39,7 @@ export class IaSectionService {
     if (this.isLoading()) return;
 
     if (this.form.invalid) {
-      this.showAlert('Falta la Job Description.', 'error');
+      this.taigaAlerts.showWarning('alerts.ats.errors.no_jobDescription').subscribe();
       return;
     }
 
@@ -73,18 +73,8 @@ export class IaSectionService {
           });
 
           this.dataService.saveCv(this.state.cvForm.getRawValue() as CvForm);
-
-          this.showAlert('CV optimizado con IA. ¡Revisá los cambios!', 'success', 5000);
-        },
-        error: (err) => {
-          console.error('Error de IA:', err);
-          const message = err.message || 'Error al conectar con la IA.';
-          this.showAlert(message, 'error', 7000);
+          this.taigaAlerts.showSuccess('alerts.ia.success.cv_optimized').subscribe();
         },
       });
-  }
-
-  private showAlert(message: string, appearance: 'success' | 'error', autoClose = 3000): void {
-    this.alerts.open(message, { appearance, autoClose }).subscribe();
   }
 }
