@@ -15,7 +15,6 @@ describe('CvStateService', () => {
   beforeEach(() => {
     fb = new FormBuilder();
 
-    // Create a minimal valid form structure for testing
     const mockCvForm = fb.group({
       personalInfo: fb.group({
         name: ['Test Name', Validators.required],

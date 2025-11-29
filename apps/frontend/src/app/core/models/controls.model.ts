@@ -67,5 +67,4 @@ export interface CvFormControls {
 export interface IaFormControls {
   jobDescription: FormControl<string | null>;
   exaggeration: FormControl<number | null>;
-  makeEnglish: FormControl<boolean | null>;
 }

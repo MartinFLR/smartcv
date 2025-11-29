@@ -44,7 +44,6 @@ describe('CvFormBuilderService', () => {
     it('should create an IA form with required controls', () => {
       const form = service.buildIaForm();
       expect(form.controls.jobDescription).toBeDefined();
-      expect(form.controls.makeEnglish).toBeDefined();
       expect(form.controls.exaggeration).toBeDefined();
     });
   });
