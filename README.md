@@ -191,12 +191,12 @@ cd smartcv
 ### 2. Set up your environment variables
 
 ```bash
-cp .env.example .env
+mv .env.example .env
 ```
 
 Edit `.env` and set:
 
-```
+```env
 GEMINI_API_KEY=your_api_key_here
 OPENAI_API_KEY=your_api_key_here
 ...
