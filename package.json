@@ -3,6 +3,9 @@
   "version": "1.2.0",
   "private": true,
   "description": "Your free self-hosted intelligent assistant for analyzing, optimizing, and comparing resumes with job descriptions using AI.",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "start": "npx nx run-many -t serve -p backend frontend",
     "serve:frontend": "nx serve apps/frontend",
@@ -79,7 +82,7 @@
     "@nx/web": "22.1.0",
     "@nx/webpack": "22.1.0",
     "@swc-node/register": "~1.11.1",
-    "@swc/core": "~1.5.7",
+    "@swc/core": "^1.13.3",
     "@swc/helpers": "~0.5.11",
     "@testing-library/angular": "^18.1.1",
     "@testing-library/dom": "^10.4.1",
