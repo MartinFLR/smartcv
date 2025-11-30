@@ -286,11 +286,16 @@ See `LICENSE.txt` for more details.
 
 <!-- MARKDOWN LINKS -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/MartinFLR/smartcv?style=flat-square&color=4ade80&labelColor=18181b
-[forks-shield]: https://img.shields.io/github/forks/MartinFLR/smartcv?style=flat-square&color=60a5fa&labelColor=18181b
-[stars-shield]: https://img.shields.io/github/stars/MartinFLR/smartcv?style=flat-square&color=facc15&labelColor=18181b
-[issues-shield]: https://img.shields.io/github/issues/MartinFLR/smartcv?style=flat-square&color=fb7185&labelColor=18181b
-[license-shield]: https://img.shields.io/github/license/MartinFLR/smartcv?style=flat-square&color=a78bfa&labelColor=18181b
+[contributors-shield]: https://img.shields.io/github/contributors/MartinFLR/smartcv?style=flat&color=4ade80&labelColor=18181b
+[contributors-url]: https://github.com/MartinFLR/smartcv/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/MartinFLR/smartcv?style=flat&color=60a5fa&labelColor=18181b
+[forks-url]: https://github.com/MartinFLR/smartcv/network/members
+[stars-shield]: https://img.shields.io/github/stars/MartinFLR/smartcv?style=flat&color=facc15&labelColor=18181b
+[stars-url]: https://github.com/MartinFLR/smartcv/stargazers
+[issues-shield]: https://img.shields.io/github/issues/MartinFLR/smartcv?style=flat&color=fb7185&labelColor=18181b
+[issues-url]: https://github.com/MartinFLR/smartcv/issues
+[license-shield]: https://img.shields.io/github/license/MartinFLR/smartcv?style=flat&color=a78bfa&labelColor=18181b
+[license-url]: https://github.com/MartinFLR/smartcv/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/martinflr
 [Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
