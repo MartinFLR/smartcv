@@ -14,7 +14,7 @@
 <h3 align="center">SmartCv</h3>
 
   <p align="center">
-    A self-hosted AI assistant that helps you analyze, optimize, and match resumes to job descriptions.
+    A self-hosted, open-source AI assistant that helps you analyze, optimize, and match resumes to job descriptions.
     <br /><br />
     <a href="https://smartcv-demo.vercel.app">View Demo</a>
     &middot;
