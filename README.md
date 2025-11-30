@@ -279,8 +279,20 @@ See `LICENSE.txt` for more details.
 
 # Contact 📬
 
-[![GitHub][github-shield]][github-url]  
-[![LinkedIn][linkedin-shield]](https://linkedin.com/in/martin-leonardo-flores)
+<p align="center">
+  <a href="https://github.com/MartinFLR">
+    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+  </a>
+  <a href="https://linkedin.com/in/martin-leonardo-flores">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
+  </a>
+  <a href="https://martinflores.vercel.app/">
+    <img src="https://img.shields.io/badge/Website-Visit-007ACC?style=for-the-badge&logo=internet-explorer&logoColor=white" alt="Website">
+  </a>
+  <a href="https://ko-fi.com/martinfloresdev">
+    <img src="https://img.shields.io/badge/Ko--fi-Support-orange?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Ko-fi">
+  </a>
+</p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
