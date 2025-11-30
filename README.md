@@ -3,19 +3,19 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
 
 <br />
-<div align="center">
+<div align="center" >
+  <a id="readme-top"></a>
   <a href="https://github.com/martinFLR/smartcv">
     <img src="/apps/frontend/public/assets/logo.png" alt="Logo" width="100" height="100">
   </a>
 
-<h3 align="center">SmartCV</h3>
+<h3 align="center">SmartCv</h3>
 
   <p align="center">
-    A free self-hosted AI assistant that helps you analyze, optimize, and match resumes to job descriptions.    <br />
-    <br />
+    A self-hosted AI assistant that helps you analyze, optimize, and match resumes to job descriptions.
+    <br /><br />
     <a href="https://smartcv-demo.vercel.app">View Demo</a>
     &middot;
     <a href="https://github.com/MartinFLR/smartcv/issues/new?labels=bug&template=bug_report.yml">Report Bug</a>
@@ -29,54 +29,43 @@
 <details>
   <summary>📖 Table of Contents</summary>
   <ol>
-    <li><a href="#about">About The Project</a>
+    <li><a href="#about-the-project-">About The Project</a>
       <ul>
-        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#-built-with">Built With</a></li>
       </ul>
     </li>
-    <li><a href="#getting-started">Getting Started</a>
+    <li><a href="#getting-started-">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#prerequisites-">Prerequisites</a></li>
+        <li><a href="#installation-">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#option-1-install-with-npm-">Option 1: Install with npm</a></li>
+    <li><a href="#option-2-run-with-docker-">Option 2: Run with Docker</a></li>
+    <li><a href="#roadmap-">Roadmap</a></li>
+    <li><a href="#contributing-">Contributing</a></li>
+    <li><a href="#license-">License</a></li>
+    <li><a href="#contact-">Contact</a></li>
   </ol>
 </details>
 
 <!-- ABOUT THE PROJECT -->
 
-## 🧠 About The Project
-
-[![SmartCV Screenshot][product-screenshot]](https://smartcv.vercel.app)
+## About The Project 🧠
 
 **SmartCV** is an AI-powered web app that analyzes and compares resumes with job descriptions.  
 Its goal is to help candidates improve their CVs, identify missing keywords, and increase compatibility with job offers.
 
-### ✨ Key Features
+### Key Features ✨
 
-- **AI-powered resume analysis** with adjustable levels of exaggeration
+- **AI-powered resume analysis** with adjustable exaggeration levels
 - **Profile saving & locking** — keep a CV version fixed for consistent optimization
 - **ATS Compatibility Scoring** (resume vs. job description)
 - **Keyword detection** and smart suggestions
-- **AI-generated Cover Letters**, optimized for different contexts:
-  - LinkedIn message
-  - Email application
-  - Job form submission
-  - Internal referral
-- **Tone customization** — instantly switch between:
-  - Formal
-  - Enthusiastic
-  - Casual
-  - Neutral
-  - Confident
-- **Self-hosted Express.js backend** — simple to deploy and run anywhere
-- **Completely free! :D**
+- **AI-generated Cover Letters**
+- **Tone customization** (Formal, Casual, Confident, etc.)
+- **Self-hosted Express.js backend**
+- **100% Free**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -85,42 +74,62 @@ Its goal is to help candidates improve their CVs, identify missing keywords, and
 ### ⚙️ Built With
 
 - [![Angular][Angular.io]][Angular-url]
+- [![NestJS][NestJS]][NestJS-url]
 - [![Node.js][Node.js]][Node-url]
-- [![Express.js][Express.js]][Express-url]
 - [![TypeScript][TypeScript]][TypeScript-url]
+- [![Nx][Nx]][Nx-url]
+- [![Docker][Docker]][Docker-url]
 - [![Taiga UI][TaigaUI]][TaigaUI-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- GETTING STARTED -->
+---
 
-## 🚀 Getting Started
+## Getting Started 🚀
 
 Follow these steps to get a local copy of **SmartCV** up and running.
 
-### Prerequisites
+---
 
-Make sure you have the following installed:
+## Prerequisites 🧩
 
-- **Git** – to clone the repository  
-  [Download Git](https://git-scm.com/)  
-  Verify installation:
+Make sure you have **one** of the following setups:
 
-  ```sh
+### ✅ Option A — Node.js (npm)
+
+- **Git** – to clone the repository [Download Git](https://git-scm.com/) Verify installation:
+
+  ```bash
   git --version
   ```
 
-- **Node.js** (v20.19.0 or newer) – includes npm  
-  [Download Node.js](https://nodejs.org/)  
-  Verify installation:
-  ```sh
+- **Node.js** – includes npm [Download Node.js](https://nodejs.org/)
+  ```bash
   node -v
   npm -v
   ```
 
-## 🚀 Installation
+### Option B — Docker ✅
 
-Follow these steps to set up and run **SmartCV** locally:
+- Install **Docker Desktop**  
+  https://www.docker.com/products/docker-desktop/
+
+- Verify installation:
+  ```bash
+  docker -v
+  docker compose version
+  ```
+
+---
+
+## Installation 📦
+
+SmartCV can be installed in **two different ways**.  
+Choose the one you prefer:
+
+---
+
+# **Option 1: Install with npm** 🚀
 
 1. **Clone the repository**
 
@@ -135,19 +144,18 @@ Follow these steps to set up and run **SmartCV** locally:
    npm install
    ```
 
-3. **Set up environment variables**  
-   Rename the `.env.example` file to `.env`:
+3. **Set up environment variables**
 
    ```bash
-   cd apps/backend
    mv .env.example .env
-   cd ../..
    ```
 
-   Then open it and add your API keys:
+   Add your API key:
 
-   ```bash
+   ```env
    GEMINI_API_KEY=your_api_key_here
+   OPENAI_API_KEY=your_api_key_here
+   ...
    ```
 
 4. **Start the app**
@@ -156,126 +164,149 @@ Follow these steps to set up and run **SmartCV** locally:
    npm start
    ```
 
-5. **Open SmartCV in your browser**  
-   Once the server is running, navigate to:
+5. Open:
 
    ```
    http://localhost:4200/
    ```
 
-6. ✅ **Done!**  
- You’re all set — SmartCV should now be running locally!
+---
+
+# **Option 2: Run with Docker** 🐳
+
+SmartCV includes a full `docker-compose.yml` that starts:
+
+- Frontend (Angular)
+- Backend (Nest.Js)
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/MartinFLR/smartcv.git
+cd smartcv
+```
+
+### 2. Set up your environment variables
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` and set:
+
+```
+GEMINI_API_KEY=your_api_key_here
+OPENAI_API_KEY=your_api_key_here
+...
+```
+
+### 3. Start SmartCV with Docker
+
+```bash
+docker compose up -d
+```
+
+### 4. Open in the browser:
+
+```
+http://localhost:4200/
+```
+
+---
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- USAGE EXAMPLES -->
+# Roadmap 🗺️
 
-## Roadmap
-
-- [ ] Multi-language Support
+- [x] Multi-language Support
   - [x] Spanish
-  - [ ] English
+  - [x] English
   - [ ] Brazilian
-- [ ] Add Additional Templates
 
-See the [open issues](https://github.com/MartinFLR/smartcv/issues) for a full list of proposed features (and known issues).
+- [ ] Additional Templates
+  - [x] Harvard
+  - [ ] Europass Resume
+  - [ ] Infographic Resume
+  - [ ] Creative Resume
+
+See all issues here:  
+https://github.com/MartinFLR/smartcv/issues
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- CONTRIBUTING -->
+---
 
-## Contributing
+# Contributing 🤝
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**!
-
-If you have a suggestion that would make **SmartCV** better, you can:
-
-- Fork the repository
-- Create a pull request
-- Or open an issue with the `enhancement` label
-
-Don't forget to ⭐ the project if you find it useful!
+Contributions are **greatly appreciated**!
 
 ### How to Contribute
 
-1. **Fork the Project**
-2. **Create your Feature Branch**
+1. **Fork the project**
+2. **Create your feature branch**
    ```bash
    git checkout -b feature/AmazingFeature
    ```
-3. Commit your Changes
+3. **Commit your changes**
    ```bash
-   git commit -m "Add some AmazingFeature"
+   git commit -m "feat: Add AmazingFeature"
    ```
-4. Push to the Branch
+4. **Push**
    ```bash
    git push origin feature/AmazingFeature
    ```
-5. Open a Pull Request
+5. **Open a Pull Request**
 
-### Top contributors:
+### Top Contributors
 
 <a href="https://github.com/MartinFLR/smartcv/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=MartinFLR/smartcv" alt="contrib.rocks image" />
+  <img src="https://contrib.rocks/image?repo=MartinFLR/smartcv" />
 </a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- LICENSE -->
+---
 
-## License
+# License 📜
 
-Distributed under the Unlicense License. See `LICENSE.txt` for more information.
+Distributed under the **AGPL-3.0 License**.  
+See `LICENSE.txt` for more details.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- CONTACT -->
+---
 
-## Contact
+# Contact 📬
 
 [![GitHub][github-shield]][github-url]  
-[![LinkedIn][linkedin-shield]](https://linkedin.com/in//martin-leonardo-flores)
+[![LinkedIn][linkedin-shield]](https://linkedin.com/in/martin-leonardo-flores)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- ACKNOWLEDGMENTS -->
+---
 
-## Acknowledgments
+<!-- MARKDOWN LINKS -->
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-- [Choose an Open Source License](https://choosealicense.com)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/MartinFLR/smartcv?style=flat-square&color=4ade80&labelColor=18181b
+[forks-shield]: https://img.shields.io/github/forks/MartinFLR/smartcv?style=flat-square&color=60a5fa&labelColor=18181b
+[stars-shield]: https://img.shields.io/github/stars/MartinFLR/smartcv?style=flat-square&color=facc15&labelColor=18181b
+[issues-shield]: https://img.shields.io/github/issues/MartinFLR/smartcv?style=flat-square&color=fb7185&labelColor=18181b
+[license-shield]: https://img.shields.io/github/license/MartinFLR/smartcv?style=flat-square&color=a78bfa&labelColor=18181b
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
+[linkedin-url]: https://linkedin.com/in/martinflr
 [Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
 [Angular-url]: https://angular.io
 [Node.js]: https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white
 [Node-url]: https://nodejs.org
-[Express.js]: https://img.shields.io/badge/Express.js-%23404d59?style=for-the-badge&logo=express&logoColor=%2361DAFB
-[Express-url]: https://expressjs.com
+[NestJS]: https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white
+[NestJS-url]: https://nestjs.com
+[Docker]: https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white
+[Docker-url]: https://www.docker.com
+[Nx]: https://img.shields.io/badge/Nx-143055?style=for-the-badge&logo=nx&logoColor=white
+[Nx-url]: https://nx.dev
 [TypeScript]: https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white
 [TypeScript-url]: https://www.typescriptlang.org
 [TaigaUI]: https://img.shields.io/badge/Taiga%20UI-00BFA6?style=for-the-badge&logo=angular&logoColor=white
-[TaigaUI-url]: https://taiga-ui.dev
+[TaigaUI-url]: https://taiga-ui.dev/
 [github-shield]: https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white
 [github-url]: https://github.com/MartinFLR
-[linkedin-url]: https://linkedin.com/in/martinflr
-[linkedin-shield]: https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white
