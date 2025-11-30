@@ -64,8 +64,7 @@ Its goal is to help candidates improve their CVs, identify missing keywords, and
 - **Keyword detection** and smart suggestions
 - **AI-generated Cover Letters**
 - **Tone customization** (Formal, Casual, Confident, etc.)
-- **Self-hosted Express.js backend**
-- **100% Free**
+- **Self-hosted Nest.js backend**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
