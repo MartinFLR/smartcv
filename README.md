@@ -295,7 +295,7 @@ See `LICENSE.txt` for more details.
 [issues-shield]: https://img.shields.io/github/issues/MartinFLR/smartcv?style=flat&color=fb7185&labelColor=18181b
 [issues-url]: https://github.com/MartinFLR/smartcv/issues
 [license-shield]: https://img.shields.io/github/license/MartinFLR/smartcv?style=flat&color=a78bfa&labelColor=18181b
-[license-url]: https://github.com/MartinFLR/smartcv/blob/main/LICENSE
+[license-url]: https://github.com/MartinFLR/smartcv/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/martinflr
 [Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
