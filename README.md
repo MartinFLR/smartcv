@@ -1,23 +1,21 @@
+<br />
+<div align="center" >
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-
 [![MIT License][license-shield]][license-url]
 ![Open Source](https://img.shields.io/badge/open%20source-%E2%9D%A4-brightgreen)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome!-brightgreen.svg)
-
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/MartinFLR/smartcv)
 
-<br />
-<div align="center" >
-  <a id="readme-top"></a>
+<a id="readme-top"></a>
+
   <a href="https://github.com/martinFLR/smartcv">
     <img src="/apps/frontend/public/assets/logo.png" alt="Logo" width="100" height="100">
   </a>
-
 <h3 align="center">SmartCv</h3>
-
   <p align="center">
     A self-hosted, open-source AI assistant that helps you analyze, optimize, and match resumes to job descriptions.
     <br /><br />
