@@ -5,7 +5,6 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
 ![Open Source](https://img.shields.io/badge/open%20source-%E2%9D%A4-brightgreen)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome!-brightgreen.svg)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/MartinFLR/smartcv)
