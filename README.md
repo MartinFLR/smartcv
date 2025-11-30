@@ -128,7 +128,7 @@ Choose the one you prefer:
 
 ---
 
-# **Option 1: Install with npm** 🚀
+# **Option A: Install with npm** 🚀
 
 1. **Clone the repository**
 
@@ -171,7 +171,7 @@ Choose the one you prefer:
 
 ---
 
-# **Option 2: Run with Docker** 🐳
+# **Option B: Run with Docker** 🐳
 
 SmartCV includes a full `docker-compose.yml` that starts:
 
