@@ -23,11 +23,11 @@ jobs:
           cache: 'npm'
           check-latest: false
 
-
       - name: Install dependencies
         run: npm ci
 
       - name: Run Commitlint
+        if: ${{ github.actor != 'github-actions[bot]' }}
         uses: wagoid/commitlint-github-action@v6
         with:
           failOnWarnings: true
