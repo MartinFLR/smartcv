@@ -1,5 +1,55 @@
 # Changelog
 
+## [1.2.1](https://github.com/MartinFLR/smartcv/compare/v1.2.0...v1.2.1) (2025-12-01)
+
+
+### 🐛 Bug Fixes
+
+* add additional ignore rules for commitlint ([ea23321](https://github.com/MartinFLR/smartcv/commit/ea23321a4fd2248305fc299ee035b87d9f4ec894))
+* add commitDepth option to commitlint action ([ff2f842](https://github.com/MartinFLR/smartcv/commit/ff2f84268bd7e19aeda0d361ebbe4c578d91964b))
+* add condition to skip Commitlint for GitHub Actions bot ([2a59be4](https://github.com/MartinFLR/smartcv/commit/2a59be414cdaf2bd6e1c613315815bdf9980b82c))
+* Rename Lint workflow to lowercase 'lint' ([4e3d3d3](https://github.com/MartinFLR/smartcv/commit/4e3d3d325832f650c81c3978808dca75adfbf4db))
+* Rename workflow from 'Build' to 'build' ([9271d82](https://github.com/MartinFLR/smartcv/commit/9271d823fbbc1ebc086e8e7bf2cad60c4401d61f))
+* start fix ([a17ae25](https://github.com/MartinFLR/smartcv/commit/a17ae255ca08f6c620c48c410894e380b66cbb47))
+* start fix ([9a83ef6](https://github.com/MartinFLR/smartcv/commit/9a83ef661f886d1d4d09f2c76b0c732fb974f1a5))
+* start fix ([febb75a](https://github.com/MartinFLR/smartcv/commit/febb75aa721c9143fbccbbc5f7a2511cbb229896))
+* update branch filters for build workflow ([23051de](https://github.com/MartinFLR/smartcv/commit/23051de01741cc21429dde4739aa528c07fcc67f))
+* update commitlint workflow to lint all branches ([938c335](https://github.com/MartinFLR/smartcv/commit/938c335b97b1c201e261de9607c74df6f1cc2e38))
+* update GitHub token for release-please action ([60a3e4d](https://github.com/MartinFLR/smartcv/commit/60a3e4d866c266ba45478b77f705c2b20ed3a827))
+* update lint workflow to target all branches ([754a30d](https://github.com/MartinFLR/smartcv/commit/754a30d3c4223d24afd57863d5f1cc5d2adab027))
+
+
+### ♻️ Code Refactoring
+
+* refactor commitlint configuration to add new ignores ([ed62c4b](https://github.com/MartinFLR/smartcv/commit/ed62c4b6e1b2246171edde47d271b7553330d250))
+
+
+### 📚 Documentation
+
+* license fix ([82ae14e](https://github.com/MartinFLR/smartcv/commit/82ae14ea7fc0a8784cc3b8226d909659f17336f0))
+* readme ([cfbeff9](https://github.com/MartinFLR/smartcv/commit/cfbeff9911193f5249365c9c368009134d9208be))
+* readme ([d8b6616](https://github.com/MartinFLR/smartcv/commit/d8b6616e7149553ef8826e42a782d003950af3ce))
+* readme fix ([c48ba12](https://github.com/MartinFLR/smartcv/commit/c48ba124b23bf26fe9479c467d7c2cdc20ecae1c))
+* readme fix ([de5736c](https://github.com/MartinFLR/smartcv/commit/de5736caa91adfdb94c26578065d8c494ab664de))
+* readme fix ([d1e604e](https://github.com/MartinFLR/smartcv/commit/d1e604e8424ac661e011fd4beaf20101119401c4))
+* readme fix ([b335bb9](https://github.com/MartinFLR/smartcv/commit/b335bb9ced9cc07975c9f39c2522fab9dce1277e))
+* readme fix ([a40f5ce](https://github.com/MartinFLR/smartcv/commit/a40f5ce3b462581f67303119b905f61fcfcfa6ed))
+* readme shields ([d91cd8f](https://github.com/MartinFLR/smartcv/commit/d91cd8f9ce50e764767d247cc4d3b4fd5d004185))
+* readme shields ([f785f21](https://github.com/MartinFLR/smartcv/commit/f785f216db68051618db4341479ce7446ceefa3a))
+* readme shields center ([f8808e5](https://github.com/MartinFLR/smartcv/commit/f8808e502e4ef5fca9c142a7e7b20037e5134ddb))
+* Remove GitHub funding username ([#21](https://github.com/MartinFLR/smartcv/issues/21)) ([895ceda](https://github.com/MartinFLR/smartcv/commit/895cedad93899b160c6acb925c099b34df57f000))
+* Update funding information in FUNDING.yml ([972422d](https://github.com/MartinFLR/smartcv/commit/972422d2374a3405b421a8f6a203d1624dfa6edc))
+
+
+### 🔧 Miscellaneous Chores
+
+* add package-lock ([d0e5756](https://github.com/MartinFLR/smartcv/commit/d0e575664f4da67afabf0630a40e3d1e9e5c50c8))
+* ci ([81ad631](https://github.com/MartinFLR/smartcv/commit/81ad631728205ac200944c3e45fd40cba3585f20))
+* ci ([4887c38](https://github.com/MartinFLR/smartcv/commit/4887c386023925a9f7c89804f7c340e61087f774))
+* **deps:** bump actions/checkout from 5 to 6 ([41128eb](https://github.com/MartinFLR/smartcv/commit/41128ebfe9a4ba17388468f03c75841470b1b67e))
+* **deps:** bump actions/checkout from 5 to 6 ([41128eb](https://github.com/MartinFLR/smartcv/commit/41128ebfe9a4ba17388468f03c75841470b1b67e))
+* label ia ([38dc71c](https://github.com/MartinFLR/smartcv/commit/38dc71c1b9fd6b02c332124691511a2f053acb46))
+
 ## [1.2.0](https://github.com/MartinFLR/smartcv/compare/v1.1.0...v1.2.0) (2025-11-29)
 
 
