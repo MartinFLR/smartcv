@@ -1,13 +1,12 @@
 export default {
   extends: ['@commitlint/config-conventional'],
-  ignores: [(commit) => commit.includes('dependabot[bot]')],
-  rules: {
-    'type-empty': [2, 'never'],
-    'subject-empty': [2, 'never'],
-     ignores: [
+  ignores: [
     (commit) => commit.includes('dependabot[bot]'),
     (commit) => /^\w+ \d+\.\d+\.\d+/.test(commit), 
     ],
+  rules: {
+    'type-empty': [2, 'never'],
+    'subject-empty': [2, 'never'],
     'require-full-header': [2, 'always'],
     'type-enum': [
       2,
