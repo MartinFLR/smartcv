@@ -4,6 +4,10 @@ export default {
   rules: {
     'type-empty': [2, 'never'],
     'subject-empty': [2, 'never'],
+     ignores: [
+    (commit) => commit.includes('dependabot[bot]'),
+    (commit) => /^\w+ \d+\.\d+\.\d+/.test(commit), 
+    ],
     'require-full-header': [2, 'always'],
     'type-enum': [
       2,
