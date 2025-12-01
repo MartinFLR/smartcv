@@ -32,3 +32,4 @@ jobs:
         with:
           failOnWarnings: true
           failOnErrors: true
+          commitDepth: 1
