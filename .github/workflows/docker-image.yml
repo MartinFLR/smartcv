@@ -3,7 +3,7 @@ name: Docker Compose CI
 on:
   push:
     branches: ["main"]
-  workflow_dispatch:  # para ejecutar manualmente
+  workflow_dispatch:
 
 jobs:
   build-and-push:
@@ -20,12 +20,17 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # 3) Instalar Docker Compose si no está
+      # 3) Instalar Docker Compose
       - name: Set up Docker Compose
         run: |
           docker-compose version || sudo apt-get update && sudo apt-get install -y docker-compose
 
-      # 4) Build & push usando docker-compose
+      # 4) Crear .env temporal para CI
+      - name: Create temporary env file
+        run: |
+          touch .env
+
+      # 5) Build y push de todas las imágenes
       - name: Build & Push Docker images
         run: |
           docker-compose -f docker-compose.yml build
