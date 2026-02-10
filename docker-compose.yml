@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: apps/backend/Dockerfile
+    image: martinfldev/smartcv_backend:latest
     ports:
       - "3000:3000"
     environment:
@@ -15,6 +16,7 @@ services:
     build:
       context: .
       dockerfile: apps/frontend/Dockerfile
+    image: martinfldev/smartcv_frontend:latest
     ports:
       - "4200:80"
     depends_on:
