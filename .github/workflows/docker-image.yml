@@ -26,9 +26,10 @@ jobs:
           docker-compose version || sudo apt-get update && sudo apt-get install -y docker-compose
 
       # 4) Crear .env temporal para CI
-      - name: Create temporary env file
+      - name: Create temporary .env
         run: |
-          touch .env
+          echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> .env
+          touch .env 
 
       # 5) Build y push de todas las imágenes
       - name: Build & Push Docker images
