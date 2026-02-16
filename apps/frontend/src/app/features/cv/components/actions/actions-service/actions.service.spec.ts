@@ -3,7 +3,7 @@ import { ActionsService } from './actions.service';
 import { ProfileService } from '../../../../../core/services/profile/profile.service';
 import { CvStateService } from '../../../services/cv-form/cv-form-state/cv-state.service';
 import { CvFormDataService } from '../../../services/cv-form/cv-form-data/cv-form-data.service';
-import { TuiDialogService } from '@taiga-ui/experimental';
+import { TuiDialogService } from '@taiga-ui/core';
 import { TaigaAlertsService } from '../../../../../core/services/alerts/taiga-alerts.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { signal } from '@angular/core';
@@ -141,6 +141,8 @@ describe('ActionsService', () => {
 
       service.createNewProfile();
 
+      // Verify dialog was opened
+      expect(dialogServiceMock.open).toHaveBeenCalled();
       expect(cvFormDataServiceMock.saveCv).toHaveBeenCalled();
       expect(profileServiceMock.saveCurrentCvAsProfile).toHaveBeenCalledWith('Mi Nuevo Perfil');
       expect(service.selectedProfile()?.id).toBe('new-id');
