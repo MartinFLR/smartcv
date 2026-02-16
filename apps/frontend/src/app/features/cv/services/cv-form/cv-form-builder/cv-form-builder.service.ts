@@ -56,6 +56,7 @@ export class CvFormBuilderService {
       location: this.fb.control<string | null>(''),
       github: this.fb.control<string | null>(''),
       web: this.fb.control<string | null>(''),
+      photo: this.fb.control<string | null>(''),
       profileSummary: this.fb.control<string | null>(''),
     });
   }

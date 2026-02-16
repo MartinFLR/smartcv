@@ -2,11 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { AIFactory, AIModel } from '../../core/ai/ai.factory';
 import { cleanJson } from '../../core/utils/json-cleaner';
 import { AiSettings, CvAtsPayload, CvAtsResponse } from '@smartcv/types';
-import { buildPrompt } from '../../core/prompt/prompt-builder';
+import { PromptService } from '../../core/prompt/prompt.service';
 import * as pdfParse from 'pdf-parse';
 
 @Injectable()
 export class AtsService {
+  // eslint-disable-next-line @angular-eslint/prefer-inject
+  constructor(private readonly promptService: PromptService) {}
+
   async analyzeCvAts(body: CvAtsPayload, headerSettings: AiSettings): Promise<CvAtsResponse> {
     const { file, jobDesc, promptOption } = body;
 
@@ -16,7 +19,7 @@ export class AtsService {
     } else if (typeof file === 'string') {
       pdfBuffer = Buffer.from(file, 'base64');
     } else {
-      pdfBuffer = Buffer.from(file as ArrayBuffer);
+      pdfBuffer = Buffer.from(file as unknown as string, 'base64');
     }
     const pdfParser = new pdfParse.PDFParse({ data: pdfBuffer });
     const parsed: pdfParse.TextResult = await pdfParser.getText();
@@ -26,24 +29,29 @@ export class AtsService {
       throw new Error('jobDesc no puede ser undefined en ats.analysis');
     }
 
-    const finalAiSettings: AiSettings = {
-      modelProvider: headerSettings.modelProvider,
-      modelVersion: headerSettings.modelVersion,
-      systemPrompt: headerSettings.systemPrompt,
-    };
+    const generator = this.promptService.getGenerator('ats');
 
-    const { systemPrompt, userPrompt } = buildPrompt(cvText, jobDesc, headerSettings, promptOption);
+    const systemPrompt = generator.buildSystemPrompt(
+      promptOption?.lang || 'spanish',
+      promptOption?.temperature || 'low',
+      promptOption,
+    );
+
+    const userPrompt = generator.buildUserPrompt(
+      cvText, // Use extracted text as baseCv
+      jobDesc,
+      promptOption?.lang || 'spanish',
+      promptOption,
+    );
 
     const ai: AIModel = AIFactory.create({
-      modelProvider: finalAiSettings.modelProvider!,
-      modelVersion: finalAiSettings.modelVersion,
-      systemPrompt: systemPrompt,
+      modelProvider: headerSettings.modelProvider!,
+      modelVersion: headerSettings.modelVersion,
+      systemPrompt,
     });
 
     const text = await ai.generate(userPrompt);
 
-    const parsedJson = cleanJson<CvAtsResponse>(text);
-
-    return parsedJson;
+    return cleanJson<CvAtsResponse>(text);
   }
 }

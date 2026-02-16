@@ -46,4 +46,7 @@ export class Actions {
   protected readonly profileStringifier = (profile: CvProfile): string => profile.name;
   protected readonly profileIdentityMatcher: TuiIdentityMatcher<CvProfile> = (item1, item2) =>
     item1?.id === item2?.id;
+
+  protected readonly templateStringifier = (item: string): string =>
+    item ? item.charAt(0).toUpperCase() + item.slice(1) : '';
 }

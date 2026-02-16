@@ -4,7 +4,7 @@ import { AiSettings } from './Types';
 export type SectionScoreItem = [string, number];
 
 export interface CvAtsPayload {
-  file: string | ArrayBuffer;
+  file: string | ArrayBuffer | Uint8Array;
   jobDesc: string;
   aiSettings?: AiSettings;
   promptOption?: BuildPromptOptions;

@@ -1,6 +1,8 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { effect, inject, Injectable, signal, untracked, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
-import { TuiDialogService } from '@taiga-ui/experimental';
+import { TuiDialogService } from '@taiga-ui/core';
+import { TUI_CONFIRM } from '@taiga-ui/kit';
 import { CvForm, CvProfile } from '@smartcv/types';
 import { CvFormDataService } from '../../../services/cv-form/cv-form-data/cv-form-data.service';
 import { ProfileService } from '../../../../../core/services/profile/profile.service';
@@ -9,6 +11,7 @@ import { TaigaAlertsService } from '../../../../../core/services/alerts/taiga-al
 import { CreateProfile } from '../profile/create-profile/create-profile';
 import { EditProfile } from '../profile/edit-profile/edit-profile';
 import { TranslocoService } from '@jsverse/transloco';
+import { filter } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +23,7 @@ export class ActionsService {
   private readonly dialogs = inject(TuiDialogService);
   private readonly transloco = inject(TranslocoService);
   private readonly taigaAlerts = inject(TaigaAlertsService);
+  private readonly destroyRef = inject(DestroyRef);
 
   public readonly selectedProfile = signal<CvProfile | null>(null);
   public readonly profiles = this.profileService.profiles;
@@ -27,21 +31,34 @@ export class ActionsService {
   public readonly isCvValid = this.cvState.isValid;
   public readonly isCvLocked = this.cvState.isCvLocked;
   public readonly isLoading = this.cvState.isLoading;
+  public readonly template = this.cvState.template;
 
   constructor() {
-    this.restoreActiveProfileSession();
-  }
+    effect(() => {
+      const profiles = this.profiles();
+      const lastProfileId = this.profileService.getLastActiveProfileId();
 
-  private restoreActiveProfileSession(): void {
-    const lastProfileId = this.profileService.getLastActiveProfileId();
-
-    if (lastProfileId) {
-      const foundProfile = this.profiles().find((p) => p.id === lastProfileId);
-
-      if (foundProfile) {
-        this.selectedProfile.set(foundProfile);
+      if (profiles.length > 0 && lastProfileId && !this.selectedProfile()) {
+        const foundProfile = profiles.find((p) => p.id === lastProfileId);
+        if (foundProfile) {
+          untracked(() => {
+            this.selectedProfile.set(foundProfile);
+          });
+        }
       }
-    }
+    });
+
+    this.profileService.profileIdChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((change) => {
+        const { oldId, newId } = change;
+        const current = this.selectedProfile();
+        if (current && current.id === oldId) {
+          this.selectedProfile.set({ ...current, id: newId });
+          this.profileService.saveLastActiveProfileId(newId);
+          console.log(`Updated active profile ID from ${oldId} to ${newId}`);
+        }
+      });
   }
 
   public selectProfile(newProfile: CvProfile | null): void {
@@ -58,18 +75,31 @@ export class ActionsService {
       this.profileService.loadProfileToActive(newProfile.id);
       this.taigaAlerts.showInfo('alerts.profiles.loaded', { name: newProfile.name }).subscribe();
     } else {
-      this.clearForm();
+      this.clearForm(false); // No confirmation needed when switching to "empty" via select
     }
   }
 
   public deleteProfile(id: string): void {
-    this.profileService.deleteProfile(id);
-    if (this.selectedProfile()?.id === id) {
-      this.selectedProfile.set(null);
-      this.profileService.saveLastActiveProfileId(null);
-      this.clearForm();
-    }
-    this.taigaAlerts.showInfo('alerts.profiles.deleted').subscribe();
+    this.dialogs
+      .open<boolean>(TUI_CONFIRM, {
+        label: '¿Eliminar perfil?',
+        size: 's',
+        data: {
+          content: 'Esta acción no se puede deshacer.',
+          yes: 'Eliminar',
+          no: 'Cancelar',
+        },
+      })
+      .pipe(filter((yes) => yes))
+      .subscribe(() => {
+        this.profileService.deleteProfile(id);
+        if (this.selectedProfile()?.id === id) {
+          this.selectedProfile.set(null);
+          this.profileService.saveLastActiveProfileId(null);
+          this.clearForm(false); // Don't ask again
+        }
+        this.taigaAlerts.showInfo('alerts.profiles.deleted').subscribe();
+      });
   }
 
   public saveCv(asProfileUpdate = false): void {
@@ -100,10 +130,31 @@ export class ActionsService {
   public downloadPdf(): void {
     if (!this.isCvValid()) return;
     const rawData = this.cvState.cvForm.getRawValue() as CvForm;
-    this.dataService.downloadPdf(rawData);
+    this.dataService.downloadPdf(rawData, this.template());
   }
 
-  public clearForm(): void {
+  public clearForm(requireConfirmation = true): void {
+    if (requireConfirmation) {
+      this.dialogs
+        .open<boolean>(TUI_CONFIRM, {
+          label: '¿Limpiar formulario?',
+          size: 's',
+          data: {
+            content: 'Se perderán todos los datos no guardados.',
+            yes: 'Limpiar',
+            no: 'Cancelar',
+          },
+        })
+        .pipe(filter((yes) => yes))
+        .subscribe(() => {
+          this.performClear();
+        });
+    } else {
+      this.performClear();
+    }
+  }
+
+  private performClear(): void {
     this.selectedProfile.set(null);
     this.cvState.resetForm();
     this.taigaAlerts.showInfo('alerts.forms.cleared').subscribe();
@@ -111,6 +162,10 @@ export class ActionsService {
 
   public toggleLock(locked: boolean): void {
     this.cvState.setLockState(locked);
+  }
+
+  public setTemplate(template: string): void {
+    this.cvState.setTemplate(template);
   }
 
   public createNewProfile(): void {

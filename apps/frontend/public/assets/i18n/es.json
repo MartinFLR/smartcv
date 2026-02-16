@@ -4,18 +4,24 @@
     "spanish": "Español",
     "english": "Inglés"
   },
-
   "nav": {
     "resume": "Currículum",
     "config": "Configuración"
   },
-
   "alerts": {
     "notifications": {
-      "success": { "title": "¡Todo OK!" },
-      "error": { "title": "Algo salió mal" },
-      "warning": { "title": "Atención" },
-      "info": { "title": "Información" }
+      "success": {
+        "title": "¡Todo OK!"
+      },
+      "error": {
+        "title": "Algo salió mal"
+      },
+      "warning": {
+        "title": "Atención"
+      },
+      "info": {
+        "title": "Información"
+      }
     },
     "api": {
       "errors": {
@@ -100,7 +106,6 @@
       }
     }
   },
-
   "cv": {
     "tab": {
       "personal": "Personal",
@@ -112,14 +117,12 @@
       "ats": "ATS",
       "coverLetter": "Carta de Presentación"
     },
-
     "actions": {
       "profile": "Cargar Perfil...",
       "delete": {
         "name": "Eliminar",
         "hint": ""
       },
-
       "block": {
         "name": "Bloquear",
         "hint": "Bloqueá el CV para que todas las optimizaciones partan siempre de esta versión."
@@ -137,7 +140,6 @@
         "save": "Guardar"
       }
     },
-
     "personalInfo": {
       "title": "Información Personal",
       "subtitle": "Cargá tus datos personales.",
@@ -170,15 +172,19 @@
         "placeholder": "github.com/usuario"
       },
       "web": {
-        "name": "Sitio web (URL)",
-        "placeholder": "Ej: www.misitio.com"
+        "name": "Sitio Web",
+        "placeholder": "https://mideveloper.com"
+      },
+      "photo": {
+        "label": "Foto de Perfil",
+        "remove": "Eliminar Foto",
+        "hint": "Formato: PNG, JPG. Máx 2MB."
       },
       "resume": {
-        "title": "Perfil Profesional",
+        "title": "Resumen Profesional",
         "placeholder": "Escribí tu perfil profesional..."
       }
     },
-
     "education": {
       "title": "Educación",
       "subtitle": "Mostrá tu formación y tus logros académicos.",
@@ -204,7 +210,6 @@
         "placeholder": "Ej: Proyecto final destacado..."
       }
     },
-
     "experience": {
       "title": "Experiencia Laboral",
       "subtitle": "Mostrá tu experiencia y logros más importantes.",
@@ -230,7 +235,6 @@
         "placeholder": "- Implementé nuevas funcionalidades..."
       }
     },
-
     "project": {
       "title": "Proyectos",
       "sub": "Mostrá tus proyectos y qué aprendiste.",
@@ -256,7 +260,6 @@
         "placeholder": "- Diseñé la arquitectura..."
       }
     },
-
     "skills": {
       "title": "Habilidades y Certificaciones",
       "subtitle": "Mostrá tus habilidades y certificaciones.",
@@ -288,7 +291,6 @@
         "placeholder": "Scrum, Kanban, Docker, AWS..."
       }
     },
-
     "ia": {
       "title": "Optimización con IA",
       "subtitle": "Acá podés optimizar tu CV usando IA.",
@@ -317,7 +319,6 @@
         "button": "Optimizar CV con IA"
       }
     },
-
     "coverLetter": {
       "title": "Generá tu carta de presentación",
       "subtitle": "La IA analiza tu CV y crea una carta personalizada lista para enviar.",
@@ -387,7 +388,6 @@
       "button": "Generar carta",
       "generated": "Tu carta de presentación:"
     },
-
     "ats": {
       "title": "ATS Checker",
       "subtitle": "Subí tu CV (PDF)",
@@ -398,7 +398,6 @@
         "highlight": "Esto nos permite calcular tu puntaje y ver qué podés mejorar."
       },
       "button": "Calcular puntaje ATS",
-
       "points": {
         "title": "Puntaje ATS",
         "level": {
@@ -419,23 +418,29 @@
           "warning": "Advertencias"
         }
       },
-
       "general": "Visión general",
       "analysis": "Análisis de palabras clave",
-
       "sections": {
         "title": "Puntaje por sección",
-        "summary": { "name": "Perfil profesional" },
-        "experience": { "name": "Experiencia" },
-        "education": { "name": "Educación" },
-        "skills": { "name": "Habilidades" },
-        "projects": { "name": "Proyectos" }
+        "summary": {
+          "name": "Perfil profesional"
+        },
+        "experience": {
+          "name": "Experiencia"
+        },
+        "education": {
+          "name": "Educación"
+        },
+        "skills": {
+          "name": "Habilidades"
+        },
+        "projects": {
+          "name": "Proyectos"
+        }
       },
-
       "recommendations": "Recomendaciones"
     }
   },
-
   "config": {
     "title": "Configuración",
     "back": "Volver",
@@ -446,7 +451,6 @@
       "button": "Guardar ajustes"
     }
   },
-
   "view": {
     "resume": "PERFIL PROFESIONAL",
     "experience": "EXPERIENCIA LABORAL",
@@ -457,6 +461,7 @@
     "languages": "IDIOMAS:",
     "certifications": "CERTIFICACIONES:",
     "additional": "HABILIDADES ADICIONALES:",
+    "contact": "CONTACTO",
     "complete": "Completá el formulario para ver la vista previa."
   }
 }

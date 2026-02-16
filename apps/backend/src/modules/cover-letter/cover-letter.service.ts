@@ -1,20 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { AiSettings, CoverLetterPayload } from '@smartcv/types';
-import { buildPrompt } from '../../core/prompt/prompt-builder';
+import { PromptService } from '../../core/prompt/prompt.service';
 import { AIFactory, AIModel } from '../../core/ai/ai.factory';
 
 @Injectable()
 export class CoverLetterService {
+  // eslint-disable-next-line @angular-eslint/prefer-inject
+  constructor(private readonly promptService: PromptService) {}
+
   async generateCoverLetterStream(
     body: CoverLetterPayload,
     headerSettings: AiSettings,
   ): Promise<AsyncIterable<string> | undefined> {
     const { baseCv, jobDesc, promptOption } = body;
+    const promptType = 'coverLetter';
 
-    const { systemPrompt, userPrompt } = buildPrompt(
+    const generator = this.promptService.getGenerator(promptType);
+
+    const systemPrompt = generator.buildSystemPrompt(
+      promptOption?.lang || 'spanish',
+      promptOption?.temperature || 'low',
+      { ...promptOption, tone: promptOption?.tone },
+    );
+    const userPrompt = generator.buildUserPrompt(
       JSON.stringify(baseCv, null, 2),
       jobDesc,
-      headerSettings,
+      promptOption?.lang || 'spanish',
       promptOption,
     );
 

@@ -45,6 +45,7 @@ export interface CvForm {
     linkedin: string | null;
     github: string | null;
     web: string | null;
+    photo: string | null;
     profileSummary: string | null;
   };
   education: {

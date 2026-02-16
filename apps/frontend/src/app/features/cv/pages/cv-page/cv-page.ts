@@ -1,7 +1,15 @@
-import { TuiFade, TuiTabs } from '@taiga-ui/kit';
+import {
+  TuiFade,
+  TuiTabs,
+  TuiTabsWithMore,
+  TuiSelect,
+  TuiDataListWrapper,
+  TuiChevron,
+} from '@taiga-ui/kit';
+import { TuiItem } from '@taiga-ui/cdk';
 import { Component, inject, signal } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { TUI_DARK_MODE } from '@taiga-ui/core';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { TUI_DARK_MODE, TuiScrollbar, TuiSelectLike, TuiTextfield } from '@taiga-ui/core';
 import { DummyView } from '../../components/dummy-view/dummy-view';
 import { IaSection } from '../../components/ia-section/ia-section.component';
 import { SkillsSection } from '../../components/skills-section/skills-section';
@@ -14,7 +22,7 @@ import { ATSSection } from '../../components/ats-section/ats-section';
 import { CoverLetterSection } from '../../components/cover-letter-section/cover-letter-section';
 import { TuiCardLarge } from '@taiga-ui/layout';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet, TitleCasePipe } from '@angular/common';
 import { TuiSwipe, TuiSwipeEvent } from '@taiga-ui/cdk';
 import { CvStateService } from '../../services/cv-form/cv-form-state/cv-state.service';
 
@@ -23,8 +31,15 @@ import { CvStateService } from '../../services/cv-form/cv-form-state/cv-state.se
   standalone: true,
   imports: [
     ReactiveFormsModule,
+    FormsModule,
     TuiTabs,
     TuiFade,
+    TuiTabsWithMore,
+    TuiItem,
+    TuiSelect,
+    TuiTextfield,
+    TuiDataListWrapper,
+    TuiChevron,
     DummyView,
     IaSection,
     SkillsSection,
@@ -39,6 +54,9 @@ import { CvStateService } from '../../services/cv-form/cv-form-state/cv-state.se
     TranslocoDirective,
     NgTemplateOutlet,
     TuiSwipe,
+    TuiScrollbar,
+    TitleCasePipe,
+    TuiSelectLike,
   ],
   templateUrl: './cv-page.html',
 })
@@ -49,6 +67,11 @@ export class CvPage {
 
   protected readonly activeTab = signal(0);
   protected readonly mobileView = signal(0);
+
+  protected readonly templates = ['harvard', 'creative'];
+
+  protected readonly stringify = (item: string): string =>
+    item ? item.charAt(0).toUpperCase() + item.slice(1) : '';
 
   private readonly TOTAL_FORM_TABS = 8;
 

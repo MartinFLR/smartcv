@@ -1,6 +1,6 @@
 <ng-template #formContent>
   <div class="md:col-span-6 flex flex-col gap-6">
-    <div tuiCardLarge class="p-6 border rounded-lg shadow-sm" (tuiSwipe)="onViewSwipe($event)">
+    <div tuiCardLarge class="p-6 border rounded-lg shadow-sm" style="touch-action: pan-y">
       <app-actions />
 
       <ng-container *transloco="let t">
@@ -18,13 +18,7 @@
         </tui-tabs-with-more>
       </ng-container>
 
-      <form
-        [formGroup]="state.cvForm"
-        class="flex flex-col gap-6 pt-6"
-        (tuiSwipe)="onFormSwipe($event)"
-        (touchstart.stop)="(0)"
-        (mousedown.stop)="(0)"
-      >
+      <form [formGroup]="state.cvForm" class="flex flex-col gap-6 pt-6">
         @switch (activeTab()) {
           @case (0) {
             <app-personal-section />
@@ -57,15 +51,36 @@
 </ng-template>
 
 <ng-template #previewContent>
-  <div class="md:col-span-6 md:sticky md:top-8 h-full" (tuiSwipe)="onViewSwipe($event)">
-    <app-dummy-view
-      [cvPreview]="state.cvPreview()"
-      [hasEducation]="state.hasEducation()"
-      [hasExperience]="state.hasExperience()"
-      [hasProjects]="state.hasProjects()"
-      [hasSkills]="state.hasSkills()"
-    />
+  <div class="md:col-span-6 md:sticky md:top-8 h-full max-h-[calc(100vh-2rem)] flex flex-col">
+    <div class="flex justify-end pb-4">
+      <tui-textfield tuiChevron tuiTextfieldSize="m" iconStart="@tui.layout-template" class="w-56">
+        <label tuiLabel>Template</label>
+        <input
+          tuiSelectLike
+          tuiTextfield
+          [ngModel]="state.template()"
+          (ngModelChange)="state.setTemplate($event)"
+        />
+        <tui-data-list-wrapper *tuiTextfieldDropdown [items]="templates"></tui-data-list-wrapper>
+      </tui-textfield>
+    </div>
+
+    <tui-scrollbar class="flex-1 w-full rounded-lg shadow-sm">
+      <app-dummy-view
+        [cvPreview]="state.cvPreview()"
+        [template]="state.template()"
+        [hasEducation]="state.hasEducation()"
+        [hasExperience]="state.hasExperience()"
+        [hasProjects]="state.hasProjects()"
+        [hasSkills]="state.hasSkills()"
+        class="h-full overflow-hidden"
+      ></app-dummy-view>
+    </tui-scrollbar>
   </div>
+</ng-template>
+
+<ng-template #content let-data>
+  {{ data | titlecase }}
 </ng-template>
 
 <div class="md:hidden">
@@ -74,16 +89,24 @@
     <button tuiTab>Previsualizar</button>
   </tui-tabs>
 
-  <div class="overflow-hidden">
+  <div class="overflow-x-hidden">
     <div
       class="flex transition-transform duration-300 ease-in-out"
       [class.translate-x-0]="mobileView() === 0"
       [class.-translate-x-full]="mobileView() === 1"
     >
-      <div class="w-full flex-shrink-0 p-4">
+      <div
+        class="w-full flex-shrink-0 p-4"
+        (tuiSwipe)="onViewSwipe($event)"
+        style="touch-action: pan-y"
+      >
         <ng-container *ngTemplateOutlet="formContent"></ng-container>
       </div>
-      <div class="w-full flex-shrink-0 p-4">
+      <div
+        class="w-full flex-shrink-0 p-4"
+        (tuiSwipe)="onViewSwipe($event)"
+        style="touch-action: pan-y"
+      >
         <ng-container *ngTemplateOutlet="previewContent"></ng-container>
       </div>
     </div>

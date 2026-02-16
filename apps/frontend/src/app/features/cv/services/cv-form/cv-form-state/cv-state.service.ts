@@ -25,6 +25,7 @@ export class CvStateService {
   public readonly isLoading = signal(false);
   public readonly isCvLocked = signal(false);
   public readonly lockedCv = signal<CvForm | null>(null);
+  public readonly template = signal<string>('harvard');
 
   public readonly cvForm: FormGroup<CvFormControls>;
   public readonly iaForm: FormGroup<IaFormControls>;
@@ -57,6 +58,10 @@ export class CvStateService {
       untracked(() => {
         if (activeCv) {
           this.formManager.patchCvData(this.cvForm, activeCv);
+          // If we are locked on init (from meta), ensuring lockedCv is set so we can potentially unlock/revert
+          if (this.isCvLocked() && this.lockedCv() === null) {
+            this.lockedCv.set(activeCv);
+          }
         } else {
           this.resetInternalState();
         }
@@ -90,6 +95,14 @@ export class CvStateService {
         )
       );
     });
+
+    const meta = this.saveDataService.loadMeta();
+    if (meta.isLocked) {
+      this.isCvLocked.set(true);
+    }
+    if (meta.template) {
+      this.template.set(meta.template);
+    }
   }
 
   public resetForm(): void {
@@ -102,6 +115,7 @@ export class CvStateService {
     this.formManager.ensureMinimumFormArrays(this.cvForm);
     this.isCvLocked.set(false);
     this.lockedCv.set(null);
+    this.template.set('harvard');
     this.cvForm.updateValueAndValidity();
   }
 
@@ -113,6 +127,21 @@ export class CvStateService {
       this.isCvLocked.set(false);
       this.lockedCv.set(null);
     }
+    this.saveMeta();
+  }
+
+  public setTemplate(template: string): void {
+    this.template.set(template);
+    this.saveMeta();
+  }
+
+  private saveMeta(): void {
+    const current = this.saveDataService.loadMeta();
+    this.saveDataService.saveMeta({
+      ...current,
+      isLocked: this.isCvLocked(),
+      template: this.template(),
+    });
   }
 
   public get personalInfoGroup() {

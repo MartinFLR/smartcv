@@ -12,10 +12,51 @@
       </p>
     </header>
 
+    @if (cvStateService.template() !== 'harvard') {
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="flex items-center gap-4">
+          @if (personalInfo.controls.photo.value) {
+            <tui-avatar
+              [src]="personalInfo.controls.photo.value"
+              size="xl"
+              class="rounded-full object-cover"
+            ></tui-avatar>
+            <button
+              tuiButton
+              type="button"
+              appearance="outline-destructive"
+              size="s"
+              iconStart="@tui.trash"
+              (click)="removePhoto()"
+            >
+              {{ t('cv.personalInfo.photo.remove') }}
+            </button>
+          } @else {
+            <div class="flex flex-col gap-2 w-full">
+              <label tuiLabel>{{ t('cv.personalInfo.photo.label') }}</label>
+              <label tuiInputFiles>
+                <input
+                  tuiInputFiles
+                  accept="image/*"
+                  (ngModelChange)="onFileSelected($event)"
+                  [ngModel]="null"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </label>
+              <div class="tui-form__field-note">
+                {{ t('cv.personalInfo.photo.hint') }}
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
     <tui-textfield>
       <label tuiLabel [for]="'personalNameInput'"> {{ t('cv.personalInfo.name.name') }}</label>
       <input tuiTextfield [id]="'personalNameInput'" formControlName="name" />
     </tui-textfield>
+
     <tui-textfield>
       <label [for]="'personalJobInput'" tuiLabel>{{ t('cv.personalInfo.job.name') }}</label>
       <input
@@ -25,6 +66,7 @@
         formControlName="job"
       />
     </tui-textfield>
+
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <tui-textfield>
         <label tuiLabel [for]="'personalEmail'">{{ t('cv.personalInfo.email.name') }}</label>

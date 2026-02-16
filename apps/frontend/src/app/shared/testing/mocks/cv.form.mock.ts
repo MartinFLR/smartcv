@@ -10,6 +10,7 @@ export const MOCK_CV_FORM: CvForm = {
     linkedin: 'linkedin.com/in/martin-dev',
     github: 'github.com/martin-dev',
     web: 'martindev.com',
+    photo: null,
     profileSummary:
       'Ingeniero de software con más de 6 años de experiencia especializado en Angular y ecosistemas modernos de JavaScript. Apasionado por la UI/UX y la optimización de rendimiento.',
   },

@@ -43,8 +43,8 @@ export class CvFormDataService {
     return this.iaService.generateCvWithIA(payload);
   }
 
-  public downloadPdf(data: CvForm): void {
-    this.pdfService.downloadPdf(data);
+  public downloadPdf(data: CvForm, template: string): void {
+    this.pdfService.downloadPdf(data, template);
   }
 
   public saveCv(data: CvForm): void {

@@ -1,0 +1,223 @@
+<ng-container *transloco="let t">
+  @if (cvPreview(); as cv) {
+    <div
+      tuiCardLarge
+      class="shadow-xl rounded-xl overflow-hidden max-w-[595pt] mx-auto min-h-[842pt] bg-white text-gray-800 font-sans"
+      style="touch-action: pan-y"
+    >
+      <!-- Header with Name and Job -->
+      <div class="bg-slate-800 text-white p-8 text-center relative">
+        <h2 class="text-3xl font-extrabold tracking-wide uppercase">{{ cv.personalInfo.name }}</h2>
+        @if (cv.personalInfo.job) {
+          <p class="text-lg font-light mt-2 text-slate-300 tracking-wider">
+            {{ cv.personalInfo.job }}
+          </p>
+        }
+        <!-- Decorative line -->
+        <div class="w-16 h-1 bg-teal-400 mx-auto mt-4 rounded-full"></div>
+      </div>
+
+      <div class="grid grid-cols-12 gap-0 min-h-[700pt]">
+        <!-- Left Sidebar (Contact & Skills) -->
+        <div class="col-span-4 bg-slate-50 p-6 border-r border-slate-100">
+          <!-- Photo -->
+          @if (cv.personalInfo.photo) {
+            <div class="mb-6 flex justify-center">
+              <img
+                [src]="cv.personalInfo.photo"
+                alt="Profile Photo"
+                class="w-32 h-32 rounded-xl object-cover border-4 border-white shadow-lg"
+              />
+            </div>
+          }
+
+          <!-- Contact Info -->
+          <div class="mb-8">
+            <h4
+              class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4 border-b border-slate-200 pb-2"
+            >
+              {{ t('view.contact') }}
+            </h4>
+            <div class="text-sm space-y-3">
+              @if (cv.personalInfo.email) {
+                <div class="flex items-center gap-2">
+                  <span class="text-teal-600">✉</span>
+                  <span class="break-all">{{ cv.personalInfo.email }}</span>
+                </div>
+              }
+              @if (cv.personalInfo.phone) {
+                <div class="flex items-center gap-2">
+                  <span class="text-teal-600">📞</span>
+                  <span>{{ cv.personalInfo.phone }}</span>
+                </div>
+              }
+              @if (cv.personalInfo.location) {
+                <div class="flex items-center gap-2">
+                  <span class="text-teal-600">📍</span>
+                  <span>{{ cv.personalInfo.location }}</span>
+                </div>
+              }
+              @if (cv.personalInfo.linkedin) {
+                <div class="flex items-center gap-2">
+                  <span class="text-teal-600">in</span>
+                  <a
+                    [href]="'https://' + cv.personalInfo.linkedin"
+                    target="_blank"
+                    class="text-slate-600 hover:text-teal-600 transition-colors truncate"
+                  >
+                    LinkedIn
+                  </a>
+                </div>
+              }
+              @if (cv.personalInfo.web) {
+                <div class="flex items-center gap-2">
+                  <span class="text-teal-600">🌐</span>
+                  <a
+                    [href]="'https://' + cv.personalInfo.web"
+                    target="_blank"
+                    class="text-slate-600 hover:text-teal-600 transition-colors truncate"
+                  >
+                    Portfolio
+                  </a>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Skills -->
+          @if (hasSkills()) {
+            <div>
+              <h4
+                class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4 border-b border-slate-200 pb-2"
+              >
+                {{ t('view.skills') }}
+              </h4>
+              @for (skillGroup of cv.skills; track $index) {
+                <div class="mb-4">
+                  @if (skillGroup.skills.length > 0) {
+                    <div class="flex flex-wrap gap-2">
+                      @for (skill of skillGroup.skills; track $index) {
+                        <span
+                          class="bg-teal-50 text-teal-700 text-xs px-2 py-1 rounded-md border border-teal-100 font-medium"
+                        >
+                          {{ skill }}
+                        </span>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Main Content (Summary, Experience, Education) -->
+        <div class="col-span-8 p-8">
+          <!-- Summary -->
+          @if (cv.personalInfo.profileSummary) {
+            <div class="mb-8">
+              <h4 class="text-lg font-bold text-slate-800 mb-3 border-l-4 border-teal-500 pl-3">
+                {{ t('view.resume') }}
+              </h4>
+              <p class="text-sm text-slate-600 leading-relaxed whitespace-pre-line">
+                {{ cv.personalInfo.profileSummary }}
+              </p>
+            </div>
+          }
+
+          <!-- Experience -->
+          @if (hasExperience()) {
+            <div class="mb-8">
+              <h4 class="text-lg font-bold text-slate-800 mb-4 border-l-4 border-teal-500 pl-3">
+                {{ t('view.experience') }}
+              </h4>
+              <div class="space-y-6">
+                @for (exp of cv.experience; track $index) {
+                  @if (exp.role) {
+                    <div class="relative pl-4 border-l border-slate-200 ml-1">
+                      <div
+                        class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-teal-400 border-2 border-white"
+                      ></div>
+                      <div class="flex justify-between items-baseline mb-1">
+                        <h5 class="font-bold text-slate-700">{{ exp.role }}</h5>
+                        <span class="text-xs font-medium text-slate-400">
+                          {{ filterTruthy([exp.dateIn, exp.dateFin]).join(' - ') }}
+                        </span>
+                      </div>
+                      <div class="text-sm text-teal-600 font-medium mb-2">{{ exp.company }}</div>
+                      <ul
+                        class="text-sm text-slate-600 space-y-1 list-disc list-inside marker:text-teal-300"
+                      >
+                        @for (bullet of (exp.bullets || '').split('\n'); track $index) {
+                          @if (bullet.trim()) {
+                            <li>{{ bullet.trim().replace('/^[•–-]\s*/', '').trim() }}</li>
+                          }
+                        }
+                      </ul>
+                    </div>
+                  }
+                }
+              </div>
+            </div>
+          }
+
+          <!-- Projects -->
+          @if (hasProjects()) {
+            <div class="mb-8">
+              <h4 class="text-lg font-bold text-slate-800 mb-4 border-l-4 border-teal-500 pl-3">
+                {{ t('view.projects') }}
+              </h4>
+              <div class="space-y-4">
+                @for (proj of cv.projects; track $index) {
+                  @if (proj.name) {
+                    <div class="bg-white rounded-lg">
+                      <div class="flex justify-between items-baseline mb-1">
+                        <h5 class="font-bold text-slate-700">{{ proj.name }}</h5>
+                        <span class="text-xs font-medium text-slate-400">
+                          {{ filterTruthy([proj.dateIn, proj.dateFin]).join(' - ') }}
+                        </span>
+                      </div>
+                      <div class="text-sm text-slate-500 italic mb-2">{{ proj.subtitle }}</div>
+                    </div>
+                  }
+                }
+              </div>
+            </div>
+          }
+
+          <!-- Education -->
+          @if (hasEducation()) {
+            <div>
+              <h4 class="text-lg font-bold text-slate-800 mb-4 border-l-4 border-teal-500 pl-3">
+                {{ t('view.education') }}
+              </h4>
+              <div class="space-y-4">
+                @for (edu of cv.education; track $index) {
+                  @if (edu.title) {
+                    <div>
+                      <div class="flex justify-between items-baseline mb-1">
+                        <h5 class="font-bold text-slate-700">{{ edu.title }}</h5>
+                        <span class="text-xs font-medium text-slate-400">
+                          {{ filterTruthy([edu.dateIn, edu.dateFin]).join(' - ') }}
+                        </span>
+                      </div>
+                      <div class="text-sm text-slate-500">{{ edu.institution }}</div>
+                    </div>
+                  }
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div
+      tuiCardLarge
+      class="p-8 bg-white shadow-lg rounded-lg border min-h-[80vh] flex items-center justify-center"
+      style="touch-action: pan-y"
+    >
+      <p class="text-gray-500">{{ t('view.complete') }}</p>
+    </div>
+  }
+</ng-container>

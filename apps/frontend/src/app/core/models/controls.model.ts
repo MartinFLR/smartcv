@@ -17,6 +17,7 @@ export interface PersonalInfoControls {
   linkedin: FormControl<string | null>;
   web: FormControl<string | null>;
   github: FormControl<string | null>;
+  photo: FormControl<string | null>;
   profileSummary: FormControl<string | null>;
 }
 

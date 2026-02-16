@@ -21,6 +21,7 @@ export const mockPersonalInfoGroup = new FormGroup<PersonalInfoControls>({
   linkedin: new FormControl(''),
   github: new FormControl(''),
   web: new FormControl(''),
+  photo: new FormControl(''),
   profileSummary: new FormControl(''),
 });
 

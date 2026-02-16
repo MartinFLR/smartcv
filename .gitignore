@@ -53,3 +53,16 @@ Thumbs.db
 .cursor/rules/nx-rules.mdc
 .github/instructions/nx.instructions.md
 .vercel
+
+
+AGENTS.md
+CLAUDE.md
+.nx/ai
+.github/agents
+.github/prompts
+
+# SQLite
+database.sqlite
+database.sqlite-journal
+database.sqlite-wal
+database.sqlite-shm
