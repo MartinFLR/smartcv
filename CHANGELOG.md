@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/MartinFLR/smartcv/compare/v1.4.0...v1.4.1) (2026-02-16)
+
+
+### 🐛 Bug Fixes
+
+* old distros support ([d41e77d](https://github.com/MartinFLR/smartcv/commit/d41e77d90af521a2a48095121fa8e69064236634))
+
 ## [1.4.0](https://github.com/MartinFLR/smartcv/compare/v1.3.0...v1.4.0) (2026-02-16)
 
 
