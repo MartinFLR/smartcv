@@ -8,6 +8,9 @@ export const windowMock = {
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
   }),
+  HTMLInputElement: globalThis.HTMLInputElement,
+  HTMLTextAreaElement: globalThis.HTMLTextAreaElement,
+  HTMLElement: globalThis.HTMLElement,
   addEventListener: jest.fn(),
   removeEventListener: jest.fn(),
   localStorage: {

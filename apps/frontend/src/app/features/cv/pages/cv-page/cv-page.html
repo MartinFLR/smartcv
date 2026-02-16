@@ -1,6 +1,11 @@
 <ng-template #formContent>
   <div class="md:col-span-6 flex flex-col gap-6">
-    <div tuiCardLarge class="p-6 border rounded-lg shadow-sm" style="touch-action: pan-y">
+    <div
+      tuiCardLarge
+      class="p-6 border rounded-lg shadow-sm"
+      (tuiSwipe)="onFormSwipe($event)"
+      style="touch-action: pan-y"
+    >
       <app-actions />
 
       <ng-container *transloco="let t">

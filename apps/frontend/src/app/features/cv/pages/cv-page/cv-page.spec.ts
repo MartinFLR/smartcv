@@ -3,7 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { TranslocoTestingModule } from '@jsverse/transloco';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, PLATFORM_ID } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { TUI_DARK_MODE } from '@taiga-ui/core';
@@ -43,6 +43,23 @@ describe('CvPage', () => {
   beforeEach(async () => {
     jest.clearAllMocks();
 
+    // Mock matchMedia
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: jest.fn().mockImplementation((query) => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      })),
+    });
+
+    (window as any).tuiInputPatched = true;
+
     await TestBed.configureTestingModule({
       imports: [
         CvPage,
@@ -53,21 +70,27 @@ describe('CvPage', () => {
         }),
       ],
       providers: [
+        { provide: PLATFORM_ID, useValue: 'server' },
         provideNoopAnimations(),
         provideHttpClientTesting(),
         { provide: CvStateService, useValue: stateServiceMock },
         { provide: TUI_DARK_MODE, useValue: of(false) },
-        { provide: WA_WINDOW, useValue: windowMock },
-        { provide: WA_LOCAL_STORAGE, useValue: windowMock.localStorage },
+        { provide: WA_WINDOW, useValue: window },
+        { provide: WA_LOCAL_STORAGE, useValue: window.localStorage },
         { provide: WA_NAVIGATOR, useValue: { userAgent: 'test-agent' } },
-        { provide: DOCUMENT, useValue: windowMock.document },
         { provide: HttpClient, useValue: httpClientMock },
         { provide: TuiLanguageSwitcherService, useValue: languageSwitcherMock },
         { provide: TUI_DOC_ICONS, useValue: {} },
         { provide: IaApiService, useValue: {} },
         {
           provide: ActionsService,
-          useValue: { selectedProfile: signal(null), isLoading: signal(false) },
+          useValue: {
+            selectedProfile: signal(null),
+            isLoading: signal(false),
+            isCvValid: signal(true),
+            isCvLocked: signal(false),
+            template: signal('harvard'),
+          },
         },
         { provide: CvFormDataService, useValue: {} },
         {
@@ -83,6 +106,14 @@ describe('CvPage', () => {
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
+
+    console.log('window.HTMLInputElement:', !!window.HTMLInputElement);
+    console.log('globalThis.HTMLInputElement:', !!globalThis.HTMLInputElement);
+    console.log('window.HTMLSelectElement:', !!window.HTMLSelectElement);
+    const win = TestBed.inject(WA_WINDOW);
+    console.log('Injected WA_WINDOW === window:', win === window);
+    console.log('Injected WA_WINDOW.tuiInputPatched:', (win as any).tuiInputPatched);
+    console.log('window.tuiInputPatched:', (window as any).tuiInputPatched);
 
     fixture = TestBed.createComponent(CvPage);
     component = fixture.componentInstance;

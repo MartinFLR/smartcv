@@ -216,6 +216,7 @@ export class ProfileService {
       .subscribe();
 
     this.profilesSignal.update((profiles) => [...profiles, newProfile]);
+    this.persistProfiles();
     return newProfile;
   }
 
