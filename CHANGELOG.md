@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/MartinFLR/smartcv/compare/v1.3.0...v1.4.0) (2026-02-16)
+
+
+### ✨ Features
+
+* multi-template refactor, docker images and logic fixes ([7cf5692](https://github.com/MartinFLR/smartcv/commit/7cf569224bb5a2a2c4f21b217407e824996749e4))
+
 ## [1.3.0](https://github.com/MartinFLR/smartcv/compare/v1.2.1...v1.3.0) (2026-02-16)
 
 
