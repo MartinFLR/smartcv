@@ -7,9 +7,10 @@ import { TuiDialogService } from '@taiga-ui/experimental';
 import { TaigaAlertsService } from '../../../../../core/services/alerts/taiga-alerts.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { signal } from '@angular/core';
-import { of, Subject } from 'rxjs';
+import { of, Subject, throwError } from 'rxjs';
 import { MOCK_CV_PROFILE } from '../../../../../shared/testing/mocks/cv.form.mock';
 import { CvForm } from '@smartcv/types';
+import { HttpClient } from '@angular/common/http';
 
 // Mocks for Polymorpheus components to avoid dependency issues
 jest.mock('../profile/create-profile/create-profile', () => ({
@@ -72,6 +73,13 @@ describe('ActionsService', () => {
     translate: jest.fn().mockReturnValue('Translated Text'),
   };
 
+  const httpClientMock = {
+    get: jest.fn().mockReturnValue(throwError(() => new Error('Network error'))),
+    post: jest.fn().mockReturnValue(of({})),
+    put: jest.fn().mockReturnValue(of({})),
+    delete: jest.fn().mockReturnValue(of({})),
+  };
+
   beforeEach(() => {
     jest.clearAllMocks();
 
@@ -84,6 +92,7 @@ describe('ActionsService', () => {
         { provide: TuiDialogService, useValue: dialogServiceMock },
         { provide: TaigaAlertsService, useValue: taigaAlertsServiceMock },
         { provide: TranslocoService, useValue: translocoServiceMock },
+        { provide: HttpClient, useValue: httpClientMock },
       ],
     });
     service = TestBed.inject(ActionsService);

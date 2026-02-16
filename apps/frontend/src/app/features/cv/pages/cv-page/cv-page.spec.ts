@@ -5,10 +5,11 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { TranslocoTestingModule } from '@jsverse/transloco';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { TUI_DARK_MODE } from '@taiga-ui/core';
 import { TuiSwipeEvent } from '@taiga-ui/cdk';
 import { tuiInputPhoneInternationalOptionsProvider } from '@taiga-ui/kit';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { signal } from '@angular/core';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { CvStateService } from '../../services/cv-form/cv-form-state/cv-state.service';
@@ -32,6 +33,13 @@ describe('CvPage', () => {
   let component: CvPage;
   let fixture: ComponentFixture<CvPage>;
 
+  const httpClientMock = {
+    get: jest.fn().mockReturnValue(throwError(() => new Error('Network error'))),
+    post: jest.fn().mockReturnValue(of({})),
+    put: jest.fn().mockReturnValue(of({})),
+    delete: jest.fn().mockReturnValue(of({})),
+  };
+
   beforeEach(async () => {
     jest.clearAllMocks();
 
@@ -53,6 +61,7 @@ describe('CvPage', () => {
         { provide: WA_LOCAL_STORAGE, useValue: windowMock.localStorage },
         { provide: WA_NAVIGATOR, useValue: { userAgent: 'test-agent' } },
         { provide: DOCUMENT, useValue: windowMock.document },
+        { provide: HttpClient, useValue: httpClientMock },
         { provide: TuiLanguageSwitcherService, useValue: languageSwitcherMock },
         { provide: TUI_DOC_ICONS, useValue: {} },
         { provide: IaApiService, useValue: {} },
