@@ -29,6 +29,14 @@ export const windowMock = {
     body: {
       appendChild: jest.fn(),
       removeChild: jest.fn(),
+      querySelector: jest.fn().mockReturnValue(null),
+      querySelectorAll: jest.fn().mockReturnValue([]),
+    },
+    head: {
+      appendChild: jest.fn(),
+      removeChild: jest.fn(),
+      querySelector: jest.fn().mockReturnValue(null),
+      querySelectorAll: jest.fn().mockReturnValue([]),
     },
   },
 };
