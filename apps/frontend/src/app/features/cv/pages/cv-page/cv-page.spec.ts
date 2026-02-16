@@ -4,10 +4,12 @@ import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { TranslocoTestingModule } from '@jsverse/transloco';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { TUI_DARK_MODE } from '@taiga-ui/core';
 import { TuiSwipeEvent } from '@taiga-ui/cdk';
 import { tuiInputPhoneInternationalOptionsProvider } from '@taiga-ui/kit';
 import { of } from 'rxjs';
+import { signal } from '@angular/core';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { CvStateService } from '../../services/cv-form/cv-form-state/cv-state.service';
 import { IaApiService } from '../../components/ia-section/api/ia-api.service';
@@ -50,10 +52,14 @@ describe('CvPage', () => {
         { provide: WA_WINDOW, useValue: windowMock },
         { provide: WA_LOCAL_STORAGE, useValue: windowMock.localStorage },
         { provide: WA_NAVIGATOR, useValue: { userAgent: 'test-agent' } },
+        { provide: DOCUMENT, useValue: windowMock.document },
         { provide: TuiLanguageSwitcherService, useValue: languageSwitcherMock },
         { provide: TUI_DOC_ICONS, useValue: {} },
         { provide: IaApiService, useValue: {} },
-        { provide: ActionsService, useValue: {} },
+        {
+          provide: ActionsService,
+          useValue: { selectedProfile: signal(null), isLoading: signal(false) },
+        },
         { provide: CvFormDataService, useValue: {} },
         {
           provide: SkillsService,

@@ -2,19 +2,33 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AtsService } from './ats.service';
 import { AiSettings, CvAtsPayload } from '@smartcv/types';
 import { AIFactory } from '../../core/ai/ai.factory';
+import { PromptService } from '../../core/prompt/prompt.service';
 
 // Mock the AIFactory and other dependencies
 jest.mock('../../core/ai/ai.factory');
 jest.mock('../../core/utils/json-cleaner');
-jest.mock('../../core/prompt/prompt-builder');
+jest.mock('../../core/prompt/prompt.service');
 jest.mock('pdf-parse');
 
 describe('AtsService', () => {
   let service: AtsService;
 
   beforeEach(async () => {
+    const mockPromptService = {
+      getGenerator: jest.fn().mockReturnValue({
+        buildSystemPrompt: jest.fn().mockReturnValue('System prompt'),
+        buildUserPrompt: jest.fn().mockReturnValue('User prompt'),
+      }),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AtsService],
+      providers: [
+        AtsService,
+        {
+          provide: PromptService,
+          useValue: mockPromptService,
+        },
+      ],
     }).compile();
 
     service = module.get<AtsService>(AtsService);
@@ -69,13 +83,6 @@ describe('AtsService', () => {
         fitLevel: 'High',
       });
 
-      // Mock buildPrompt
-      const { buildPrompt } = require('../../core/prompt/prompt-builder');
-      buildPrompt.mockReturnValue({
-        systemPrompt: 'System prompt',
-        userPrompt: 'User prompt',
-      });
-
       const result = await service.analyzeCvAts(mockPayload, mockHeaderSettings);
 
       expect(result).toBeDefined();
@@ -110,12 +117,6 @@ describe('AtsService', () => {
 
       const { cleanJson } = require('../../core/utils/json-cleaner');
       cleanJson.mockReturnValue({ text: 'result' });
-
-      const { buildPrompt } = require('../../core/prompt/prompt-builder');
-      buildPrompt.mockReturnValue({
-        systemPrompt: 'System',
-        userPrompt: 'User',
-      });
 
       await service.analyzeCvAts(mockPayload, mockHeaderSettings);
 

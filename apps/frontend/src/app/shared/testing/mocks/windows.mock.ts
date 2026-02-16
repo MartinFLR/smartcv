@@ -15,4 +15,20 @@ export const windowMock = {
     setItem: jest.fn(),
     removeItem: jest.fn(),
   },
+  document: {
+    createElement: jest.fn().mockReturnValue({
+      style: {},
+      setAttribute: jest.fn(),
+      getAttribute: jest.fn(),
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+    }),
+    querySelectorAll: jest.fn().mockReturnValue([]),
+    querySelector: jest.fn().mockReturnValue(null),
+    getElementById: jest.fn().mockReturnValue(null),
+    body: {
+      appendChild: jest.fn(),
+      removeChild: jest.fn(),
+    },
+  },
 };

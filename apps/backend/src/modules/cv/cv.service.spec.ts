@@ -2,18 +2,32 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CvService } from './cv.service';
 import { CvPayload, AiSettings } from '@smartcv/types';
 import { AIFactory } from '../../core/ai/ai.factory';
+import { PromptService } from '../../core/prompt/prompt.service';
 
 jest.mock('../../core/ai/ai.factory');
 jest.mock('../../core/utils/json-cleaner');
 jest.mock('../../core/utils/normalizer');
-jest.mock('../../core/prompt/prompt-builder');
+jest.mock('../../core/prompt/prompt.service');
 
 describe('CvService', () => {
   let service: CvService;
 
   beforeEach(async () => {
+    const mockPromptService = {
+      getGenerator: jest.fn().mockReturnValue({
+        buildSystemPrompt: jest.fn().mockReturnValue('System prompt'),
+        buildUserPrompt: jest.fn().mockReturnValue('User prompt'),
+      }),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
-      providers: [CvService],
+      providers: [
+        CvService,
+        {
+          provide: PromptService,
+          useValue: mockPromptService,
+        },
+      ],
     }).compile();
 
     service = module.get<CvService>(CvService);
@@ -57,12 +71,6 @@ describe('CvService', () => {
       };
 
       (AIFactory.create as jest.Mock).mockReturnValue(mockAiInstance);
-
-      const { buildPrompt } = require('../../core/prompt/prompt-builder');
-      buildPrompt.mockReturnValue({
-        systemPrompt: 'System',
-        userPrompt: 'User',
-      });
 
       const { cleanJson } = require('../../core/utils/json-cleaner');
       cleanJson.mockReturnValue({
