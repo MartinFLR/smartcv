@@ -5,7 +5,8 @@ import { DOCUMENT } from '@angular/common';
 import { jest } from '@jest/globals';
 import { CvForm, CvProfile } from '@smartcv/types';
 import { MOCK_CV_FORM } from '../../../shared/testing/mocks/cv.form.mock';
-
+import { HttpClient } from '@angular/common/http';
+import { of, throwError } from 'rxjs';
 describe('ProfileService', () => {
   let service: ProfileService;
   const saveDataServiceMock = {
@@ -23,6 +24,13 @@ describe('ProfileService', () => {
     defaultView: {
       localStorage: localStorageMock,
     },
+  };
+
+  const httpClientMock = {
+    get: jest.fn().mockReturnValue(throwError(() => new Error('Network error'))),
+    post: jest.fn().mockReturnValue(of({})),
+    put: jest.fn().mockReturnValue(of({})),
+    delete: jest.fn().mockReturnValue(of({})),
   };
 
   const mockUuid = '1234-5678-9012';
@@ -43,6 +51,7 @@ describe('ProfileService', () => {
         ProfileService,
         { provide: SaveDataService, useValue: saveDataServiceMock },
         { provide: DOCUMENT, useValue: documentMock },
+        { provide: HttpClient, useValue: httpClientMock },
       ],
     });
 
@@ -70,6 +79,7 @@ describe('ProfileService', () => {
           ProfileService,
           { provide: SaveDataService, useValue: saveDataServiceMock },
           { provide: DOCUMENT, useValue: documentMock },
+          { provide: HttpClient, useValue: httpClientMock },
         ],
       });
       const newService = TestBed.inject(ProfileService);
