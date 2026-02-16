@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.3.0](https://github.com/MartinFLR/smartcv/compare/v1.2.1...v1.3.0) (2026-02-16)
+
+
+### ✨ Features
+
+* multi-template refactor, docker images and logic fixes ([3d83912](https://github.com/MartinFLR/smartcv/commit/3d839124913a5a22fbc41e6413db30fc68e01c18))
+* multi-template refactor, docker images and logic fixes ([25cc180](https://github.com/MartinFLR/smartcv/commit/25cc18099aa08f296186f1c28e74b611be34263c))
+* multi-template refactor, docker images and logic fixes ([181a785](https://github.com/MartinFLR/smartcv/commit/181a78573baddb4038baedfcb6f6db44ff68ea31))
+* multi-template refactor, docker images and logic fixes ([2fa4e17](https://github.com/MartinFLR/smartcv/commit/2fa4e17bd541b0a75b373973aeab20b4e653e178))
+* multi-template refactor, docker images and logic fixes ([653ae3d](https://github.com/MartinFLR/smartcv/commit/653ae3d2a5ed661b2cea44fd3fb2c907712e9f65))
+* multi-template refactor, docker images and logic fixes ([72c226b](https://github.com/MartinFLR/smartcv/commit/72c226b840004ea9b90d34a4d87a40a3aa459d60))
+* multi-template refactor, docker images and logic fixes ([bcf33cd](https://github.com/MartinFLR/smartcv/commit/bcf33cdb11d32f75211218e306c3d4f19a30d634))
+* multi-template refactor, docker images and logic fixes ([b3b70cd](https://github.com/MartinFLR/smartcv/commit/b3b70cd2d451769428d11a2b37f91df1119f5a82))
+* multi-template refactor, docker images and logic fixes ([e4b814e](https://github.com/MartinFLR/smartcv/commit/e4b814e253e6fba4759a7ba2ba2fd6c144cf26d1))
+* multi-template refactor, docker images and logic fixes ([fe4008b](https://github.com/MartinFLR/smartcv/commit/fe4008b7ff93a4f3c18f1211e94c217da9c103ac))
+* multi-template refactor, docker images and logic fixes ([988b239](https://github.com/MartinFLR/smartcv/commit/988b239be4b4b1f81d5855af7f0c6a9706f7d147))
+
+
+### 🔧 Miscellaneous Chores
+
+* add .npmrc to enforce legacy-peer-deps in CI ([2070296](https://github.com/MartinFLR/smartcv/commit/207029668b326af320736f7c775ea8deb7a70fb1))
+* harden CI workflows with legacy-peer-deps and npmrc in docker ([bce7c7d](https://github.com/MartinFLR/smartcv/commit/bce7c7da510bd90ba67a9cacfd004046546be795))
+* regenerate package-lock.json with legacy-peer-deps to fix CI ([10c0bc4](https://github.com/MartinFLR/smartcv/commit/10c0bc4d9b12652755df74663aa1d6cb3271cbb2))
+
 ## [1.2.1](https://github.com/MartinFLR/smartcv/compare/v1.2.0...v1.2.1) (2025-12-01)
 
 
