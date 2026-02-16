@@ -22,7 +22,7 @@ export class SaveDataService {
   saveData(cvData: CvForm): void {
     try {
       const serializedData = JSON.stringify(cvData);
-      this.storage.setItem(this.STORAGE_KEY, serializedData);
+      this.storage?.setItem(this.STORAGE_KEY, serializedData);
       this.cvDataSignal.set(cvData);
     } catch (e) {
       console.error('Error al guardar datos en localStorage:', e);
@@ -33,7 +33,7 @@ export class SaveDataService {
   saveMeta(meta: CvMeta): void {
     try {
       const serializedMeta = JSON.stringify(meta);
-      this.storage.setItem(this.STORAGE_META_KEY, serializedMeta);
+      this.storage?.setItem(this.STORAGE_META_KEY, serializedMeta);
     } catch (e) {
       console.error('Error al guardar metadata en localStorage:', e);
     }
@@ -41,8 +41,8 @@ export class SaveDataService {
 
   loadMeta(): CvMeta {
     try {
-      const serializedMeta = this.storage.getItem(this.STORAGE_META_KEY);
-      if (serializedMeta === null) {
+      const serializedMeta = this.storage?.getItem(this.STORAGE_META_KEY);
+      if (!serializedMeta) {
         return { isLocked: false };
       }
       return JSON.parse(serializedMeta) as CvMeta;
@@ -54,8 +54,8 @@ export class SaveDataService {
 
   clearData(): void {
     try {
-      this.storage.removeItem(this.STORAGE_KEY);
-      this.storage.removeItem(this.STORAGE_META_KEY);
+      this.storage?.removeItem(this.STORAGE_KEY);
+      this.storage?.removeItem(this.STORAGE_META_KEY);
       this.cvDataSignal.set(null);
     } catch (e) {
       console.error('Error al limpiar datos de localStorage:', e);
@@ -65,8 +65,8 @@ export class SaveDataService {
 
   private loadDataInternal(): CvForm | null {
     try {
-      const serializedData = this.storage.getItem(this.STORAGE_KEY);
-      if (serializedData === null) {
+      const serializedData = this.storage?.getItem(this.STORAGE_KEY);
+      if (!serializedData) {
         return null;
       }
       return JSON.parse(serializedData) as CvForm;
