@@ -3,15 +3,12 @@ import { CvController } from './cv.controller';
 import { CvService } from './cv.service';
 import { InternalServerErrorException } from '@nestjs/common';
 import { CvPayload, AiSettings } from '@smartcv/types';
-
 describe('CvController', () => {
   let controller: CvController;
   let service: CvService;
-
   const mockCvService = {
     generateTailoredCv: jest.fn(),
   };
-
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [CvController],
@@ -22,19 +19,15 @@ describe('CvController', () => {
         },
       ],
     }).compile();
-
     controller = module.get<CvController>(CvController);
     service = module.get<CvService>(CvService);
   });
-
   afterEach(() => {
     jest.clearAllMocks();
   });
-
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
-
   describe('generateCv', () => {
     const mockProvider = 'google';
     const mockModel = 'gemini-2.0-flash';
@@ -49,7 +42,6 @@ describe('CvController', () => {
       jobDesc: 'Senior fullstack developer',
       promptOption: { lang: 'spanish', type: 'tailoredCv' },
     };
-
     it('should successfully generate CV when valid data is provided', async () => {
       const mockResponse = {
         summary: 'Tailored summary',
@@ -58,11 +50,8 @@ describe('CvController', () => {
         skills: [],
         projects: [],
       };
-
       mockCvService.generateTailoredCv.mockResolvedValue(mockResponse);
-
       const result = await controller.generateCv(mockProvider, mockModel, mockBody);
-
       expect(result).toEqual(mockResponse);
       expect(mockCvService.generateTailoredCv).toHaveBeenCalledWith(
         mockBody,
@@ -73,21 +62,16 @@ describe('CvController', () => {
         }),
       );
     });
-
     it('should handle service errors and throw InternalServerErrorException', async () => {
       mockCvService.generateTailoredCv.mockRejectedValue(new Error('AI service failed'));
-
       await expect(controller.generateCv(mockProvider, mockModel, mockBody)).rejects.toThrow(
         InternalServerErrorException,
       );
     });
-
     it('should pass correct header settings to service', async () => {
       const mockResponse = { summary: 'Test summary' } as any;
       mockCvService.generateTailoredCv.mockResolvedValue(mockResponse);
-
       await controller.generateCv('openai', 'gpt-4', mockBody);
-
       expect(mockCvService.generateTailoredCv).toHaveBeenCalledWith(
         mockBody,
         expect.objectContaining({

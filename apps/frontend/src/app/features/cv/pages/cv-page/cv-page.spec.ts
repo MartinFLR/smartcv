@@ -28,21 +28,17 @@ import { languageSwitcherMock } from '../../../../shared/testing/mocks/language.
 import { WA_LOCAL_STORAGE, WA_WINDOW, WA_NAVIGATOR } from '@ng-web-apis/common';
 import { windowMock } from '../../../../shared/testing/mocks/windows.mock';
 import { TUI_DOC_ICONS } from '@taiga-ui/addon-doc/tokens';
-
 describe('CvPage', () => {
   let component: CvPage;
   let fixture: ComponentFixture<CvPage>;
-
   const httpClientMock = {
     get: jest.fn().mockReturnValue(throwError(() => new Error('Network error'))),
     post: jest.fn().mockReturnValue(of({})),
     put: jest.fn().mockReturnValue(of({})),
     delete: jest.fn().mockReturnValue(of({})),
   };
-
   beforeEach(async () => {
     jest.clearAllMocks();
-
     // Mock matchMedia
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
@@ -57,9 +53,7 @@ describe('CvPage', () => {
         dispatchEvent: jest.fn(),
       })),
     });
-
     (window as any).tuiInputPatched = true;
-
     await TestBed.configureTestingModule({
       imports: [
         CvPage,
@@ -106,7 +100,6 @@ describe('CvPage', () => {
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
-
     console.log('window.HTMLInputElement:', !!window.HTMLInputElement);
     console.log('globalThis.HTMLInputElement:', !!globalThis.HTMLInputElement);
     console.log('window.HTMLSelectElement:', !!window.HTMLSelectElement);
@@ -114,77 +107,60 @@ describe('CvPage', () => {
     console.log('Injected WA_WINDOW === window:', win === window);
     console.log('Injected WA_WINDOW.tuiInputPatched:', (win as any).tuiInputPatched);
     console.log('window.tuiInputPatched:', (window as any).tuiInputPatched);
-
     fixture = TestBed.createComponent(CvPage);
     component = fixture.componentInstance;
     if (mockCvForm) {
       mockCvForm.updateValueAndValidity({ onlySelf: true, emitEvent: false });
     }
-
     fixture.detectChanges();
   });
-
   it('debe crearse correctamente', () => {
     expect(component).toBeTruthy();
   });
-
   describe('Navegación de Pestañas (Tabs Logic)', () => {
     it('debe iniciar en la pestaña 0', () => {
       // Accedemos a la signal interna del COMPONENTE
       expect((component as any).activeTab()).toBe(0);
     });
-
     it('debe avanzar pestaña con swipe LEFT', () => {
       const swipeEvent: TuiSwipeEvent = { direction: 'left', target: null } as any;
       (component as any).onFormSwipe(swipeEvent);
-
       expect((component as any).activeTab()).toBe(1);
     });
-
     it('debe retroceder pestaña con swipe RIGHT', () => {
       // Configuramos el estado en el COMPONENTE, no en el servicio
       (component as any).activeTab.set(1);
-
       const swipeEvent: TuiSwipeEvent = { direction: 'right', target: null } as any;
       (component as any).onFormSwipe(swipeEvent);
-
       expect((component as any).activeTab()).toBe(0);
     });
   });
-
   describe('Vista Móvil', () => {
     it('debe iniciar en vista Formulario (0)', () => {
       expect((component as any).mobileView()).toBe(0);
     });
-
     it('debe cambiar a Preview (1) con swipe LEFT', () => {
       (component as any).mobileView.set(0);
       const swipeEvent: TuiSwipeEvent = { direction: 'left', target: null } as any;
       (component as any).onViewSwipe(swipeEvent);
-
       expect((component as any).mobileView()).toBe(1);
     });
   });
-
   describe('Renderizado del Template', () => {
     it('debe mostrar el dummy-view', () => {
       const dummyView = fixture.debugElement.query(By.css('app-dummy-view'));
       expect(dummyView).toBeTruthy();
     });
-
     it('debe mostrar la sección correcta según activeTab', () => {
       // Reset manual al inicio del test por si acaso
       (component as any).activeTab.set(0);
       fixture.detectChanges();
-
       // 1. Tab 0 -> Personal
       let personalSection = fixture.debugElement.query(By.css('app-personal-section'));
       expect(personalSection).toBeTruthy();
-
       // 2. Cambio a Tab 1 -> Education
       (component as any).activeTab.set(1);
       fixture.detectChanges();
-
       let educationSection = fixture.debugElement.query(By.css('app-education-section'));
       expect(educationSection).toBeTruthy();
     });

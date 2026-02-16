@@ -3,10 +3,8 @@ import { TaigaAlertsService } from './taiga-alerts.service';
 import { TuiAlertService } from '@taiga-ui/core';
 import { TranslocoService } from '@jsverse/transloco';
 import { jest } from '@jest/globals';
-
 describe('TaigaAlertsService', () => {
   let service: TaigaAlertsService;
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -17,7 +15,6 @@ describe('TaigaAlertsService', () => {
     });
     service = TestBed.inject(TaigaAlertsService);
   });
-
   it('should be created', () => {
     expect(service).toBeTruthy();
   });

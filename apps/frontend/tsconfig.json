@@ -18,7 +18,8 @@
       "@smartcv/types/*": ["dist/libs/types/*"],
       "@smartcv/shared": ["dist/libs/shared"],
       "@smartcv/shared/*": ["dist/libs/shared/*"]
-    }
+    },
+    "lib": ["dom", "es2022"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

@@ -5,12 +5,10 @@ import { By } from '@angular/platform-browser';
 import { TranslocoTestingModule } from '@jsverse/transloco';
 import { SkillsSection } from './skills-section';
 import { jest } from '@jest/globals';
-
 describe('SkillsSection', () => {
   let component: SkillsSection;
   let fixture: ComponentFixture<SkillsSection>;
   let mockSkillsService: any;
-
   const createSkillGroup = () =>
     new FormGroup({
       skills: new FormControl([]),
@@ -18,7 +16,6 @@ describe('SkillsSection', () => {
       certifications: new FormArray([]),
       additional: new FormControl([]),
     });
-
   beforeEach(async () => {
     mockSkillsService = {
       formArray: jest.fn(),
@@ -26,11 +23,9 @@ describe('SkillsSection', () => {
       addCertification: jest.fn(),
       removeCertification: jest.fn(),
     };
-
     const defaultFormArray = new FormArray([createSkillGroup()]);
     mockSkillsService.formArray.mockReturnValue(defaultFormArray);
     mockSkillsService.getCertificationsControls.mockReturnValue([]);
-
     await TestBed.configureTestingModule({
       imports: [
         SkillsSection,
@@ -42,33 +37,27 @@ describe('SkillsSection', () => {
       ],
       providers: [{ provide: SkillsService, useValue: mockSkillsService }],
     }).compileComponents();
-
     fixture = TestBed.createComponent(SkillsSection);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
   describe('Structure Rendering', () => {
     it('should render main inputs', () => {
       const skillsInput = fixture.debugElement.query(By.css('#skillsSkills'));
       const langInput = fixture.debugElement.query(By.css('#skillsLanguages'));
       const addInput = fixture.debugElement.query(By.css('#skillsAdditional'));
-
       expect(skillsInput).toBeTruthy();
       expect(langInput).toBeTruthy();
       expect(addInput).toBeTruthy();
     });
-
     it('should show "no certifications" message when empty', () => {
       const emptyMessage = fixture.debugElement.query(By.css('p.text-sm.opacity-60'));
       expect(emptyMessage).toBeTruthy();
     });
   });
-
   describe('Certifications Rendering', () => {
     it('should render certification cards if service returns them', () => {
       // Mock getCertificationsControls to return 2 controls
@@ -78,15 +67,12 @@ describe('SkillsSection', () => {
       ];
       mockSkillsService.getCertificationsControls.mockReturnValue(certs);
       fixture.detectChanges();
-
       const emptyMessage = fixture.debugElement.query(By.css('p.text-sm.opacity-60'));
       expect(emptyMessage).toBeNull();
-
       const items = fixture.debugElement.queryAll(By.css('button[tuiAccordion]'));
       expect(items.length).toBe(2);
     });
   });
-
   describe('Interactions', () => {
     it('should call addCertification when add button is clicked', () => {
       const addBtn = fixture.debugElement.query(By.css('button[appearance="secondary"]'));
@@ -94,7 +80,6 @@ describe('SkillsSection', () => {
       addBtn?.nativeElement.click();
       expect(mockSkillsService.addCertification).toHaveBeenCalledWith(0);
     });
-
     it('should call removeCertification when delete button is clicked', () => {
       const certGroup = new FormGroup({
         name: new FormControl('A'),
@@ -102,13 +87,9 @@ describe('SkillsSection', () => {
       });
       mockSkillsService.getCertificationsControls.mockReturnValue([certGroup]);
       fixture.detectChanges();
-
       const deleteBtn = fixture.debugElement.query(By.css('button[appearance="flat-destructive"]'));
-
       expect(deleteBtn).toBeTruthy();
-
       deleteBtn.nativeElement.click();
-
       expect(mockSkillsService.removeCertification).toHaveBeenCalledWith(0, 0);
     });
   });

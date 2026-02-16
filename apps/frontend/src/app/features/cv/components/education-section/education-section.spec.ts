@@ -7,22 +7,18 @@ import { TranslocoTestingModule } from '@jsverse/transloco';
 import { By } from '@angular/platform-browser';
 import { signal } from '@angular/core';
 import { jest } from '@jest/globals';
-
 describe('EducationSection', () => {
   let component: EducationSection;
   let fixture: ComponentFixture<EducationSection>;
   let educationServiceMock: any;
   let formArray: FormArray;
-
   beforeEach(async () => {
     formArray = new FormArray<any>([]);
-
     educationServiceMock = {
       formArray: signal(formArray),
       add: jest.fn(),
       remove: jest.fn(),
     };
-
     await TestBed.configureTestingModule({
       imports: [
         EducationSection,
@@ -37,22 +33,18 @@ describe('EducationSection', () => {
         { provide: EducationService, useValue: educationServiceMock },
       ],
     }).compileComponents();
-
     fixture = TestBed.createComponent(EducationSection);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
   describe('Rendering', () => {
     it('should render 0 items when form array is empty', () => {
       const items = fixture.debugElement.queryAll(By.css('[tuiCardLarge]'));
       expect(items.length).toBe(0);
     });
-
     it('should render correct number of items when form array has data', () => {
       // Arrange
       educationServiceMock.formArray.set(
@@ -74,22 +66,17 @@ describe('EducationSection', () => {
         ]),
       );
       fixture.detectChanges();
-
       // Assert
       const items = fixture.debugElement.queryAll(By.css('button[tuiAccordion]'));
       expect(items.length).toBe(2);
     });
   });
-
   describe('Interactions', () => {
     it('should call service.add() when Add button is clicked', () => {
       const addButton = fixture.debugElement.query(By.css('button[appearance="secondary"]'));
-
       addButton.nativeElement.click();
-
       expect(educationServiceMock.add).toHaveBeenCalled();
     });
-
     it('should call service.remove(index) when Remove button is clicked', () => {
       // Arrange
       formArray.push(
@@ -102,13 +89,10 @@ describe('EducationSection', () => {
         }),
       );
       fixture.detectChanges();
-
       const removeButtons = fixture.debugElement.queryAll(By.css('button[iconStart="@tui.trash"]'));
       const removeButton = removeButtons[0];
-
       // Act
       removeButton.nativeElement.click();
-
       // Assert
       expect(educationServiceMock.remove).toHaveBeenCalledWith(0);
     });

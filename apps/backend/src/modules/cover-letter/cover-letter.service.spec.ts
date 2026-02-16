@@ -3,13 +3,10 @@ import { CoverLetterService } from './cover-letter.service';
 import { CoverLetterPayload, AiSettings } from '@smartcv/types';
 import { AIFactory } from '../../core/ai/ai.factory';
 import { PromptService } from '../../core/prompt/prompt.service';
-
 jest.mock('../../core/ai/ai.factory');
 jest.mock('../../core/prompt/prompt.service');
-
 describe('CoverLetterService', () => {
   let service: CoverLetterService;
-
   beforeEach(async () => {
     const mockPromptService = {
       getGenerator: jest.fn().mockReturnValue({
@@ -17,7 +14,6 @@ describe('CoverLetterService', () => {
         buildUserPrompt: jest.fn().mockReturnValue('User prompt'),
       }),
     };
-
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CoverLetterService,
@@ -27,18 +23,14 @@ describe('CoverLetterService', () => {
         },
       ],
     }).compile();
-
     service = module.get<CoverLetterService>(CoverLetterService);
   });
-
   afterEach(() => {
     jest.clearAllMocks();
   });
-
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
-
   describe('generateCoverLetterStream', () => {
     it('should return stream when AI service supports streaming', async () => {
       const mockPayload: CoverLetterPayload = {
@@ -52,30 +44,23 @@ describe('CoverLetterService', () => {
         jobDesc: 'Software engineer position',
         promptOption: { lang: 'english', type: 'coverLetter' },
       };
-
       const mockHeaderSettings: AiSettings = {
         modelProvider: 'google',
         modelVersion: 'gemini-2.0-flash',
         systemPrompt: '',
       };
-
       const mockStream = (async function* () {
         yield 'Dear ';
         yield 'Sir,';
       })();
-
       const mockAiInstance = {
         generate: jest.fn(),
         generateStream: jest.fn().mockReturnValue(mockStream),
       };
-
       (AIFactory.create as jest.Mock).mockReturnValue(mockAiInstance);
-
       const result = await service.generateCoverLetterStream(mockPayload, mockHeaderSettings);
-
       expect(result).toBeDefined();
       expect(mockAiInstance.generateStream).toHaveBeenCalled();
-
       // Verify the stream works
       const chunks: string[] = [];
       if (result) {
@@ -85,7 +70,6 @@ describe('CoverLetterService', () => {
       }
       expect(chunks).toEqual(['Dear ', 'Sir,']);
     });
-
     it('should fallback to non-streaming when generateStream is not available', async () => {
       const mockPayload: CoverLetterPayload = {
         baseCv: {
@@ -97,24 +81,18 @@ describe('CoverLetterService', () => {
         } as any,
         jobDesc: 'Job',
       };
-
       const mockHeaderSettings: AiSettings = {
         modelProvider: 'openai',
         modelVersion: 'gpt-4',
         systemPrompt: '',
       };
-
       const mockAiInstance = {
         generate: jest.fn().mockResolvedValue('Complete cover letter text'),
       };
-
       (AIFactory.create as jest.Mock).mockReturnValue(mockAiInstance);
-
       const result = await service.generateCoverLetterStream(mockPayload, mockHeaderSettings);
-
       expect(result).toBeDefined();
       expect(mockAiInstance.generate).toHaveBeenCalled();
-
       // Verify the fallback stream
       const chunks: string[] = [];
       if (result) {
@@ -124,7 +102,6 @@ describe('CoverLetterService', () => {
       }
       expect(chunks).toEqual(['Complete cover letter text']);
     });
-
     it('should stringify baseCv and build prompts correctly', async () => {
       const mockPayload: CoverLetterPayload = {
         baseCv: {
@@ -142,15 +119,11 @@ describe('CoverLetterService', () => {
         modelVersion: 'gemini-2.0-flash',
         systemPrompt: '',
       };
-
       const mockAiInstance = {
         generate: jest.fn().mockResolvedValue('Letter'),
       };
-
       (AIFactory.create as jest.Mock).mockReturnValue(mockAiInstance);
-
       await service.generateCoverLetterStream(mockPayload, mockHeaderSettings);
-
       // Note: We can't easily verify buildSystemPrompt/buildUserPrompt calls with the current mock setup
       // The service uses getGenerator which returns the generator, so we'd need to spy on that
     });

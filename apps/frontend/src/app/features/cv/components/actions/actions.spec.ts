@@ -5,11 +5,9 @@ import { TranslocoTestingModule } from '@jsverse/transloco';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { signal } from '@angular/core';
 import { MOCK_CV_PROFILE } from '../../../../shared/testing/mocks/cv.form.mock';
-
 describe('Actions Component', () => {
   let component: Actions;
   let fixture: ComponentFixture<Actions>;
-
   const actionsServiceMock = {
     selectedProfile: signal(null),
     profiles: signal([MOCK_CV_PROFILE]),
@@ -26,7 +24,6 @@ describe('Actions Component', () => {
     editProfileName: jest.fn(),
     deleteProfile: jest.fn(),
   };
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -38,12 +35,10 @@ describe('Actions Component', () => {
       ],
       providers: [provideAnimations(), { provide: ActionsService, useValue: actionsServiceMock }],
     }).compileComponents();
-
     fixture = TestBed.createComponent(Actions);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });

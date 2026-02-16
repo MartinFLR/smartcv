@@ -7,12 +7,10 @@ import { TranslocoTestingModule } from '@jsverse/transloco';
 import { signal } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { jest } from '@jest/globals';
-
 describe('IaSection Component', () => {
   let component: IaSection;
   let fixture: ComponentFixture<IaSection>;
   let iaSectionServiceMock: any;
-
   beforeEach(async () => {
     iaSectionServiceMock = {
       form: new FormGroup({
@@ -25,7 +23,6 @@ describe('IaSection Component', () => {
       setExaggeration: jest.fn(),
       optimizeCv: jest.fn(),
     };
-
     await TestBed.configureTestingModule({
       imports: [
         IaSection,
@@ -39,42 +36,32 @@ describe('IaSection Component', () => {
         { provide: IaSectionService, useValue: iaSectionServiceMock },
       ],
     }).compileComponents();
-
     fixture = TestBed.createComponent(IaSection);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
   describe('Initialization', () => {
     it('should initialize currentExaggeration signal from service', () => {
       expect(component['service'].currentExaggeration()).toBe(0);
     });
   });
-
   describe('Interactions', () => {
     it('should have a slider for exaggeration level', () => {
       const slider = fixture.debugElement.query(By.css('input[tuiSlider]'));
       expect(slider).toBeTruthy();
     });
-
     it('should call service.optimizeCv when optimize button is clicked', () => {
       const optimizeBtn = fixture.debugElement.query(By.css('button[appearance="primary"]'));
-
       optimizeBtn.nativeElement.click();
-
       expect(iaSectionServiceMock.optimizeCv).toHaveBeenCalled();
     });
-
     it('should show loading state on button when service.isLoading is true', () => {
       iaSectionServiceMock.isLoading.set(true);
       fixture.detectChanges();
-
       const optimizeBtn = fixture.debugElement.query(By.css('button[appearance="primary"]'));
-
       // In TuiButton, loading state is usually handled by the component itself or a directive
       // Here we check if the loading input of the button (if exposed) or class reflects it.
       // Since we use TuiButtonLoading, let's check if the component instance has loading set

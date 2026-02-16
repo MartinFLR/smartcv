@@ -6,13 +6,11 @@ import { SaveDataService } from '../../../../../core/services/save-data/save-dat
 import { of } from 'rxjs';
 import { CvForm } from '@smartcv/types';
 import { jest } from '@jest/globals';
-
 describe('CvFormDataService', () => {
   let service: CvFormDataService;
   let iaApiServiceMock: any;
   let pdfServiceMock: any;
   let saveDataServiceMock: any;
-
   beforeEach(() => {
     iaApiServiceMock = {
       generateCvWithIA: jest.fn().mockReturnValue(of({})),
@@ -24,7 +22,6 @@ describe('CvFormDataService', () => {
       saveData: jest.fn(),
       clearData: jest.fn(),
     };
-
     TestBed.configureTestingModule({
       providers: [
         CvFormDataService,
@@ -35,19 +32,15 @@ describe('CvFormDataService', () => {
     });
     service = TestBed.inject(CvFormDataService);
   });
-
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-
   describe('optimizeCv', () => {
     it('should call iaService.generateCvWithIA with correct payload (low temp)', () => {
       const baseCv = { personalInfo: { name: 'Test' } } as CvForm;
       const jobDesc = 'Developer';
       const exaggeration = 0;
-
       service.optimizeCv(baseCv, jobDesc, exaggeration);
-
       expect(iaApiServiceMock.generateCvWithIA).toHaveBeenCalledWith(
         expect.objectContaining({
           baseCv,
@@ -56,7 +49,6 @@ describe('CvFormDataService', () => {
         }),
       );
     });
-
     it('should call iaService.generateCvWithIA with correct payload (medium temp)', () => {
       const baseCv = {} as CvForm;
       service.optimizeCv(baseCv, '', 1);
@@ -66,7 +58,6 @@ describe('CvFormDataService', () => {
         }),
       );
     });
-
     it('should call iaService.generateCvWithIA with correct payload (high temp)', () => {
       const baseCv = {} as CvForm;
       service.optimizeCv(baseCv, '', 2);
@@ -77,7 +68,6 @@ describe('CvFormDataService', () => {
       );
     });
   });
-
   describe('downloadPdf', () => {
     it('should call pdfService.downloadPdf', () => {
       const data = {} as CvForm;
@@ -86,7 +76,6 @@ describe('CvFormDataService', () => {
       expect(pdfServiceMock.downloadPdf).toHaveBeenCalledWith(data, template);
     });
   });
-
   describe('saveCv', () => {
     it('should call saveDataService.saveData', () => {
       const data = {} as CvForm;
@@ -94,7 +83,6 @@ describe('CvFormDataService', () => {
       expect(saveDataServiceMock.saveData).toHaveBeenCalledWith(data);
     });
   });
-
   describe('clearCv', () => {
     it('should call saveDataService.clearData', () => {
       service.clearCv();

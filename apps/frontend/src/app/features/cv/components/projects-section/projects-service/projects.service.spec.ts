@@ -5,20 +5,16 @@ import { CvFormBuilderService } from '../../../services/cv-form/cv-form-builder/
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { signal } from '@angular/core';
 import { jest } from '@jest/globals';
-
 describe('ProjectsService', () => {
   let service: ProjectsService;
   let cvStateServiceMock: any;
   let cvFormBuilderServiceMock: any;
   let mockProjectsArray: FormArray;
-
   beforeEach(() => {
     mockProjectsArray = new FormArray<any>([]);
-
     cvStateServiceMock = {
       projectsArray: mockProjectsArray,
     };
-
     cvFormBuilderServiceMock = {
       createProjectGroup: jest.fn().mockReturnValue(
         new FormGroup({
@@ -26,7 +22,6 @@ describe('ProjectsService', () => {
         }),
       ),
     };
-
     TestBed.configureTestingModule({
       providers: [
         ProjectsService,
@@ -36,15 +31,12 @@ describe('ProjectsService', () => {
     });
     service = TestBed.inject(ProjectsService);
   });
-
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-
   it('should return formArray from state', () => {
     expect(service.formArray()).toBe(mockProjectsArray);
   });
-
   describe('add', () => {
     it('should add a new project group to the form array', () => {
       service.add();
@@ -52,12 +44,10 @@ describe('ProjectsService', () => {
       expect(cvFormBuilderServiceMock.createProjectGroup).toHaveBeenCalled();
     });
   });
-
   describe('remove', () => {
     it('should remove project group at index', () => {
       mockProjectsArray.push(new FormGroup({}));
       expect(mockProjectsArray.length).toBe(1);
-
       service.remove(0);
       expect(mockProjectsArray.length).toBe(0);
     });

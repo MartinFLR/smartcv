@@ -8,14 +8,13 @@ import { TuiCardLarge } from '@taiga-ui/layout';
 import { AiProviderModels, AiSettings } from '@smartcv/types';
 import { map, skip, startWith } from 'rxjs';
 import { AI_MODELS_CONFIG } from '../../core/config/ai.models.config';
-import { CommonModule } from '@angular/common';
+
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-config',
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     RouterLink,
     TuiButton,

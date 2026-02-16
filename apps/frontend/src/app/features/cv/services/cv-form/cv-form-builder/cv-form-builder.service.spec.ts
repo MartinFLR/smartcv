@@ -1,10 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { CvFormBuilderService } from './cv-form-builder.service';
 import { FormArray, FormGroup, ReactiveFormsModule } from '@angular/forms';
-
 describe('CvFormBuilderService', () => {
   let service: CvFormBuilderService;
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule],
@@ -12,11 +10,9 @@ describe('CvFormBuilderService', () => {
     });
     service = TestBed.inject(CvFormBuilderService);
   });
-
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-
   describe('buildCvForm', () => {
     it('should create a form with all required sections', () => {
       const form = service.buildCvForm();
@@ -28,7 +24,6 @@ describe('CvFormBuilderService', () => {
       expect(form.controls.skills).toBeInstanceOf(FormArray);
     });
   });
-
   describe('buildCoverLetterForm', () => {
     it('should create a cover letter form with required controls', () => {
       const form = service.buildCoverLetterForm();
@@ -39,7 +34,6 @@ describe('CvFormBuilderService', () => {
       expect(form.controls.deliveryChannel).toBeDefined();
     });
   });
-
   describe('buildIaForm', () => {
     it('should create an IA form with required controls', () => {
       const form = service.buildIaForm();
@@ -47,13 +41,11 @@ describe('CvFormBuilderService', () => {
       expect(form.controls.exaggeration).toBeDefined();
     });
   });
-
   describe('createPersonalInfoGroup', () => {
     it('should create personal info group with validators', () => {
       const group = service.createPersonalInfoGroup();
       expect(group.controls.name).toBeDefined();
       expect(group.controls.job).toBeDefined();
-
       // Check required validators
       const nameControl = group.controls.name;
       nameControl.setValue('');
@@ -62,14 +54,12 @@ describe('CvFormBuilderService', () => {
       expect(nameControl.valid).toBeTruthy();
     });
   });
-
   describe('createExperienceGroup', () => {
     it('should create experience group with default values', () => {
       const group = service.createExperienceGroup();
       expect(group.controls.role.value).toBe('');
       expect(group.controls.company.value).toBe('');
     });
-
     it('should create experience group with provided values', () => {
       const data = { role: 'Dev', company: 'Google' };
       const group = service.createExperienceGroup(data);
@@ -77,33 +67,28 @@ describe('CvFormBuilderService', () => {
       expect(group.controls.company.value).toBe('Google');
     });
   });
-
   describe('createProjectGroup', () => {
     it('should create project group with default values', () => {
       const group = service.createProjectGroup();
       expect(group.controls.name.value).toBe('');
     });
-
     it('should create project group with provided values', () => {
       const data = { name: 'SmartCV' };
       const group = service.createProjectGroup(data);
       expect(group.controls.name.value).toBe('SmartCV');
     });
   });
-
   describe('createEducationGroup', () => {
     it('should create education group with default values', () => {
       const group = service.createEducationGroup();
       expect(group.controls.title.value).toBe('');
     });
-
     it('should create education group with provided values', () => {
       const data = { title: 'Engineer' };
       const group = service.createEducationGroup(data);
       expect(group.controls.title.value).toBe('Engineer');
     });
   });
-
   describe('createCertificationGroup', () => {
     it('should create certification group', () => {
       const group = service.createCertificationGroup({ name: 'Cert', date: '2023' });
@@ -111,7 +96,6 @@ describe('CvFormBuilderService', () => {
       expect(group.controls.date.value).toBe('2023');
     });
   });
-
   describe('createSkillGroup', () => {
     it('should create skill group with empty arrays by default', () => {
       const group = service.createSkillGroup();
@@ -120,7 +104,6 @@ describe('CvFormBuilderService', () => {
       expect(group.controls.certifications).toBeInstanceOf(FormArray);
       expect(group.controls.certifications.length).toBe(0);
     });
-
     it('should create skill group with provided values including certifications', () => {
       const data = {
         skills: ['Angular'],
