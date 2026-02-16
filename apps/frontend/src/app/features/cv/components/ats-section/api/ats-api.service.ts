@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class AtsApiService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:3000/api/ats';
+  private readonly apiUrl = '/api/ats';
 
   private readonly _response = signal<CvAtsResponse | null>(null);
   private readonly _isLoading = signal<boolean>(false);

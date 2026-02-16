@@ -13,7 +13,7 @@ describe('CoverApiService', () => {
     baseCv: MOCK_CV_FORM as any,
     jobDesc: 'Job Description',
   };
-  const API_URL = 'http://localhost:3000/api/generate-cover-letter';
+  const API_URL = '/api/generate-cover-letter';
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [CoverApiService, provideHttpClient(), provideHttpClientTesting()],

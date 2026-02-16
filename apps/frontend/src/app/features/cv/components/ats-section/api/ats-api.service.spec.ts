@@ -8,7 +8,7 @@ import { firstValueFrom } from 'rxjs';
 describe('AtsApiService', () => {
   let service: AtsApiService;
   let httpMock: HttpTestingController;
-  const API_URL = 'http://localhost:3000/api/ats';
+  const API_URL = '/api/ats';
   const MOCK_FORMDATA = new FormData();
   const MOCK_RESPONSE: CvAtsResponse = {
     text: 'CV Analizado',

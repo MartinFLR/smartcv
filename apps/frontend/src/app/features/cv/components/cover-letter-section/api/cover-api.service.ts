@@ -15,7 +15,7 @@ import { filter, map } from 'rxjs';
   providedIn: 'root',
 })
 export class CoverApiService {
-  private readonly apiUrl = 'http://localhost:3000/api/generate-cover-letter';
+  private readonly apiUrl = '/api/generate-cover-letter';
 
   private readonly http = inject(HttpClient);
 

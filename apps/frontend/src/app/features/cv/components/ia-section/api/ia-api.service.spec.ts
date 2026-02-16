@@ -10,7 +10,7 @@ import { MOCK_CV_FORM } from '../../../../../shared/testing/mocks/cv.form.mock';
 describe('IaApiService', () => {
   let service: IaApiService;
   let httpMock: HttpTestingController;
-  const API_URL = 'http://localhost:3000/api/generate-cv';
+  const API_URL = '/api/generate-cv';
   const MOCK_PAYLOAD: CvPayload = {
     baseCv: MOCK_CV_FORM as any,
     jobDesc: 'Angular Lead',

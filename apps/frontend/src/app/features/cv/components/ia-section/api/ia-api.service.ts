@@ -8,7 +8,7 @@ import { CvPayload, CvResponse, TransformedCvResponse } from '@smartcv/types';
 })
 export class IaApiService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:3000/api/generate-cv';
+  private readonly apiUrl = '/api/generate-cv';
 
   generateCvWithIA(payload: CvPayload): Observable<TransformedCvResponse> {
     return this.http.post<CvResponse>(this.apiUrl, payload).pipe(
