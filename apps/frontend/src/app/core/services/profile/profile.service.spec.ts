@@ -11,6 +11,8 @@ describe('ProfileService', () => {
   const saveDataServiceMock = {
     activeCv: jest.fn(),
     saveData: jest.fn(),
+    loadMeta: jest.fn().mockReturnValue({ isLocked: false }),
+    saveMeta: jest.fn(),
   };
   const localStorageMock = {
     getItem: jest.fn(),

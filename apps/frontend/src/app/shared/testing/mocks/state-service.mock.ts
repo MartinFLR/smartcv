@@ -79,6 +79,7 @@ export const stateServiceMock = {
   isLoading: signal(false),
   isCvLocked: signal(false),
   lockedCv: signal<CvForm | null>(null),
+  template: signal('harvard'),
 
   isValid: signal(true),
   activeTab: signal(0),
@@ -103,5 +104,8 @@ export const stateServiceMock = {
   setLockState: jest.fn((locked: boolean) => {
     stateServiceMock.isCvLocked.set(locked);
     if (!locked) stateServiceMock.lockedCv.set(null);
+  }),
+  setTemplate: jest.fn((template: string) => {
+    stateServiceMock.template.set(template);
   }),
 };

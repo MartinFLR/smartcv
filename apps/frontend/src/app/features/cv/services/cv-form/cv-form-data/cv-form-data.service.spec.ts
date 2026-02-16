@@ -81,8 +81,9 @@ describe('CvFormDataService', () => {
   describe('downloadPdf', () => {
     it('should call pdfService.downloadPdf', () => {
       const data = {} as CvForm;
-      service.downloadPdf(data);
-      expect(pdfServiceMock.downloadPdf).toHaveBeenCalledWith(data);
+      const template = 'harvard';
+      service.downloadPdf(data, template);
+      expect(pdfServiceMock.downloadPdf).toHaveBeenCalledWith(data, template);
     });
   });
 

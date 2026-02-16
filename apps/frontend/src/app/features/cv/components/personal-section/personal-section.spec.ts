@@ -6,6 +6,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { TranslocoTestingModule } from '@jsverse/transloco';
 import { By } from '@angular/platform-browser';
 import { tuiInputPhoneInternationalOptionsProvider } from '@taiga-ui/kit';
+import { signal } from '@angular/core';
 
 describe('PersonalSection Component', () => {
   let component: PersonalSection;
@@ -28,6 +29,7 @@ describe('PersonalSection Component', () => {
 
     cvStateServiceMock = {
       personalInfoGroup: mockPersonalInfoForm,
+      template: signal('harvard'),
     };
 
     await TestBed.configureTestingModule({
@@ -43,7 +45,7 @@ describe('PersonalSection Component', () => {
         provideAnimations(),
         { provide: CvStateService, useValue: cvStateServiceMock },
         tuiInputPhoneInternationalOptionsProvider({
-          metadata: import('libphonenumber-js/max/metadata').then((m) => m.default as any),
+          metadata: import('libphonenumber-js/min/metadata').then((m) => m.default),
         }),
       ],
     }).compileComponents();

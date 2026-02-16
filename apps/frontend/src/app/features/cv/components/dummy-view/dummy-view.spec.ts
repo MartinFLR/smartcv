@@ -79,16 +79,6 @@ describe('DummyView Component', () => {
 
   // ----------------------------------------------------------------------------------------------------
 
-  describe('Helper Method Logic', () => {
-    it('should format certifications correctly and filter null names', () => {
-      const result = component.formatCertifications(COMPLEX_CV.skills[0].certifications);
-
-      expect(result).toBe('AWS Certified (2023) | Scrum Master');
-    });
-  });
-
-  // ----------------------------------------------------------------------------------------------------
-
   describe('Template Rendering and Data Integrity', () => {
     it('should render basic personal info (Name and Job)', () => {
       const compiled = fixture.nativeElement as HTMLElement;

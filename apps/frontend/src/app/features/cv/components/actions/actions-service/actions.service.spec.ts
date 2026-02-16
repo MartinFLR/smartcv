@@ -7,7 +7,7 @@ import { TuiDialogService } from '@taiga-ui/experimental';
 import { TaigaAlertsService } from '../../../../../core/services/alerts/taiga-alerts.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { signal } from '@angular/core';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { MOCK_CV_PROFILE } from '../../../../../shared/testing/mocks/cv.form.mock';
 import { CvForm } from '@smartcv/types';
 
@@ -24,6 +24,7 @@ describe('ActionsService', () => {
 
   const profileServiceMock = {
     profiles: signal([MOCK_CV_PROFILE]),
+    profileIdChange: new Subject<{ oldId: string; newId: string }>(),
     getLastActiveProfileId: jest.fn(),
     saveLastActiveProfileId: jest.fn(),
     loadProfileToActive: jest.fn(),
@@ -42,11 +43,13 @@ describe('ActionsService', () => {
     isValid: signal(true),
     isCvLocked: signal(false),
     isLoading: signal(false),
+    template: signal('harvard'),
     cvForm: {
       getRawValue: jest.fn().mockReturnValue({} as CvForm),
     },
     resetForm: jest.fn(),
     setLockState: jest.fn(),
+    setTemplate: jest.fn(),
   };
 
   const cvFormDataServiceMock = {

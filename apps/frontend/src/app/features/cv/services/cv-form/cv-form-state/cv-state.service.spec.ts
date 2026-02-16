@@ -9,7 +9,12 @@ import { CvForm } from '@smartcv/types';
 describe('CvStateService', () => {
   let service: CvStateService;
   let formManagerMock: jest.Mocked<CvFormManagerService>;
-  let saveDataServiceMock: { activeCv: WritableSignal<CvForm | null>; clearData: jest.Mock };
+  let saveDataServiceMock: {
+    activeCv: WritableSignal<CvForm | null>;
+    clearData: jest.Mock;
+    loadMeta: jest.Mock;
+    saveMeta: jest.Mock;
+  };
   let fb: FormBuilder;
 
   beforeEach(() => {
@@ -41,6 +46,8 @@ describe('CvStateService', () => {
     saveDataServiceMock = {
       activeCv: signal<CvForm | null>(null),
       clearData: jest.fn(),
+      loadMeta: jest.fn().mockReturnValue({ isLocked: false, template: 'harvard' }),
+      saveMeta: jest.fn(),
     };
 
     TestBed.configureTestingModule({

@@ -6,6 +6,7 @@ import { TranslocoTestingModule } from '@jsverse/transloco';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TUI_DARK_MODE } from '@taiga-ui/core';
 import { TuiSwipeEvent } from '@taiga-ui/cdk';
+import { tuiInputPhoneInternationalOptionsProvider } from '@taiga-ui/kit';
 import { of } from 'rxjs';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { CvStateService } from '../../services/cv-form/cv-form-state/cv-state.service';
@@ -21,7 +22,7 @@ import {
 } from '../../../../shared/testing/mocks/state-service.mock';
 import { TuiLanguageSwitcherService } from '@taiga-ui/i18n/utils';
 import { languageSwitcherMock } from '../../../../shared/testing/mocks/language.mock';
-import { WA_LOCAL_STORAGE, WA_WINDOW } from '@ng-web-apis/common';
+import { WA_LOCAL_STORAGE, WA_WINDOW, WA_NAVIGATOR } from '@ng-web-apis/common';
 import { windowMock } from '../../../../shared/testing/mocks/windows.mock';
 import { TUI_DOC_ICONS } from '@taiga-ui/addon-doc/tokens';
 
@@ -48,6 +49,7 @@ describe('CvPage', () => {
         { provide: TUI_DARK_MODE, useValue: of(false) },
         { provide: WA_WINDOW, useValue: windowMock },
         { provide: WA_LOCAL_STORAGE, useValue: windowMock.localStorage },
+        { provide: WA_NAVIGATOR, useValue: { userAgent: 'test-agent' } },
         { provide: TuiLanguageSwitcherService, useValue: languageSwitcherMock },
         { provide: TUI_DOC_ICONS, useValue: {} },
         { provide: IaApiService, useValue: {} },
@@ -60,6 +62,9 @@ describe('CvPage', () => {
             getCertificationsControls: jest.fn(() => []),
           },
         },
+        tuiInputPhoneInternationalOptionsProvider({
+          metadata: import('libphonenumber-js/min/metadata').then((m) => m.default),
+        }),
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();

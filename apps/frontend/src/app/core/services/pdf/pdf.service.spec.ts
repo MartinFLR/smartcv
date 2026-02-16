@@ -65,7 +65,7 @@ describe('PdfService', () => {
       service.downloadPdf(MOCK_CV_FORM);
 
       expect(jsPDF).toHaveBeenCalledWith('p', 'pt', 'a4');
-      expect(mockSave).toHaveBeenCalledWith('CV_Optimizado_ATS.pdf');
+      expect(mockSave).toHaveBeenCalledWith('CV_Harvard.pdf');
     });
 
     it('should translate section titles', () => {
