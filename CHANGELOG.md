@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/MartinFLR/smartcv/compare/v1.4.1...v1.4.2) (2026-02-16)
+
+
+### 🐛 Bug Fixes
+
+* **docker:** upgrade node updated to 22-alpine to support angular 19+ ([fe90d03](https://github.com/MartinFLR/smartcv/commit/fe90d031a4b1cf9cdb9d93e52c66045a4acf4ff0))
+
 ## [1.4.1](https://github.com/MartinFLR/smartcv/compare/v1.4.0...v1.4.1) (2026-02-16)
 
 
