@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.3](https://github.com/MartinFLR/smartcv/compare/v1.4.2...v1.4.3) (2026-02-22)
+
+
+### 🐛 Bug Fixes
+
+* Update Nginx config to proxy API requests to host ([ad6ce56](https://github.com/MartinFLR/smartcv/commit/ad6ce56d5944e3e6ec7a24db0839930a232b37bd))
+
 ## [1.4.2](https://github.com/MartinFLR/smartcv/compare/v1.4.1...v1.4.2) (2026-02-16)
 
 

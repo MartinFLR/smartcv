@@ -1,6 +1,6 @@
 {
   "name": "smartcv",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "private": true,
   "description": "Your free self-hosted intelligent assistant for analyzing, optimizing, and comparing resumes with job descriptions using AI.",
   "engines": {
