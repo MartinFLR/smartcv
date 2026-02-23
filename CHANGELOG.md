@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.3](https://github.com/MartinFLR/smartcv/compare/v1.5.2...v1.5.3) (2026-02-23)
+
+
+### 🐛 Bug Fixes
+
+* uuid fallback on create profile ([a31a36c](https://github.com/MartinFLR/smartcv/commit/a31a36ccec0afc346631d0cbe21404d4e3c5147c))
+
 ## [1.5.2](https://github.com/MartinFLR/smartcv/compare/v1.5.1...v1.5.2) (2026-02-23)
 
 
