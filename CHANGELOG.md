@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/MartinFLR/smartcv/compare/v1.5.0...v1.5.1) (2026-02-23)
+
+
+### 🐛 Bug Fixes
+
+* nginx fix ([33839c9](https://github.com/MartinFLR/smartcv/commit/33839c976823a0baa1a34553fd54e6dcc5fdb14d))
+
 ## [1.5.0](https://github.com/MartinFLR/smartcv/compare/v1.4.1...v1.5.0) (2026-02-23)
 
 
