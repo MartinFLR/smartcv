@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.5.0](https://github.com/MartinFLR/smartcv/compare/v1.4.1...v1.5.0) (2026-02-23)
+
+
+### ✨ Features
+
+* api keys in config ([287c915](https://github.com/MartinFLR/smartcv/commit/287c9151bb888162b32589f08025c174f1e06393))
+* api keys in config ([db87d60](https://github.com/MartinFLR/smartcv/commit/db87d604280eac1d5a87aafd81e2977eac9c0fcf))
+* api keys in config ([2328eee](https://github.com/MartinFLR/smartcv/commit/2328eeea6bc73e4f51059b07005305273cb7c85f))
+
+
+### 🐛 Bug Fixes
+
+* **docker:** upgrade node updated to 22-alpine to support angular 19+ ([fe90d03](https://github.com/MartinFLR/smartcv/commit/fe90d031a4b1cf9cdb9d93e52c66045a4acf4ff0))
+* Update Nginx config to proxy API requests to host ([ad6ce56](https://github.com/MartinFLR/smartcv/commit/ad6ce56d5944e3e6ec7a24db0839930a232b37bd))
+
 ## [1.4.1](https://github.com/MartinFLR/smartcv/compare/v1.4.0...v1.4.1) (2026-02-16)
 
 ### 🐛 Bug Fixes
