@@ -41,6 +41,45 @@
           </tui-textfield>
         </label>
 
+        <ng-container formGroupName="apiKeys">
+          <h3 class="text-lg font-semibold mt-4">API Keys</h3>
+          <p class="text-sm text-gray-500">
+            Estas claves se guardan de forma segura en el servidor.
+          </p>
+
+          <label tuiLabel>
+            Gemini API Key
+            <tui-textfield iconStart="@tui.key">
+              <input tuiTextfield type="password" formControlName="geminiApiKey" />
+              <tui-icon tuiPassword></tui-icon>
+            </tui-textfield>
+          </label>
+
+          <label tuiLabel>
+            OpenAI API Key
+            <tui-textfield iconStart="@tui.key">
+              <input tuiTextfield type="password" formControlName="openaiApiKey" />
+              <tui-icon tuiPassword></tui-icon>
+            </tui-textfield>
+          </label>
+
+          <label tuiLabel>
+            Anthropic (Claude) API Key
+            <tui-textfield iconStart="@tui.key">
+              <input tuiTextfield type="password" formControlName="claudeApiKey" />
+              <tui-icon tuiPassword></tui-icon>
+            </tui-textfield>
+          </label>
+
+          <label tuiLabel>
+            Mistral API Key
+            <tui-textfield iconStart="@tui.key">
+              <input tuiTextfield type="password" formControlName="mistralApiKey" />
+              <tui-icon tuiPassword></tui-icon>
+            </tui-textfield>
+          </label>
+        </ng-container>
+
         <button
           tuiButton
           type="button"

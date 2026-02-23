@@ -61,4 +61,10 @@ module.exports = defineConfig([
     extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
     rules: {},
   },
+  {
+    files: ['apps/backend/**/*.ts'],
+    rules: {
+      '@angular-eslint/prefer-inject': 'off',
+    },
+  },
 ]);

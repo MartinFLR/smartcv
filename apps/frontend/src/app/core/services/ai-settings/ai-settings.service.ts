@@ -1,5 +1,7 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Injectable, signal, inject, PLATFORM_ID } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
 import { AiSettings } from '@smartcv/types';
 
 @Injectable({
@@ -10,6 +12,7 @@ export class AiSettingsService {
 
   private readonly document = inject(DOCUMENT);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly http = inject(HttpClient);
 
   private readonly storage: Storage | null = null;
 
@@ -38,6 +41,14 @@ export class AiSettingsService {
     } catch (e) {
       console.error('Error al guardar datos en localStorage:', e);
     }
+  }
+
+  getApiKeys() {
+    return this.http.get<Record<string, string>>('/api/config');
+  }
+
+  saveApiKeys(keys: Record<string, string>) {
+    return this.http.post('/api/config/batch', keys);
   }
 
   clearData(): void {

@@ -4,11 +4,14 @@ import { PromptService } from '../../core/prompt/prompt.service';
 import { AIFactory, AIModel } from '../../core/ai/ai.factory';
 import { cleanJson } from '../../core/utils/json-cleaner';
 import { normalizeCv } from '../../core/utils/normalizer';
+import { ConfigService } from '../../modules/config/config.service';
 
 @Injectable()
 export class CvService {
-  // eslint-disable-next-line @angular-eslint/prefer-inject
-  constructor(private readonly promptService: PromptService) {}
+  constructor(
+    private readonly promptService: PromptService,
+    private readonly configService: ConfigService,
+  ) {}
 
   async generateTailoredCv(body: CvPayload, headerSettings: AiSettings): Promise<CvResponse> {
     const { baseCv, jobDesc, promptOption } = body;
@@ -29,10 +32,13 @@ export class CvService {
       promptOption,
     );
 
+    const apiKeys = await this.configService.getAll();
+
     const ai: AIModel = AIFactory.create({
       modelProvider: headerSettings.modelProvider!,
       modelVersion: headerSettings.modelVersion,
       systemPrompt,
+      apiKeys,
     });
 
     const text = await ai.generate(userPrompt);

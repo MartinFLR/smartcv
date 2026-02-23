@@ -4,11 +4,14 @@ import { cleanJson } from '../../core/utils/json-cleaner';
 import { AiSettings, CvAtsPayload, CvAtsResponse } from '@smartcv/types';
 import { PromptService } from '../../core/prompt/prompt.service';
 import * as pdfParse from 'pdf-parse';
+import { ConfigService } from '../../modules/config/config.service';
 
 @Injectable()
 export class AtsService {
-  // eslint-disable-next-line @angular-eslint/prefer-inject
-  constructor(private readonly promptService: PromptService) {}
+  constructor(
+    private readonly promptService: PromptService,
+    private readonly configService: ConfigService,
+  ) {}
 
   async analyzeCvAts(body: CvAtsPayload, headerSettings: AiSettings): Promise<CvAtsResponse> {
     const { file, jobDesc, promptOption } = body;
@@ -44,10 +47,12 @@ export class AtsService {
       promptOption,
     );
 
+    const apiKeys = await this.configService.getAll();
     const ai: AIModel = AIFactory.create({
       modelProvider: headerSettings.modelProvider!,
       modelVersion: headerSettings.modelVersion,
       systemPrompt,
+      apiKeys,
     });
 
     const text = await ai.generate(userPrompt);

@@ -122,6 +122,7 @@ export interface AiSettings {
   modelProvider?: string;
   modelVersion?: string;
   systemPrompt?: string;
+  apiKeys?: Record<string, string>;
 }
 
 export interface CoverLetterPayload {

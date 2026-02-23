@@ -50,7 +50,9 @@ export class AIFactory {
 
     const ServiceClass = PROVIDER_SERVICES[provider];
     const apiKeyField = PROVIDER_API_KEYS[provider];
-    const apiKey = config[apiKeyField];
+
+    // Check if key is provided in options (from DB), otherwise use env config
+    const apiKey = options.apiKeys?.[apiKeyField] || config[apiKeyField];
 
     if (!apiKey) {
       throw new Error(`${apiKeyField.toUpperCase()} no configurada`);

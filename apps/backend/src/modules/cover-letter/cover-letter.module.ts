@@ -3,8 +3,10 @@ import { CoverLetterController } from './cover-letter.controller';
 import { CoverLetterService } from './cover-letter.service';
 import { PromptService } from '../../core/prompt/prompt.service';
 import { CoverLetterPromptGenerator } from './prompt/cover-letter-prompt.generator';
+import { ConfigModule } from '../config/config.module';
 
 @Module({
+  imports: [ConfigModule],
   controllers: [CoverLetterController],
   providers: [CoverLetterService, CoverLetterPromptGenerator, PromptService],
 })

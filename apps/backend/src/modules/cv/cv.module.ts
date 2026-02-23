@@ -3,8 +3,10 @@ import { CvController } from './cv.controller';
 import { CvService } from './cv.service';
 import { PromptService } from '../../core/prompt/prompt.service';
 import { CvPromptGenerator } from './prompt/cv-prompt.generator';
+import { ConfigModule } from '../config/config.module';
 
 @Module({
+  imports: [ConfigModule],
   controllers: [CvController],
   providers: [CvService, CvPromptGenerator, PromptService],
 })
