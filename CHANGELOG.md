@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.2](https://github.com/MartinFLR/smartcv/compare/v1.5.1...v1.5.2) (2026-02-23)
+
+
+### 🔧 Miscellaneous Chores
+
+* logs on create new profile ([dc05654](https://github.com/MartinFLR/smartcv/commit/dc05654353d93b4b48302e67687a286511b3c810))
+
 ## [1.5.1](https://github.com/MartinFLR/smartcv/compare/v1.5.0...v1.5.1) (2026-02-23)
 
 
