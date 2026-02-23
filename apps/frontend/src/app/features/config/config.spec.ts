@@ -21,6 +21,8 @@ describe('Config Component', () => {
   const aiSettingsServiceMock = {
     loadSettings: jest.fn(),
     saveSettings: jest.fn(),
+    getApiKeys: jest.fn().mockReturnValue(of({})),
+    saveApiKeys: jest.fn().mockReturnValue(of({})),
   };
   const alertServiceMock = {
     open: jest.fn().mockReturnValue(of(true)),
@@ -129,7 +131,7 @@ describe('Config Component', () => {
         modelVersion: 'gpt-4o',
         systemPrompt: 'New Prompt',
       };
-      component.aiForm.setValue(formValues);
+      component.aiForm.patchValue(formValues);
       component.saveAiSettings();
       expect(aiSettingsServiceMock.saveSettings).toHaveBeenCalledWith(formValues);
       expect(alertServiceMock.open).toHaveBeenCalledWith(

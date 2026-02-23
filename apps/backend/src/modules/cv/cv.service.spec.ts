@@ -3,6 +3,7 @@ import { CvService } from './cv.service';
 import { CvPayload, AiSettings } from '@smartcv/types';
 import { AIFactory } from '../../core/ai/ai.factory';
 import { PromptService } from '../../core/prompt/prompt.service';
+import { ConfigService } from '../../modules/config/config.service';
 jest.mock('../../core/ai/ai.factory');
 jest.mock('../../core/utils/json-cleaner');
 jest.mock('../../core/utils/normalizer');
@@ -16,12 +17,19 @@ describe('CvService', () => {
         buildUserPrompt: jest.fn().mockReturnValue('User prompt'),
       }),
     };
+    const mockConfigService = {
+      getAll: jest.fn().mockResolvedValue({}),
+    };
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CvService,
         {
           provide: PromptService,
           useValue: mockPromptService,
+        },
+        {
+          provide: ConfigService,
+          useValue: mockConfigService,
         },
       ],
     }).compile();

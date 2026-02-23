@@ -3,6 +3,8 @@ import { AtsService } from './ats.service';
 import { AiSettings, CvAtsPayload } from '@smartcv/types';
 import { AIFactory } from '../../core/ai/ai.factory';
 import { PromptService } from '../../core/prompt/prompt.service';
+import { ConfigService } from '../../modules/config/config.service';
+import { of } from 'rxjs';
 // Mock the AIFactory and other dependencies
 jest.mock('../../core/ai/ai.factory');
 jest.mock('../../core/utils/json-cleaner');
@@ -17,12 +19,19 @@ describe('AtsService', () => {
         buildUserPrompt: jest.fn().mockReturnValue('User prompt'),
       }),
     };
+    const mockConfigService = {
+      getAll: jest.fn().mockResolvedValue({}),
+    };
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AtsService,
         {
           provide: PromptService,
           useValue: mockPromptService,
+        },
+        {
+          provide: ConfigService,
+          useValue: mockConfigService,
         },
       ],
     }).compile();
