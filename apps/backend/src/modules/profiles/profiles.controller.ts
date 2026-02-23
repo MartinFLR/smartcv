@@ -18,10 +18,22 @@ export class ProfilesController {
 
   @Post()
   async create(@Body() body: { name: string; data: CvForm }): Promise<Profile> {
-    const profile = new Profile();
-    profile.name = body.name;
-    profile.data = body.data;
-    return this.profilesRepository.save(profile);
+    const bodySize = JSON.stringify(body).length;
+    console.log(
+      `[ProfilesController] POST /api/profiles - name: "${body?.name}", hasData: ${!!body?.data}, bodySize: ${(bodySize / 1024).toFixed(1)}KB`,
+    );
+
+    try {
+      const profile = new Profile();
+      profile.name = body.name;
+      profile.data = body.data;
+      const saved = await this.profilesRepository.save(profile);
+      console.log(`[ProfilesController] ✅ Perfil guardado - id: ${saved.id}`);
+      return saved;
+    } catch (err) {
+      console.error('❌ [ProfilesController] Error al crear perfil:', err);
+      throw err;
+    }
   }
   @Put(':id')
   async update(

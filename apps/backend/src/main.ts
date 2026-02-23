@@ -13,10 +13,14 @@ dotenv.config({
 
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  // Increase body parser limit for large payloads (e.g. base64 photos in profiles)
+  app.useBodyParser('json', { limit: '10mb' });
 
   // Enable CORS with proper configuration matching Express backend
   app.enableCors({

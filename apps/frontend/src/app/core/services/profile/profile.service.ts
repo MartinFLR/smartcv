@@ -1,7 +1,7 @@
 import { DestroyRef, DOCUMENT, inject, Injectable, signal } from '@angular/core';
 import { CvForm, CvProfile } from '@smartcv/types';
 import { SaveDataService } from '../save-data/save-data.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, of, Subject, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -29,8 +29,24 @@ export class ProfileService {
     this.loadProfiles();
   }
 
+  private logHttpError(context: string, err: unknown): void {
+    if (err instanceof HttpErrorResponse) {
+      console.error(`❌ [ProfileService] ${context}:`, {
+        status: err.status,
+        statusText: err.statusText,
+        url: err.url,
+        message: err.message,
+        errorBody: err.error,
+      });
+    } else if (err instanceof Error) {
+      console.error(`❌ [ProfileService] ${context}:`, err.message, err);
+    } else {
+      console.error(`❌ [ProfileService] ${context}:`, err);
+    }
+  }
+
   private loadProfiles(): void {
-    // Try loading from DB first
+    console.log('[ProfileService] Cargando perfiles desde BD...');
     this.http
       .get<CvProfile[]>(this.API_URL)
       .pipe(
@@ -43,10 +59,11 @@ export class ProfileService {
           })),
         ),
         tap((profiles) => {
+          console.log(`[ProfileService] ✅ ${profiles.length} perfiles cargados desde BD`);
           this.profilesSignal.set(profiles);
         }),
-        catchError(() => {
-          console.warn('Backend no disponible, cargando de LocalStorage');
+        catchError((err) => {
+          this.logHttpError('Error al cargar perfiles desde BD, usando LocalStorage', err);
           this.loadProfilesFromStorage();
           return of([]);
         }),
@@ -67,13 +84,16 @@ export class ProfileService {
   }
 
   saveCurrentCvAsProfile(name: string): CvProfile {
+    console.log(`[ProfileService] saveCurrentCvAsProfile("${name}") iniciado`);
+
     const currentCv = this.saveDataService.activeCv();
+    console.log('[ProfileService] activeCv() =', currentCv ? 'tiene datos' : 'NULL');
+
     if (!currentCv) {
       throw new Error('No hay CV activo para guardar.');
     }
     const cvDataCopy = JSON.parse(JSON.stringify(currentCv));
 
-    // Optimistic Update / Temporary ID
     const tempId = crypto.randomUUID();
     const newProfile: CvProfile = {
       id: tempId,
@@ -82,12 +102,16 @@ export class ProfileService {
       data: cvDataCopy,
     };
 
-    // Try saving to DB
+    const payloadSize = JSON.stringify({ name, data: cvDataCopy }).length;
+    console.log(
+      `[ProfileService] Enviando POST ${this.API_URL} (payload: ${(payloadSize / 1024).toFixed(1)}KB, tempId: ${tempId})`,
+    );
+
     this.http
       .post<CvProfile>(this.API_URL, { name, data: cvDataCopy })
       .pipe(
         tap((dbProfile) => {
-          // Replace optimistic profile with real DB profile
+          console.log(`[ProfileService] ✅ Perfil guardado en BD con id: ${dbProfile.id}`);
           this.profilesSignal.update((profiles) =>
             profiles.map((p) =>
               p.id === tempId
@@ -99,24 +123,21 @@ export class ProfileService {
             ),
           );
 
-          // Update Active Profile ID in Storage if it matches the temp ID
           if (this.getLastActiveProfileId() === tempId) {
             this.saveLastActiveProfileId(dbProfile.id);
           }
 
-          // Notify subscribers of ID change
           this.profileIdChange.next({ oldId: tempId, newId: dbProfile.id });
         }),
-        catchError(() => {
-          console.warn('Backend no disponible, guardando en LocalStorage');
-          this.persistProfiles(); // Persist the optimistic profile which is already added below
+        catchError((err) => {
+          this.logHttpError('Error al guardar perfil en BD (saveCurrentCvAsProfile)', err);
+          this.persistProfiles();
           return of(null);
         }),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
 
-    // Update Local State immediately
     this.profilesSignal.update((profiles) => [newProfile, ...profiles]);
 
     return newProfile;
@@ -143,20 +164,13 @@ export class ProfileService {
       }),
     );
 
-    // Try updating DB (Delete + Create strategy or simple overwrite if endpoint existed, but here we use Create logic for now or Custom Update)
-    // Actually the Controller has findAll, create, remove. It's missing 'update'.
-    // For now, we will handle it as "Delete old + Create new" if we want to sync, OR just ignore DB update if strictly following the plan that mentioned "create/delete".
-    // BUT the user expects "update".
-    // Let's implement a simple "Create with same name" or just rely on local storage fallback if the API doesn't support update yet.
-    // Wait, the previous implementation plan said "ProfilesController (CRUD)". I implemented findAll, create, remove. I missed Update.
     this.persistProfiles();
 
-    // Try updating DB
     this.http
       .put(`${this.API_URL}/${profileId}`, { data: cvDataCopy })
       .pipe(
-        catchError(() => {
-          console.warn('Fallo al actualizar en BD, pero actualizado localmente');
+        catchError((err) => {
+          this.logHttpError('Error al actualizar perfil en BD', err);
           return of(null);
         }),
         takeUntilDestroyed(this.destroyRef),
@@ -165,6 +179,8 @@ export class ProfileService {
   }
 
   createEmptyProfile(name: string): CvProfile {
+    console.log(`[ProfileService] createEmptyProfile("${name}") iniciado`);
+
     const emptyCvForm: CvForm = {
       personalInfo: {
         name: name,
@@ -184,7 +200,6 @@ export class ProfileService {
       skills: [],
     };
 
-    // Optimistic
     const tempId = crypto.randomUUID();
     const newProfile: CvProfile = {
       id: tempId,
@@ -193,11 +208,16 @@ export class ProfileService {
       data: emptyCvForm,
     };
 
-    // DB Sync
+    const payloadSize = JSON.stringify({ name, data: emptyCvForm }).length;
+    console.log(
+      `[ProfileService] Enviando POST ${this.API_URL} (payload: ${payloadSize} bytes, tempId: ${tempId})`,
+    );
+
     this.http
       .post<CvProfile>(this.API_URL, { name, data: emptyCvForm })
       .pipe(
         tap((dbProfile) => {
+          console.log(`[ProfileService] ✅ Perfil vacío guardado en BD con id: ${dbProfile.id}`);
           this.profilesSignal.update((profiles) =>
             profiles.map((p) => (p.id === tempId ? { ...newProfile, id: dbProfile.id } : p)),
           );
@@ -207,7 +227,8 @@ export class ProfileService {
           }
           this.profileIdChange.next({ oldId: tempId, newId: dbProfile.id });
         }),
-        catchError(() => {
+        catchError((err) => {
+          this.logHttpError('Error al crear perfil vacío en BD (createEmptyProfile)', err);
           this.persistProfiles();
           return of(null);
         }),
@@ -221,16 +242,14 @@ export class ProfileService {
   }
 
   deleteProfile(id: string): void {
-    // Optimistic delete
     this.profilesSignal.update((profiles) => profiles.filter((p) => p.id !== id));
     this.persistProfiles();
 
-    // DB Sync
     this.http
       .delete(`${this.API_URL}/${id}`)
       .pipe(
-        catchError(() => {
-          console.warn('Fallo al eliminar de BD, pero eliminado localmente');
+        catchError((err) => {
+          this.logHttpError('Error al eliminar perfil de BD', err);
           return of(null);
         }),
         takeUntilDestroyed(this.destroyRef),
@@ -257,12 +276,11 @@ export class ProfileService {
       throw new Error('Perfil no encontrado para actualizar.');
     }
 
-    // DB Sync
     this.http
       .put(`${this.API_URL}/${id}`, { name: newName })
       .pipe(
-        catchError(() => {
-          console.warn('Fallo al renombrar en BD, pero renombrado localmente');
+        catchError((err) => {
+          this.logHttpError('Error al renombrar perfil en BD', err);
           return of(null);
         }),
         takeUntilDestroyed(this.destroyRef),
@@ -274,20 +292,24 @@ export class ProfileService {
 
   private loadProfilesFromStorage(): void {
     if (!this.storage) {
+      console.warn('[ProfileService] localStorage no disponible');
       return;
     }
     const profiles = this.storage.getItem(this.STORAGE_KEY);
-    this.profilesSignal.set(profiles ? JSON.parse(profiles) : []);
+    const parsed = profiles ? JSON.parse(profiles) : [];
+    console.log(`[ProfileService] ${parsed.length} perfiles cargados desde LocalStorage`);
+    this.profilesSignal.set(parsed);
   }
 
   private persistProfiles(): void {
     if (!this.storage) {
+      console.warn('[ProfileService] localStorage no disponible, no se puede persistir');
       return;
     }
     try {
       this.storage.setItem(this.STORAGE_KEY, JSON.stringify(this.profiles()));
     } catch (e) {
-      console.error('Error al persistir perfiles en localStorage:', e);
+      console.error('[ProfileService] Error al persistir perfiles en localStorage:', e);
     }
   }
 

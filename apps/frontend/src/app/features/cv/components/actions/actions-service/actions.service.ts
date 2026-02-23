@@ -170,8 +170,13 @@ export class ActionsService {
 
   public createNewProfile(): void {
     const cvEsValido = this.isCvValid();
+    const hasSelectedProfile = !!this.selectedProfile();
+    console.log(
+      `[ActionsService] createNewProfile() - cvEsValido: ${cvEsValido}, hasSelectedProfile: ${hasSelectedProfile}`,
+    );
 
     if (cvEsValido && this.selectedProfile()) {
+      console.log('[ActionsService] Guardando perfil actual antes de crear uno nuevo...');
       this.saveCv(true);
     }
 
@@ -182,24 +187,40 @@ export class ActionsService {
       })
       .subscribe({
         next: (name) => {
-          if (!name) return;
+          console.log(`[ActionsService] Dialog devolvió nombre: "${name}" (type: ${typeof name})`);
+          if (!name) {
+            console.warn('[ActionsService] Nombre vacío/undefined, abortando creación');
+            return;
+          }
 
           try {
             let newProfile: CvProfile;
 
             if (cvEsValido) {
+              console.log('[ActionsService] CV válido → saveCurrentCvAsProfile');
               this.saveCv(true);
               newProfile = this.profileService.saveCurrentCvAsProfile(name);
               this.taigaAlerts.showSuccess('alerts.profiles.created_from_data').subscribe();
             } else {
+              console.log('[ActionsService] CV inválido → createEmptyProfile');
               newProfile = this.profileService.createEmptyProfile(name);
               this.taigaAlerts.showSuccess('alerts.profiles.created_empty').subscribe();
             }
 
+            console.log(
+              `[ActionsService] ✅ Perfil creado localmente: id=${newProfile.id}, name=${newProfile.name}`,
+            );
             this.selectedProfile.set(newProfile);
           } catch (e) {
+            console.error('[ActionsService] ❌ Error en createNewProfile:', e);
             this.handleError(e);
           }
+        },
+        error: (err) => {
+          console.error('[ActionsService] ❌ Error en dialog de crear perfil:', err);
+        },
+        complete: () => {
+          console.log('[ActionsService] Dialog de crear perfil cerrado');
         },
       });
   }
