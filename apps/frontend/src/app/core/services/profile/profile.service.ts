@@ -29,6 +29,18 @@ export class ProfileService {
     this.loadProfiles();
   }
 
+  private generateUUID(): string {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+      return crypto.randomUUID();
+    }
+    // Fallback for non-secure contexts (HTTP)
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      const r = (Math.random() * 16) | 0;
+      const v = c === 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
+  }
+
   private logHttpError(context: string, err: unknown): void {
     if (err instanceof HttpErrorResponse) {
       console.error(`❌ [ProfileService] ${context}:`, {
@@ -94,7 +106,7 @@ export class ProfileService {
     }
     const cvDataCopy = JSON.parse(JSON.stringify(currentCv));
 
-    const tempId = crypto.randomUUID();
+    const tempId = this.generateUUID();
     const newProfile: CvProfile = {
       id: tempId,
       name: name,
@@ -200,7 +212,7 @@ export class ProfileService {
       skills: [],
     };
 
-    const tempId = crypto.randomUUID();
+    const tempId = this.generateUUID();
     const newProfile: CvProfile = {
       id: tempId,
       name: name,
