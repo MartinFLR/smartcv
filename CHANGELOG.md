@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.6.0](https://github.com/MartinFLR/smartcv/compare/v1.5.3...v1.6.0) (2026-02-26)
+
+
+### ✨ Features
+
+* chrome extension ([d5885b9](https://github.com/MartinFLR/smartcv/commit/d5885b93a02aebd7343b0df2bc32589ced2f19d2))
+
+
+### 🐛 Bug Fixes
+
+* resolve alias in esbuild ([24850cf](https://github.com/MartinFLR/smartcv/commit/24850cff13342fdcf3fdda6957b6f89a50166c4b))
+* resolve alias in esbuild ([5dbb99f](https://github.com/MartinFLR/smartcv/commit/5dbb99fa949fd179519abfbd0666794381497093))
+* resolve alias in esbuild ([158bd6c](https://github.com/MartinFLR/smartcv/commit/158bd6cbc63aeda68a2548832db0d09601b2c6ef))
+
 ## [1.5.3](https://github.com/MartinFLR/smartcv/compare/v1.5.2...v1.5.3) (2026-02-23)
 
 
