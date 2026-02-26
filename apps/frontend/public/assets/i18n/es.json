@@ -97,6 +97,26 @@
       "saved_local": {
         "label": "Guardado",
         "message": "CV guardado en tu dispositivo."
+      },
+      "json_copied": {
+        "label": "JSON Copiado",
+        "message": "Los datos del CV se copiaron al portapapeles."
+      },
+      "json_copy_error": {
+        "label": "Error al copiar",
+        "message": "No se pudo copiar el JSON al portapapeles."
+      },
+      "json_imported": {
+        "label": "JSON Importado",
+        "message": "Los datos del CV se importaron del portapapeles."
+      },
+      "json_invalid": {
+        "label": "JSON Inválido",
+        "message": "El portapapeles no contiene datos de CV válidos."
+      },
+      "json_paste_error": {
+        "label": "Error al pegar",
+        "message": "No se pudo leer del portapapeles. Validá los permisos."
       }
     },
     "forms": {
@@ -138,6 +158,14 @@
         "title": "¿Qué nombre querés ponerle?",
         "cancel": "Cancelar",
         "save": "Guardar"
+      },
+      "export_json": "Exportar JSON al portapapeles",
+      "import_json_tooltip": "Importar JSON desde el portapapeles",
+      "import_json": {
+        "label": "Importar JSON",
+        "content": "Esto va a reemplazar los datos actuales del formulario con el JSON en tu portapapeles. ¿Continuar?",
+        "yes": "Importar",
+        "no": "Cancelar"
       }
     },
     "personalInfo": {

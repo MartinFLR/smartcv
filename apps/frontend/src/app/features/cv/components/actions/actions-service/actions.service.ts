@@ -11,7 +11,7 @@ import { TaigaAlertsService } from '../../../../../core/services/alerts/taiga-al
 import { CreateProfile } from '../profile/create-profile/create-profile';
 import { EditProfile } from '../profile/edit-profile/edit-profile';
 import { TranslocoService } from '@jsverse/transloco';
-import { filter } from 'rxjs';
+import { filter, from, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -258,6 +258,52 @@ export class ActionsService {
         this.handleError(e);
       }
     }
+  }
+
+  public exportJson(): void {
+    try {
+      const rawData = this.cvState.cvForm.getRawValue() as CvForm;
+      const json = JSON.stringify(rawData, null, 2);
+      from(navigator.clipboard.writeText(json)).subscribe({
+        next: () => this.taigaAlerts.showSuccess('alerts.cv.json_copied').subscribe(),
+        error: () => this.taigaAlerts.showError('alerts.cv.json_copy_error').subscribe(),
+      });
+    } catch (e) {
+      this.handleError(e);
+    }
+  }
+
+  public importJson(): void {
+    this.dialogs
+      .open<boolean>(TUI_CONFIRM, {
+        label: this.transloco.translate('cv.actions.import_json.label'),
+        size: 's',
+        data: {
+          content: this.transloco.translate('cv.actions.import_json.content'),
+          yes: this.transloco.translate('cv.actions.import_json.yes'),
+          no: this.transloco.translate('cv.actions.import_json.no'),
+        },
+      })
+      .pipe(
+        filter((yes) => yes),
+        switchMap(() => from(navigator.clipboard.readText())),
+      )
+      .subscribe({
+        next: (text) => {
+          try {
+            const cvData = JSON.parse(text) as CvForm;
+            if (!cvData.personalInfo) {
+              this.taigaAlerts.showError('alerts.cv.json_invalid').subscribe();
+              return;
+            }
+            this.cvState.patchForm(cvData);
+            this.taigaAlerts.showSuccess('alerts.cv.json_imported').subscribe();
+          } catch {
+            this.taigaAlerts.showError('alerts.cv.json_invalid').subscribe();
+          }
+        },
+        error: () => this.taigaAlerts.showError('alerts.cv.json_paste_error').subscribe(),
+      });
   }
 
   private handleError(e: unknown): void {

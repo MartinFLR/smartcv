@@ -110,6 +110,12 @@ export class CvStateService {
     this.resetInternalState();
   }
 
+  public patchForm(cvData: CvForm): void {
+    this.formManager.patchCvData(this.cvForm, cvData);
+    this.formManager.ensureMinimumFormArrays(this.cvForm);
+    this.cvForm.updateValueAndValidity();
+  }
+
   private resetInternalState(): void {
     this.formManager.resetCvForm(this.cvForm);
     this.formManager.ensureMinimumFormArrays(this.cvForm);

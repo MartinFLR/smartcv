@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "SmartCV - Job Description Capture",
+  "version": "1.0.0",
+  "description": "Capture job descriptions from any website and generate optimized CVs with SmartCV.",
+  "permissions": ["activeTab", "contextMenus", "storage", "scripting", "tabs"],
+  "host_permissions": ["http://localhost:*/*", "https://*/*"],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

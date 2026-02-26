@@ -4,18 +4,24 @@
     "spanish": "Spanish",
     "english": "English"
   },
-
   "nav": {
     "resume": "Resume",
     "config": "Settings"
   },
-
   "alerts": {
     "notifications": {
-      "success": { "title": "All Good!" },
-      "error": { "title": "Something went wrong" },
-      "warning": { "title": "Warning" },
-      "info": { "title": "Information" }
+      "success": {
+        "title": "All Good!"
+      },
+      "error": {
+        "title": "Something went wrong"
+      },
+      "warning": {
+        "title": "Warning"
+      },
+      "info": {
+        "title": "Information"
+      }
     },
     "api": {
       "errors": {
@@ -91,6 +97,26 @@
       "saved_local": {
         "label": "Saved",
         "message": "Resume saved to your device."
+      },
+      "json_copied": {
+        "label": "JSON Copied",
+        "message": "CV data has been copied to clipboard as JSON."
+      },
+      "json_copy_error": {
+        "label": "Copy failed",
+        "message": "Could not copy JSON to clipboard."
+      },
+      "json_imported": {
+        "label": "JSON Imported",
+        "message": "CV data has been imported from clipboard."
+      },
+      "json_invalid": {
+        "label": "Invalid JSON",
+        "message": "The clipboard does not contain valid CV data."
+      },
+      "json_paste_error": {
+        "label": "Paste failed",
+        "message": "Could not read from clipboard. Make sure you granted permission."
       }
     },
     "forms": {
@@ -100,7 +126,6 @@
       }
     }
   },
-
   "cv": {
     "tab": {
       "personal": "Personal",
@@ -112,14 +137,12 @@
       "ats": "ATS",
       "coverLetter": "Cover Letter"
     },
-
     "actions": {
       "profile": "Load Profile...",
       "delete": {
         "name": "Delete",
         "hint": ""
       },
-
       "block": {
         "name": "Lock",
         "hint": "Lock the resume so all optimizations always start from this version."
@@ -135,9 +158,16 @@
         "title": "What name do you want to give it?",
         "cancel": "Cancel",
         "save": "Save"
+      },
+      "export_json": "Export JSON to clipboard",
+      "import_json_tooltip": "Import JSON from clipboard",
+      "import_json": {
+        "label": "Import JSON",
+        "content": "This will replace the current form data with the JSON in your clipboard. Continue?",
+        "yes": "Import",
+        "no": "Cancel"
       }
     },
-
     "personalInfo": {
       "title": "Personal Information",
       "subtitle": "Enter your personal details.",
@@ -178,7 +208,6 @@
         "placeholder": "Write your professional summary..."
       }
     },
-
     "education": {
       "title": "Education",
       "subtitle": "Show your academic background and achievements.",
@@ -204,7 +233,6 @@
         "placeholder": "E.g.: Graduated with honors..."
       }
     },
-
     "experience": {
       "title": "Work Experience",
       "subtitle": "Show your most relevant experience and achievements.",
@@ -230,7 +258,6 @@
         "placeholder": "- Implemented new features..."
       }
     },
-
     "project": {
       "title": "Projects",
       "sub": "Show your projects and what you learned.",
@@ -256,7 +283,6 @@
         "placeholder": "- Designed the architecture..."
       }
     },
-
     "skills": {
       "title": "Skills & Certifications",
       "subtitle": "Show your skills and certifications.",
@@ -288,7 +314,6 @@
         "placeholder": "Scrum, Kanban, Docker, AWS..."
       }
     },
-
     "ia": {
       "title": "AI Optimization",
       "subtitle": "Optimize your resume using AI.",
@@ -317,7 +342,6 @@
         "button": "Optimize Resume with AI"
       }
     },
-
     "coverLetter": {
       "title": "Generate your cover letter",
       "subtitle": "The AI analyzes your resume and creates a personalized, ready-to-send letter.",
@@ -387,7 +411,6 @@
       "button": "Generate letter",
       "generated": "Your cover letter:"
     },
-
     "ats": {
       "title": "ATS Checker",
       "subtitle": "Upload your resume (PDF)",
@@ -398,7 +421,6 @@
         "highlight": "This allows us to calculate your score and see what can be improved."
       },
       "button": "Calculate ATS score",
-
       "points": {
         "title": "ATS Score",
         "level": {
@@ -419,23 +441,29 @@
           "warning": "Warnings"
         }
       },
-
       "general": "Overview",
       "analysis": "Keyword analysis",
-
       "sections": {
         "title": "Score by section",
-        "summary": { "name": "Professional summary" },
-        "experience": { "name": "Experience" },
-        "education": { "name": "Education" },
-        "skills": { "name": "Skills" },
-        "projects": { "name": "Projects" }
+        "summary": {
+          "name": "Professional summary"
+        },
+        "experience": {
+          "name": "Experience"
+        },
+        "education": {
+          "name": "Education"
+        },
+        "skills": {
+          "name": "Skills"
+        },
+        "projects": {
+          "name": "Projects"
+        }
       },
-
       "recommendations": "Recommendations"
     }
   },
-
   "config": {
     "title": "Settings",
     "back": "Back",
@@ -446,7 +474,6 @@
       "button": "Save settings"
     }
   },
-
   "view": {
     "resume": "PROFESSIONAL SUMMARY",
     "experience": "WORK EXPERIENCE",

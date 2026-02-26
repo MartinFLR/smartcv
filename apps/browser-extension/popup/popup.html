@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SmartCV Extension</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+
+  <body>
+    <div class="app">
+      <!-- Header -->
+      <header class="header">
+        <div class="header__logo">
+          <img src="../icons/logo.png" alt="SmartCV" class="header__logo-img" />
+          <span class="header__title">SmartCV</span>
+        </div>
+        <div style="display: flex; gap: 8px">
+          <a
+            href="https://github.com/MartinFLR/smartcv"
+            target="_blank"
+            id="githubBtn"
+            class="btn-icon"
+            title="Repository"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+              ></path>
+            </svg>
+          </a>
+          <button id="settingsBtn" class="btn-icon" title="Settings">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="3" />
+              <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+              />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Settings Panel (hidden by default) -->
+      <section id="settingsPanel" class="settings-panel hidden">
+        <label class="form-label" data-i18n="settings.serverUrl">Server URL</label>
+        <div class="input-group">
+          <input type="text" id="serverUrl" class="input" placeholder="http://localhost:3000" />
+          <button id="saveUrlBtn" class="btn btn--sm btn--primary" data-i18n="settings.save">
+            Save
+          </button>
+        </div>
+        <div id="connectionStatus" class="status-badge"></div>
+
+        <!-- Language -->
+        <label class="form-label" data-i18n="settings.lang">Language</label>
+        <select id="langSelect" class="select">
+          <option value="spanish">🇦🇷 Español</option>
+          <option value="english">🇬🇧 English</option>
+        </select>
+
+        <!-- AI Provider & Model -->
+        <label class="form-label" data-i18n="settings.provider">AI Provider</label>
+        <select id="providerSelect" class="select">
+          <option value="google">Google (Gemini)</option>
+          <option value="openai">OpenAI</option>
+          <option value="anthropic">Anthropic (Claude)</option>
+          <option value="groq">Groq</option>
+        </select>
+
+        <label class="form-label" data-i18n="settings.model">Model</label>
+        <select id="modelSelect" class="select">
+          <option value="">Loading...</option>
+        </select>
+      </section>
+
+      <!-- Main Content -->
+      <main class="main">
+        <!-- Profile Selector -->
+        <section class="section">
+          <label class="form-label" data-i18n="profile">Profile</label>
+          <select id="profileSelect" class="select">
+            <option value="">Loading profiles...</option>
+          </select>
+        </section>
+
+        <!-- Template Selector -->
+        <section class="section">
+          <label class="form-label" data-i18n="template">Template</label>
+          <select id="templateSelect" class="select">
+            <option value="harvard" data-i18n="template.harvard">Harvard (Classic)</option>
+            <option value="creative" data-i18n="template.creative">Creative (Modern)</option>
+          </select>
+        </section>
+
+        <!-- Tab Bar -->
+        <div class="tab-bar">
+          <button class="tab-btn active" data-tab="cv" data-i18n="tab.cv">⚡ Optimize CV</button>
+          <button class="tab-btn" data-tab="cover" data-i18n="tab.cover">📝 Cover Letter</button>
+        </div>
+
+        <!-- ========== TAB: OPTIMIZE CV ========== -->
+        <div id="tabCv" class="tab-panel active">
+          <!-- Job Description -->
+          <section class="section">
+            <label class="form-label" data-i18n="cv.jobDesc">Job Description</label>
+            <div class="textarea-wrapper">
+              <textarea
+                id="jobDesc"
+                class="textarea"
+                data-i18n-placeholder="cv.jobDesc.placeholder"
+                placeholder="Select text on a job listing and right-click → 'Send to SmartCV', or paste the job description here..."
+                rows="5"
+              ></textarea>
+              <div id="capturedBadge" class="captured-badge hidden">
+                <span class="captured-badge__dot"></span>
+                <span data-i18n="cv.captured">Captured from page</span>
+              </div>
+            </div>
+            <div class="char-count">
+              <span
+                ><span id="charCount">0</span>
+                <span data-i18n="cv.characters">characters</span></span
+              >
+              <button id="clearJobDescBtn" class="btn-inline" title="Clear" data-i18n="cv.clear">
+                ✕ Clear
+              </button>
+            </div>
+          </section>
+
+          <!-- Exaggeration Level -->
+          <section class="section">
+            <div class="slider-container">
+              <div class="slider-header">
+                <label
+                  class="form-label"
+                  style="margin-bottom: 0"
+                  data-i18n="cv.ia.exaggeration.title"
+                  >Exaggeration Level</label
+                >
+                <span id="exaggerationBadge" class="slider-badge">Low</span>
+              </div>
+              <input type="range" id="exaggerationSlider" min="0" max="2" step="1" value="0" />
+              <div class="slider-labels">
+                <span class="active">Low</span>
+                <span>Medium</span>
+                <span>High</span>
+              </div>
+              <p id="exaggerationDesc" class="slider-description"></p>
+            </div>
+          </section>
+
+          <!-- Generate CV Button -->
+          <section class="actions">
+            <button id="generateBtn" class="btn btn--primary btn--lg" disabled>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10" />
+              </svg>
+              <span data-i18n="cv.generate">Optimize CV</span>
+            </button>
+            <button id="downloadBtn" class="btn btn--accent btn--lg hidden">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              <span data-i18n="cv.download">Download PDF</span>
+            </button>
+            <div id="secondaryActions" class="secondary-actions hidden">
+              <button id="editInAppBtn" class="btn btn--outline btn--lg">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                </svg>
+                <span data-i18n="cv.editInApp">Edit in SmartCV</span>
+              </button>
+              <div class="btn-row">
+                <button id="copyJsonBtn" class="btn btn--outline btn--sm-flex">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                  </svg>
+                  <span data-i18n="cv.copyJson">Copy JSON</span>
+                </button>
+                <button id="newGenerationBtn" class="btn btn--outline btn--sm-flex">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <polyline points="23 4 23 10 17 10" />
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+                  </svg>
+                  <span data-i18n="cv.newGeneration">New Generation</span>
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- ========== TAB: COVER LETTER ========== -->
+        <div id="tabCover" class="tab-panel">
+          <!-- Tone -->
+          <section class="section">
+            <label class="form-label" data-i18n="cv.coverLetter.tone.title">Tone</label>
+            <div class="chip-group" id="toneChips">
+              <button class="chip active" data-value="0">💼 Formal</button>
+              <button class="chip" data-value="1">✨ Enthusiastic</button>
+              <button class="chip" data-value="2">☕ Casual</button>
+              <button class="chip" data-value="3">⚖ Neutral</button>
+              <button class="chip" data-value="4">🛡 Confident</button>
+            </div>
+          </section>
+
+          <!-- Delivery Channel -->
+          <section class="section">
+            <label class="form-label" data-i18n="cv.coverLetter.deliveryChannel.title"
+              >Delivery Channel</label
+            >
+            <div class="chip-group" id="channelChips">
+              <button class="chip active" data-value="0">💼 LinkedIn</button>
+              <button class="chip" data-value="1">📧 Email</button>
+              <button class="chip" data-value="2">📄 Application Form</button>
+              <button class="chip" data-value="3">👥 Referral</button>
+            </div>
+          </section>
+
+          <!-- Optional fields -->
+          <section class="section">
+            <label class="form-label" data-i18n="cv.coverLetter.optional.title"
+              >Optional Details</label
+            >
+            <div class="input-grid">
+              <div class="section">
+                <input
+                  id="recruiterName"
+                  class="input-sm"
+                  type="text"
+                  data-i18n-placeholder="cv.coverLetter.optional.recruiter.placeholder"
+                  placeholder="Recruiter name"
+                />
+              </div>
+              <div class="section">
+                <input
+                  id="companyName"
+                  class="input-sm"
+                  type="text"
+                  data-i18n-placeholder="cv.coverLetter.optional.company.placeholder"
+                  placeholder="Company name"
+                />
+              </div>
+              <div id="referralField" class="section hidden">
+                <input
+                  id="referralName"
+                  class="input-sm"
+                  type="text"
+                  data-i18n-placeholder="cv.coverLetter.optional.referral.placeholder"
+                  placeholder="Referral name"
+                />
+              </div>
+            </div>
+          </section>
+
+          <!-- Shared Job Description note -->
+          <section class="section">
+            <div class="shared-note">
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="16" x2="12" y2="12" />
+                <line x1="12" y1="8" x2="12.01" y2="8" />
+              </svg>
+              <span data-i18n="cv.coverLetter.job.description"
+                >Uses the job description from the Optimize CV tab</span
+              >
+            </div>
+          </section>
+
+          <!-- Generate Cover Letter -->
+          <section class="actions">
+            <button id="generateCoverBtn" class="btn btn--primary btn--lg" disabled>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M15 4V2" />
+                <path d="M15 16v-2" />
+                <path d="M8 9h2" />
+                <path d="M20 9h2" />
+                <path d="M17.8 11.8 19 13" />
+                <path d="M15 9h0" />
+                <path d="M17.8 6.2 19 5" />
+                <path d="M3 21l9-9" />
+                <path d="M12.2 6.2 11 5" />
+              </svg>
+              <span data-i18n="cv.coverLetter.button">Generate Cover Letter</span>
+            </button>
+          </section>
+
+          <!-- Cover Letter Output -->
+          <section id="coverOutputSection" class="section hidden">
+            <div class="cover-output-header">
+              <label
+                class="form-label"
+                style="margin-bottom: 0"
+                data-i18n="cv.coverLetter.generated"
+                >Generated Cover Letter</label
+              >
+              <button id="copyCoverBtn" class="btn btn--outline btn--sm">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+                <span data-i18n="cover.copy">Copy</span>
+              </button>
+            </div>
+            <div id="coverOutput" class="cover-output"></div>
+          </section>
+        </div>
+
+        <!-- Status -->
+        <div id="statusArea" class="status-area hidden">
+          <div class="status-area__content">
+            <div id="statusIcon" class="spinner"></div>
+            <span id="statusText">Generating...</span>
+          </div>
+          <div id="progressBar" class="progress-bar">
+            <div id="progressBarFill" class="progress-bar__fill"></div>
+          </div>
+        </div>
+
+        <!-- Generated CV Preview -->
+        <section id="previewSection" class="preview-section hidden">
+          <div class="preview-header">
+            <label class="form-label" style="margin-bottom: 0" data-i18n="preview.title"
+              >Generated CV Preview</label
+            >
+            <span id="generationInfo" class="generation-info"></span>
+          </div>
+          <div id="previewContent" class="preview-content"></div>
+        </section>
+      </main>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <span data-i18n="footer.version">SmartCV Extension v1.1</span>
+        <a id="openAppLink" href="#" class="footer__link" data-i18n="footer.open">Open SmartCV ↗</a>
+      </footer>
+    </div>
+
+    <script src="../lib/jspdf.umd.min.js"></script>
+    <script src="../lib/pdf-generator.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>

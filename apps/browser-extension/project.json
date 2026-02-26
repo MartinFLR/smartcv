@@ -1,0 +1,28 @@
+{
+  "name": "browser-extension",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/browser-extension",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "rm -rf dist/apps/browser-extension",
+          "mkdir -p dist/apps/browser-extension/popup",
+          "mkdir -p dist/apps/browser-extension/lib",
+          "npx esbuild apps/browser-extension/popup/popup.ts --bundle --outfile=dist/apps/browser-extension/popup/popup.js",
+          "npx esbuild apps/browser-extension/background.ts --bundle --outfile=dist/apps/browser-extension/background.js",
+          "npx esbuild apps/browser-extension/content.ts --bundle --outfile=dist/apps/browser-extension/content.js",
+          "cp apps/browser-extension/manifest.json dist/apps/browser-extension/",
+          "cp -r apps/browser-extension/icons dist/apps/browser-extension/",
+          "cp -r apps/browser-extension/lib/* dist/apps/browser-extension/lib/",
+          "cp apps/browser-extension/popup/popup.html dist/apps/browser-extension/popup/",
+          "cp apps/browser-extension/popup/popup.css dist/apps/browser-extension/popup/",
+          "node -e \"const fs=require('fs'); const p=require('./package.json'); const m=require('./dist/apps/browser-extension/manifest.json'); m.version=p.version; fs.writeFileSync('./dist/apps/browser-extension/manifest.json', JSON.stringify(m,null,2))\""
+        ],
+        "parallel": false
+      }
+    }
+  }
+}

@@ -24,6 +24,7 @@ async function bootstrap() {
 
   // Enable CORS with proper configuration matching Express backend
   app.enableCors({
+    origin: true,
     exposedHeaders: ['X-Ai-Provider', 'X-Ai-Model'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Ai-Provider', 'X-Ai-Model'],
   });

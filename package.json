@@ -10,6 +10,7 @@
     "start": "npx nx run-many -t serve -p backend frontend",
     "serve:frontend": "nx serve apps/frontend",
     "serve:backend": "nx serve apps/backend",
+    "build:extension": "nx run browser-extension:build",
     "format": "prettier --write .",
     "prepare": "husky install"
   },

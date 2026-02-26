@@ -100,6 +100,34 @@
           type="button"
           size="s"
           tuiRipple
+          appearance="outline"
+          iconStart="@tui.copy"
+          [tuiHint]="t('cv.actions.export_json')"
+          (click)="actions.exportJson()"
+          [disabled]="actions.isLoading() || !actions.isCvValid()"
+        >
+          <span class="sr-only">{{ t('cv.actions.export_json') }}</span>
+        </button>
+
+        <button
+          tuiButton
+          type="button"
+          size="s"
+          tuiRipple
+          appearance="outline"
+          iconStart="@tui.clipboard-paste"
+          [tuiHint]="t('cv.actions.import_json_tooltip')"
+          (click)="actions.importJson()"
+          [disabled]="actions.isLoading()"
+        >
+          <span class="sr-only">{{ t('cv.actions.import_json_tooltip') }}</span>
+        </button>
+
+        <button
+          tuiButton
+          type="button"
+          size="s"
+          tuiRipple
           appearance="outline-destructive"
           iconStart="@tui.trash"
           tuiTooltip="Limpiar Formulario (Reset)"
