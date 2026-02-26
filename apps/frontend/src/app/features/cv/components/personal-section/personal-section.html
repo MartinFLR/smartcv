@@ -33,9 +33,10 @@
             </button>
           } @else {
             <div class="flex flex-col gap-2 w-full">
-              <label tuiLabel>{{ t('cv.personalInfo.photo.label') }}</label>
+              <label tuiLabel for="photoInput">{{ t('cv.personalInfo.photo.label') }}</label>
               <label tuiInputFiles>
                 <input
+                  id="photoInput"
                   tuiInputFiles
                   accept="image/*"
                   (ngModelChange)="onFileSelected($event)"

@@ -59,8 +59,9 @@
   <div class="md:col-span-6 md:sticky md:top-8 h-full max-h-[calc(100vh-2rem)] flex flex-col">
     <div class="flex justify-end pb-4">
       <tui-textfield tuiChevron tuiTextfieldSize="m" iconStart="@tui.layout-template" class="w-56">
-        <label tuiLabel>Template</label>
+        <label tuiLabel for="templateSelectInput">Template</label>
         <input
+          id="templateSelectInput"
           tuiSelectLike
           tuiTextfield
           [ngModel]="state.template()"
