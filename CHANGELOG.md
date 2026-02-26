@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1](https://github.com/MartinFLR/smartcv/compare/v1.6.0...v1.6.1) (2026-02-26)
+
+
+### 🔧 Miscellaneous Chores
+
+* **web-extension:** url frontend and backend ([ae288e9](https://github.com/MartinFLR/smartcv/commit/ae288e9ac4c850851ab352477232e792439747c2))
+
 ## [1.6.0](https://github.com/MartinFLR/smartcv/compare/v1.5.3...v1.6.0) (2026-02-26)
 
 
