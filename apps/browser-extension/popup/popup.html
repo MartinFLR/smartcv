@@ -60,14 +60,36 @@
 
       <!-- Settings Panel (hidden by default) -->
       <section id="settingsPanel" class="settings-panel hidden">
+        <label class="form-label" data-i18n="settings.appUrl">App URL</label>
+        <input
+          type="text"
+          id="appUrl"
+          class="input"
+          placeholder="http://localhost:4200"
+          style="margin-bottom: 12px"
+        />
+
         <label class="form-label" data-i18n="settings.serverUrl">Server URL</label>
-        <div class="input-group">
-          <input type="text" id="serverUrl" class="input" placeholder="http://localhost:3000" />
-          <button id="saveUrlBtn" class="btn btn--sm btn--primary" data-i18n="settings.save">
-            Save
-          </button>
+        <input
+          type="text"
+          id="serverUrl"
+          class="input"
+          placeholder="http://localhost:3000"
+          style="margin-bottom: 12px"
+        />
+
+        <button
+          id="saveUrlBtn"
+          class="btn btn--sm btn--primary"
+          style="width: 100%; margin-bottom: 8px"
+          data-i18n="settings.save"
+        >
+          Save
+        </button>
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <div id="appConnectionStatus" class="status-badge"></div>
+          <div id="apiConnectionStatus" class="status-badge"></div>
         </div>
-        <div id="connectionStatus" class="status-badge"></div>
 
         <!-- Language -->
         <label class="form-label" data-i18n="settings.lang">Language</label>
@@ -93,6 +115,17 @@
 
       <!-- Main Content -->
       <main class="main">
+        <!-- Global Connection Warning -->
+        <div
+          id="globalConnectionWarning"
+          class="status-badge status-badge--error hidden"
+          style="margin-bottom: 16px; padding: 12px; cursor: pointer; text-align: center"
+        >
+          <span data-i18n="settings.globalWarning"
+            >⚠️ Error de conexión. Clic aquí para configurar.</span
+          >
+        </div>
+
         <!-- Profile Selector -->
         <section class="section">
           <label class="form-label" data-i18n="profile">Profile</label>

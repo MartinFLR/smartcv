@@ -19,10 +19,14 @@ import packageJson from '../../../package.json';
 const EXTENSION_I18N = {
   spanish: {
     // Settings
-    'settings.serverUrl': 'URL del Servidor',
+    'settings.appUrl': 'URL de la App (Frontend)',
+    'settings.serverUrl': 'URL del Servidor (API)',
     'settings.save': 'Guardar',
-    'settings.connected': '✓ Conectado',
-    'settings.error': '✕ Error de conexión',
+    'settings.appConnected': '✓ App Encontrada',
+    'settings.appError': '✕ No se encuentra App',
+    'settings.apiConnected': '✓ API Conectada',
+    'settings.apiError': '✕ No se encuentra API',
+    'settings.globalWarning': '⚠️ Error de conexión. Clic aquí para configurar.',
     'settings.lang': 'Idioma',
     'settings.provider': 'Proveedor IA',
     'settings.model': 'Modelo',
@@ -76,10 +80,14 @@ const EXTENSION_I18N = {
   },
   english: {
     // Settings
-    'settings.serverUrl': 'Server URL',
+    'settings.appUrl': 'App URL (Frontend)',
+    'settings.serverUrl': 'Server URL (API)',
     'settings.save': 'Save',
-    'settings.connected': '✓ Connected',
-    'settings.error': '✕ Connection failed',
+    'settings.appConnected': '✓ App Found',
+    'settings.appError': '✕ App Not Found',
+    'settings.apiConnected': '✓ API Connected',
+    'settings.apiError': '✕ API Not Found',
+    'settings.globalWarning': '⚠️ Connection error. Click here to configure.',
     'settings.lang': 'Language',
     'settings.provider': 'AI Provider',
     'settings.model': 'Model',
@@ -196,9 +204,12 @@ const elements = {
   githubBtn: document.getElementById('githubBtn') as HTMLAnchorElement | null,
   settingsBtn: document.getElementById('settingsBtn'),
   settingsPanel: document.getElementById('settingsPanel'),
+  appUrl: document.getElementById('appUrl'),
   serverUrl: document.getElementById('serverUrl'),
   saveUrlBtn: document.getElementById('saveUrlBtn'),
-  connectionStatus: document.getElementById('connectionStatus'),
+  globalConnectionWarning: document.getElementById('globalConnectionWarning'),
+  appConnectionStatus: document.getElementById('appConnectionStatus'),
+  apiConnectionStatus: document.getElementById('apiConnectionStatus'),
   langSelect: document.getElementById('langSelect'),
   providerSelect: document.getElementById('providerSelect'),
   modelSelect: document.getElementById('modelSelect'),
@@ -269,6 +280,7 @@ function updateChipsText(container, keys) {
 
 // =================== STATE ===================
 const state = {
+  appUrl: 'http://localhost:4200',
   serverUrl: 'http://localhost:3000',
   profiles: [],
   selectedProfileId: null,
@@ -291,7 +303,9 @@ const state = {
 document.addEventListener('DOMContentLoaded', init);
 
 async function init() {
-  const stored = await chromeStorageGet([
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const stored: any = await chromeStorageGet([
+    'appUrl',
     'serverUrl',
     'selectedProfileId',
     'aiProvider',
@@ -304,9 +318,20 @@ async function init() {
     'lang',
   ]);
 
+  if (stored.appUrl) {
+    state.appUrl = stored.appUrl;
+    (elements.appUrl as HTMLInputElement).value = stored.appUrl;
+  } else {
+    // Migration for existing users
+    state.appUrl = stored.serverUrl
+      ? stored.serverUrl.replace(':3000', ':4200')
+      : 'http://localhost:4200';
+    (elements.appUrl as HTMLInputElement).value = state.appUrl;
+  }
+
   if (stored.serverUrl) {
     state.serverUrl = stored.serverUrl;
-    elements.serverUrl.value = stored.serverUrl;
+    (elements.serverUrl as HTMLInputElement).value = stored.serverUrl;
   }
 
   // Language
@@ -344,7 +369,7 @@ async function init() {
   }
 
   // Update app link
-  elements.openAppLink.href = state.serverUrl.replace(':3000', ':4200');
+  (elements.openAppLink as HTMLAnchorElement).href = state.appUrl;
 
   // Apply i18n texts
   applyI18n();
@@ -380,13 +405,22 @@ function setupEventListeners() {
   // Settings toggle
   elements.settingsBtn.addEventListener('click', () => {
     elements.settingsPanel.classList.toggle('hidden');
+    elements.settingsBtn.classList.toggle('active');
   });
+
+  if (elements.globalConnectionWarning) {
+    elements.globalConnectionWarning.addEventListener('click', () => {
+      elements.settingsPanel.classList.remove('hidden');
+      elements.settingsBtn.classList.add('active');
+    });
+  }
 
   // Save URL
   elements.saveUrlBtn.addEventListener('click', async () => {
-    state.serverUrl = elements.serverUrl.value.replace(/\/+$/, '');
-    elements.openAppLink.href = state.serverUrl.replace(':3000', ':4200');
-    await chromeStorageSet({ serverUrl: state.serverUrl });
+    state.appUrl = (elements.appUrl as HTMLInputElement).value.replace(/\/+$/, '');
+    state.serverUrl = (elements.serverUrl as HTMLInputElement).value.replace(/\/+$/, '');
+    (elements.openAppLink as HTMLAnchorElement).href = state.appUrl;
+    await chromeStorageSet({ appUrl: state.appUrl, serverUrl: state.serverUrl });
     testConnection();
     loadProfiles();
   });
@@ -504,7 +538,7 @@ function setupEventListeners() {
   // Open App link
   elements.openAppLink.addEventListener('click', (e) => {
     e.preventDefault();
-    chrome.tabs.create({ url: elements.openAppLink.href });
+    chrome.tabs.create({ url: (elements.openAppLink as HTMLAnchorElement).href });
   });
 }
 
@@ -872,7 +906,7 @@ function showPreview(cvData) {
 // =================== SEND TO APP ===================
 function sendToApp() {
   if (!state.generatedCvData) return;
-  const frontendUrl = state.serverUrl.replace(':3000', ':4200');
+  const frontendUrl = state.appUrl;
   const cvDataJson = JSON.stringify(state.generatedCvData);
   const metaJson = JSON.stringify({
     isLocked: false,
@@ -999,17 +1033,51 @@ function downloadPdf() {
 
 // =================== CONNECTION TEST ===================
 async function testConnection() {
+  if (!state.serverUrl || !state.appUrl) return;
+
+  let apiOk = false;
+  let appOk = false;
+
+  // 1. Test API
   try {
     const response = await fetch(`${state.serverUrl}/api/config`);
-    if (response.ok) {
-      elements.connectionStatus.textContent = t('settings.connected');
-      elements.connectionStatus.className = 'status-badge status-badge--connected';
-    } else {
+    if (response.ok && elements.apiConnectionStatus) {
+      elements.apiConnectionStatus.textContent = t('settings.apiConnected');
+      elements.apiConnectionStatus.className = 'status-badge status-badge--connected';
+      apiOk = true;
+    } else if (elements.apiConnectionStatus) {
       throw new Error();
     }
   } catch {
-    elements.connectionStatus.textContent = t('settings.error');
-    elements.connectionStatus.className = 'status-badge status-badge--error';
+    if (elements.apiConnectionStatus) {
+      elements.apiConnectionStatus.textContent = t('settings.apiError');
+      elements.apiConnectionStatus.className = 'status-badge status-badge--error';
+    }
+  }
+
+  // 2. Test App
+  try {
+    const response = await fetch(state.appUrl, { mode: 'no-cors' }).catch(() => null);
+    if (response && elements.appConnectionStatus) {
+      elements.appConnectionStatus.textContent = t('settings.appConnected');
+      elements.appConnectionStatus.className = 'status-badge status-badge--connected';
+      appOk = true;
+    } else if (elements.appConnectionStatus) {
+      throw new Error();
+    }
+  } catch {
+    if (elements.appConnectionStatus) {
+      elements.appConnectionStatus.textContent = t('settings.appError');
+      elements.appConnectionStatus.className = 'status-badge status-badge--error';
+    }
+  }
+
+  if (elements.globalConnectionWarning) {
+    if (!apiOk || !appOk) {
+      elements.globalConnectionWarning.classList.remove('hidden');
+    } else {
+      elements.globalConnectionWarning.classList.add('hidden');
+    }
   }
 }
 
@@ -1031,7 +1099,8 @@ function formatTimeAgo(isoString) {
 }
 
 // =================== CHROME STORAGE HELPERS ===================
-function chromeStorageGet(keys) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function chromeStorageGet(keys: string | string[]): Promise<any> {
   return new Promise((resolve) => {
     chrome.storage.local.get(keys, resolve);
   });
