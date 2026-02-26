@@ -13,7 +13,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       # 1) Checkout del repo
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       # 2) Logueo en Docker Hub
       - name: Log in to Docker Hub
